@@ -1,0 +1,120 @@
+<div class="col-12" *ngIf="isSpousePanAvailable">
+    <div class="col-12" *ngIf="!showSpousePanDetails">
+        <div class="grid text-center ">
+            <div class="col-12">
+                <label>{{ "enter-spouse-pan" | transloco }}</label>
+            </div>
+            <div class="col-12">
+                <input appBlockCopyPaste panValidation class="input input-otp" type="text" maxlength="10"
+                    [(ngModel)]="spousePAN" required
+                    style="text-transform: uppercase; padding: 10px; border-radius: 5px; border: 1px solid #ccc;"
+                    onchange="this.value = this.value.toUpperCase();" (input)="spousePAN = spousePAN.toUpperCase()" />
+            </div>
+            <div class="col-12 justify-content-center">
+                <re-captcha *ngIf="isCaptchaVisible" #captchaElem (resolved)="resolved($event)" [siteKey]="siteKey"
+                    errorMode="default"></re-captcha>
+            </div>
+        </div>
+       
+        <div class="grid">
+            <div class="col-12 mt-3 text-center">
+                <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                    [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                    [disabled]="spousePAN == '' || spousePAN == null || spousePAN.length !== 10" [ngClass]="
+                        spousePAN == '' || spousePAN == null || spousePAN.length !== 10
+                        ? 'disabled-button'
+                        : 'active-button'
+                        " (click)="fetchSpousePanDetailsNew()">
+                    {{ "fetch-pan" | transloco }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-12 xl:col-12" *ngIf="showSpousePanDetails && (spousePAN !== '' || spousePAN !== null)"><!---->
+        <div class="col-12">
+            <div class="grid">
+            </div>
+            <div class="grid">
+                <div class="col-12 lg:col-4">
+                    <ion-label>{{ "pan-number" | transloco }}</ion-label>
+                </div>
+                <div class="col-12 lg:col-8">
+                    <ion-label class="custom-label">{{spousePANNumber}}</ion-label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="grid">
+                <div class="col-12 lg:col-4">
+                    <ion-label>{{ "name-as-per-pan" | transloco }}</ion-label>
+                </div>
+                <div class="col-12 lg:col-8">
+                    <ion-label class="custom-label">{{spousePANName}}</ion-label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="grid">
+                <div class="col-12 lg:col-4">
+                    <ion-label>{{ "name-as-per-digilocker" | transloco }}</ion-label>
+                </div>
+                <div class="col-12 lg:col-8">
+                    <ion-label class="custom-label">{{spouseAadhaarName}}</ion-label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid" *ngIf="showSpousePanDetails">
+        <div class="col-12">
+            <div id="parent">
+                <div id="narrow">
+                    <ion-checkbox color="primary" checked slot="start"
+                        [(ngModel)]="consentAcceptedSpouse"></ion-checkbox>
+                </div>
+                <div id="wide" class="text-left text-xs">
+                    {{ "digi-multiple-names-consent" | transloco }}
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="grid mt-5">
+                <div class="col-6 text-center" *ngIf="selectedRadioOption !== 'test'">
+                    <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                        [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [disabled]="!consentAcceptedSpouse"
+                        [ngClass]="!consentAcceptedSpouse  ? 'disabled-button': 'active-button'" 
+                        (click)="save()">
+                        {{ "proceed" | transloco }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12" *ngIf="!isSpousePanAvailable">
+    <div class="grid">
+        <div class="col-12 text-base">
+            <div class="grid">
+                <app-file-upload-cmp [uploadFileVisible]="uploadFileVisible"  
+                    [selectedImage]="selectedImage" 
+                    [questionCode]="questionCode"
+                    [isReUploadFileAllowed]="isReUploadFileAllowed"
+                    (evaluateProceedFn)="evaluateProceed()"
+                    class="col-12"></app-file-upload-cmp>
+            </div>
+        </div>
+        <div class="col-12 text-right">
+            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+              [ngClass]="
+                proceedEnabled == false
+                  ? 'disabled-button'
+                  : 'active-button flex-end'
+              " [disabled]="proceedEnabled == false" (click)="proceed()" style="align-self:flex-end;">
+              {{ "proceed" | transloco }}
+            </button>
+          </div>
+    </div>
+
+</div>

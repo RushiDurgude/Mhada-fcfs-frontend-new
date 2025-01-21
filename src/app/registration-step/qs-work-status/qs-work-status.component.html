@@ -1,0 +1,107 @@
+<div class="col-12">
+  <div class="col-12">
+    <div class="grid">
+      <div class="col-12 text-base">
+        <div class="grid">
+          <div class="col-12 lg:col-12 xl:col-12">
+            <div class="grid">
+              <div class="col-12 m-0 p-0">
+                {{"income-detail-correct-label" | transloco}}
+              </div>
+            </div>
+            <br>
+            <div class="grid">
+              <div class="col-12 md:col-6 p-2 form-outline">
+                <select class="outlined-input" (change)="onFinancialYearChange($event)" [(ngModel)]="financialYear">
+                  <option value="" selected>Select Financial Year</option>
+                  <option *ngFor="let year of financialYears | keyvalue" [value]="year.key">
+                    {{ year.value }}
+                  </option>
+                </select>
+                <label class="outlined-label labelN">{{"financial-year" | transloco}} <span class="requiredN">*</span></label>
+              </div>
+              <div class="col-12 md:col-6 p-2 form-outline">
+                <input type="text" [(ngModel)]="selfIncome" id="selfIncome" autocomplete="off" 
+                  (keypress)="numberOnly($event)" inputmode="numeric" (change)="evaluateAnswer($event)"
+                  class="col-12 outlined-input" placeholder="{{ 'self-income' | transloco }}" maxlength="10" />
+                <label for="selfIncome" class="bank-input-label outlined-label">
+                  {{ 'self-income' | transloco }} <span style="color: red"> *</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 m-0 p-0">
+            <div class="col-12 md:col-6 form-outline" *ngIf="showSpouseIncome">
+              <input type="text" [(ngModel)]="spouseIncome" id="spouseIncome" autocomplete="off" 
+                (keypress)="numberOnly($event)" inputmode="numeric" (change)="evaluateAnswer($event)"
+                class="col-12 outlined-input" placeholder="{{ 'spouse-income' | transloco }}" maxlength="10" />
+              <label for="spouseIncome" class="bank-input-label outlined-label">
+                {{ 'spouse-income' | transloco }} <span style="color: red"> *</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="col-12 lg:col-12 xl:col-12">
+            <div class="col-12 pl-0">
+              <label style="font-weight: bold">{{"working-status" | transloco}}</label>
+            </div>
+            <ion-radio-group [(ngModel)]="selectedRadioOption" (ngModelChange)="radioButtonClicked($event)">
+              <div class="grid m-0" *ngIf="showSpouseIncome">
+                <div class="col-12 m-0 p-0 lg:col-3">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-both" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Both" disabled></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 p-0 lg:col-3">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-self" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Self" disabled></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 mt-2 p-0 lg:col-3">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-spouse" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Spouse" disabled></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 mt-2 p-0 lg:col-3">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-none" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="None" disabled></ion-radio>
+                  </ion-item>
+                </div>
+              </div>
+              <div class="grid" *ngIf="!showSpouseIncome">
+                <div class="col-12 m-0 p-0 lg:col-6">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-yes" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Yes" disabled></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 p-0 lg:col-6">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-no" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="No" disabled></ion-radio>
+                  </ion-item>
+                </div>
+              </div>
+              &nbsp;&nbsp;&nbsp;
+            </ion-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-right">
+        <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+          [ngClass]="
+            proceedEnabled == false
+              ? 'disabled-button'
+              : 'active-button flex-end'
+          " [disabled]="proceedEnabled == false" (click)="proceed()" style="align-self:flex-end;">
+          {{ "proceed" | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

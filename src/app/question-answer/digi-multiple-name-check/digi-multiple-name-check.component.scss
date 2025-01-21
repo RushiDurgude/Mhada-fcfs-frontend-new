@@ -1,0 +1,92 @@
+#parent {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+  #narrow {
+    width: fit-content;
+    /* Just so it's visible */
+  }
+  #wide {
+    flex: 1;
+    margin-left: 0.5rem;
+    font-size: 15px;
+    color: #767676;
+    /* Grow to rest of container */
+    /* Just so it's visible */
+  }
+  .input-address{
+    padding: 0.5rem;
+    border: 1px solid #9F9F9F;
+    border-radius: 12px;
+    font-size: 20px;
+    resize: vertical
+  }
+
+  .card-border-dashed-signup{
+    border: 1px dashed #9F9F9F;
+    border-radius: 12px;
+    min-height: 120px;
+    max-height: fit-content;
+  }
+
+  .pulsingButton {
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0 0 0 0 rgba(232, 76, 61, 0.7);
+    border-radius: 10px;
+    -webkit-animation: pulsing 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+    -moz-animation: pulsing 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+    -ms-animation: pulsing 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+    animation: pulsing 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+    text-decoration: none !important;
+    color: #ffffff;
+    transition: all 300ms ease-in-out;
+    z-index: 1000;
+  }
+  
+  /* Comment-out to have the button continue to pulse on mouseover */
+  
+  a.pulsingButton:hover {
+    -webkit-animation: none;
+    -moz-animation: none;
+    -ms-animation: none;
+    animation: none;
+    color: #ffffff;
+    z-index: 1000;
+  }
+  
+  /* Animation */
+  
+  @-webkit-keyframes pulsing {
+    to {
+      box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+      z-index: 1000;
+    }
+  }
+  
+  @-moz-keyframes pulsing {
+    to {
+      box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+      z-index: 1000;
+    }
+  }
+  
+  @-ms-keyframes pulsing {
+    to {
+      box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+    }
+  }
+  
+  @keyframes pulsing {
+    to {
+      box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+      z-index: 1000;
+    }
+  }
+  .nameList{
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1);
+
+  }

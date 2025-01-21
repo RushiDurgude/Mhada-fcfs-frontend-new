@@ -1,0 +1,235 @@
+<div class="grid m-0 p-0 background-image card-content" style="overflow: auto; height: calc(100% - 100px)">
+  <div class="col-12 lg:col-3 xl:col-3 md:col-1 file-upload-container text-center"></div>
+  <div class="col-12 lg:col-6 xl:col-6 md:col-10 pl-3 pr-3 pb-0" #target [ngClass]="platform == 'ios' ? 'mb-6' : ''">
+    <div class="grid m-0 p-0 card">
+      <div class="col-12 text-center line-height-4 text-xl font-medium" style="border-bottom: 1px solid grey">
+        {{ "digi-multiple-names" | transloco }}
+      </div>
+      <div class="col-12 mt-3 vertical-center">
+        <div class="grid text-left">
+          <div class="col-12">
+            <label class="profile-label"> {{ "label-aadhar-name" | transloco }} </label>
+            <label> : {{ aadharName }} </label>
+          </div>
+          <div class="col-12">
+            <label class="profile-label"> {{ "label-pan-name" | transloco }} </label>
+            <label> : {{ panName }} </label>
+          </div>
+          <div class="col-12" *ngIf="rgName1 != ''">
+            <label class="profile-label"> {{ "aliasName" | transloco }} 1 </label>
+            <label> : {{ rgName1 }} </label>
+          </div>
+          <div class="col-12" *ngIf="rgName2 != ''">
+            <label class="profile-label"> {{ "aliasName" | transloco }} 2 </label>
+            <label> : {{ rgName2 }} </label>
+          </div>
+          <div class="col-12" *ngIf="rgName3 != ''">
+            <label class="profile-label"> {{ "aliasName" | transloco }} 3 </label>
+            <label> : {{ rgName3 }} </label>
+          </div>
+          <div class="col-12" *ngIf="addNewRecordBtnVisible">
+            <div id="parent">
+              <div id="narrow">
+                <ion-checkbox color="primary" checked slot="start" [(ngModel)]="multipleNamesExist"></ion-checkbox>
+              </div>
+              <div id="wide" class="text-left text-sm">
+                {{ "signUp-multiple-name-question" | transloco }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12" *ngIf="multipleNamesExist">
+            <div class="grid m-0 p-2">
+              <ng-container class="col-12" *ngFor="let name of names; let last = last; let i = index">
+                <div class="grid m-0 p-0 w-full card" style="border-radius: 10px" *ngIf="last && isCardVisible">
+                  <div class="col-12">
+                    <div class="grid text-left">
+                      <div class="col-12">
+                        <label>{{ "signUp-multiple-name-textbox-label" | transloco }}</label>
+                      </div>
+                      <div class="col-12 -mt-2">
+                        <input
+                          class="input-address w-full"
+                          type="text"
+                          maxlength="200"
+                          [(ngModel)]="names[i].name"
+                          [pattern]="namePattern"
+                          required
+                          name="fullNamePtrn"
+                          #fullNamePtrn="ngModel"
+                        />
+                        <div *ngIf="fullNamePtrn.errors">
+                          <div *ngIf="fullNamePtrn.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+                            <p style="color: red">{{ "signup-multiple-name-regex-error" | transloco }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 text-left">
+                      {{ "signUp-multiple-name-dropdown-label" | transloco }}:
+                      <ion-list>
+                        <ion-item class="ion-no-padding">
+                          <ion-select
+                            style="width: 100%"
+                            interface="popover"
+                            placeholder="{{ 'signUp-multiple-name-dropdown-placeholder' | transloco }}"
+                            [(ngModel)]="names[i].selectedReason"
+                            (ionChange)="reasonChanged(name)"
+                          >
+                            <ng-container *ngFor="let reason of reasons">
+                              <ion-select-option value="{{ reason.trrReasonDescEng }}">{{
+                                reason.trrReasonDescEng
+                              }}</ion-select-option>
+                            </ng-container>
+                          </ion-select>
+                        </ion-item>
+                      </ion-list>
+                    </div>
+                    <div class="col-12" *ngIf="names[i].name != '' && names[i].selectedReason != ''">
+                      <div class="grid m-0 p-0">
+                        <div class="col-12 text-center file-upload-container m-0 p-0">
+                          <div class="grid p-1">
+                            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                            <div class="col-12 lg:col-10 xl:col-8 md:col-8">
+                              <div class="grid card-border-dashed-signup text-center">
+                                <div class="col-12"></div>
+                                <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                                  Only image is allowed.
+                                </div>
+                                <div
+                                  class="col-12"
+                                  (click)="presentActionSheet(name)"
+                                  *ngIf="names[i].selectedImage == ''"
+                                >
+                                  <div class="grid centered-file-upload-image">
+                                    <div class="col-12 -mt-3">
+                                      <img src="assets/browse.png" class="h-3rem" />
+                                    </div>
+                                    <div class="col-12 text-sm -mt-2">
+                                      <label>{{ "browseAndUpload" | transloco }}</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12" *ngIf="names[i].selectedImage != ''">
+                                  <div class="grid">
+                                    <div class="col-12">
+                                      <!-- <img [src]="names[i].selectedImage" class="selected-image-to-upload" /> -->
+                                      {{ names[i].uploadedFilename }}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <button
+                                class="retry-button"
+                                (click)="reUploadImage(name)"
+                                *ngIf="names[i].selectedDocToUpload != ''"
+                              >
+                                {{ "re-upload" | transloco }}
+                              </button>
+                            </div>
+                            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 text-center">
+                    <button
+                      *ngIf="names.length >= 1 && isCardVisible"
+                      type="submit"
+                      (click)="submit()"
+                      [disabled]="submitDisabled || fullNamePtrn.errors"
+                      [ngClass]="
+                        submitDisabled || fullNamePtrn.errors ? 'disabled-button' : 'pulsingButton active-button'
+                      "
+                    >
+                      {{ "signUp-multiple-name-submit" | transloco }}
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="col-12">
+                <div
+                  class="grid mt-2 text-sm"
+                  *ngFor="let nameList of nameChangeList; let index = index"
+                  [ngClass]="{ nameList: 0 === index % 2 }"
+                >
+                  <div class="col-4">Name</div>
+                  <div class="col-8 font-medium">
+                    {{ nameList.name }}
+                  </div>
+
+                  <div class="col-4">Reason</div>
+                  <div class="col-8 font-medium">
+                    {{ nameList.selectedReason }}
+                  </div>
+
+                  <div class="col-4">Document</div>
+                  <div class="col-8 font-medium">
+                    {{ nameList.uploadedFilename }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 text-center">
+                <button
+                  type="button"
+                  *ngIf="addNewRecordBtnVisible && !isCardVisible"
+                  (click)="addNewRecord()"
+                  [disabled]="addNewRecordDisabled"
+                  [ngClass]="
+                    addNewRecordDisabled
+                      ? 'disabled-button  w-full'
+                      : 'retry-button w-full font-normal text-black-alpha-90'
+                  "
+                >
+                  {{ "signUp-multiple-name-another-name" | transloco }}
+                </button>
+              </div>
+
+              <input
+                type="file"
+                id="fileupload"
+                accept="image/png,image/jpeg,image/jpg"
+                style="display: none"
+                (change)="handleFileInput($event)"
+                *ngIf="fileUploadVisible"
+              />
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div id="parent">
+              <div id="narrow">
+                <ion-checkbox color="primary" checked slot="start" [(ngModel)]="consentAccepted"></ion-checkbox>
+              </div>
+              <div id="wide" class="text-left text-xs">
+                {{ "digi-multiple-names-consent" | transloco }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 text-center">
+            <button
+              (click)="proceed()"
+              [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+              [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+              [ngClass]="
+                consentAccepted == false || (multipleNamesExist && multipleNames == null)
+                  ? 'disabled-button'
+                  : 'active-button'
+              "
+              [disabled]="consentAccepted == false || (multipleNamesExist && multipleNames == null)"
+            >
+              {{ "proceed" | transloco }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 lg:col-3 xl:col-3 md:col-1 file-upload-container text-center"></div>
+</div>

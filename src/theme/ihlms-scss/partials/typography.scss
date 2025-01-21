@@ -1,0 +1,53 @@
+@import "../partials/color.scss";
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.font-weight-bold {
+  font-weight: 500;
+}
+
+.breadcrumb-list {
+  ul {
+    display: inline-flex;
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    margin-top: 10px;
+    li {
+      font-size: 14px;
+      color: $black;
+      font-weight: 500;
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+       
+      &.active {
+        color: $primery;
+       }
+    }
+  }
+}
+
+.pageScroll-bar {
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: $white;
+    margin: 2% 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    margin: 2% 0;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}

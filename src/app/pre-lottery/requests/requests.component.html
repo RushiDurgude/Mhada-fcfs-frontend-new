@@ -1,0 +1,27 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%;">
+    <div class="grid col-11 m-3 p-0">
+        <div class="col-12 card">
+            <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+                {{"select-applicant-request-type" | transloco}}
+            </div>
+            <div class="col-12 p-0 mt-2">
+                <form [formGroup]="form" #localForm="ngForm" class="grid p-2">
+                    <div flex="grid" style="display: flex;">
+                        <div class="col-3" style="width: fit-content;">
+                            <select id="reqType" formControlName="reqType" 
+                                class="form-control form-control select-dropdwon col-12" 
+                                (change)="changeWebsite($event)">  
+                                <option value="">Select Type</option>
+                                <option *ngFor="let req of requestTypes" value={{req.configKey}}>{{req.configValue}}</option>  
+                            </select>  
+                        </div> 
+                        <div class="col-12 flex justify-content-center align-items-center" *ngIf="isLoading">
+                            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

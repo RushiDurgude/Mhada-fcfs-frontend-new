@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+  <div style="text-align: center;">
+    <img [src]="data.imageSrc" [style.width.%]="zoomLevel" alt="Zoomed Image">
+  </div>
+</div>
+<div mat-dialog-actions style="justify-content: center;">
+  <button mat-button (click)="zoomIn()"><mat-icon>zoom_in</mat-icon></button>
+  <button mat-button (click)="zoomOut()"><mat-icon>zoom_out</mat-icon></button>
+  <button mat-button mat-dialog-close><mat-icon>close</mat-icon></button>
+</div>

@@ -1,0 +1,32 @@
+<div *ngIf="isFirst">
+  <div style="text-align:center">
+      <ion-icon name="alert-circle" class="icon"></ion-icon>
+  </div>
+  <h1>{{'warning-header'|transloco}}</h1><br />
+  <div mat-dialog-content>
+    <p>{{'close-warning-question-msg'|transloco}}</p>
+  </div><br />
+  <div class="text-center">
+    <button mat-button (click)="onNoClick()" class="nobtn">{{'no-btn'|transloco}}</button>
+    <button mat-button (click)="OkClick()" class="actioncss" cdkFocusInitial>
+      <div style=" color: #003BAD;">{{'ok-btn'|transloco}}
+      </div>
+    </button>
+  </div>
+</div>
+<div *ngIf="!isFirst">
+  <div style="text-align:center">
+    <ion-icon name="alert-circle" class="icon"></ion-icon>
+  </div>
+  <h1>{{'warning-header'|transloco}}</h1><br />
+  <div mat-dialog-content>
+    <p>{{'reopen-warning-question-msg'|transloco}}</p>
+  </div><br />
+  <div class="text-center">
+    <button mat-button (click)="onNoClick()" class="nobtn">{{'no-btn'|transloco}}</button>
+    <button mat-button (click)="OkClick()" class="actioncss" cdkFocusInitial>
+      <div style=" color: #003BAD;">{{'ok-btn'|transloco}}
+      </div>
+    </button>
+  </div>
+</div>

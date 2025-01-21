@@ -1,0 +1,78 @@
+<div
+  class="m-0 p-0 background-image"
+  style="height: calc(100% - 100px); overflow: auto"
+  (scroll)="onScroll($event)"
+  #divToScroll
+>
+  <div class="container">
+    <div class="col-11 card m-3 p-3">
+      <div class="card-body">
+        <div class="grid m-0 p-1 col-12">
+          <div class="webth col-3 no-padding"></div>
+          <div class="col-6 webth line-height-1 lg:text-2xl text-center title-font-size text-align">
+            {{ "my-objections-suggestions" | transloco }}
+          </div>
+          <div class="col-9 mobth line-height-1 lg:text-2xl text-center title-font-size text-align">
+            {{ "my-objections-suggestions" | transloco }}
+          </div>
+          <!-- <div class="mobth col-3 no-padding "></div> -->
+          <div class="col-3 no-padding text-right p-0">
+            <button class="btncss" routerLink="/create-objection-suggestion">
+              <div style="display: flex">
+                <ion-icon class="iconcss" slot name="add"></ion-icon>
+                <div class="webth" style="color: #003bad">{{ "raise-objection-and-suggestions" | transloco }}</div>
+                <div class="mobth" style="color: #003bad">{{ "raise-objection-and-suggestion" | transloco }}</div>
+              </div>
+            </button>
+          </div>
+          <div class="col-12 p-0 border-line"></div>
+        </div>
+        <div *ngIf="objSuggestionList.length == 0" class="text-center m1">
+          {{ "no-objection/suggestion-found" | transloco }}
+        </div>
+        <div style="margin-top: 10px" [ngClass]="objSuggestionList.length != 0 ? 'tbodycss' : 'tbodycss1'">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatableobj">
+            <thead>
+              <tr>
+                <th class="webth">{{ "objection-suggestion-id" | transloco }}</th>
+                <th class="webth">{{ "board" | transloco }}</th>
+                <th class="webth">{{ "objection-suggestion-type" | transloco }}</th>
+                <th class="webth">{{ "subject" | transloco }}</th>
+                <th class="webth">{{ "objection-suggestion-view" | transloco }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let o of objSuggestionList">
+                <td class="aligncenter">
+                  <p class="mobth font-weight">{{ "objection-suggestion-id" | transloco }} :</p>
+                  {{ o.pkOsid }}
+                </td>
+                <td class="aligncenter">
+                  <p class="mobth font-weight">{{ "board" | transloco }} :</p>
+                  {{ o.boardName }}
+                </td>
+                <td>
+                  <p class="mobth font-weight">{{ "objection-suggestion-type" | transloco }} :</p>
+                  {{ o.osTypeName }}
+                </td>
+                <td>
+                  <p class="mobth font-weight">{{ "subject" | transloco }} :</p>
+                  {{ o.osSubject }}
+                </td>
+                <td class="aligncenter center">
+                  <button
+                    (click)="viewObjecSuggestion(o.pkOsid)"
+                    title="View"
+                    style="background-color: white; text-align: center"
+                  >
+                    <ion-icon name="eye" style="font-size: 25px; color: #003bad !important"></ion-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

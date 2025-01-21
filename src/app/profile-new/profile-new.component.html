@@ -1,0 +1,102 @@
+<div class="grid m-0 p-0 background-image">
+  <div class="col-12 pl-3 pr-3 md:pl-0 md:pr-0">
+    <div class="col-12 md:col-8 lg:col-8 xl:col-8 md:col-offset-2 lg:col-offset-2 xl:col-offset-2 bg-white mt-7 pl-3 pr-3"
+      style="border-radius: 1em;" *ngIf="profile">
+      <div class="col-12 text-center p-0" *ngIf="photo">
+        <img [src]="photo" alt="Profile Picture" class="profile-picture">
+      </div>
+      <h3 class="col-12 m-0 text-left">Profile Summary</h3>
+      <div class="grid col-12 m-0">
+        <div class="col-12 md:col-4 pl-0">
+          <div class="col-12 p-0 flex align-items-center">
+            <ion-icon name="person-outline" class="bg-blue-100 p-2" style="border-radius: 15px;"></ion-icon>
+            <span class="pl-2 text-600 font-medium">Name</span>
+          </div>
+          <p class="pl-5-4">{{profile.name}}</p>
+        </div>
+        <div class="col-12 md:col-3 pl-0">
+          <div class="col-12 p-0 flex align-items-center">
+            <ion-icon name="call-outline" class="bg-blue-100 p-2" style="border-radius: 15px;"></ion-icon>
+            <span class="pl-2 text-600 font-medium">Mobile Number</span>
+          </div>
+          <p class="pl-5-4">+91 {{profile.maskedMobileNumber}}</p>
+        </div>
+        <div class="col-12 md:col-3 pl-0">
+          <div class="col-12 p-0 flex align-items-center">
+            <ion-icon name="card-outline" class="bg-blue-100 p-2" style="border-radius: 15px;"></ion-icon>
+            <span class="pl-2 text-600 font-medium">PAN Number</span>
+          </div>
+          <p class="pl-5-4">{{profile.panNumber}}</p>
+        </div>
+        <div class="col-12 md:col-2 pl-0">
+          <div class="col-12 p-0 flex align-items-center">
+            <ion-icon name="calendar-outline" class="bg-blue-100 p-2" style="border-radius: 15px;"></ion-icon>
+            <span class="pl-2 text-600 font-medium">DOB</span>
+          </div>
+          <p class="pl-5-4">{{profile.dob}}</p>
+        </div>
+        <div class="col-12 md:col-6 pl-0">
+          <div class="col-12 p-0 flex align-items-center">
+            <ion-icon name="location-outline" class="bg-blue-100 p-2" style="border-radius: 15px;"></ion-icon>
+            <span class="pl-2 text-600 font-medium">Permanent Address</span>
+          </div>
+          <p class="pl-5-4">{{profile.permanentAddress}}</p>
+        </div>
+        <div class="col-12 md:col-6 pl-0" *ngIf="profile.address">
+          <div class="col-12 p-0 flex align-items-center">
+            <ion-icon name="location-outline" class="bg-blue-100 p-2" style="border-radius: 15px;"></ion-icon>
+            <span class="pl-2 text-600 font-medium">Address</span>
+          </div>
+          <p class="pl-5-4">{{profile.address}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-12 md:col-4 lg:col-4 xl:col-4 md:col-offset-4 lg:md:col-offset-3 xl:md:col-offset-3 mt-2 pl-5-4 pr-5 flex justify-content-evenly" *ngIf="profile">
+    <button *ngIf="!esigned" class="active-button-new" (click)="eSign()">{{ "eSign" | transloco }}</button>
+    <button *ngIf="esigned" class="active-button-new" (click)="downloadEsign()">{{ "downloadEsign" | transloco }}</button>
+    <button *ngIf="esigned" class="active-button-new" (click)="apply()">{{ "title-header-apply" | transloco }}</button>
+  </div>
+  <div class="col-12 pl-3 pr-3 md:pl-0 md:pr-0 mb-5">
+    <div class="col-12 md:col-8 lg:col-8 xl:col-8 md:col-offset-2 lg:col-offset-2 xl:col-offset-2 bg-white mt-2 pl-3 pr-3 mb-4"
+      style="border-radius: 1em;" *ngIf="profile">
+      <h2 class="col-12 m-0 text-left">Document Overview</h2>
+      <div class="grid col-12 m-0">
+        <div class="grid col-12 m-0 p-0" *ngFor="let document of profile.profileDocuments">
+          <div class="col-10 md:col-7 pl-0">
+            <div class="col-12 text-lg pl-0 pb-0 flex align-items-center">
+              <ion-icon name="checkmark-circle-sharp" style="color: rgb(87, 233, 87); font-size: 1.8em" *ngIf="['Verified', 'Answered', 'Allowed with Condition'].indexOf(document.verificationStatus) >= 0"></ion-icon>
+              <ion-icon name="close-circle-sharp" style="color: red; font-size: 1.8em" *ngIf="['Rejected', 'Rejected-Duplicate'].indexOf(document.verificationStatus) >= 0"></ion-icon>
+              <span class="pending" *ngIf="['Not-Verified'].indexOf(document.verificationStatus) >= 0">&nbsp;</span>
+              {{document.displayOnProfile.split('|||')[activeLangIndex]}}
+            </div>
+            <div class="col-12 text-sm pl-5 pt-0">
+              {{document.answer}}
+            </div>
+            <div class="col-12 text-xs pl-5" *ngIf="document.rejectRemarks" style="color: #943838; font-weight: 550;">
+              Rejection Reason - {{document.rejectRemarks}}
+            </div>
+          </div>
+          <div class="col-4 hidden md:block text-right">
+            <span *ngIf="['Verified'].indexOf(document.verificationStatus) >= 0" class="successStatus">Verified</span>
+            <span *ngIf="['Answered'].indexOf(document.verificationStatus) >= 0" class="successStatus">Answered</span>
+            <span *ngIf="['Allowed with Condition'].indexOf(document.verificationStatus) >= 0" class="warningStatus">Allowed with Condition</span>
+            <span *ngIf="document.verificationStatus == 'Not-Verified'" class="warningStatus">Verification in Progress</span>
+            <span *ngIf="['Rejected', 'Rejected-Duplicate'].indexOf(document.verificationStatus) >= 0" class="errorStatus">Rejected</span>
+          </div>
+          <div class="col-2 md:col-1 text-right">
+            <ion-icon name="settings-outline" class="text-2xl cursor-pointer" (click)="presentActionSheet(document)"></ion-icon>    
+          </div>
+          <div class="col-12 block md:hidden text-left pl-5 -mt-2">
+            <span *ngIf="['Verified'].indexOf(document.verificationStatus) >= 0" class="successStatus">Verified</span>
+            <span *ngIf="['Answered'].indexOf(document.verificationStatus) >= 0" class="successStatus">Answered</span>
+            <span *ngIf="['Allowed with Condition'].indexOf(document.verificationStatus) >= 0" class="warningStatus">Allowed with Condition</span>
+            <span *ngIf="document.verificationStatus == 'Not-Verified'" class="warningStatus">Verification in Progress</span>
+            <span *ngIf="['Rejected', 'Rejected-Duplicate'].indexOf(document.verificationStatus) >= 0" class="errorStatus">Rejected</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

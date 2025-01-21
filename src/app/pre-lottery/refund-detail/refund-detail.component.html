@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-icon name="close-circle-sharp" 
+                (click)="cancel()" style="color: red;font-size: 26px; cursor: pointer;"></ion-icon>
+        </ion-buttons>
+        <ion-title class="pl-3">{{"label-refund-detail" | transloco}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="p-1">
+    <div class="col-12 text-right p-0"></div>
+    <div class="col-12" style="height: calc(100% - 60px); ">
+      <div class="field col-12">
+        <label for="refundDate" style="color: #979292;">
+            {{"label-refund-date" | transloco}}
+        </label><br>
+        <label class="col-12 p-2" style="background-color: #DFDFDF; color: black;font-weight: 500; min-height: 40px;">
+            {{refundDate}}
+        </label>
+      </div>
+      <div class="field col-12">
+        <label for="refundMessage" style="color: #979292;">
+            {{"label-refund-message" | transloco}}
+        </label><br>
+        <label class="col-12 p-2" style="background-color: #DFDFDF; color: black;font-weight: 500; min-height: 40px;">
+            {{refundMessage}}
+        </label>
+      </div>
+    </div>
+</ion-content>

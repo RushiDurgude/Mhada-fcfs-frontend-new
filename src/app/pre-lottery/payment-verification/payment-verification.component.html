@@ -1,0 +1,113 @@
+<div class="grid m-0 p-0 background-image-new card-content ng-star-inserted" 
+    style="min-height: 100%;">
+<div class="col-12 bill-summary-card p-4" >
+    <div class="col-12">
+        <div class="col-12 p-0 mt-2" *ngIf="paymentResponseModel">
+            <div class="grid">
+                <div class="col-12 p-0">
+                    <div class="col-12 text-center" *ngIf="paymentResponseModel?.status === 'SUCCESS'">
+                        <ion-icon name="checkmark-circle-sharp" style="font-size: 65px;color: #3ec13e;"></ion-icon><br>
+                        <label style="font-size: 33px;">&#8377;</label>
+                        <label style="font-size: 40px;">{{paymentResponseModel?.amount}}</label>
+                        <div class="p-2 status-message-new">
+                            {{"label-payment-success" | transloco}}
+                        </div>
+                    </div>
+                    <div class="col-12 text-center" *ngIf="paymentResponseModel?.status === 'FAILURE'">
+                        <ion-icon name="close-circle-sharp" style="font-size: 65px;color: red;"></ion-icon><br>
+                        <div class="p-2 status-message-new">
+                            {{"label-payment-failed" | transloco}}
+                        </div>
+                    </div>
+                    <div class="col-12 text-center" *ngIf="paymentResponseModel?.status === 'PENDING'">
+                        <ion-icon name="warning-sharp" style="font-size: 65px;color: orange;"></ion-icon><br>
+                        <div class="p-2 status-message-new">
+                            {{"label-payment-pending" | transloco}}
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 p-4">
+                        <div class="grid col-12 m-0 p-3 card">
+                            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+                                <label style="color: #979292;">{{"label-application-no" | transloco}}</label><br>
+                                <p class="m-0 font-bold" style="font-size: 16px;">{{paymentResponseModel?.applicationNo}}</p>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+                                <label style="color: #979292;">{{"label-scheme" | transloco}}</label><br>
+                                <p class="m-0 font-bold" style="font-size: 16px;">{{paymentResponseModel?.schemeCode}} - {{paymentResponseModel?.schemeName}}</p>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+                                <label style="color: #979292;">{{"label-category" | transloco}}</label><br>
+                                <p class="m-0 font-bold" style="font-size: 16px;">{{paymentResponseModel?.categoryCode}} - {{paymentResponseModel?.categoryName}}</p>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+                                <label style="color: #979292;">{{"label-transaction-id" | transloco}}</label><br>
+                                <p class="m-0 font-bold" style="font-size: 16px;">{{paymentResponseModel?.transactionId}}</p>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-12 p-0">
+                        <div class="grid col-12 m-0 p-3">
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12" *ngIf="paymentResponseModel?.status === 'SUCCESS'">
+                                <p style="font-size: 18px; font-weight: 500; margin-bottom: 5px;">
+                                    Thank you! Your payment for 
+                                    <strong style="font-weight: bold;">Application No {{paymentResponseModel?.applicationNo}}</strong>
+                                    for scheme 
+                                    <strong style="font-weight: bold;">{{paymentResponseModel?.schemeName}}, {{paymentResponseModel?.schemeCode}}</strong>
+                                    has been successfully processed.
+                                </p>
+                                <!-- <p style="font-size: 16px; font-weight: 400; color: #5a5a5a;">
+                                    Please proceed to complete the Earnest Money Deposit (EMD) to confirm your application.
+                                </p> -->
+                            </div>
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12" *ngIf="paymentResponseModel?.status === 'PENDING'">
+                                <p style="font-size: 18px; font-weight: 500; margin-bottom: 5px;">
+                                    Dear Applicant, Your payment for 
+                                    <strong style="font-weight: bold;">Application No {{paymentResponseModel?.applicationNo}}</strong>
+                                    for scheme 
+                                    <strong style="font-weight: bold;">{{paymentResponseModel?.schemeName}}, {{paymentResponseModel?.schemeCode}}</strong>
+                                    has not been completed.
+                                </p>
+                                <!-- <p style="font-size: 16px; font-weight: 400; color: #5a5a5a;">
+                                    Please proceed to complete the Earnest Money Deposit (EMD) to confirm your application.
+                                </p> -->
+                            </div>
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12" *ngIf="paymentResponseModel?.status === 'FAILURE'">
+                                <p style="font-size: 18px; font-weight: 500; margin-bottom: 5px;">
+                                    Dear Applicant, Your payment for 
+                                    <strong style="font-weight: bold;">Application No {{paymentResponseModel?.applicationNo}}</strong>
+                                    for scheme 
+                                    <strong style="font-weight: bold;">{{paymentResponseModel?.schemeName}}, {{paymentResponseModel?.schemeCode}}</strong>
+                                    has not been failed.
+                                </p>
+                                <!-- <p style="font-size: 16px; font-weight: 400; color: #5a5a5a;">
+                                    Please proceed to complete the Earnest Money Deposit (EMD) to confirm your application.
+                                </p> -->
+                            </div>
+                        </div>
+                    </div>                    
+                    <!-- <div class="col-12" *ngIf="paymentResponseModel?.status === 'FAILURE' || 
+                            paymentResponseModel?.status === 'PENDING'">
+                        <label>{{"label-message" | transloco}}</label><br>
+                        <p class="m-0 font-bold" style="font-size: 18px; color: red;">{{paymentResponseModel?.errorMessage}}</p>
+                    </div> -->
+                </div>
+                <div class="col-12 text-center mt-3" *ngIf="paymentResponseModel?.status === 'SUCCESS'">
+                    <button class="applicant-btn shadow-4 mt-0 p-2" (click)="showReceipt()">
+                        {{"button-view-receipt" | transloco}}
+                    </button>
+                </div>
+                <div class="col-12 text-center mt-0"  
+                    *ngIf="paymentResponseModel?.status === 'PENDING' || paymentResponseModel?.status === 'FAILURE'">
+                    <div class="grid col-12 warning-message justify-content-center m-0 p-2">
+                        {{"label-payment-deduction-warning" | transloco}}
+                    </div>
+                    <button class="applicant-btn shadow-4 mt-4" type="button" 
+                        [routerLink]="['/app', 'payment', paymentResponseModel?.applicationKey]">
+                        {{"button-pay-emd-fee" | transloco}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

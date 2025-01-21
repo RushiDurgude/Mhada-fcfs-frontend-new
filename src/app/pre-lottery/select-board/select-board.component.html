@@ -1,0 +1,28 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%; align-content: baseline;">
+    <div class="col-12 pl-4 pr-4">
+        <div class="col-12 card">
+            <div class="col-12 line-height-1 text-2xl" style="display: flex;">
+                {{"title-header-select-board" | transloco}}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 pl-4 pr-3 pb-3 grid" *ngIf="loaded">
+        <div class="grid col-12 p-2">
+            <div class="col-6 sm:col-6 md:col-4 lg:col-3 m-0 p-0 cursor-pointer" *ngFor="let board of boards">
+                <div class="col-10 shadow-2 p-0 m-2">
+                    <div class="col-12 text-xl p-0" style="border: 1px solid #DFDFDF;"
+                        (click)="onBoardClick(board)">
+                        <ion-img [src]="api_url+board.boardImage" class="col-12 p-0"></ion-img>
+                        <p class="mt-2 mb-2 text-center bold">
+                            {{board.boardName}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 ml-2 p-3 card" *ngIf="loaded && (!boards || boards?.length === 0)">
+                {{"message-boards-empty" | transloco}}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,272 @@
+<div class="grid m-0 p-0 background-image-new card-content" style="min-height: 100%">
+  <!-- overflow: auto; height: calc(100% - 100px) -->
+    <!-- Header Section -->
+    <div class="col-12 pl-4 pr-4">
+      <div class="col-12 card-round">
+        <!-- <div class="col-12 line-height-1 text-2xl">
+          <a [routerLink]="['/app', 'select-scheme', boardKey, lotteryKey, viewMode]">
+            <ion-icon color="dark" name="arrow-undo"></ion-icon>
+          </a>
+          {{"title-header-scheme" | transloco}}
+          <button class="btn shadow-4 mt-0" style="float: right;" type="button"
+                  [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]"
+                  *ngIf="viewMode === 'APPLY'">
+            {{"title-header-apply" | transloco}}
+          </button>
+        </div> -->
+  
+        <div class="col-12 position-relative line-height-1 text-2xl hidden xl:block lg:block md:block"
+          style="display: flex; align-items: center;">
+          <div style="display: flex; align-items: center;">
+            <a [routerLink]="['/app', 'select-lottery', boardKey]" *ngIf="viewMode === 'APPLY'"
+              style="color: #6c757d; text-decoration: none;font-size: 14px;">
+              {{"title-header-select-lottery" | transloco}}
+            </a>
+            <a [routerLink]="['/app', 'select-lottery', boardKey, 'VIEW']" *ngIf="viewMode === 'VIEW'"
+              style="color: #6c757d; text-decoration: none;font-size: 14px;">
+              {{"title-header-select-lottery" | transloco}}
+            </a>
+            <a [routerLink]="['/app', 'old-lottery']" *ngIf="viewMode === 'OLD'"
+              style="color: #6c757d; text-decoration: none;font-size: 14px;">
+              {{"title-header-select-lottery" | transloco}}
+            </a>
+            <span style="margin: 0 8px;">&#8250;</span>
+            <a [routerLink]="['/app', 'select-scheme', boardKey, lotteryKey, viewMode]"
+              style="color: #6c757d; text-decoration: none; font-size: 14px;">
+              {{scheme?.lotteryCode}} - {{scheme?.lotteryName}}
+              <!-- Selected Lottery -->
+            </a>
+            <span style="margin: 0 8px;">&#8250;</span> <!-- Corrected this span -->
+            <span style="font-weight: 500; font-size: 14px;">
+              {{scheme?.schemeCode}} - {{scheme?.schemeName}}
+            </span>
+            <!-- <button class="btn shadow-4 mt-0 d-flex gap-2 position-absolute top-right" style="float: right;" type="button"
+                  [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]"
+                  *ngIf="viewMode === 'APPLY'">
+            {{"title-header-apply" | transloco}}
+          </button> -->
+            <!-- <div class="d-flex gap-2 position-absolute top-right">
+            <button class="select-location-btn hidden xl:block lg:block md:block"
+            [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]" *ngIf="viewMode === 'APPLY'">
+              <span class="text-white">
+                {{"title-header-apply" | transloco}}
+              </span>
+            </button>
+          </div> -->
+          </div>
+          <button class="select-location-btn hidden xl:block lg:block md:block position-absolute top-right" type="button"
+            [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]" *ngIf="viewMode === 'APPLY'">
+            {{"title-header-apply" | transloco}}
+          </button>
+  
+        </div>
+  
+        <div class="col-12 line-height-1 text-2xl  hidden block sm:block md:hidden"
+          style="display: flex; align-items: center;">
+          <div style="display: flex; align-items: center;">
+            <a [routerLink]="['/app', 'select-scheme', boardKey, lotteryKey, viewMode]"
+              style="color: #6c757d; text-decoration: none; font-size: 14px;">
+              <ion-icon name="arrow-back-outline" style="margin-right: 8px; font-size: 18px; color: #080808;"></ion-icon>
+              <!-- Selected Lottery -->
+            </a>
+            <span style="font-weight: 500; font-size: 14px;">
+              {{scheme?.schemeCode}} - {{scheme?.schemeName}}
+            </span>
+          </div>
+        </div>
+  
+  
+        <!-- Main Content Section -->
+        <!-- <div class="col-12 pl-4 pr-4" style="height: calc(100% - 60px);" *ngIf="scheme"> -->
+        <div class="col-12 pl-4 pr-4" *ngIf="scheme">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Swiper Container with reduced width on large screens -->
+            <div class="swiper-container swiper-width md:col-span-1">
+              <swiper [config]="config" [autoplay]="true" [keyboard]="true" [pagination]="true" [scrollbar]="true"
+                #swiperSlideShow1 *ngIf="scheme?.buildingImages.length > 0">
+                <ng-template swiperSlide *ngFor="let buildingImage of scheme?.buildingImages">
+                  <ion-card class="m-0">
+                    <ion-card-content class="p-0">
+                      <div class="swiper-zoom-container">
+                        <img class="col-12 p-0" [src]="api_url+buildingImage" tappable
+                          (click)="zoom(api_url+buildingImage)" style="max-height: 400px;" />
+                      </div>
+                    </ion-card-content>
+                  </ion-card>
+                </ng-template>
+              </swiper>
+  
+              <!-- Fallback image if no building images are available -->
+              <div *ngIf="scheme?.buildingImages.length === 0" class="fallback-image">
+                <img class="col-12 p-0" src="assets/default-building.png" alt="Default Image"
+                  style="max-height: 300px;" />
+              </div>
+            </div>
+  
+            <!-- Details Section -->
+            <div class="details-container details-width md:col-span-1 position-relative">
+              <!-- <div class="col-12 d-flex gap-2 position-absolute top-right">
+                  <button class="select-location-btn hidden xl:block lg:block md:block"  [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]" *ngIf="viewMode === 'APPLY'">
+                          {{"title-header-apply" | transloco}}
+                  </button>
+              </div> -->
+              <div class="header-container d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-bold pb-0 font-style-h1" style="font-size: 15px;">
+                  {{scheme?.schemeCode}} - {{scheme?.schemeName}}
+                </h6>
+                <!-- <button class="select-location-btn shadow-4" type="button"
+                          [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]" 
+                          >
+                    {{"title-header-apply" | transloco}}
+                  </button> -->
+              </div>
+              <p class="col-12 p-0 m-0 pt-1 font-style-h2" style="font-size: 12px;">
+                {{scheme?.address}}
+              </p>
+              <div class="col-12">
+                <ul class="list-disc text-sm ml-2">
+                  <li style="margin-bottom: 2px;">
+                    <label class="font-bold font-style-h2">{{"label-scheme-categories" | transloco}} - </label>
+                    <label *ngFor="let cat of scheme?.categoryCodes" class="font-style-h1"
+                      style="margin: 0px !important;font-size:13px">
+                      {{cat}},
+                    </label>
+                  </li>
+                  <li>
+                    <label class="font-bold font-style-h2">{{"label-builtup-area" | transloco}} - </label><label
+                      class="font-style-h1" style="margin: 0px !important;font-size:13px">{{scheme?.builtupArea}}
+                      {{scheme?.builtupAreaUnit}}</label>
+                  </li>
+                  <li *ngIf="scheme?.superBuiltupArea">
+                    <label class="font-bold font-style-h2">{{"label-super-builtup-area" | transloco}} - </label><label
+                      class="font-style-h1"
+                      style="margin: 0px !important;font-size:13px">{{scheme?.superBuiltupArea}}</label>
+                    <span *ngIf="scheme?.superBuiltupAreaUnit" class="font-style-h1"
+                      style="margin: 0px !important;font-size:13px">{{scheme?.superBuiltupAreaUnit}} </span>
+                  </li>
+                  <li>
+                    <label class="font-bold font-style-h2">{{"label-carpet-area" | transloco}} - </label><label
+                      class="font-style-h1" style="margin: 0px !important;font-size:13px">{{scheme?.carpetArea}}
+                      {{scheme?.carpetAreaUnit}}</label>
+                  </li>
+                  <li>
+                    <label class="font-bold font-style-h2">{{"label-cost" | transloco}} - </label>&#8377; <label
+                      class="font-style-h1" style="margin: 0px !important;font-size:13px">{{scheme?.cost}}</label>
+                  </li>
+                  <li>
+                    <label class="font-bold font-style-h2">{{"label-emd" | transloco}} - </label>&#8377; <label
+                      class="font-style-h1" style="margin: 0px !important;font-size:13px">{{scheme?.emdAmount}}</label>
+                  </li>
+                  <li>
+                    <label class="font-bold font-style-h2">{{"label-total-tenements" | transloco}} - </label><label
+                      class="font-style-h1" style="margin: 0px !important;font-size:13px">{{scheme?.tenements}}</label>
+                  </li>
+                  <li>
+                    <label class="font-bold font-style-h2">{{"label-rera" | transloco}} - </label><label
+                      class="font-style-h1"
+                      style="margin: 0px !important;font-size:13px">{{scheme?.reraRegistrationNo}}</label>
+                  </li>
+                </ul>
+              </div>
+              <p class="grid p-2">
+                <label class="m-0 p-2 cursor-pointer" style="font-family: Poppins;color: #313638;font-size: 12px;" *ngFor="let a of scheme?.amenities | keyvalue">
+                  <img [src]="api_url+'/shared-image/scheme-amenity/'+a.key+'.PNG'" class="col-11 p-0"
+                    style="height: 16px; width: 21px;" />
+                  {{a.value}}
+                </label>
+              </p>
+              <div class="tenement-categories">
+                <p class="title">Available Tenements as per Categories</p>
+                <div class="categories-grid">
+                  <div
+                    class="category-item"
+                    *ngFor="let a of scheme?.categoryCodesWithCount | keyvalue"
+                  >
+                    <span class="category-count">{{ a.value }}</span>
+                  </div>
+                </div>
+              </div>              
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-12 pl-4 pr-4">
+          <hr width="100%" size="2" style=background-color:#E6E6E6;height:2px>
+        </div>
+  
+        <!-- Additional Sections -->
+        <div class="col-12 pl-4 pr-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Floor Plan Section -->
+            <div class="col-12 sm:col-12 md:col-6 lg:col-4 p-0 pr-2 mt-2" *ngIf="scheme?.floorPlanImages?.length > 0">
+              <div class="col-12 p-2 bg-details shadow-2 pt-2">
+                <div class="col-12 p-0">
+                  <swiper [config]="config" [autoplay]="true" [keyboard]="true" [pagination]="true" [scrollbar]="true"
+                    [zoom]="true" #swiperSlideShow2 *ngIf="scheme?.floorPlanImages.length > 0">
+                    <ng-template swiperSlide *ngFor="let floorPlan of scheme?.floorPlanImages">
+                      <ion-card class="m-0">
+                        <ion-card-content class="p-0">
+                          <img class="col-12 p-0" [src]="api_url+floorPlan" style="height: 300px" tappable
+                            (click)="zoom(api_url+floorPlan)" />
+                        </ion-card-content>
+                      </ion-card>
+                    </ng-template>
+                  </swiper>
+                </div>
+                <div class="col-12 p-2 ">
+                  {{"label-floor-plan" | transloco}}
+                </div>
+              </div>
+            </div>
+  
+            <!-- Location Plan Section -->
+            <div class="col-12 sm:col-12 md:col-6 lg:col-4 p-0 pr-2 mt-2" *ngIf="scheme?.locationImages?.length > 0">
+              <div class="col-12 p-2 bg-details shadow-2 pt-2">
+                <div class="col-12 p-0">
+                  <swiper [config]="config" [autoplay]="true" [keyboard]="true" [pagination]="true" [scrollbar]="true"
+                    [zoom]="true" #swiperSlideShow3 *ngIf="scheme?.locationImages.length > 0">
+                    <ng-template swiperSlide *ngFor="let locationplan of scheme?.locationImages">
+                      <ion-card class="m-0">
+                        <ion-card-content class="p-0">
+                          <img class="col-12 p-0" [src]="api_url+locationplan" style="height: 300px" tappable
+                            (click)="zoom(api_url+locationplan)" />
+                        </ion-card-content>
+                      </ion-card>
+                    </ng-template>
+                  </swiper>
+                </div>
+                <div class="col-12 p-2">
+                  {{"label-location-plan" | transloco}}
+                </div>
+              </div>
+            </div>
+  
+            <!-- Google Map Section -->
+            <div class="col-12 sm:col-12 md:col-6 lg:col-4 p-0 pr-2 mt-2">
+              <div class="col-12 p-2 bg-details shadow-2 pt-2">
+                <div class="col-12 p-0">
+                  <ion-card class="m-0">
+                    <ion-card-content class="p-0">
+                      <iframe class="col-12 p-0" height="300" referrerpolicy="no-referrer-when-downgrade" [src]="gmapUrl"
+                        frameborder="0" allowfullscreen></iframe>
+                    </ion-card-content>
+                  </ion-card>
+                </div>
+                <div class="col-12 p-2">
+                  {{"label-google-map" | transloco}}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3 top-center">
+              <button class="select-location-btn hidden block sm:block md:hidden"
+              [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]" *ngIf="viewMode === 'APPLY'">
+              <span class="text-white">
+                {{"title-header-apply" | transloco}}
+              </span>
+            </button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,40 @@
+<div class="col-12">
+  <div class="col-12">
+    <div class="grid">
+      <div class="col-12 text-base">
+        <div class="grid">
+          <div class="col-12 lg:col-12 xl:col-12">
+            <ion-radio-group [(ngModel)]="selectedRadioOption" (ngModelChange)="radioButtonClicked($event)">
+              <div class="grid">
+                <div class="col-12 m-0 p-0 lg:col-6">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-yes" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Yes"></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 p-0 lg:col-6">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-no" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="No"></ion-radio>
+                  </ion-item>
+                </div>
+              </div>
+              &nbsp;&nbsp;&nbsp;
+            </ion-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-right">
+        <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+          [ngClass]="
+            proceedEnabled == false
+              ? 'disabled-button'
+              : 'active-button flex-end'
+          " [disabled]="proceedEnabled == false" (click)="proceed()" style="align-self:flex-end;">
+          {{ "proceed" | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

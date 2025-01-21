@@ -1,0 +1,141 @@
+<div class="grid m-0 p-2">
+  <ng-container class="col-12" *ngFor="let name of names; let last = last; let i = index">
+    <div class="grid m-0 p-0 w-full card" style="border-radius: 10px" *ngIf="last && isCardVisible">
+      <!-- <div class="col-12 text-right" *ngIf="names.length > 1 && last">
+        <ion-icon
+          name="close-outline"
+          class="cursor-pointer"
+          style="color: black; font-size: 30px"
+          (click)="removeLastRecord()"
+        ></ion-icon>
+      </div> -->
+      <div class="col-12">
+        <div class="grid text-left">
+          <div class="col-12">
+            <label>{{ "signUp-multiple-name-textbox-label" | transloco }}</label>
+          </div>
+          <div class="col-12 -mt-2">
+            <input class="input-address w-full" type="text" maxlength="25" [(ngModel)]="names[i].name" />
+          </div>
+        </div>
+        <div class="col-12 text-left">
+          {{ "signUp-multiple-name-dropdown-label" | transloco }}:
+          <ion-list>
+            <ion-item class="ion-no-padding"> 
+              <ion-select
+                style="width: 100%"
+                interface="popover"
+                placeholder="{{ 'signUp-multiple-name-dropdown-placeholder' | transloco }}"
+                [(ngModel)]="names[i].selectedReason"
+                (ionChange)="reasonChanged(name)"
+              >
+                <ng-container *ngFor="let reason of reasons">
+                  <ion-select-option value="{{ reason.trrReasonDescEng }}">{{
+                    reason.trrReasonDescEng
+                  }}</ion-select-option>
+                </ng-container>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </div>
+        <div class="col-12" *ngIf="names[i].name != '' && names[i].selectedReason != ''">
+          <div class="grid m-0 p-0">
+            <div class="col-12 text-center file-upload-container m-0 p-0">
+              <div class="grid p-1">
+                <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                <div class="col-12 lg:col-10 xl:col-8 md:col-8">
+                  <div class="grid card-border-dashed-signup text-center">
+                    <div class="col-12"></div>
+                    <div class="col-12 error-message" *ngIf="errorMessageVisible">Only image is allowed.</div>
+                    <div class="col-12" (click)="presentActionSheet(name)" *ngIf="names[i].selectedImage == ''">
+                      <div class="grid centered-file-upload-image">
+                        <div class="col-12 -mt-3">
+                          <img src="assets/browse.png" class="h-3rem" />
+                        </div>
+                        <div class="col-12 text-sm -mt-2">
+                          <label>{{ "browseAndUpload" | transloco }}</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12" *ngIf="names[i].selectedImage != ''">
+                      <div class="grid">
+                        <div class="col-12">
+                          <!-- <img [src]="names[i].selectedImage" class="selected-image-to-upload" /> -->
+                          {{ names[i].uploadedFilename }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button class="retry-button" (click)="reUploadImage(name)" *ngIf="names[i].selectedDocToUpload != ''">
+                    {{ "re-upload" | transloco }}
+                  </button>
+                </div>
+                <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="col-12 text-center">
+    <button
+      *ngIf="names.length >= 1 && isCardVisible"
+      type="submit"
+      (click)="submit()"
+      [disabled]="submitDisabled"
+      [ngClass]="submitDisabled ? 'disabled-button' : 'pulsingButton active-button'"
+    >
+      {{ "signUp-multiple-name-submit" | transloco }}
+    </button>
+  </div>
+
+  <div class="col-12 mt-3">
+    <div
+      class="grid mt-2 text-sm"
+      *ngFor="let nameList of nameChangeList; let index = index"
+      [ngClass]="{ nameList: 0 === index % 2 }"
+    >
+      <div class="col-4">Name</div>
+      <div class="col-8 font-medium">
+        {{ nameList.name }}
+      </div>
+
+      <div class="col-4">Reason</div>
+      <div class="col-8 font-medium">
+        {{ nameList.selectedReason }}
+      </div>
+
+      <div class="col-4">Document</div>
+      <div class="col-8 font-medium">
+        {{ nameList.uploadedFilename }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 text-center">
+    <button
+      type="button"
+      *ngIf="names.length < 3 && !isCardVisible"
+      (click)="addNewRecord()"
+      [disabled]="addNewRecordDisabled"
+      [ngClass]="
+        addNewRecordDisabled ? 'disabled-button  w-full' : 'retry-button w-full font-normal text-black-alpha-90'
+      "
+    >
+      {{ "signUp-multiple-name-another-name" | transloco }}
+    </button>
+  </div>
+
+  <input
+    type="file"
+    id="fileupload"
+    accept="image/png,image/jpeg,image/jpg"
+    style="display: none"
+    (change)="handleFileInput($event)"
+    *ngIf="fileUploadVisible"
+  />
+</div>

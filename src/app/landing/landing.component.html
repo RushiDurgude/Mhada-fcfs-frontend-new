@@ -1,0 +1,309 @@
+<div class="grid m-0 p-0" style="overflow: auto; background-color: white; width: 100%;">
+  <!-- News Bar -->
+  <div class="col-12 m-0 p-0" style="height: fit-content;">
+    <div class="news-bar">
+      <div class="news-label">
+        {{"lbl-news" | transloco}}
+      </div>
+      <marquee class="news-content" direction="left">
+        <span *ngFor="let newsItem of news" style="color: white;">
+          &nbsp;•&nbsp;{{ lang === "mr" ? newsItem.announcementMr : newsItem.announcementEn }}
+        </span>
+      </marquee>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="header-container">
+      <!-- Logo -->
+      <div class="logo" style="display: flex; align-items: center;">
+        <div class="menu-button" style="margin-left: 10px;">
+          <button style="background: none; border: none;">
+            <ion-menu-button [color]="'dark'"></ion-menu-button>
+          </button>
+        </div>
+        <img src="assets/cidco_icon.png" alt="CIDCO Logo" class="logo-image" />
+      </div>
+  
+      <!-- Navigation Links -->
+      <nav class="nav-links">
+        <a style="cursor: pointer;" (click)="getShowInfoFlag()" class="nav-item">{{ "menu-home" | transloco }}</a>
+        <a [routerLink]="['/app','select-lottery' , '1', 'VIEW']" class="nav-item">{{ "title-header-live-lottery" | transloco }}</a>
+        <!-- <a [routerLink]="['/app', 'application-detail-lists']" class="nav-item">{{ "menu-application-Lists" | transloco }}</a> -->
+        <a [routerLink]="['/app', 'quick-links']" class="nav-item">{{ "menu-quick-links" | transloco }}</a>
+        <a [routerLink]="['/app', 'news']" class="nav-item">{{ "menu-news" | transloco }}</a>
+        <a [routerLink]="['/app', 'help']" class="nav-item">{{ "menu-help" | transloco }}</a>
+        <a [routerLink]="['/contact-us']" class="nav-item">{{ "label-contact-us" | transloco }}</a>
+      </nav>
+  
+      <!-- Language Dropdown -->
+    <div class="language-selector">
+      <select (change)="changeLang($event)">
+        <option value="en" [selected]="activeLang === 'en'">ENG</option>
+        <option value="mr" [selected]="activeLang === 'mr'">MAR</option>
+      </select>
+    </div>
+    </div>
+  </header>  
+  
+  <!-- Slider Section -->
+  <div class="slider-container" style="position: relative; width: 100%; margin: 0;">
+    <!-- Navigation Arrows -->
+    <div class="slider-left-icon" (click)="slidePrev()" style="background-color: transparent;">
+      <ion-icon name="arrow-back" class="slider-arrow" style="background-color: #ccc8c8; padding: 4px; border-radius: 20px; color: #605d5d;"></ion-icon>
+    </div>
+    <div class="slider-right-icon" (click)="slideNext()" style="background-color: transparent;">
+      <ion-icon name="arrow-forward" class="slider-arrow" style="background-color: #ccc8c8; padding: 4px; border-radius: 20px; color: #605d5d;"></ion-icon>
+    </div>
+    
+    <!-- Rectangle Box -->
+    <div
+      class="rectangle-box"
+      style="
+        position: absolute; 
+        top: 44%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+        z-index: 10; 
+        background-color: rgba(255, 255, 255, 0.8); 
+        padding: 20px; 
+        text-align: center; 
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+        width: 90%; /* Adjust to fit within wider screens */
+        max-width: 925px;height: 38%;padding-top: 50px;
+      ">
+      <h1 style="font-size: 24px; margin-bottom: 10px; color: #333;font-family: Poppins;">
+        {{ "landing-details1" | transloco }}
+      </h1>
+      <p style="font-size: 13px; margin-bottom: 25px; color: #555;font-family: Poppins;">
+        {{ "landing-details2" | transloco }}
+      </p>
+      <div class="button-container">
+      <button 
+        class="landing-button" 
+        style="
+          background-color: rgb(57, 57, 255); 
+          color: white; 
+          padding: 10px 20px; 
+          font-size: 16px; 
+          border: none; 
+          border-radius: 4px; 
+          cursor: pointer;
+          width: 216px;
+          height: 42.68px;"
+        (click)="startNow()">
+        BOOK NOW
+      </button>
+
+      <button 
+      class="landing-button" 
+      style="
+        background-color:rgb(40 40 58); 
+        color: white; 
+        padding: 10px 7px;
+        font-size: 14px; 
+        border: none; 
+        border-radius: 4px; 
+        cursor: pointer;
+        width: 123px;
+        height: 34.68px;" 
+      [routerLink]="['/app','select-lottery' , '1', 'VIEW']">
+      VIEW SCHEMES
+    </button>
+      </div>
+    </div>
+  
+    <!-- Ion Slider -->
+    <ion-slides #Slides [options]="slideOpts" *ngIf="banners.length > 0" class="shadow-2" style="width: 100%;">
+      <ion-slide *ngFor="let banner of banners">
+        <img class="landing-image" [src]="banner.imageUrl" alt="slide-1" style="width: 100%; height: auto;" />
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="steps-to-apply-container">
+    <div class="title-and-button" style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>Steps to Apply</h2>
+        <button class="start-application-buttons" (click)="startNow()">
+          Start Your Application
+          <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none" style="margin-left: 8px;">
+            <path d="M6.75 4.25V5.5H14.6187L4.25 15.8687L5.13125 16.75L15.5 6.38125V14.25H16.75V4.25H6.75Z" fill="black" stroke="black" stroke-width="0.5"/>
+          </svg>
+        </button>
+    </div>
+    
+  
+    <!-- Description -->
+    <p class="description">
+      Explore our housing schemes designed to provide quality and affordable homes for all.
+    </p>
+  
+    <!-- Steps -->
+    <div class="steps-grid">
+      <!-- Step 1 -->
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3 style="color: #FFFFFF;">Register</h3>
+        <p style="color: #FFFFFF;">Sign up on the CIDCO portal with your basic details.</p>
+      </div>
+  
+      <!-- Step 2 -->
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Online Application</h3>
+        <p>Fill in the application form with accurate details.</p>
+      </div>
+  
+      <!-- Step 3 -->
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Upload Documents</h3>
+        <p>Upload the required documents (e.g., ID proof, income certificate).</p>
+      </div>
+  
+      <!-- Step 4 -->
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>Payment & Done</h3>
+        <p>Pay the application fee online securely and wait for the allotment announcement.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 md:col-10 md:col-offset-1 lg:col-offset-1 xl:col-offset-1 mt-4 p-0 relative" style="bottom: 0" *ngIf="videos.length > 0">
+    <div class="slider-video-left-icon" (click)="slidePrevVideo()">
+      <ion-icon color="dark" name="arrow-back" class="slider-arrow" style="background-color: #ccc8c8; padding: 4px; border-radius: 20px; color: #605d5d;"></ion-icon>
+    </div>
+    <div class="slider-video-right-icon" (click)="slideNextVideo()">
+      <ion-icon color="dark" name="arrow-forward" class="slider-arrow" style="background-color: #ccc8c8; padding: 4px; border-radius: 20px; color: #605d5d;"></ion-icon>
+    </div>
+    <ion-slides #VideoSlides [options]="videoSlideOpts">
+      <ion-slide *ngFor="let video of videos">
+        <div style="height: 200px; position: absolute; background: transparent; width: 100%; cursor: pointer;" (click)="viewHelpVideo(video.lovMediaLink, $event)"></div>
+        <img style="height: 200px; object-fit: fill; width: 100%; border-radius: 10px; padding: 5px; background-color: white;" class="ythumb" [src]="video.videoId" />
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <div class="faq-container">
+    <!-- Left Section -->
+    <div class="faq-left">
+      <h2>Have Questions? <span class="faq-badge">FAQ</span></h2>
+      <p>Explore our housing schemes designed to provide quality and affordable homes for all.</p>
+      <button class="start-application-buttons" (click)="startNow()">
+        Start Your Application
+        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none" style="margin-left: 8px;">
+          <path d="M6.75 4.25V5.5H14.6187L4.25 15.8687L5.13125 16.75L15.5 6.38125V14.25H16.75V4.25H6.75Z" fill="black" stroke="black" stroke-width="0.5" />
+        </svg>
+      </button>
+    </div>
+  
+    <!-- Right Section -->
+    <div class="faq-right col-12 lg:col-7 xl:col-7">
+      <ul class="no-bullets">
+        <li class="mb-3">
+          <ion-accordion-group expand="inset">
+            <!-- Accordion Item 1 -->
+            <ion-accordion value="first">
+              <ion-item slot="header">
+                <ion-label class="accordion-no-word-wrap">
+                  How do I apply for the CIDCO Housing Scheme?
+                </ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                To apply for the CIDCO Housing Scheme, visit the official website, register, and complete the online application.
+              </div>
+            </ion-accordion>
+            <!-- Add More Accordion Items Below -->
+            <!-- Accordion Item 2 (Example) -->
+            <ion-accordion value="second">
+              <ion-item slot="header">
+                <ion-label class="accordion-no-word-wrap">
+                  What documents are required for the application process?
+                </ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Required documents include ID proof, income certificate, and proof of residence.
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <footer style="background-color: #0078d7; color: white; padding: 0px 0; text-align: center;">
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+      <!-- Logo and Description -->
+      <div class="logo-description" style="flex: 1; min-width: 200px; display: flex; flex-direction: column; align-items: flex-start;">
+        <img src="assets/cidco_icon.png" alt="CIDCO Logo" class="icon-details">
+        <p class="details-des">
+          CIDCO Is An Acronym Of The City And Industrial Development Corporation Of Maharashtra Limited
+          (CIDCO), Completely Owned By The State Government Incorporated As A Company.
+        </p>
+        <!-- <div>
+          <a href="#" style="margin: 0 5px; color: white;">Google Icon</a>
+          <a href="#" style="margin: 0 5px; color: white;">Facebook Icon</a>
+          <a href="#" style="margin: 0 5px; color: white;">Twitter Icon</a>
+          <a href="#" style="margin: 0 5px; color: white;">Instagram Icon</a>
+          <a href="#" style="margin: 0 5px; color: white;">LinkedIn Icon</a>
+        </div> -->
+      </div>
+  
+      <!-- Quick Links -->
+      <div class="footer-section-quick-links" style="flex: 1; min-width: 200px; text-align: left;margin-left: 100px;">
+        <h4 class="footer-header">Quick Links</h4>
+        <ul class="footer-list" style="list-style: none; padding: 0;margin: 0;">
+          <li><a href="#" style="color: white; text-decoration: none;">About Us</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Register for Lottery</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Lottery Information</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Latest News</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">FAQ's</a></li>
+        </ul>
+      </div>
+  
+      <!-- About Website -->
+      <div class="footer-section-about-website" style="flex: 1; min-width: 200px;text-align: left;">
+        <h4 class="footer-header">About Website</h4>
+        <ul class="footer-list" style="list-style: none; padding: 0;margin: 0;">
+          <li><a href="#" style="color: white; text-decoration: none;">About Website</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Disclaimer</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Terms Of Use</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Privacy Policy</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Contact</a></li>
+        </ul>
+      </div>
+  
+      <!-- Get in Touch -->
+      <div class="footer-section-get-in-touch" style="flex: 1; min-width: 200px;text-align: left;">
+        <h4 class="footer-header">Get In Touch</h4>
+        <ul class="footer-list" style="list-style: none; padding: 0; margin: 0;">
+          <li><a href="#" style="color: white; text-decoration: none;">Contact Us</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Emergency Number</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Complaint</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Feedback</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Help</a></li>
+        </ul>
+      </div>
+    </div>
+  
+    <!-- App Store Links -->
+    <!-- <div style="margin: 0px 0;">
+      <a href="#" style="margin-right: 10px;">
+        <img src="path-to-google-play-icon.png" alt="Google Play" style="height: 40px;">
+      </a>
+      <a href="#">
+        <img src="path-to-app-store-icon.png" alt="App Store" style="height: 40px;">
+      </a>
+    </div> -->
+  
+    <!-- Copyright -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+      <p style="color: #FFF; font-family: Poppins; font-size: 11px; font-style: normal; font-weight: 300; line-height: normal; margin: 0;margin-left:20px;">
+        © Copyright 2024 – All Rights Reserved
+      </p>
+      <div>
+        <a href="#" style="color: #FFF; font-family: Poppins; font-size: 11px; font-style: normal; font-weight: 300; line-height: normal; text-decoration: none; margin-right: 20px;">
+          Privacy Policy & Terms Of Use
+        </a>
+      </div>
+    </div>    
+  </footer>
+</div>

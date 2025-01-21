@@ -1,0 +1,351 @@
+<div class="grid m-0 p-0 background-image card-content" style="overflow: auto; height: calc(100% - 100px)">
+  <div class="col-12 lg:col-3 xl:col-3 md:col-1 file-upload-container text-center"></div>
+  <div class="col-12 lg:col-6 xl:col-6 md:col-10 pl-3 pr-3 pb-0" #target [ngClass]="platform == 'ios' ? 'mb-6' : ''">
+    <div class="grid m-0 p-0 card">
+      <div class="col-12 text-center line-height-4 text-xl font-medium" style="border-bottom: 1px solid grey">
+        {{ "label-signup" | transloco }}
+      </div>
+      <div class="col-12 mt-3 vertical-center" *ngIf="signUpPanVerified">
+        <div class="grid text-left">
+          <div class="col-12">
+            <label>{{ "pan" | transloco }}</label>
+          </div>
+          <div class="col-12">
+            <input class="input input-otp w-full" type="text" maxlength="10" [(ngModel)]="signUpPanNo"
+              [pattern]="panPattern" required style="text-transform: uppercase"
+              onchange="this.value = this.value.toUpperCase();" name="panPtrn" #panPtrn="ngModel"
+              (input)="signUpPanNo = signUpPanNo.toUpperCase()" [disabled]="contentVisible" />
+            <div *ngIf="panPtrn.errors">
+              <div *ngIf="panPtrn.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+                <p style="color: red">{{ "pan-pattern-error" | transloco }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- New CAPTCHA Implementation -->
+          <div class="col-12 p-0 mt-3 form-outline" style="display: contents;" *ngIf="isCaptchaVisible">
+            <div class="col-8 p-0 pl-2">
+              <img [src]="captchaImg" class="captcha-img" alt="Captcha" />
+            </div>
+            <div class="col-2 p-0 pt-2">
+              <button 
+                type="button" 
+                title="Play Audio" 
+                (click)="playAudioCaptcha()" 
+                class="btn btn-secondary btn-auto audio-btn"
+              >
+                <mat-icon>volume_up</mat-icon>
+              </button>
+              <button 
+                type="button" 
+                title="Refresh" 
+                (click)="generateCaptcha()" 
+                class="btn btn-secondary btn-auto refresh-btn mt-2"
+              >
+                <mat-icon>autorenew</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="col-12 p-2 mt-0 form-outline" *ngIf="isCaptchaVisible">
+            <div class="col-12 p-0 mt-0 form-outline">
+              <input
+                type="text"
+                [(ngModel)]="captchaText"
+                class="col-12 outlined-input"
+                maxlength="6"
+                placeholder="{{ 'captcha' | transloco }}"
+              />
+            </div>
+          </div>
+          <!-- End of New CAPTCHA Implementation -->
+          <div class="col-12 text-center" *ngIf="!contentVisible">
+            <button [disabled]="signUpPanNo == '' || panPtrn.errors || signUpPanNo.length < 10 || !isCaptchaClicked"
+              [ngClass]="
+                signUpPanNo == '' || panPtrn.errors || signUpPanNo.length < 10 || !isCaptchaClicked
+                  ? 'disabled-button'
+                  : 'active-button'
+              " (click)="verifyPanNew()"><!--(click)="verifyPan()-->
+              {{ "verify" | transloco }}
+            </button>
+          </div>
+        </div>
+
+        <div class="grid text-left" *ngIf="contentVisible">
+          <!-- <div class="col-12">
+            <div id="parent">
+              <div id="narrow">
+                <ion-checkbox color="primary" checked slot="start" [(ngModel)]="multipleNamesExist"></ion-checkbox>
+              </div>
+              <div id="wide" class="text-left text-sm">
+                {{ "signUp-multiple-name-question" | transloco }}
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <div class="col-12" *ngIf="multipleNamesExist">
+            <div class="grid m-0 p-2">
+              <ng-container class="col-12" *ngFor="let name of names; let last = last; let i = index">
+                <div class="grid m-0 p-0 w-full card" style="border-radius: 10px" *ngIf="last && isCardVisible">
+                  <div class="col-12">
+                    <div class="grid text-left">
+                      <div class="col-12">
+                        <label>{{ "signUp-multiple-name-textbox-label" | transloco }}</label>
+                      </div>
+                      <div class="col-12 -mt-2">
+                        <input class="input-address w-full" type="text" maxlength="200" [(ngModel)]="names[i].name"
+                          [pattern]="namePattern" required name="fullNamePtrn" #fullNamePtrn="ngModel" />
+                        <div *ngIf="fullNamePtrn.errors">
+                          <div *ngIf="fullNamePtrn.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+                            <p style="color: red">{{ "signup-multiple-name-regex-error" | transloco }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 text-left">
+                      {{ "signUp-multiple-name-dropdown-label" | transloco }}:
+                      <mat-form-field appearance="outline" class="w-full">
+                        <mat-select [(ngModel)]="names[i].selectedReason">
+                          <mat-option *ngFor="let reason of reasons" [value]="reason.trrReasonDescEng">
+                            {{ reason.trrReasonDescEng }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12" *ngIf="names[i].name != '' && names[i].selectedReason != ''">
+                      <div class="grid m-0 p-0">
+                        <div class="col-12 text-center file-upload-container m-0 p-0">
+                          <div class="grid p-1">
+                            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                            <div class="col-12 lg:col-10 xl:col-8 md:col-8">
+                              <div class="grid card-border-dashed-signup text-center">
+                                <div class="col-12"></div>
+                                <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                                  Only image is allowed.
+                                </div>
+                                <div class="col-12" (click)="presentActionSheet(name)"
+                                  *ngIf="names[i].selectedImage == ''">
+                                  <div class="grid centered-file-upload-image">
+                                    <div class="col-12 -mt-3">
+                                      <img src="assets/browse.png" class="h-3rem" />
+                                    </div>
+                                    <div class="col-12 text-sm -mt-2">
+                                      <label>{{ "browseAndUpload" | transloco }}</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12" *ngIf="names[i].selectedImage != ''">
+                                  <div class="grid">
+                                    <div class="col-12">
+                                      {{ names[i].uploadedFilename }}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <button class="retry-button" (click)="reUploadImage(name)"
+                                *ngIf="names[i].selectedDocToUpload != ''">
+                                {{ "re-upload" | transloco }}
+                              </button>
+                            </div>
+                            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 text-center">
+                    <button *ngIf="names.length >= 1 && isCardVisible" type="submit" (click)="submit()"
+                      [disabled]="submitDisabled || fullNamePtrn.errors" [ngClass]="
+                        submitDisabled || fullNamePtrn.errors ? 'disabled-button' : 'pulsingButton active-button'
+                      ">
+                      {{ "signUp-multiple-name-submit" | transloco }}
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="col-12">
+                <div class="grid mt-2 text-sm" *ngFor="let nameList of nameChangeList; let index = index"
+                  [ngClass]="{ nameList: 0 === index % 2 }">
+                  <div class="col-4">Name</div>
+                  <div class="col-8 font-medium">
+                    {{ nameList.name }}
+                  </div>
+
+                  <div class="col-4">Reason</div>
+                  <div class="col-8 font-medium">
+                    {{ nameList.selectedReason }}
+                  </div>
+
+                  <div class="col-4">Document</div>
+                  <div class="col-8 font-medium">
+                    {{ nameList.uploadedFilename }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 text-center">
+                <button type="button" *ngIf="names.length < 3 && !isCardVisible" (click)="addNewRecord()"
+                  [disabled]="addNewRecordDisabled" [ngClass]="
+                    addNewRecordDisabled
+                      ? 'disabled-button  w-full'
+                      : 'retry-button w-full font-normal text-black-alpha-90'
+                  ">
+                  {{ "signUp-multiple-name-another-name" | transloco }}
+                </button>
+              </div>
+
+              <input type="file" id="fileupload" accept="image/png,image/jpeg,image/jpg" style="display: none"
+                (change)="handleFileInput($event)" *ngIf="fileUploadVisible" />
+            </div>
+          </div> -->
+
+          <div class="col-12">
+            <label>{{ "name" | transloco }}</label>
+          </div>
+          <div class="col-12">
+            <input class="input input-otp w-full" type="text" [(ngModel)]="userName" readonly disabled />
+          </div>
+          <div class="col-12 vertical-center">
+            <div class="grid text-left">
+              <div class="col-12">
+                <label>{{ "emailIDLabel" | transloco }}</label>
+              </div>
+              <div class="col-12">
+                <input class="input input-otp w-full" type="text" maxlength="50" [(ngModel)]="signUpEmailId"
+                  name="email" #email="ngModel" [pattern]="emailPattern" required style="text-transform: lowercase"
+                  onchange="this.value = this.value.toUpperCase();" />
+                <div *ngIf="email.errors">
+                  <div *ngIf="email.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+                    <p style="color: red">{{ "emailError" | transloco }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid text-left">
+              <div class="col-12">
+                <label>{{ "phoneNoLabel" | transloco }}</label>
+              </div>
+              <div class="col-12">
+                <input class="input input-otp w-full" type="text" inputmode="numeric" maxlength="10"
+                  [(ngModel)]="signUpMobileNo" name="mobNo" #mobNo="ngModel" [pattern]="mobilePattern" required />
+                <div *ngIf="mobNo.errors">
+                  <div *ngIf="mobNo.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+                    <p style="color: red">{{ "phoneNoError" | transloco }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid text-left">
+              <div class="col-12">
+                <label>{{ "label-password" | transloco }}</label>
+              </div>
+              <div class="col-12">
+                <input class="input input-otp w-full" type="password" maxlength="20" [(ngModel)]="signUpPassword"
+                  [pattern]="passwordPattern" required name="newPwd" #newPwd="ngModel" />
+                <div *ngIf="newPwd.errors">
+                  <div *ngIf="newPwd.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+                    <p style="color: red">{{ "passwordError" | transloco }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid text-left">
+              <div class="col-12">
+                <label>{{ "label-confirm-password" | transloco }}</label>
+              </div>
+              <div class="col-12">
+                <input class="input input-otp w-full" [disabled]="signUpPassword == ''" type="password" maxlength="20"
+                  [(ngModel)]="signupConfirmPassword" required />
+                <div *ngIf="signUpPassword != '' && signupConfirmPassword != ''">
+                  <div *ngIf="signUpPassword !== signupConfirmPassword" class="ui-g-12 ui-lg-12 ui-md-12">
+                    <p style="color: red">{{"password-does-not-match-label" | transloco}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col-12 mt-3 text-center">
+                <button [disabled]="
+                    (multipleNamesExist && multipleNames == null) ||
+                    signUpEmailId == '' ||
+                    email.errors ||
+                    signUpMobileNo == '' ||
+                    mobNo.errors ||
+                    newPwd.errors ||
+                    signUpPassword !== signupConfirmPassword
+                  " [ngClass]="
+                    (multipleNamesExist && multipleNames == null) ||
+                    signUpEmailId == '' ||
+                    email.errors ||
+                    signUpMobileNo == '' ||
+                    mobNo.errors ||
+                    newPwd.errors ||
+                    signUpPassword !== signupConfirmPassword
+                      ? 'disabled-button'
+                      : 'active-button'
+                  " (click)="sendOtp()">
+                  {{ "next" | transloco }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="isOtpVerificationVisible">
+        <div class="grid text-left">
+          <div class="col-12">
+            <div class="grid">
+              <div class="col-12 text-xs">
+                <label>{{ "emailOtpLabel" | transloco }}</label>
+              </div>
+              <div class="col-12">
+                <input class="input input-otp w-full" type="text" inputmode="numeric" maxlength="8" id="fileupload"
+                  [(ngModel)]="emailOtp" (keypress)="numberOnly($event)" />
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt-2">
+            <div class="grid">
+              <div class="col-12 text-xs">
+                <label>{{ "phoneNoOtpLabel" | transloco }}</label>
+              </div>
+              <div class="col-12">
+                <input class="input input-otp w-full" type="text" inputmode="numeric" maxlength="8" id="fileupload"
+                  [(ngModel)]="mobileOtp" (keypress)="numberOnly($event)" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col-12 text-center">
+            <button (click)="verifyOtp()" [ngClass]="
+                emailOtp == '' || emailOtp.length < 8 || mobileOtp == '' || mobileOtp.length < 8
+                  ? 'disabled-button'
+                  : 'active-button'
+              " [disabled]="emailOtp == '' || emailOtp.length < 8 || mobileOtp == '' || mobileOtp.length < 8">
+              {{ "proceed" | transloco }}
+            </button>
+          </div>
+          <div class="col-12 text-center mt-2 text-base">
+            <div class="loginLabel" *ngIf="!isResendOtpButtonVisible">
+              {{ "resend-otp-in" | transloco }} {{ resendOtpIn }}
+            </div>
+            <div class="loginLabel" style="color: blue; text-decoration: underline; letter-spacing: 0.05rem"
+              (click)="onResendOtpClick()" *ngIf="isResendOtpButtonVisible">
+              {{ "resend-otp" | transloco }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-3 text-center" *ngIf="!isOtpVerificationVisible">
+        {{ "label-existing-user" | transloco }}
+        <a routerLink="/signIn">{{ "label-existing-user-signin-link" | transloco }}</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 lg:col-3 xl:col-3 md:col-1 file-upload-container text-center"></div>
+</div>

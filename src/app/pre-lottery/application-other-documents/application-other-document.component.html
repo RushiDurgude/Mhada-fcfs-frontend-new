@@ -1,0 +1,281 @@
+<div class="flex align-items-center justify-content-between">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details col-12">
+      <div
+        class="col-12 line-height-1 text-2xl"
+        style="border-bottom: 1px solid grey"
+      >
+        <a *ngIf="true" [routerLink]="['/app/application-detail-list']">
+          <ion-icon
+            [color]="isDarkMode ? 'light' : 'dark'"
+            name="arrow-undo"
+          ></ion-icon>
+        </a>
+
+        Upload Other Documents
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="add-userDetails pageScroll-bar">
+  <form
+    [formGroup]="form"
+    #localForm="ngForm"
+    (ngSubmit)="isSubmitDisabled = true; onSubmit()"
+  >
+    <div class="user-responsibilities">
+      <div
+        class="flex align-items-center justify-content-between mt-4 mb-4 px-3"
+      >
+        <div class="title">Upload Documents</div>
+        <div class="add-btn">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="addOtherDocuments()"
+            title="Add Document"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <table class="responsibilities-table">
+        <!-- [ngClass]="{ 'dark-mode': isDarkMode }" -->
+        <tbody>
+          <tr
+            *ngFor="let responsibility of DetailOfDocumentEnter; index as i"
+            formArrayName="otherDocumentLst"
+            class="responsibilities-details"
+            style="background-color: transparent"
+          >
+            <td
+              class="flex align-items-center justify-content-between responsibilities-details px-3"
+              [formGroupName]="i"
+            >
+              <div class="field col-12 sm:col-6 md:col-6 lg:col-6">
+                <label for="documentName{{ i }}" style="color: #979292">
+                  {{ "upload-document-name" | transloco }}
+                  <span style="color: red">*</span> </label
+                ><br />
+                <!-- <mat-select
+                  style="padding: 10px"
+                  id="documentName{{ i }}"
+                  [compareWith]="showDocumentName"
+                  formControlName="documentName"
+                  class="form-control select-dropdown"
+                  (selectionChange)="onSelectionChange($event.value)"
+                >
+                  <mat-option value="">{{ "select" | transloco }}</mat-option>
+                  <mat-option
+                    *ngFor="let o of configDetails"
+                    [value]="o.configKey"
+                  >
+                    {{ o.configValue }}
+                  </mat-option>
+                </mat-select> -->
+                <select
+                  style="padding: 10px"
+                  id="documentName{{ i }}"
+                  [compareWith]="showDocumentName"
+                  formControlName="documentName"
+                  class="form-control select-dropdown custom-select"
+                  (change)="onSelectionChange($event)"
+                >
+                  <option value="">{{ "select" | transloco }}</option>
+                  <option *ngFor="let o of configDetails" [value]="o.configKey">
+                    {{ o.configValue }}
+                  </option>
+                </select>
+                <field-error-component
+                  [controlName]="form.get('documentName')"
+                  [formSubmitted]="localForm.submitted"
+                  class="position-absolute block"
+                >
+                </field-error-component>
+              </div>
+              <div
+                class="field mt-4 pl-3 col-12 sm:col-1 md:col-1 lg:col-1"
+                *ngIf="
+                  responsibility.get('key').value !== null &&
+                  !showUploadButtonForRow[responsibility.get('key').value]
+                "
+              >
+                <button
+                  class="btn-medium shadow-4 col-12"
+                  style="
+                    height: 32px;
+                    background-color: #4c85f5;
+                    border-radius: 7px;
+                    width: 80px;
+                  "
+                  (click)="viewDocumentPdf(responsibility.get('key').value)"
+                  type="button"
+                >
+                  <span style="color: white">{{ "view" | transloco }}</span>
+                </button>
+              </div>
+              <div
+                class="field mt-4 pl-3 col-12 sm:col-5 md:col-5 lg:col-5"
+                *ngIf="
+                  responsibility.get('key').value !== null &&
+                  !showUploadButtonForRow[responsibility.get('key').value]
+                "
+              >
+                <button
+                  style="
+                    height: 32px;
+                    background-color: #4c85f5;
+                    border-radius: 7px;
+                    width: 80px;
+                  "
+                  class="btn-medium shadow-4 col-12"
+                  (click)="showUploadButton(responsibility.get('key').value)"
+                  type="button"
+                >
+                  <span style="color: white">{{ "upload" | transloco }}</span>
+                </button>
+              </div>
+
+              <div
+                class="field mt-2 pl-3 col-12 sm:col-6 md:col-6 lg:col-6"
+                *ngIf="
+                  showUploadButtonForRow[responsibility.get('key').value] ||
+                  responsibility.get('key').value === null
+                "
+              >
+                <label for="file{{ i }}" style="color: #979292">
+                  {{ "upload" | transloco }}
+                  <span style="color: red">*</span> </label
+                ><br />
+
+                <button
+                  type="button"
+                  (click)="triggerFileInputClick(i)"
+                  style="float: left"
+                  class="btn btn-primery"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >cloud_upload</mat-icon
+                  >
+                  <div
+                    style="float: left; padding-top: 1.5px"
+                    class="text-white"
+                  >
+                    <span style="background-color: #f27900">
+                      {{ "label-cert-select-file" | transloco }}
+                    </span>
+                  </div>
+                  <input
+                    type="file"
+                    id="fileInput{{ i }}"
+                    #fileInput
+                    formControlName="file"
+                    style="display: none"
+                    (change)="onDocumentFileSelect($event, i)"
+                    accept="application/pdf"
+                  />
+                </button>
+                <div
+                  *ngIf="selectedFiles[i]"
+                  class="pl-2 pt-2"
+                  style="float: left"
+                >
+                  {{ selectedFiles[i]?.name }}
+                </div>
+                <div
+                  *ngIf="selectedFileNames[i] && !selectedFiles[i]"
+                  class="pl-2 pt-2"
+                  style="float: left"
+                >
+                  {{ selectedFileNames[i] }}
+                </div>
+                <field-error-component
+                  [controlName]="form.get('file')"
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+              </div>
+
+              <!-- <div class="responsibilities-info mr-3 mb-4">
+                <label for="memberRelation{{ i }}" class="label-input">
+                  {{ "family-member-relation" | transloco }}
+                  <span style="color: red">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="memberRelation{{ i }}"
+                  formControlName="memberRelation"
+                  class="form-control"
+                  autocomplete="off"
+                  maxlength="50"
+                  (input)="validateInput($event)"
+                  onpaste="return false;"
+                />
+                <field-error-component
+                  [controlName]="form.get('memberRelation')"
+                  [formSubmitted]="localForm.submitted"
+                  class="position-absolute block"
+                >
+                </field-error-component>
+              </div>
+               -->
+
+              <div class="responsibilities-info delete-btn">
+                <button
+                  type="button"
+                  mat-icon-button
+                  title="Delete"
+                  class="btn delete-btns"
+                  (click)="deleteResponsibility(i)"
+                  *ngIf="i !== 0"
+                >
+                  <mat-icon style="color: #f27900" class="material-icons"
+                    >delete_outline</mat-icon
+                  >
+                </button>
+              </div>
+
+              <div class="responsibilities-info delete-mobile">
+                <button
+                  type="button"
+                  mat-button
+                  title="Delete"
+                  class="btn text-buttton"
+                  (click)="deleteResponsibility(i)"
+                  *ngIf="i !== 0"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mx-3 py-3 add-btn-mobile mobile-btn">
+        <button
+          type="submit"
+          [disabled]="isSubmitDisabled"
+          class="btn btn-secondary mr-3"
+          mat-stroked-button
+        >
+          <span style="color: #f27900"> Submit </span>
+        </button>
+        <button
+          type="button"
+          [routerLink]="['/app', 'application-detail-list']"
+          color="primery"
+          class="btn btn-primery"
+          mat-raised-button
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,254 @@
+#parent {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+#narrow {
+width: fit-content;
+/* Just so it's visible */
+}
+#wide {
+flex: 1;
+margin-left: 0.5rem;
+font-size: 15px;
+color: #767676;
+/* Grow to rest of container */
+/* Just so it's visible */
+}
+.uploaded-doc-container {
+border-top: 1px dashed #9f9f9f;
+}
+.selected-doc {
+background: #ffe896;
+color: #ff5c00;
+border-radius: 32px;
+padding: 0.5rem 1rem 0.5rem 1rem;
+font-weight: 700;
+font-size: 20px;
+line-height: 24px;
+text-align: center;
+}
+.remove-selected-doc-btn {
+position: relative;
+left: -20px;
+top: -20px;
+background: #f24e1e;
+border-radius: 50%;
+width: 24px;
+height: 24px;
+text-align: center;
+}
+.selected-image-to-upload {
+max-width: 200px;
+height: auto;
+// border: solid;
+}
+.selected-image {
+height: 180px;
+width: 100%;
+object-fit: contain;
+}
+
+.card-content {
+display: flex;
+justify-content: center;
+align-items: center;
+height: fit-content;
+vertical-align: middle;
+}
+.image {
+// width: 100%;
+// object-fit: contain;
+// height: 100%;
+}
+::ng-deep .mat-expansion-panel {
+border-radius: 24px 24px 0 0 !important;
+}
+::ng-deep .mat-expansion-panel-body {
+padding: 0 !important;
+}
+::ng-deep .mat-expansion-panel-header.mat-expanded {
+height: 0px;
+}
+::ng-deep .mat-expansion-panel-header {
+height: 0px;
+}
+::ng-deep .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+box-shadow: none;
+}
+.rotatedown {
+-moz-transition: all 0.3s linear;
+-webkit-transition: all 0.3s linear;
+transition: all 0.3s linear;
+-moz-transform: rotate(180deg);
+-webkit-transform: rotate(180deg);
+transform: rotate(180deg);
+}
+.rotateup {
+-moz-transition: all 0.3s linear;
+-webkit-transition: all 0.3s linear;
+transition: all 0.3s linear;
+-moz-transform: rotate(0deg);
+-webkit-transform: rotate(0deg);
+transform: rotate(0deg);
+}
+.expansion-panel-btn {
+background: none;
+font-size: 30px;
+color: #778386;
+}
+.container {
+height: 400px;
+position: relative;
+}
+
+.vertical-center {
+margin: 0;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+.example-margin {
+height: 10px;
+// border-radius: 10px;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+background-color: #1f3038;
+border-radius: 30px;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+background: #d0d4d6;
+}
+
+::ng-deep .mat-progress-bar {
+border-radius: 20px;
+}
+
+.input-address {
+padding: 0.5rem;
+border: 1px solid #9f9f9f;
+border-radius: 12px;
+font-size: 20px;
+resize: vertical;
+}
+
+.pulsingButton {
+text-align: center;
+white-space: nowrap;
+box-shadow: 0 0 0 0 rgba(61, 70, 232, 0.7);
+border-radius: 100px;
+-webkit-animation: pulsing 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+-moz-animation: pulsing 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+-ms-animation: pulsing 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+animation: pulsing 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+text-decoration: none !important;
+color: #ffffff;
+transition: all 300ms ease-in-out;
+z-index: 1000;
+}
+
+/* Comment-out to have the button continue to pulse on mouseover */
+
+a.pulsingButton:hover {
+-webkit-animation: none;
+-moz-animation: none;
+-ms-animation: none;
+animation: none;
+color: #ffffff;
+z-index: 1000;
+}
+
+/* Animation */
+
+@-webkit-keyframes pulsing {
+to {
+    box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+    z-index: 1000;
+}
+}
+
+@-moz-keyframes pulsing {
+to {
+    box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+    z-index: 1000;
+}
+}
+
+@-ms-keyframes pulsing {
+to {
+    box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+}
+}
+
+@keyframes pulsing {
+to {
+    box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+    z-index: 1000;
+}
+}
+
+
+
+.button-like {
+background: #1061FF;
+border-radius: 5px;
+width: 130px;
+height: 50px;
+color: #FFFFFF;
+font-weight: 700;
+font-size: 20px;
+line-height: 25px;
+cursor: pointer;
+}
+
+.ion-no-padding {
+    --padding-end: 0px !important;
+    --inner-padding-end: 0px !important; 
+    --inner-border-width: 0px !important;
+}
+
+.input-container {
+    position: relative;
+    margin: 20px 0;
+    width: 300px;
+}
+
+.floating-label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.3s ease all;
+    color: grey;
+    font-size: 20px;
+    pointer-events: none;
+    background-color: white;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: transparent;
+    border: 0.5px solid black;
+    border-radius: 5px;
+    color: black;
+}
+
+input:focus, input:not(:placeholder-shown) {
+    outline: none;
+}
+
+input:focus + .floating-label,
+input:not(:placeholder-shown) + .floating-label {
+    top: 0;
+    left: 10px;
+    font-size: 12px;
+    color: black;
+    background-color: white;
+    padding: 0 5px;
+    transform: translateY(-50%);
+}

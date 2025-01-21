@@ -1,0 +1,102 @@
+<div class="grid m-0 p-0">
+  <div class="col-12 text-left p-0 m-0">
+    {{ data[0] }}
+  </div>
+  <div class="col-12 text-center p-0 m-0">
+    <input
+      class="input input-otp w-full"
+      type="numeric"
+      maxlength="200"
+      [(ngModel)]="itrName"
+      [pattern]="fullNamePattern"
+      required
+      name="fullNamePtrn"
+      #fullNamePtrn="ngModel"
+    />
+    <div *ngIf="fullNamePtrn.errors">
+      <div *ngIf="fullNamePtrn.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+        <p style="color: red">{{ "fullNameError" | transloco }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="col-12 text-center">
+    {{ data[2] }}
+  </div>
+  <div class="col-12 text-center">
+    <input class="input input-otp w-full" type="numeric" maxlength="50" [(ngModel)]="itrBarcode" />
+  </div> -->
+
+  <div class="col-12 text-left p-0 m-0 mt-4">
+    {{ data[2] }}
+  </div>
+  <div class="col-12 text-center p-0 m-0">
+    <input
+      class="input input-otp w-full"
+      type="numeric"
+      maxlength="7"
+      [(ngModel)]="itrAssessmentYear"
+      (input)="assessmentYear($event)"
+      [pattern]="assessmentYearPattern"
+      required
+      name="assessmentYearPtrn"
+      #assessmentYearPtrn="ngModel"
+    />
+    <div *ngIf="assessmentYearPtrn.errors">
+      <div *ngIf="assessmentYearPtrn.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+        <p style="color: red">yyyy-yy</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 text-left p-0 m-0 mt-4">
+    {{ data[4] }}
+  </div>
+  <div class="col-12 text-center">
+    <input class="input input-otp w-full" type="tel" (input)="onInput($event)" maxlength="50" [(ngModel)]="itrIncome" />
+  </div>
+
+  <div class="col-12">
+    <div id="parent">
+      <div id="narrow">
+        <ion-checkbox color="primary" checked slot="start" [(ngModel)]="consentAccepted"></ion-checkbox>
+      </div>
+      <div id="wide" class="text-left text-sm">
+        {{ "custom-itr-consent" | transloco }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 text-center">
+    <button mat-raised-button class="button" mat-dialog-close="No">
+      {{ "no" | transloco }}
+    </button>
+  </div>
+  <div class="col-6 text-center">
+    <button
+      [disabled]="
+        itrName == '' ||
+        fullNamePtrn.errors ||
+        itrAssessmentYear == '' ||
+        assessmentYearPtrn.errors ||
+        itrIncome == '' ||
+        itrAssessmentYear.length < 7 ||
+        consentAccepted == false
+      "
+      [ngClass]="
+        itrName == '' ||
+        fullNamePtrn.errors ||
+        itrAssessmentYear == '' ||
+        assessmentYearPtrn.errors ||
+        itrIncome == '' ||
+        itrAssessmentYear.length < 7 ||
+        consentAccepted == false
+          ? 'disabled-button'
+          : 'active-button'
+      "
+      (click)="submitItrDetails()"
+    >
+      {{ "button-submit" | transloco }}
+    </button>
+  </div>
+</div>

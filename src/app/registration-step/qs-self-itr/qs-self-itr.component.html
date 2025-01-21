@@ -1,0 +1,178 @@
+<div class="col-12">
+  <div class="col-12">
+    <div class="grid">
+      <div class="col-12 text-base">
+        <div class="grid">
+          <div class="col-12 lg:col-12 xl:col-12 md:col-12 text-center" *ngIf="showReVerifyItr">
+            <span *ngIf="showItrErrorMessage" style="color: red">
+              {{ "reject-reason" | transloco }} - {{ itrErrorMessage}}<br /><br />
+            </span>
+            <span *ngIf="itrStatus == 'API-Authorization-Pending' || itrStatus == 'Not-Verified'">
+              {{ "itr-verification-progress" | transloco }}<br /><br />
+            </span>
+            <button [style.fontWeight]="
+                activeLang == 'mr' ? '600' : ''
+              " [style.fontSize]="
+                activeLang == 'mr' ? '18px' : ''
+              " class="active-button" (click)="reVerifyItr()">
+              {{ "re-verify" | transloco }}
+            </button>
+          </div>       
+          <object [attr.data]="selectedPdf" type="application/pdf" width="100%" height="140%" *ngIf="itrStatus == 'Verified'"></object>   
+          <div class="col-12 p-0 text-left">
+            <span *ngIf="firstItrApi || secondItrApi">
+            {{ "note" | transloco }} <br />{{ "itr-or-income-note-1" | transloco }}<br/>
+            {{ "itr-or-income-note-2-false" | transloco }}<br>
+            {{ "itr-or-income-note-3" | transloco }}<br />
+            </span>
+          </div>
+          <div class="grid col-12 p-0 text-left mt-4" style="margin-top: 0.5rem !important;" *ngIf="firstItrApi">
+            <!-- <div class="col-12">
+              <re-captcha #captchaElem (resolved)="resolved($event)"
+                [siteKey]="siteKey" errorMode="default"></re-captcha>
+            </div> -->
+            
+            <!-- New CAPTCHA Implementation -->
+          <div class="col-12 p-0 mt-3 form-outline" style="display: contents;" >
+            <div class="col-6 p-0 pl-2" style="margin-top: 20px;">
+              <img [src]="captchaImg" class="captcha-img" alt="Captcha" />
+            </div>
+            <div class="col-2 p-0 pt-2">
+              <button 
+                type="button" 
+                title="Play Audio" 
+                (click)="playAudioCaptcha()" 
+                class="btn btn-secondary btn-auto audio-btn"
+              >
+                <mat-icon>volume_up</mat-icon>
+              </button>
+              <button 
+                type="button" 
+                title="Refresh" 
+                (click)="generateCaptcha()" 
+                class="btn btn-secondary btn-auto refresh-btn mt-2"
+              >
+                <mat-icon>autorenew</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="col-12 p-2 mt-0 form-outline" >
+            <div class="col-12 p-0 mt-0 form-outline">
+              <input
+                type="text"
+                [(ngModel)]="captchaText"
+                (ngModelChange)="agreeClicked()"
+                maxlength="6"
+                class="col-12 outlined-input"
+                placeholder="{{ 'captcha' | transloco }}"
+              />
+            </div>
+          </div>
+          <!-- End of New CAPTCHA Implementation -->
+
+          <div class="col-12" style="display: flex; align-items: center;">
+            <div style="margin-right: 10px;">
+              <input type="checkbox" id="iAgree" [(ngModel)]="iAgree" (ngModelChange)="agreeClicked($event)" value="true" 
+                style="margin: 0;" />
+            </div>
+            <div class="col-8">
+              <label for="iAgree" class="cursor-pointer" style="margin: 0;">
+                <span>{{ "itr-or-income-agree-false" | transloco }}</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-12" style="display: flex; align-items: center;">
+            <div style="margin-right: 10px;">
+              <input type="checkbox" id="latestRevisedItr" [(ngModel)]="latestRevisedItr" 
+                style="margin: 0;" />
+            </div>
+            <div class="col-8">
+              <label for="latestRevisedItr" class="cursor-pointer" style="margin: 0;">
+                {{ "fetch-latest-revised-itr" | transloco }}
+              </label>
+            </div>
+          </div>
+            <!-- <div class="col-12">
+              <div class="field-checkbox mb-2 cursor-pointer" style="display: flex; align-items: center; justify-content: flex-start;">
+                <input type="checkbox" id="iAgree" [(ngModel)]="iAgree" (ngModelChange)="agreeClicked($event)" value="true" 
+                  style="margin: 0;" />
+                <label for="iAgree" class="cursor-pointer" style="margin: 0;">
+                  <span>{{ "itr-or-income-agree-false" | transloco }}</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="col-12">
+              <div class="field-checkbox mb-2 cursor-pointer" style="display: flex; align-items: center; justify-content: flex-start;">
+                <input type="checkbox" id="latestRevisedItr" [(ngModel)]="latestRevisedItr" 
+                  style="margin: 0;" />
+                <label for="latestRevisedItr" class="cursor-pointer" style="margin: 0;">
+                  {{ "fetch-latest-revised-itr" | transloco }}
+                </label>
+              </div>
+            </div> -->
+            
+          </div>
+          <div class="grid col-12 p-0 text-left mt-4" *ngIf="secondItrApi">
+            <div class="grid col-6 text-left" *ngIf="secondItrApiOtp">
+            <div class="col-12 pb-0">
+              <label>{{ "otp-for-itr-portal" | transloco }}
+              <span style="color: red"> *</span></label>
+            </div>
+            <div class="col-12 pt-0">
+              <input class="input input-otp w-full" type="password" maxlength="6"
+              [(ngModel)]="itrPortalOtp" appBlockCopyPaste name="itrPortalOtp" required />
+            </div>
+            </div>
+            <div class="grid col-6 text-left" *ngIf="secondItrApiPassword">
+            <div class="col-12 pb-0">
+              <label>{{ "password-for-itr-portal" | transloco }}
+              <span style="color: red"> *</span></label>
+            </div>
+            <div class="col-12 pt-0">
+              <input class="input input-otp w-full" type="password" maxlength="250"
+              [(ngModel)]="itrPortalPassword" appBlockCopyPaste name="itrPortalPassword"
+              required />
+            </div>
+            </div>
+            <div class="grid col-6 text-left" *ngIf="secondItrApiPassword">
+            <div class="col-12 pb-0">
+              <label>{{ "confirm-password-for-itr-portal" | transloco }}
+              <span style="color: red"> *</span></label>
+            </div>
+            <div class="col-12 pt-0">
+              <input class="input input-otp w-full" type="text" maxlength="250"
+              [(ngModel)]="itrPortalConfirmPassword" appBlockCopyPaste
+              name="itrPortalConfirmPassword" required />
+            </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="col-12 text-right">
+        <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+          *ngIf="itrStatus == 'Verified'"
+          [ngClass]="'active-button flex-end'" 
+          (click)="proceed()" style="align-self:flex-end;">
+          {{ "proceed" | transloco }}
+        </button>
+        <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+          *ngIf="firstItrApi"
+          [ngClass]="proceedEnabled == false ? 'disabled-button' : 'active-button flex-end'" 
+          [disabled]="proceedEnabled == false" (click)="proceedForFirstITRApiNew()" style="align-self:flex-end;"><!--(click)="proceedForFirstITRApi()"-->
+          {{ "proceed" | transloco }}
+        </button>
+        <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+          *ngIf="secondItrApi"
+          [ngClass]="proceedEnabled == false ? 'disabled-button' : 'active-button flex-end'" 
+          [disabled]="proceedEnabled == false" (click)="proceedForSecondITRApi()" style="align-self:flex-end;">
+          {{ "proceed" | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

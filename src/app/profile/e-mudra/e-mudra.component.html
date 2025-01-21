@@ -1,0 +1,13 @@
+<form
+  [formGroup]="contactsForm"
+  #addform="ngForm"
+  action="https://demosignergateway.emsigner.com/eMsecure/V3_0/Index"
+  (submit)="eMsecure($event)"
+  method="post"
+>
+  <input id="Parameter1" name="Parameter1" type="text" formControlName="Parameter1" />
+  <input id="Parameter2" name="Parameter2" type="text" formControlName="Parameter2" />
+  <input id="Parameter3" name="Parameter3" type="text" formControlName="Parameter3" />
+  <input id="formAction2" name="formAction2" type="hidden" value="EsignWithASP" />
+  <button type="submit" class="active-button shadow-3" style="width: 100%">e-Sign Self Declaration</button>
+</form>

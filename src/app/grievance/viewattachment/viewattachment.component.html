@@ -1,0 +1,31 @@
+<div class="grid m-0 p-0">
+  <div class="col-10"></div>
+  <div class="col-2 text-right">
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon title="Close" style="font-size: 20px">close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="col-12">
+    <img class="imgdiv" [src]="imageUrl" *ngIf="showImg">
+  </div>
+  <div class="nopreview col-12 text-center" *ngIf="!showImg">
+    <ion-icon name="warning-outline" class="iconcss"></ion-icon>
+    <div class="prenotavail">{{'pre-not-available'|transloco}}</div>
+    <!-- <pdf-viewer
+        #pdf
+        [src]="pdfSrc"
+        [render-text]="true"
+        [original-size]="false"
+        style="width: 100%; height: 451px"
+      ></pdf-viewer> -->
+  </div>
+  <div class="text-center col-12">
+    <button class="btncss" mat-raised-button (click)="downloadAttach()">
+      <div style="display: flex;">
+        <div style="color: #003BAD;">  {{'download-grievance'|transloco}}      </div>
+        <mat-icon  class=" iconcss iconcss1">download</mat-icon>
+      </div>  
+    </button>
+  </div>
+</div>

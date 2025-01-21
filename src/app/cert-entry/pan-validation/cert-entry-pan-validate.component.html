@@ -1,0 +1,50 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="height: calc(100% - 100px);">
+<div class="col-12 pl-4 pr-4">
+    <div class="col-12 card">
+        <div class="col-12 line-height-1 text-2xl" style="display: flex;justify-content: center">
+            {{"title-cert-entry-pan-validation" | transloco}}
+        </div>
+    </div>
+</div>
+<div class="grid col-12 m-0" style="min-height: 87.5%;">
+    <div class="col-12 sm:col-12 md:col-6 lg:col-4 md:col-offset-4 lg:col-offset-4 p-0 card-content ng-star-inserted">
+        <div class="col-12 mt-2 p-0 card">
+            <div class="col-12">
+                <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+                    {{"title-cert-entry-pan-validation-login" | transloco}}
+                </div>
+                <div class="col-12 p-0 mt-2">
+                    <div class="col-12 p-0 mt-2">
+                        <form [formGroup]="form" #localForm="ngForm" (ngSubmit)="isSubmitDisabled = true; onSubmit()" class="grid p-2">
+                            <div class="field col-12">
+                                <label for="pan" style="color: #979292;">
+                                    {{"label-pan" | transloco}}
+                                </label>
+                                <input type="text" formControlName="pan" id="pan"
+                                    style="text-transform: uppercase"
+                                    class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                    maxlength="10" onchange="this.value = this.value.toUpperCase();"/>
+                                <field-error-component [controlName]="form.get('pan')" [formSubmitted]="localForm.submitted"></field-error-component>
+                            </div>
+                            <div class="my-2 p-2">
+                                <re-captcha #captchaElem (resolved)="resolved($event)" siteKey="6LeWlokqAAAAAACB5JwblsHJMN57Xd_G7-dSEFRQ"></re-captcha>
+                            </div>
+                            <div class="col-12 p-2 mt-6 mb-3">
+                                <button class="btn-medium shadow-4 mt-0" 
+                                    type="submit">
+                                    {{"button-submit" | transloco}}
+                                </button>
+                                <button class="btn-medium shadow-4 mt-0 ml-4" 
+                                    [routerLink]="['/']"
+                                    type="button">
+                                    {{"button-go-to-home" | transloco}}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+</div>

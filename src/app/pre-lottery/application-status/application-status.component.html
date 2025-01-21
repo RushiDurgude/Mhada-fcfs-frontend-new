@@ -1,0 +1,183 @@
+<div class="grid">
+  <div class="col-2 text-center">
+    <!-- <ion-icon name="checkmark-circle-sharp" style="color: rgb(87, 233, 87); font-size: 1.8em"
+      *ngIf="statusIcon === 'SUCCESS'"></ion-icon> -->
+
+      <ng-container *ngIf="statusIcon === 'SUCCESS'">
+        <ion-icon
+          name="checkmark-circle-sharp"
+          style="color: rgb(87, 233, 87); font-size: 1.8em"
+          [ngClass]="lotteryStage && (lotteryStage === 'PRE_LOTTERY_SCRUTINY' || lotteryStage === 'RUN_LOTTERY') ? 'blinking-icon' : ''"
+          ></ion-icon>
+      </ng-container>
+
+    <ion-icon name="close-circle-sharp" style="color: red; font-size: 1.8em"
+      *ngIf="statusIcon === 'FAILURE'"></ion-icon>
+    <ion-icon name="warning-sharp" style="color: orange; font-size: 1.8em" *ngIf="statusIcon === 'PENDING'"></ion-icon>
+  </div>
+  <div class="col-10">
+    <div class="mt-1" style="font-size: 1em">
+      <!-- <span *ngIf="statusIcon === 'SUCCESS'" style="color: rgb(24, 190, 24); font-weight: 500">{{ statusMsg }}</span> -->
+
+      <ng-container *ngIf="statusIcon === 'SUCCESS'">
+        <span
+          *ngIf="draftListPublished === 'Y'; else draftPublishedTemplate"
+          style="color: rgb(24, 190, 24); font-weight: 500"
+        >
+          Application Accepted
+        </span>
+      </ng-container>
+      <ng-template #draftPublishedTemplate>
+        <span>{{ statusMsg }}</span>
+      </ng-template>
+
+      <span *ngIf="statusIcon === 'FAILURE'" style="color: red; font-weight: 500">{{ statusMsg }}</span>
+      <span *ngIf="statusIcon === 'PENDING'" style="color: orange; font-weight: 500">{{ statusMsg }}</span>
+
+      <div *ngIf="
+          type === 'APPLICATION_POST_LOTTERY_STATUS' &&
+          statusMsg === 'Ineligible'
+        " class="mt-2">
+        <span class="font-bold">{{
+          "label-ineligibity-remarks" | transloco
+          }}</span>
+
+        <span>{{ ineligibityRemarks }}</span>
+      </div>
+
+      <div *ngIf="type === 'APPLICATION_POST_LOTTERY_STATUS' && pendingDoc !== ''">
+          <span style="color: red;">{{ pendingDoc }}</span>
+      </div>
+
+      <span *ngIf="
+          type === 'APPLICATION_INSTALLMENT_STATUS' && installmentType !== ''
+        " style="color: blue">
+        <br />({{ installmentType }})
+      </span>
+      <span *ngIf="type === 'APPLICATION_PAYMENTREFUND_STATUS'" style="color: rgb(24, 190, 24)">
+      </span>
+
+      <span *ngIf="
+          type === 'APPLICATION_FORM_STATUS' &&
+          draftListPublished === 'Y' &&
+          finalListPublished === 'N'
+        ">
+        <br /><span style="color: blue">(Draft List Published)</span>
+      </span>
+      <span *ngIf="type === 'APPLICATION_FORM_STATUS' && finalListPublished === 'Y'">
+        <br /><span style="color: green">(Final List Published)</span>
+      </span>
+      <span *ngIf="
+          type === 'APPLICATION_FORM_STATUS' &&
+          statusMsg === 'Application rejected'
+        " style="color: red; font-size: 12px">
+        <br />Reason - {{ rejectMessage }}
+      </span>
+      <div *ngIf="type === 'APPLICATION_FORM_STATUS'">
+        <button class="btn-medium shadow-4 mt-3" style="height: 32px" type="button" (click)="showAcknowledgement()">
+          <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+          <div style="
+              float: left;
+              color: white;
+              margin-top: 3px;
+              padding-left: 3px;
+              background-color: transparent;
+            ">
+            {{ "button-view-acknowledgement" | transloco }}
+          </div>
+        </button>
+        <button class="btn-medium shadow-4 mt-3" style="height: 32px"
+          *ngIf="full && lotteryStage === 'APPLICATION_RECEIVING'" type="button"
+          [routerLink]="['/app', 'edit-refund-detail', key]">
+          <mat-icon style="float: left; color: white">edit</mat-icon>
+          <div style="
+              float: left;
+              color: white;
+              margin-top: 3px;
+              padding-left: 3px;
+            ">
+            {{ "button-edit-refund-detail" | transloco }}
+          </div>
+        </button>
+      </div>
+      <div *ngIf="
+          type === 'APPLICATION_PAYMENT_STATUS' &&
+          lotteryStage === 'APPLICATION_RECEIVING'
+        ">
+        <button class="btn-medium shadow-4 mt-2" style="height: 32px; float: left"
+          *ngIf="statusMsg === 'Payment not received'" [routerLink]="['/app', 'payment', key]" type="button">
+          {{ "button-pay-emd-fee" | transloco }}
+        </button>
+        <div style="height: 32px; float: left" *ngIf="
+            statusMsg === 'Payment not received' &&
+            pendingPayments &&
+            !verifyPaymentClicked
+          ">
+          <button class="btn-medium shadow-4 mt-2" style="
+              height: 32px;
+              float: left;
+              background-color: orange;
+              color: white;
+            " *ngIf="statusMsg === 'Payment not received'" (click)="verifyPayment()" type="button">
+            {{ "button-check-payment" | transloco }}
+          </button>
+        </div>
+      </div>
+      <div *ngIf="type === 'APPLICATION_PAYMENT_STATUS'">
+        <div style="height: 32px; float: left" *ngIf="statusMsg === 'Payment refunded'">
+          <button class="btn-medium shadow-4 mt-2" style="height: 32px" *ngIf="statusMsg === 'Payment refunded'"
+            (click)="viewRefundDetail()" type="button">
+            <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+            <div style="
+                float: left;
+                color: white;
+                margin-top: 3px;
+                padding-left: 3px;
+                background-color: #4c85f5;
+              ">
+              {{ "label-refund-detail" | transloco }}
+            </div>
+          </button>
+        </div>
+        <button class="btn-medium shadow-4 mt-3" style="height: 32px" *ngIf="statusMsg === 'Payment received'"
+          (click)="showReceipt()">
+          <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+          <div style="
+              float: left;
+              color: white;
+              margin-top: 3px;
+              padding-left: 3px;
+              background-color: transparent;
+            ">
+            {{ "button-view-receipt" | transloco }}
+          </div>
+        </button>
+      </div>
+      <div *ngIf="type === 'APPLICATION_DRAW_STATUS'">
+        <span *ngIf="
+            flatDetail &&
+            (statusMsg === 'Draw winner' ||
+              statusMsg === 'Draw waitlist activated')
+          " style="font-size: 14px; color: blue" class="p-0">{{ flatDetail }}</span>
+      </div>
+      <div *ngIf="
+          type === 'APPLICATION_DRAW_STATUS' &&
+          (statusMsg === 'Draw winner' ||
+            statusMsg === 'Draw waitlist activated' ||
+            statusMsg === 'Draw waitlist')
+        " class="mt-2">
+        <span class="font-bold">{{ "label-priority" | transloco }}</span> -
+        <span>{{ priority }}</span>
+      </div>
+      <div *ngIf="
+          type === 'APPLICATION_DRAW_STATUS' &&
+          (statusMsg === 'Draw winner operated' ||
+            statusMsg === 'Draw waitlist operated')
+        " class="mt-2">
+        <span class="font-bold" style="color: red; font-size: 12px">{{
+          "label-waitlist-cancel_remark" | transloco
+          }}</span>
+      </div>
+    </div>
+  </div>
+</div>

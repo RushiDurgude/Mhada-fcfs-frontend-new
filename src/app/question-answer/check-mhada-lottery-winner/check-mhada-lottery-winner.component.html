@@ -1,0 +1,25 @@
+<div class="grid m-0 p-0">
+  <div class="col-12">
+    <!-- <div>This Pan Card is already winner in previous lottery.</div>
+    <div class="mt-2">Did you take the possession?</div> -->
+    <div>
+      The user with this PAN Number is already a <b>Winner</b> in previous MHADA Lottery. Have you taken
+      <b>Possession & Allotment of the MHADA</b> Tenement?
+    </div>
+  </div>
+  <div class="col-6">
+    <button style="background: lightgrey; width: 90%" mat-raised-button mat-dialog-close="Yes">
+      <label style="color: black">{{ "yes" | transloco }}</label>
+    </button>
+  </div>
+  <div class="col-6">
+    <button mat-raised-button style="background: lightgrey; width: 90%" (click)="updateWinnerStatus('No')">
+      <label style="color: black">{{ "no" | transloco }}</label>
+    </button>
+  </div>
+  <div class="col-12">
+    <button style="background: lightgrey; width: 100%" mat-raised-button (click)="updateWinnerStatus('Surrender')">
+      <label style="color: black">{{ "winner-pan-surrender-flat" | transloco }}</label>
+    </button>
+  </div>
+</div>

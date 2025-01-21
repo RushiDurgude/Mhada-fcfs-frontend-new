@@ -1,0 +1,14 @@
+<div style="text-align:center">
+  <ion-icon name="checkmark-circle" class="icon"></ion-icon>
+</div>
+<h1>{{'success-title'|transloco}}</h1>
+<div mat-dialog-content>
+  <h6>{{"success-dialog-msg"|transloco}}</h6>
+  <p>{{'grievance-id-dialog'|transloco}}{{data.id}}</p>
+</div>
+<div style="text-align:center;margin: 10px;">
+  <button class="actioncss" mat-raised-button (click)="gotoList()" >
+    <div style=" color: #003BAD;">{{'ok-btn'|transloco}}
+    </div>
+  </button>
+</div>

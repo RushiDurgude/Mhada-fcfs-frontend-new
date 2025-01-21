@@ -1,0 +1,117 @@
+<!-- <div class="grid m-0 p-0 background-image card-content" style="overflow: auto; height: calc(100% - 100px)"> -->
+<div 
+  class="grid m-0 p-0 background-image-new card-content d-flex align-items-center justify-content-center" style="min-height: 100%;" *ngIf="formLoadStatus != null && formLoadStatus === 'SUCCESS'">
+  <div class="bill-summary-card p-4" *ngIf="paymentModel && !showPgs">
+    <!-- Header -->
+    <h5 class="bill-summary-title mb-4" style="font-family: Poppins;">EMD Payment</h5>
+    <p class="bill-summary-description mb-4">
+      The Bill Summary provides a detailed breakdown of the financial obligations for your selected scheme under CIDCO.
+    </p>
+    <hr style="border: none; border-top: 1px solid #E6E6E6; margin: 16px 0;" />
+    
+    <div class="payment-details-card p-4">
+    <!-- Key-Value Pairs -->
+    <div class="key-value-row mb-3">
+      <span class="key-label">Application Number:</span>
+      <span class="value">{{ paymentModel?.applicationNo }}</span>
+    </div>
+    <div class="key-value-row mb-3">
+      <span class="key-label">Scheme:</span>
+      <span class="value">{{ paymentModel?.schemeCode }} - {{ paymentModel?.schemeName }}</span>
+    </div>
+
+    <!-- Separator -->
+    <hr class="separator my-4" />
+
+      <!-- Amount Section -->
+      <div class="amount-section mb-4 key-value-row">
+        <span class="amount-title font-weight-bold">Amount To Pay:</span>
+        <span class="value">
+          <span>&#8377; {{ paymentModel?.emdAmount + paymentModel?.applicationFee }}</span>
+          <br />
+          <small class="amount-details text-muted" style="font-size: 11px;font-weight: 100;line-height: 18px;text-decoration-skip-ink: none;">(Including 18% GST)</small>
+        </span>
+      </div>
+
+    
+      <!-- Checkbox Section -->
+      <div class="checkbox-section mb-4 d-flex align-items-center">
+        <input type="checkbox" id="iAgree" [(ngModel)]="iAgree" class="agree-checkbox mr-2" />
+        <label for="iAgree" class="agree-label mb-0">
+          I agree to the <a (click)="showTermsAndConditions()" class="terms-link">Terms & Conditions</a>
+        </label>
+      </div>
+    
+      <!-- Pay Button -->
+      <button 
+        class="btn btn-primary pay-btn" 
+        [disabled]="!iAgree || isPayDisabled" 
+        (click)="isPayDisabled = true; onPayFindPgs()"
+      >
+        Pay &#8377; {{ paymentModel?.emdAmount + paymentModel?.applicationFee }}
+      </button>
+    </div>    
+</div>
+<!-- <div class="col-12 bill-summary-card" *ngIf="showPgs">
+  <div class="col-12">
+      <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+          {{"title-header-select-payment-gateway" | transloco}}
+      </div>
+      <div class="col-12 p-0 mt-2" >
+          <div class="grid">
+              <div class="grid col-12 p-4">
+                  <div class="col-12 sm:col-12 md:col-6 lg:col-4 p-2 cursor-pointer"
+                  *ngFor="let pg of paymentGateways?.paymentGateways | keyvalue"    
+                  [title]="pg.value" (click)="onPay(pg.value)"
+                  >
+                      <div class="p-0 card card-border mt-2 text-center pg">
+                          <img [src]="api_url+'/shared-image/pg/'+pg.value" />
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div> -->
+<div class="bill-summary-card p-4" *ngIf="showPgs">
+  <!-- Header -->
+  <h5 class="bill-summary-title mb-4" style="font-family: Poppins;">{{"title-header-select-payment-gateway" | transloco}}</h5>
+  
+  <hr style="border: none; border-top: 1px solid #E6E6E6; margin: 16px 0;" />
+  <!-- <div class="payment-details-card p-4"> -->
+    <div class="col-12 p-0 mt-2" >
+        <div class="grid">
+            <div class="grid col-12 p-4">
+                <div class="col-12 sm:col-12 md:col-6 lg:col-4 p-2 cursor-pointer"
+                *ngFor="let pg of paymentGateways?.paymentGateways | keyvalue"    
+                [title]="pg.value" (click)="onPay(pg.value)"
+                >
+                    <div class="p-0 card card-border mt-2 text-center pg">
+                        <img [src]="api_url+'/shared-image/pg/'+pg.value" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- </div> -->
+</div>
+</div>
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+     style="min-height: 87.5%;" 
+     *ngIf="formLoadStatus === 'FAILURE'">
+    <div class="col-11 m-3 p-0 card">
+        <div class="col-12">
+            <div class="col-12 p-0 mt-2">
+                <div class="grid">
+                    <div class="col-12 text-center">
+                        <ion-icon name="warning-sharp" style="font-size: 65px;color: orange;"></ion-icon><br>
+                        <div class="col-12 p-2 status-message">
+                            {{ formLoadErrorMessage }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->

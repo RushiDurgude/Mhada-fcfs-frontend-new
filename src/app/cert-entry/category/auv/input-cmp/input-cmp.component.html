@@ -1,0 +1,15 @@
+<div class="field col-12" style="margin-bottom: -0.5rem;" [formGroup]="formGroup">
+    <label [for]="fieldName" style="color: #979292;">
+        {{fieldLabel}} <span style="color: red;" *ngIf="pageMode === 'EDIT'"> *</span>
+    </label>
+    <input type="text" [formControlName]="fieldName" [id]="fieldName"
+        [attr.disabled]="disabled?'':null"
+        class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+        [maxlength]="maxlength" *ngIf="pageMode === 'EDIT'"/>
+    <label class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary" 
+        style="background-color: #f9f9f9; margin-bottom: 0px;" *ngIf="pageMode === 'VIEW'">
+        {{fieldValue}}
+    </label>
+    <field-error-component *ngIf="pageMode === 'EDIT'"
+        [controlName]="controlName" [formSubmitted]="formSubmitted"></field-error-component>
+</div>

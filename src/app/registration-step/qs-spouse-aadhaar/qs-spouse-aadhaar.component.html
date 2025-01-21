@@ -1,0 +1,35 @@
+<div class="col-12 text-center" *ngIf="!isEdit">
+    <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+        [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+        [ngClass]="'active-button flex-end'" 
+        (click)="load()" style="width: 220px;">
+        {{"proceed-to-digilocker-spouse" | transloco}}
+    </button>
+</div>
+
+<div class="col-12" *ngIf="isEdit">
+    <div class="grid">
+        <div class="col-12 text-base">
+            <div class="grid">
+                <app-file-upload-cmp [uploadFileVisible]="uploadFileVisible"  
+                    [selectedImage]="selectedImage" 
+                    [questionCode]="questionCode"
+                    [isReUploadFileAllowed]="isReUploadFileAllowed"
+                    (evaluateProceedFn)="evaluateProceed()" 
+                    class="col-12"></app-file-upload-cmp>
+            </div>
+        </div>
+        <div class="col-12 text-right">
+            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+              [ngClass]="
+                proceedEnabled == false
+                  ? 'disabled-button'
+                  : 'active-button flex-end'
+              " [disabled]="proceedEnabled == false" (click)="proceed()" style="align-self:flex-end;">
+              {{ "proceed" | transloco }}
+            </button>
+          </div>
+    </div>
+
+</div>

@@ -1,0 +1,145 @@
+<!-- <div class="grid m-0 p-0 background-image" style="height: calc(100% - 100px); overflow: auto" #divToScroll>
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+  <div class="col-12 lg:col-10 xl:col-10 md:col-10 pl-3 pr-3 pb-0" #target [ngClass]="platform == 'ios' ? 'mb-6' : ''">
+    <div class="grid m-0 p-0">
+      <div class="col-12 xl:col-2 lg:col-2"></div>
+      <div class="col-12 xl:col-8 lg:col-8 card">
+        <div class="grid m-0 p-0">
+          <div class="col-12 lg:col-6 xl:col-6 md:col-6 m-0 p-0 image-holder">
+            <img src="assets/contact-us.jpg" class="image" />
+          </div>
+          <div class="col-12 lg:col-6 xl:col-6 md:col-6 m-0 p-0">
+            <div class="grid m-0 p-0">
+              <div class="col-12 text-xl text-center">{{ "label-contact-us" | transloco }}</div>
+              <div class="col-12" *ngIf="contactUsDetails.length > 0">
+                <div class="grid m-0 p-0">
+                  <div class="col-12 text-left font-medium" *ngIf="contactUsDetails.length > 0">Phone</div>
+                  <div class="col-6 text-left" *ngFor="let contactDetail of contactUsDetails">
+                    <a [href]="contactDetail.tel"> {{ contactDetail.lovMediaLink }} </a>
+                  </div>
+                  <div class="col-12 text-left font-medium" *ngIf="contactUsEmails.length > 0">Email</div>
+                  <div class="col-12 text-left" *ngFor="let contactDetail of contactUsEmails">
+                    <a [href]="contactDetail.mailto"> {{ contactDetail.lovMediaLink }} </a>
+                  </div>
+                  <div class="col-12 text-left font-medium" *ngIf="contactUsAddress.length > 0">Help Centers</div>
+                  <div class="col-12 text-left" *ngFor="let contactDetail of contactUsAddress">
+                    {{ contactDetail.lovMediaLink }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 text-center" *ngIf="authFlag">
+                <button class="chat-with-us-btn" (click)="openChatBot()">
+                  {{ "chat-with-us" | transloco }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 xl:col-3 lg:col-2"></div>
+    </div>
+  </div>
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+</div> -->
+
+<div class="grid m-0 p-0 background-image" style="height: calc(100% - 100px); overflow: auto" #divToScroll>
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+  <div class="col-12 lg:col-10 xl:col-10 md:col-10 pb-0" #target [ngClass]="platform == 'ios' ? 'mb-6' : ''">
+    <div class="grid m-0 p-0">
+      <!-- <div class="col-12 xl:col-2 lg:col-2"></div> -->
+      <div class="col-12 xl:col-12 lg:col-12 card">
+        <div class="grid m-0 p-0">
+          <div class="col-12 lg:col-6 xl:col-6 md:col-6 m-0 p-0" style="height: fit-content">
+            <img src="assets/contact-us.jpg" class="contact-us-image" />
+          </div>
+
+          <div class="col-12 lg:col-6 xl:col-6 md:col-6 m-0 p-0">
+            <div class="grid m-0 p-0 pl-3">
+              <div class="col-12 text-xl text-center font-medium underline" style="border-bottom: 1px solid lightgrey">
+                {{ "label-contact-us" | transloco }}
+              </div>
+
+              <div class="col-12 text-xl text-center underline">Call Center Number</div>
+              <div class="col-12" style="border-bottom: 1px solid lightgrey">
+                <ul>
+                  <div class="grid m-0 pl-3 pr-3">
+                    <div class="col-6" *ngFor="let contactUs of contactUsDetails">
+                      <li>
+                        <a [href]="contactUs.tel"> {{ contactUs.lovMediaLink }} </a>
+                      </li>
+                    </div>
+                  </div>
+                </ul>
+              </div>
+              <div class="col-12 text-xl text-center underline">Help Centers</div>
+              <div class="col-12" *ngIf="helpCenterDetails.length > 0">
+                <div
+                  class="grid m-0 p-0"
+                  *ngFor="let data of helpCenterDetails"
+                  style="border-bottom: 1px solid lightgrey"
+                >
+                  <div class="col-12 text-left text-xl font-medium underline">
+                    {{ data.city }}
+                  </div>
+                  <div class="col-12 text-left pl-3 pr-3" *ngIf="data.address.length > 0">
+                    <ul>
+                      <li>
+                        <div class="w-full">Address</div>
+                      </li>
+                      <div class="grid m-0 pl-3 pr-3">
+                        <ul>
+                          <div class="col-12" *ngFor="let address of data.address">
+                            <li>{{ address.address }}</li>
+                          </div>
+                        </ul>
+                      </div>
+                    </ul>
+                  </div>
+                  <div class="col-12 text-left pl-3 pr-3" *ngIf="data.phoneNo.length > 0">
+                    <ul>
+                      <li>
+                        <div class="w-full">Phone</div>
+                      </li>
+                      <ul>
+                        <div class="grid m-0 pl-3 pr-3">
+                          <div class="col-6" *ngFor="let phone of data.phoneNo">
+                            <li>
+                              <a [href]="'tel:' + phone.phone">{{ phone.phone }}</a>
+                            </li>
+                          </div>
+                        </div>
+                      </ul>
+                    </ul>
+                  </div>
+                  <div class="col-12 text-left pl-3 pr-3" *ngIf="data.emails.length > 0">
+                    <ul>
+                      <li>
+                        <div class="w-full">Email</div>
+                      </li>
+                      <div class="grid m-0 pl-3 pr-3">
+                        <ul>
+                          <div class="col-12" *ngFor="let email of data.emails">
+                            <li>
+                              <a [href]="'mailto:' + email.email">{{ email.email }}</a>
+                            </li>
+                          </div>
+                        </ul>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 text-center" *ngIf="authFlag">
+                <button class="chat-with-us-btn" (click)="openChatBot()">
+                  {{ "chat-with-us" | transloco }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-12 xl:col-3 lg:col-2"></div> -->
+    </div>
+  </div>
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+</div>

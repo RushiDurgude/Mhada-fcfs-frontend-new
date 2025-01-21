@@ -1,0 +1,297 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<div class="user-details">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details col-12">
+      <div
+        class="col-12 line-height-1 text-2xl"
+        style="border-bottom: 1px solid grey"
+      >
+        <a
+          *ngIf="true"
+          [routerLink]="['/app', 'application-detail-list']"
+        >
+          <ion-icon name="arrow-undo"></ion-icon>
+        </a>
+        {{ "page-appeal" | transloco }}
+      </div>
+      <div
+        class="user-filter flex justify-content-end align-items-center mt-2 col-12"
+      >
+        <div class="md:mr-3">
+          <!-- <div>
+            <button
+              type="button"
+              *ngIf="allowedForApply"
+              [routerLink]="['/app', 'noc', 'noc-form']"
+              color="primery"
+              class="btn btn-secondary btn-auto"
+              mat-raised-button
+            >
+              {{ "Page-heading-apply-noc" | transloco }}
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="grid m-0 col-12">
+      <div class="mobile-header" style="border-radius: 0px">
+        <div class="flex align-items-center justify-content-between">
+          <div class="flex align-items-center">
+            <div class="title ml-2">{{ "page-appeal" | transloco }}</div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="user-filter flex justify-content-end align-items-center mt-2 col-12"
+      >
+        <!-- <div class="md:mr-3">
+          <div>
+            <button
+              type="button"
+              *ngIf="allowedForApply"
+              [routerLink]="['/app', 'noc', 'noc-form']"
+              color="primery"
+              class="btn btn-secondary btn-auto"
+              mat-raised-button
+            >
+              {{ "Page-heading-apply-noc" | transloco }}
+            </button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="col-12 mt-4 card" *ngIf="isAllowedForLOI"> -->
+
+  <!-- </div> -->
+  <!-- <ng-template mat-tab-label>
+                {{"header-applications" | transloco}}<br />
+                {{"sub-header-applications" | transloco}}
+            </ng-template> -->
+  <div class="table-dashoard mt-4 py-2">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="table-details"
+      matSort
+      matSortActive="applicationNo"
+      matSortDirection="asc"
+      matSortDisableClear
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let element; index as i">
+          {{ currentPage * pageSize + i + 1 }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="applicationNo">
+        <th mat-header-cell *matHeaderCellDef class="applicantnumber">
+          {{ "label-application-no" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="title mb-1 mt-1" style="font-size: 17px">
+            {{ element.applicationNo }}
+          </div>
+          <div class="sub-title text-left mb-1">
+            <div class="mb-1 p-2 shadow-2">
+              {{ element.applicantName }} <br />
+
+              <!-- {{ appealType }} <br /> -->
+            </div>
+            <br />
+            <div class="mb-1 p-2 shadow-2">{{ appealType }}</div>
+            <br />
+            <div class="title mb-2 mt-1">
+              <span
+                [class]="
+                  'text-white p-1 text-sm border-round ' +
+                  viewClassForAppealStatus(element.appealHearingStatus)
+                "
+              >
+                {{ element.appealHearingStatus }}
+              </span>
+            </div>
+            <br />
+            <div class="title mb-2 mt-1">
+              {{ element.appealDate }}
+            </div>
+            <br />
+
+            <div class="mb-1 p-2 shadow-2">
+              <div class="grid col-12 m-0 pt-0 mt-2">
+                <button
+                  type="button"
+                  class="btn-medium shadow-4 col-12"
+                  style="height: 32px"
+                  color="primery"
+                  (click)="viewAppealForm(element.key)"
+                >
+                  <mat-icon style="float: left; color: white"
+                    >remove_red_eye</mat-icon
+                  >
+                  {{ "view" | transloco }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="applicantName">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "label-selected-applicantname" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="title mb-2 mt-1 schemecode">
+            {{ element.applicantName }}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="appealType">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "appeal-type" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="title mb-2 mt-1">
+            {{ element.appealType }}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="appealHearingStatus">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center">
+          {{ "label-appealHearingStatus" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="p-0">
+          <div class="grid col-12 m-0 p-0">
+            <div class="title mb-2 mt-1">
+              <span
+                [class]="
+                  'text-white p-1 text-sm border-round ' +
+                  viewClassForAppealStatus(element.appealHearingStatus)
+                "
+              >
+                {{ element.appealHearingStatus }}
+              </span>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="appealDate">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "appeal-date" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="title mb-2 mt-1">
+            {{ element.appealDate }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="applicationDrawStatus">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          style="text-align: center; margin-left: 51%; margin-top: -4%"
+        >
+          {{ "noc-status" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="p-0">
+          <div class="grid col-12 m-0 p-0">
+            <div class="title mb-2 mt-1">
+             
+              <span
+                [class]="
+                  'text-white p-1 text-sm border-round ' +
+                  viewClassForNocStatus(element.nocStatus)
+                "
+              >
+                {{ element.nocStatus }}
+              </span>
+            </div>
+          </div>
+        </td>
+      </ng-container> -->
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center">
+          {{ "label-actions" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="grid m-0">
+            <div class="grid col-12 m-0 pt-0 mt-2">
+              <button
+                type="button"
+                class="btn-medium shadow-4 col-12"
+                style="height: 32px"
+                color="primery"
+                (click)="viewAppealForm(element.key)"
+              >
+                <mat-icon style="float: left; color: white"
+                  >remove_red_eye</mat-icon
+                >
+                {{ "view" | transloco }}
+              </button>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr class="mat-row col-12" *matNoDataRow>
+        <td
+          class="mat-cell text-center no-data col-12"
+          [attr.colspan]="displayedColumns.length"
+          style="width: 100%"
+          *ngIf="dataLoaded"
+        >
+          <div class="col-12" *ngIf="allowedForApply">
+            {{ "label-noc-record-not-found" | transloco }}
+          </div>
+          <div
+            class="col-12"
+            *ngIf="!allowedForApply"
+            style="background-color: #f4f6f8"
+          >
+            {{ "lable-no-data-match" | transloco }}
+          </div>
+        </td>
+        <div class="mobile-header" style="border-radius: 0px">
+          <div class="col-12" *ngIf="allowedForApply">
+            {{ "label-noc-record-not-found" | transloco }}
+          </div>
+          <div
+            class="col-12"
+            *ngIf="!allowedForApply"
+            style="background-color: #eff1f3"
+          >
+            {{ "lable-no-data-match" | transloco }}
+          </div>
+        </div>
+      </tr>
+    </table>
+    <div
+      class="col-12 flex justify-content-center align-items-center"
+      *ngIf="isLoading"
+    >
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div class="bottom-header flex justify-content-between align-items-center">
+      <mat-paginator
+        #paginator
+        [pageIndex]="currentPage"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageChanged($event)"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

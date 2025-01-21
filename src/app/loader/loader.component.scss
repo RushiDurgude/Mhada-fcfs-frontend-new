@@ -1,0 +1,9 @@
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #FF5C00;
+}
+
+::ng-deep .progressSpinner > mat-dialog-container {
+  background-color: var(--background);
+  box-shadow: none;
+}

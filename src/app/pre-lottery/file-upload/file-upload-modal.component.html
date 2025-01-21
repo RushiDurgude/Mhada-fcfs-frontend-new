@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <button type="button" class="small-button shadow-4 bg-red-600 text-white ml-3" (click)="onCancel()">Close</button>
+        </ion-buttons>
+        <ion-title class="mt-2">{{type}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <div class="grid col-12" id="print-wrapper">
+        <div class="grid col-12 pb-3 mb-3 pt-3">
+            <form [formGroup]="form" #localForm="ngForm" (ngSubmit)="isSubmitDisabled = true; onSubmit()" class="grid col-12">
+                <div class="col-12 p-0">
+                    <div class="col-12 sm:col-12 md:col-4 lg:col-4 field" style="padding-top: 17px;">
+                        <label for="file" style="color: #979292;">
+                            File <span class="text-red-900">*</span>
+                        </label><br>
+                        <button type="button" (click)="file.click()" style="float: left;" class="small-button shadow-4 bg-primary text-white">
+                            <mat-icon style="line-height: 25px; margin-right: 5px; float: left;">cloud_upload</mat-icon>
+                            <div style="float: left; padding-top: 6px;">Select File</div>
+                            <input type="file" id="file" #file formControlName="file"
+                            style="display: none;" (change)="onFileSelect($event)" accept="application/pdf"/>
+                        </button>
+                        <div *ngIf="selectedFile" class="pl-2 pt-2" style="float: left;">{{selectedFile?.name}}</div>
+                    </div>
+                    <field-error-component [controlName]="form.get('file')" [formSubmitted]="localForm.submitted"></field-error-component>
+                </div> 
+                <div class="col-12">
+                    <br>
+                    <button type="submit" [disabled]="isSubmitDisabled"
+                        class="small-button shadow-4 bg-primary text-white mt-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ion-content>

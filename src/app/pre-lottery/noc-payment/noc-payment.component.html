@@ -1,0 +1,101 @@
+<div class="grid m-0 p-4 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%;" *ngIf="formLoadStatus != null && formLoadStatus === 'SUCCESS'">
+<div class="col-12 m-0 p-0 card" *ngIf="paymentModel && !showPgs">
+    <div class="col-12">
+        <div class="col-12 p-0 mt-2" >
+            <div class="grid">
+                <div class="col-12 text-center" *ngIf="paymentMsg !== null">
+                    <ion-icon name="warning-sharp" style="font-size: 65px;color: orange;"></ion-icon><br>
+                    <div class="col-12 p-2 status-message">
+                        {{"error-try-again" | transloco}}
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <label style="font-size: 33px;">&#8377;</label>
+                    <label style="font-size: 40px;">{{paymentModel?.emdAmount + paymentModel?.applicationFee}}</label><br>
+                    <p class="m-0">({{"label-lottery-noc-gst" | transloco}})</p>
+                </div>
+                <div class="col-12 p-4">
+                    <div class="grid col-12 p-0 card card-border">
+                        <div class="col-12 sm:col-12 md:col-6 lg:col-4">
+                            <label style="color: #979292;">{{"label-application-no" | transloco}}</label><br>
+                            <p class="m-0 font-bold" style="font-size: 16px;">{{paymentModel?.applicationNo}}</p>
+                        </div>
+                        <div class="col-12 sm:col-12 md:col-6 lg:col-4">
+                            <label style="color: #979292;">{{"label-scheme" | transloco}}</label><br>
+                            <p class="m-0 font-bold" style="font-size: 16px;">{{paymentModel?.schemeCode}} - {{paymentModel?.schemeName}}</p>
+                        </div>
+                        <div class="col-12 sm:col-12 md:col-6 lg:col-4">
+                            <label style="color: #979292;">{{"label-category" | transloco}}</label><br>
+                            <p class="m-0 font-bold" style="font-size: 16px;">{{paymentModel?.categoryCode}} - {{paymentModel?.categoryName}}</p>
+                        </div>
+                        <div class="field col-12 mt-3 pl-3">
+                            <div class="field-checkbox">
+                                <input type="checkbox" id="iAgree" style="transform: scale(1.5)"
+                                    [(ngModel)]="iAgree">&nbsp;&nbsp;
+                                <label for="iAgree" style="font-size: 16px">
+                                    {{"label-iagree" | transloco}} 
+                                </label>
+                            </div>
+                            <a (click)="showTermsAndConditions()" class="ml-3 cursor-pointer">{{"button-click-here" | transloco}}</a>
+                        </div>
+                        <div class="field" style="margin-top: 1rem;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center mt-0">
+                    <button class="btn-medium shadow-4 mt-0" style="width: 10em;"
+                        type="button" [disabled]="!iAgree || isPayDisabled"
+                        (click)="isPayDisabled = true; onPayFindPgs()">
+                        {{"button-pay" | transloco}}&nbsp;&#8377;{{paymentModel?.emdAmount + paymentModel?.applicationFee}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 m-0 p-0 card" *ngIf="showPgs">
+    <div class="col-12">
+        <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+            {{"title-header-select-payment-gateway" | transloco}}
+        </div>
+        <div class="col-12 p-0 mt-2" >
+            <div class="grid">
+                <div class="grid col-12 p-4">
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 p-2 cursor-pointer"
+                    *ngFor="let pg of paymentGateways?.paymentGateways | keyvalue"    
+                    [title]="pg.value" (click)="onPay(pg.value)"
+                    >
+                        <div class="p-0 card card-border mt-2 text-center pg">
+                            <img [src]="api_url+'/shared-image/pg/'+pg.value" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="col-11 m-3 p-0 card grid mt-6" *ngIf="showLoader">
+    <div class="col-3">&nbsp;</div>
+    <div class="col-6">
+        <img src="assets/ajax_loader_blue_350.gif" class="col-12" alt="Loading">
+    </div>
+</div> -->
+</div>
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%;" *ngIf="formLoadStatus != null && formLoadStatus === 'FAILURE'">
+    <div class="col-11 m-3 p-0 card">
+        <div class="col-12">
+            <div class="col-12 p-0 mt-2" >
+                <div class="grid">
+                    <div class="col-12 text-center">
+                        <ion-icon name="warning-sharp" style="font-size: 65px;color: orange;"></ion-icon><br>
+                        <div class="col-12 p-2 status-message">
+                            {{formLoadErrorMessage}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

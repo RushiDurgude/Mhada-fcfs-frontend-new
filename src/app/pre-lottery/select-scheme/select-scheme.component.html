@@ -1,0 +1,266 @@
+<div class="grid m-0 p-0 background-image-new card-content" style="min-height: 100%">
+    <div class="col-12 pl-4 pr-4">
+        <div class="col-12 card-round">
+            <div class="col-12 line-height-1 text-2xl hidden xl:block lg:block md:block" style="display: flex; align-items: center;">
+                <div style="display: flex; align-items: center;">
+                    <!-- <div *ngIf="viewMode === 'VIEW' || viewMode === 'OLD'">
+                        <a [routerLink]="['/app', 'select-lottery', boardKey, 'VIEW']" *ngIf="viewMode === 'VIEW'"
+                            style="color: #6c757d; text-decoration: none;font-size: 14px;">
+                            {{"title-header-select-lottery" | transloco}}
+                        </a>
+                        <a [routerLink]="['/app', 'old-lottery']" *ngIf="viewMode === 'OLD'"
+                            style="color: #6c757d; text-decoration: none;font-size: 14px;">
+                            {{"title-header-select-lottery" | transloco}}
+                        </a>
+                        </div> -->
+                    <!-- <div *ngIf="viewMode === 'APPLY'"> -->
+                    <a [routerLink]="['/app', 'select-lottery', boardKey]" *ngIf="viewMode === 'APPLY'"
+                        style="color: #6c757d; text-decoration: none;font-size: 14px;">
+                        {{"title-header-select-lottery" | transloco}}
+                    </a>
+                    <a [routerLink]="['/app', 'select-lottery', boardKey, 'VIEW']" *ngIf="viewMode === 'VIEW'"
+                        style="color: #6c757d; text-decoration: none;font-size: 14px;">
+                        {{"title-header-select-lottery" | transloco}}
+                    </a>
+                    <a [routerLink]="['/app', 'old-lottery']" *ngIf="viewMode === 'OLD'"
+                        style="color: #6c757d; text-decoration: none;font-size: 14px;">
+                        {{"title-header-select-lottery" | transloco}}
+                    </a>
+                    <!-- </div> -->
+                    <span style="margin: 0 8px;">&#8250;</span>
+                    <span style="font-weight: 500;font-size: 14px;">
+                        {{lotteryCode}} {{lotteryName}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 line-height-1 text-2xl hidden block sm:block md:hidden" style="display: flex; align-items: center;">
+                <div style="display: flex; align-items: center;">
+                    <a [routerLink]="['/app', 'select-lottery', boardKey]" *ngIf="viewMode === 'APPLY'"
+                    style="color: #6c757d; text-decoration: none; font-size: 14px; display: flex; align-items: center;">
+                    <!-- Add Back Arrow Icon Here -->
+                    <ion-icon name="arrow-back-outline" style="margin-right: 8px; font-size: 18px; color: #080808;"></ion-icon>
+                </a>
+                    <a [routerLink]="['/app', 'select-lottery', boardKey, 'VIEW']" *ngIf="viewMode === 'VIEW'"
+                        style="color: #6c757d; text-decoration: none; font-size: 14px; display: flex; align-items: center;">
+                        <!-- Add Back Arrow Icon Here -->
+                        <ion-icon name="arrow-back-outline" style="margin-right: 8px; font-size: 18px; color: #080808;"></ion-icon>
+                    </a>
+                    <span style="font-weight: 500; font-size: 14px;">
+                        {{lotteryCode}} {{lotteryName}}
+                    </span>
+                </div>
+            </div>
+
+            <h1 style="font-size: 18px; margin-top: 10px; padding-left: 15px;">
+                {{lotteryCode}} {{lotteryName}}
+            </h1>
+
+            <div class="col-12 pl-4 pr-4 pb-3 pt-0" style="height: calc(100% - 60px);" *ngIf="loaded">
+                <div class="col-12 input-icons d-flex flex-column m-0 p-0">
+                    <div class="position-relative new-search-bar" style="width: 100%;">
+                      <!-- Search Icon -->
+                      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+                  
+                      <!-- Input Field -->
+                      <input type="text" [(ngModel)]="filterText" (change)="onChangeFilterText($event)"
+                        (blur)="onChangeFilterText($event)"
+                        class="new-input-field text-base text-color surface-overlay border-1 surface-border border-round outline-none focus:border-primary"
+                        placeholder="{{'label-search-by-scheme-code-name' | transloco}}" style="width: 100%;" />
+                    </div>
+                  </div>
+                <div class="grid col-12 p-0 m-0 mt-0">
+                    <div class="grid p-0 d-flex flex-column" *ngIf="filteredSchemes">
+                        <div *ngFor="let scheme of filteredSchemes" class="col-12 sm:col-4 md:col-6 lg:col-12 p-0 mt-3"
+                            [ngClass]="scheme.canApplyForScheme ? 'cursor-pointer' : 'cursor-not-allowed'">
+
+                            <div class="col-12 p-0 border-1 border-gray-400 shadow-2 bg-white d-flex align-items-start container-spacing"
+                                style="padding: 10px; align-items: flex-start; border-radius: 4px; border: 1px solid #E6E6E6; background-color: #ffffff;"
+                                *ngIf="scheme.canApplyForScheme">
+
+                                <!-- Content Section -->
+                                 
+                                <div class="grid m-0 content-container w-100" style="flex: 1; display: flex; flex-direction: row; justify-content: space-between;">
+                                    <!-- Image Section -->
+                                
+                                    <div class="col-12 md:col-3 lg:col-3 xl:col-3" *ngIf="scheme?.buildingImages.length > 0; else defaultImage">
+                                      <img class="p-0" [src]="api_url + scheme?.buildingImages[0]" style="width: 300px; height: 135px;" />
+                                    </div>
+                                    <ng-template #defaultImage class="col-12 md:col-3 lg:col-3 xl:col-3">
+                                      <img class="p-0" src="assets/default-building.png" alt="Default Image" style="width: 300px; height: 135px;" />
+                                    </ng-template>
+                                  
+                                    <!-- Scheme Title Section -->
+                                    <div class="col-12 md:col-9 lg:col-9 xl:col-9" style="padding-left: 15px;">
+                                        <!-- Scheme Title -->
+                                        <div class="scheme-title font-weight-bold text-dark mb-0 pb-1">
+                                          {{scheme.schemeCode}} - {{scheme.schemeName}}
+                                        </div>
+                                  
+                                        <!-- Button at Top Right -->
+                                        <div class="d-flex gap-2 position-absolute top-right">
+                                          <button class="select-location-btn hidden xl:block lg:block md:block"
+                                            [routerLink]="['/app','scheme-detail', boardKey, lotteryKey, scheme.key, viewMode]">
+                                            <span class="text-white">
+                                              SELECT LOCATION
+                                            </span>
+                                          </button>
+                                        </div>
+
+                                        <p class="mt-1 pt-0 pl-0 mb-1"
+                                            style="color: #5A5A5A; font-family: Poppins; font-size: 12px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px;">
+                                            {{scheme.address}}
+                                        </p>
+
+                                        <div class="grid d-flex justify-content-around mt-2"> <!-- Reduced gap here -->
+                                            <div class="col-12 md:col-6 lg:col-3 item-wrapper">
+                                                <div class="col-12 p-0 item-content" style="display: flex; align-items: center; width: 200px;"> <!-- Removed margin-bottom -->
+                                                    <div class="icon-details">
+                                                        <ion-icon color="dark" name="calendar-outline" class="text-green-900"></ion-icon>
+                                                    </div>
+                                                    <!-- Updated Span -->
+                                                    <span class="scheme-info">
+                                                        <span>No Of Units</span>
+                                                        <span class="scheme-details" style ="margin-left: 20px;"> <!-- Reduced margin-top and margin-left -->
+                                                            {{scheme.tenements}}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-12 md:col-6 lg:col-3 item-wrapper">
+                                                <div class="col-12 p-0 item-content" style="display: flex; align-items: center; width: 200px;">
+                                                    <div class="icon-details">
+                                                        <ion-icon color="dark" name="calendar-outline" class="text-green-900"></ion-icon>
+                                                    </div>
+                                                    <!-- Updated Span -->
+                                                    <span class="scheme-info">
+                                                        <span>Carpet Area</span>
+                                                        <span class="scheme-details">
+                                                            {{scheme.carpetArea}} {{scheme.carpetAreaUnit}}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-12 md:col-6 lg:col-3 item-wrapper">
+                                                <div class="col-12 p-0 item-content" style="display: flex; align-items: center; width: 200px;">
+                                                    <div class="icon-details">
+                                                        <ion-icon color="dark" name="calendar-outline" class="text-green-900"></ion-icon>
+                                                    </div>
+                                                    <!-- Updated Span -->
+                                                    <span class="scheme-info">
+                                                        <span>Cost</span>
+                                                        <span class="scheme-details">
+                                                            {{scheme.cost}}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <p *ngIf="viewMode === 'APPLY'" class="mt-1 pt-0 pl-0 mb-1"
+                                            class="scheme-apply-eligible hidden block sm:block md:hidden">
+                                            {{"title-scheme-eligible-apply" | transloco}}
+                                        </p>
+                                            <div class="col-12 md:col-6 lg:col-3 top-center">
+                                                <button class="select-location-btn hidden block sm:block md:hidden"
+                                                [routerLink]="['/app','scheme-detail', boardKey, lotteryKey, scheme.key, viewMode]">
+                                                <span class="text-white">
+                                                  SELECT LOCATION
+                                                </span>
+                                              </button>
+                                            </div>
+                                        </div>  
+                                        <p *ngIf="viewMode === 'APPLY'" class="mt-1 pt-0 pl-0 mb-1"
+                                        class="scheme-apply-eligible hidden xl:block lg:block md:block">
+                                        {{"title-scheme-eligible-apply" | transloco}}
+                                    </p>                                      
+                                    </div>
+                                </div>                                  
+                            </div>
+                            <div class="col-12 p-0 border-1 border-gray-400 shadow-2 bg-white d-flex align-items-start container-spacing"
+                                style="padding: 10px; align-items: flex-start; border-radius: 4px; border: 1px solid #E6E6E6; background-color: #ffffff;"
+                                *ngIf="!scheme.canApplyForScheme">
+
+                                <!-- Content Section -->
+                                 
+                                <div class="grid m-0 content-container w-100" style="flex: 1; display: flex; flex-direction: row; justify-content: space-between;">
+                                    <!-- Image Section -->
+                                
+                                    <div class="col-12 md:col-3 lg:col-3 xl:col-3" *ngIf="scheme?.buildingImages.length > 0; else defaultImage">
+                                      <img class="p-0" [src]="api_url + scheme?.buildingImages[0]" style="width: 300px; height: 135px;" />
+                                    </div>
+                                    <ng-template #defaultImage class="col-12 md:col-3 lg:col-3 xl:col-3">
+                                      <img class="p-0" src="assets/default-building.png" alt="Default Image" style="width: 300px; height: 135px;" />
+                                    </ng-template>
+                                  
+                                    <!-- Scheme Title Section -->
+                                    <div class="col-12 md:col-9 lg:col-9 xl:col-9" style="padding-left: 15px;">
+                                        <!-- Scheme Title -->
+                                        <div class="scheme-title font-weight-bold text-dark mb-0 pb-1">
+                                          {{scheme.schemeCode}} - {{scheme.schemeName}}
+                                        </div>
+
+                                        <p class="mt-1 pt-0 pl-0 mb-1"
+                                            style="color: #5A5A5A; font-family: Poppins; font-size: 12px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px;">
+                                            {{scheme.address}}
+                                        </p>
+
+                                        <div class="grid d-flex justify-content-around mt-2"> <!-- Reduced gap here -->
+                                            <div class="col-12 md:col-6 lg:col-3 item-wrapper">
+                                                <div class="col-12 p-0 item-content" style="display: flex; align-items: center; width: 200px;"> <!-- Removed margin-bottom -->
+                                                    <div class="icon-details">
+                                                        <ion-icon color="dark" name="calendar-outline" class="text-green-900"></ion-icon>
+                                                    </div>
+                                                    <!-- Updated Span -->
+                                                    <span class="scheme-info">
+                                                        <span>No Of Units</span>
+                                                        <span class="scheme-details" style ="margin-left: 20px;"> <!-- Reduced margin-top and margin-left -->
+                                                            {{scheme.tenements}}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-12 md:col-6 lg:col-3 item-wrapper">
+                                                <div class="col-12 p-0 item-content" style="display: flex; align-items: center; width: 200px;">
+                                                    <div class="icon-details">
+                                                        <ion-icon color="dark" name="calendar-outline" class="text-green-900"></ion-icon>
+                                                    </div>
+                                                    <!-- Updated Span -->
+                                                    <span class="scheme-info">
+                                                        <span>Carpet Area</span>
+                                                        <span class="scheme-details">
+                                                            {{scheme.carpetArea}} {{scheme.carpetAreaUnit}}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-12 md:col-6 lg:col-3 item-wrapper">
+                                                <div class="col-12 p-0 item-content" style="display: flex; align-items: center; width: 200px;">
+                                                    <div class="icon-details">
+                                                        <ion-icon color="dark" name="calendar-outline" class="text-green-900"></ion-icon>
+                                                    </div>
+                                                    <!-- Updated Span -->
+                                                    <span class="scheme-info">
+                                                        <span>Cost</span>
+                                                        <span class="scheme-details">
+                                                            {{scheme.cost}}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p *ngIf="viewMode === 'APPLY'" class="mt-1 pt-0 pl-0 mb-1"
+                                            class="scheme-apply-noteligible">
+                                            {{"message-schemes-not-eligible" | transloco}}
+                                        </p>                                        
+                                    </div>
+                                </div>                                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

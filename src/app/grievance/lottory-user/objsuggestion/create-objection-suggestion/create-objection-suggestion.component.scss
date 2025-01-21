@@ -1,0 +1,151 @@
+.example-form {
+    width: 100%;
+    margin: auto;
+}
+
+.textarea {
+    height: 60px;
+}
+
+.form-width {
+    width: 100%;
+    margin: auto;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    margin: auto;
+}
+
+.btnclass {
+    margin: 1% auto 1%;
+    text-align: center;
+}
+
+
+.disabled-button {
+    font-weight: 500 !important;
+    font-size: 16px;
+}
+
+.active-button {
+    // height: 30px;
+    font-weight: 500 !important;
+    font-size: 16px;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+:host ::ng-deep .mat-form-field-wrapper {
+    margin: 0 !important;
+    padding: 0;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 1em 0;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+    padding: 0.5em 0;
+    border-top: 0.5em solid transparent;
+}
+
+.inputdoc {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 10px;
+    width: 80%;
+}
+
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.boxcss {
+    display: block;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.bordershow {
+    border: 1px solid lightgrey;
+    margin-top: 10px
+}
+
+.bordernone {
+    border: none;
+}
+
+@media (max-width:735px) {
+    .removeiconcss {
+        display: contents;
+    }
+}
+
+
+@media (min-width:735px) {
+    .resbox {
+        display: flex;
+    }
+    .mat-form-field {
+        line-height: initial !important
+    }
+    .removeiconcss {
+        display: table-row;
+    }
+}
+
+@media (max-width:736px) {
+    .resbox {
+        display: block;
+    }
+}
+
+.resbox {
+    padding: 5px;
+}
+
+@media (max-width: 767px) {
+    .row {
+        display: block;
+        margin: auto;
+    }
+
+    .inputdoc {
+        margin-top: 5px;
+    }
+}
+
+.text-red-900{
+    color: red;
+}
+.uploadbtncss{
+    align-items: center;
+    background: #BCD3FF;
+    border-radius: 12px;
+}
+.uploaddisabled-button{
+    background:lightgray;
+    border-radius: 12px; 
+}
+.enablecolor{
+    color: #003BAD;
+}
+// .mat-form-field{
+//     line-height: 1.5 !important;
+// }

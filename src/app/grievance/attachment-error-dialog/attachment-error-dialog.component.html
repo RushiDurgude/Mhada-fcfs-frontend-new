@@ -1,0 +1,13 @@
+<div style="text-align:center">
+  <ion-icon name="close-circle" class="icon"></ion-icon>
+</div>
+<div mat-dialog-content>
+  <p *ngIf="!isSize">{{'attachement-ext-title'|transloco}}</p>
+  <p *ngIf="isSize">{{'file-size-msg'|transloco}}</p>
+</div><br />
+<div class="actioncss">
+  <button mat-button (click)="OkClick()" cdkFocusInitial>
+    <div style="color: #003BAD;">
+      {{'ok-btn'|transloco}}
+    </div></button>
+</div>

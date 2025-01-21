@@ -1,0 +1,77 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%;">
+<div class="col-11 m-3 p-0 card">
+    <div class="col-12">
+        <div class="col-12 p-0 mt-2" *ngIf="paymentResponseModel">
+            <div class="grid">
+                <div class="col-12 p-0">
+                    <div class="col-12 text-center" *ngIf="paymentResponseModel?.status === 'SUCCESS'">
+                        <ion-icon name="checkmark-circle-sharp" style="font-size: 65px;color: #3ec13e;"></ion-icon><br>
+                        <label style="font-size: 33px;">&#8377;</label>
+                        <label style="font-size: 40px;">{{paymentResponseModel?.amount}}</label>
+                    </div>
+                    <div class="col-12 text-center" *ngIf="paymentResponseModel?.status === 'FAILURE'">
+                        <ion-icon name="close-circle-sharp" style="font-size: 65px;color: red;"></ion-icon><br>
+                        <div class="p-2 status-message">
+                            {{"label-payment-failed" | transloco}}
+                        </div>
+                    </div>
+                    <div class="col-12 text-center" *ngIf="paymentResponseModel?.status === 'PENDING'">
+                        <ion-icon name="warning-sharp" style="font-size: 65px;color: orange;"></ion-icon><br>
+                        <div class="p-2 status-message">
+                            {{"label-payment-pending" | transloco}}
+                        </div>
+                    </div>
+                    <div class="col-12 p-4">
+                        <div class="grid col-12 m-0 p-3 card card-border">
+                            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+                                <label style="color: #979292;">{{"label-application-no" | transloco}}</label><br>
+                                <p class="m-0 font-bold" style="font-size: 16px;">{{paymentResponseModel?.applicationNo}}</p>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+                                <label style="color: #979292;">{{"label-scheme" | transloco}}</label><br>
+                                <p class="m-0 font-bold" style="font-size: 16px;">{{paymentResponseModel?.schemeCode}} - {{paymentResponseModel?.schemeName}}</p>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+                                <label style="color: #979292;">{{"label-category" | transloco}}</label><br>
+                                <p class="m-0 font-bold" style="font-size: 16px;">{{paymentResponseModel?.categoryCode}} - {{paymentResponseModel?.categoryName}}</p>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+                                <label style="color: #979292;">{{"label-transaction-id" | transloco}}</label><br>
+                                <p class="m-0 font-bold" style="font-size: 16px;">{{paymentResponseModel?.transactionId}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12" *ngIf="paymentResponseModel?.status === 'FAILURE' || 
+                            paymentResponseModel?.status === 'PENDING'">
+                        <label>{{"label-message" | transloco}}</label><br>
+                        <p class="m-0 font-bold" style="font-size: 18px; color: red;">{{paymentResponseModel?.errorMessage}}</p>
+                    </div> -->
+                </div>
+                <div class="col-12 text-center mt-3" *ngIf="paymentResponseModel?.status === 'SUCCESS'">
+                    <button class="btn-medium shadow-4 mt-2 p-2 link-style" (click)="showReceipt()">
+                        <mat-icon style="float: left;color: white">download</mat-icon>
+                        <span style="color: white;">{{"button-view-installment-receipt" | transloco}}</span>                        
+                    </button>
+                    <button class="btn-medium shadow-4 ml-2 mt-2 p-2 link-style" 
+                        style="background-color: orange;"
+                        [routerLink]="['/app', 'application-detail-list', 'post-apps']">
+                        <mat-icon style="float: left;color: white">arrow_back</mat-icon>
+                        <span style="color: white;">{{"menu-application-List" | transloco}}</span>                        
+                    </button>
+                </div>
+                <div class="col-12 text-center mt-3"  
+                    *ngIf="paymentResponseModel?.status === 'PENDING' || paymentResponseModel?.status === 'FAILURE'">
+                    <div class="grid col-12 warning-message m-0 p-2">
+                        {{"label-payment-deduction-warning" | transloco}}
+                    </div>
+                    <button class="btn-medium shadow-4 mt-3" type="button" 
+                        [routerLink]="['/app', 'installment-payment', paymentResponseModel.applicationKey, installmentType]">
+                        {{"button-pay-ins" | transloco}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

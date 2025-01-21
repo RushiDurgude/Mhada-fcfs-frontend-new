@@ -1,0 +1,145 @@
+<div class="flex align-items-center justify-content-between">
+  <div class="add-lottery">
+    <!-- <div class="title">Applicant Details</div> -->
+    <div class="desktop-details col-12">
+      <div
+        class="col-12 line-height-1 text-2xl"
+        style="border-bottom: 1px solid grey"
+      >
+        <a *ngIf="true" [routerLink]="['/app/application-detail-list']">
+          <ion-icon name="arrow-undo"></ion-icon>
+        </a>
+        <!-- {{"page-heading" | transloco}} -->
+        {{ "applicant-details" | transloco }}
+      </div>
+      <!-- <div class="title">{{ "page-heading" | transloco }}</div> -->
+
+      <div
+        class="user-filter flex justify-content-end align-items-center mt-2 col-12"
+      >
+        <!-- <div class="md:mr-3">
+          <div>
+            <button
+              type="button"
+              *ngIf="allowedForApply"
+              [routerLink]="['/app', 'noc', 'noc-form']"
+              color="primery"
+              class="btn btn-secondary btn-auto"
+              mat-raised-button
+            >
+              {{ "Page-heading-apply-noc" | transloco }}
+            </button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <!-- <div class="breadcrumb-list">
+      <ul>
+        <li [routerLink]="['/secure', 'home']" class="list-items">
+          Home
+          <img
+            src="assets/images/arrow.svg"
+            alt="arrow.svg"
+            width="12"
+            height="12"
+            class="mx-2"
+          />
+        </li>
+        <li [routerLink]="['/secure', 'home']">
+          Applicant Details
+          <img
+            src="assets/images/arrow.svg"
+            alt="arrow.svg"
+            width="12"
+            height="12"
+            class="mx-2"
+          />
+        </li>
+      </ul>
+    </div> -->
+  </div>
+  <!-- <div class="mobile-header">
+    <div class="flex align-items-center">
+      <div>
+        <button
+          type="button"
+          class="btn"
+          mat-icon-button
+          [routerLink]="['/secure', 'master', 'lottery', 'list']"
+        >
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+      </div>
+      <div class="title ml-2">Config Lottery</div>
+    </div>
+  </div> -->
+</div>
+
+<div class="add-lotteryDetails mt-4 pageScroll-bar">
+  <form [formGroup]="form" #localForm="ngForm">
+    <!-- (ngSubmit)="isSubmitDisabled = true; onSubmit()" -->
+    <div
+      class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-3"
+    >
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+      >
+        <label class="cursor-pointer pt-2">
+          <br />
+          {{ "change-applicant-details-label" | transloco }}
+          <!-- Do you want to change applicant details ? -->
+        </label>
+      </div>
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+      >
+        <label class="cursor-pointer pt-2">
+          <br />
+          <mat-radio-group>
+            <mat-radio-button
+              value="Photo"
+              (change)="toggleChild($event)"
+              [checked]="selectedChild === 'Photo'"
+            >
+              {{ "applicant-photo" | transloco }}</mat-radio-button
+            >
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-radio-button
+              value="Marital Status"
+              (change)="toggleChild($event)"
+              [checked]="selectedChild === 'Marital Status'"
+            >
+              {{ "marriage-status" | transloco }}</mat-radio-button
+            >
+          </mat-radio-group>
+        </label>
+      </div>
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+      >
+        <label class="cursor-pointer pt-2">
+          <br />
+        </label>
+      </div>
+    </div>
+    <div
+      class="col-12 flex justify-content-center align-items-center"
+      *ngIf="isLoading"
+    >
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div class="borderBottom"></div>
+    <div class="mx-3 py-3 add-lotteryDetails">
+      <div *ngIf="selectedChild === 'Photo'">
+        <photo-upload [selectedChild]="selectedChild"></photo-upload>
+      </div>
+      <div *ngIf="selectedChild === 'Marital Status'">
+        <app-marriage-status
+          [selectedChild]="selectedChild"
+        ></app-marriage-status>
+      </div>
+    </div>
+  </form>
+</div>

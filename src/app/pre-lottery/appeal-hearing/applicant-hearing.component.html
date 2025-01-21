@@ -1,0 +1,271 @@
+<div class="flex align-items-center justify-content-between">
+  <div
+    class="col-12 line-height-1 text-2xl"
+    style="border-bottom: 1px solid grey"
+  >
+    <a *ngIf="true" [routerLink]="['/app', 'application-detail-list']">
+      <ion-icon name="arrow-undo"></ion-icon>
+    </a>
+    {{ "applicant-appeal" | transloco }}
+  </div>
+</div>
+
+<div class="add-lotteryDetails mt-4 pageScroll-bar">
+  <form
+    [formGroup]="form"
+    #localForm="ngForm"
+    (ngSubmit)="isSubmitDisabled = true"
+  >
+    <div
+      class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-3"
+    >
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label for="applicationNo" style="color: #979292">
+          {{ "label-application-no" | transloco }} </label
+        ><br />
+        <label
+          class="col-12 p-2"
+          style="
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{ applicationNo }}
+        </label>
+      </div>
+
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label for="applicationNo" style="color: #979292">
+          {{ "noc-applicant-name" | transloco }} </label
+        ><br />
+        <label
+          class="col-12 p-2"
+          style="
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{ applicantName }}
+        </label>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4"></div>
+
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label for="file" style="color: #979292">
+          {{ "applicant-appeal-letter" | transloco }}
+          <span class="text-red-900">*</span> </label
+        ><br />
+        <button
+          *ngIf="demoFile1"
+          type="button"
+          class="small-button shadow-4 bg-primary text-white p-1"
+          (click)="showappealfile()"
+        >
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >remove_red_eye</mat-icon
+          >
+          <span style="float: left; padding-top: 6px" class="text-white">
+            View File</span
+          >
+        </button>
+        <button
+          *ngIf="!demoFile1"
+          type="button"
+          (click)="file.click()"
+          style="float: left"
+          class="btn btn-primery"
+        >
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          {{ demoFile1 }}
+          <div style="float: left; padding-top: 6px" class="text-white">
+            Select File
+          </div>
+          <input
+            type="file"
+            id="file"
+            #file
+            formControlName="file"
+            style="display: none"
+            (change)="onAppealFileSelect($event)"
+            accept="application/pdf"
+          />
+        </button>
+        <div *ngIf="selectedFile" class="pl-2 pt-2" style="float: left">
+          {{ selectedFile?.name }}
+        </div>
+        <!-- <field-error-component
+          [controlName]="form.get('file')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component> -->
+      </div>
+
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label for="file" style="color: #979292">
+          {{ "applicant-appeal-other-letter" | transloco }}
+          <span class="text-red-900">*</span> </label
+        ><br />
+        <button
+          *ngIf="demoFile2"
+          type="button"
+          class="small-button shadow-4 bg-primary text-white p-1"
+          (click)="showappealdocfile()"
+        >
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >remove_red_eye</mat-icon
+          >
+          <span style="float: left; padding-top: 6px" class="text-white">
+            View File</span
+          >
+        </button>
+
+        <button
+          *ngIf="!demoFile2"
+          type="button"
+          (click)="file1.click()"
+          style="float: left"
+          color="primery"
+          class="btn btn-primery"
+        >
+          <!-- class="small-button shadow-4 bg-primary text-white" -->
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          <div style="float: left; padding-top: 6px" class="text-white">
+            Select File
+          </div>
+          <input
+            type="file"
+            id="file1"
+            #file1
+            formControlName="file1"
+            style="display: none"
+            (change)="onFileSelect($event)"
+            accept="application/pdf"
+          />
+        </button>
+
+        <div *ngIf="selectedFile1" class="pl-2 pt-2" style="float: left">
+          {{ selectedFile1?.name }}
+        </div>
+        <!-- <field-error-component
+          [controlName]="form.get('file')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component> -->
+      </div>
+
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4"></div>
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-6">
+        <label for="remark" style="color: #979292">
+          {{ "applicant-appeal-remark" | transloco }}
+          <span class="text-red-900">*</span></label
+        ><br />
+        <textarea
+          *ngIf="remark1"
+          class="col-12 p-2"
+          disabled
+          style="
+            float: left;
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{ remark1 }}
+        </textarea>
+        <textarea
+          *ngIf="!remark1"
+          (keypress)="handleKeyPress($event)"
+          type="text"
+          id="remark"
+          formControlName="remark"
+          class="text-base text-color surface-overlay p-2 border-1 border-gray-400 surface-border border-round appearance-none outline-none focus:border-primary w-full"
+          autocomplete="off"
+        ></textarea>
+      </div>
+    </div>
+
+    <div
+      class="col-12 flex justify-content-center align-items-center"
+      *ngIf="isLoading"
+    ></div>
+
+    <div class="col-12">
+      <button
+        *ngIf="!remark1"
+        class="btn btn-primery"
+        style="height: 32px"
+        type="button"
+        (click)="submitAppeal()"
+        mat-stroked-button
+      >
+        Submit
+      </button>
+      &nbsp;
+      <button
+        class="btn btn-primery"
+        style="background-color: #f27900; height: 32px"
+        type="button"
+        [routerLink]="['/app', 'application-detail-list']"
+        mat-raised-button
+      >
+        Back
+      </button>
+    </div>
+    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+    <div class="borderBottom"></div>
+    <!-- <div class="mx-3 py-3 add-btn-mobile mobile-btn">
+      <button
+        *ngIf="!remark1"
+        class="btn btn-primery"
+        style="height: 32px"
+        type="button"
+        [disabled]="buttonDisabled"
+        (click)="submitAppeal()"
+        mat-stroked-button
+      >
+        Submit
+      </button>
+      &nbsp;
+      <button
+        class="btn-medium-cancel shadow-1 col-1"
+        style="height: 32px"
+        type="button"
+        [routerLink]="['/app', 'application-detail-list']"
+        mat-raised-button
+      >
+        Cancel
+      </button>
+    </div> -->
+  </form>
+</div>

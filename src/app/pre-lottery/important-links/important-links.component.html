@@ -1,0 +1,76 @@
+<div class="grid m-0 p-0 background-image" style="height: calc(100% - 100px); overflow: auto" #divToScroll>
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+  <div
+    class="col-12 lg:col-10 xl:col-10 md:col-10 mt-5 pl-3 pr-3 pb-0"
+    #target
+    [ngClass]="platform == 'ios' ? 'mb-6' : ''"
+  >
+    <div class="grid m-0 p-0">
+      <!-- <div class="col-12 xl:col-1 lg:col-1"></div> -->
+      <div class="col-12 xl:col-12 lg:col-12 card">
+        <div class="grid m-0 p-0">
+          <!-- <div class="col-12 lg:col-6 xl:col-6 md:col-6 m-0 p-0 image-holder">
+            <img src="assets/privacy-policy.jpg" class="image" />
+          </div> -->
+          <div class="col-12 m-0 p-0">
+            <div class="grid m-0 p-0 text-base">
+              <div class="col-12 text-center font-medium text-xl" style="border-bottom: 1px solid grey">
+                {{ "important-links" | transloco }}
+              </div>
+              <div class="add-userDetails">
+               <div class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-3">
+                <div class="col-12 pl-0 md:col-3 md:pr-2 md:pl-2 pr-0 pt-0 pb-5 position-relative">
+                  <div class="card">
+                    <a [attr.href]="pmrda" target="_blank" [title]="'CIDCO' | transloco" data-bs-toggle="modal" class = "tags" data-bs-target="#gotowebsite">
+                      <img src="../../assets/cidco_icon.png" class="card-img-top" alt="Pune Metropolitan Region Development Authority">
+                      <div class="card-body">
+                        <h5 class="card-title" style="text-align: center; ">{{ "CIDCO-reply-name" | transloco }}</h5>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col-12 pl-0 md:col-3 md:pr-2 md:pl-2 pr-0 pt-0 pb-5 position-relative" >
+                  <div class="card">
+                    <a [attr.href]="governmentOfIndia" target="_blank" [title]="'gov-of-india' | transloco" data-bs-toggle="modal" class = "tags" data-bs-target="#gotowebsite">
+                      <img src="../../assets/images/indGovlogo.jpg" class="card-img-top" alt="Government of India">
+                      <div class="card-body">
+                        <h5 class="card-title" style="text-align: center;">{{ "gov-of-india" | transloco }}</h5>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col-12 pl-0 md:col-3 md:pr-2 md:pl-2 pr-0 pt-0 pb-5 position-relative">
+                  <div class="card">
+                    <a [attr.href]="aapleSarkar" target="_blank" [title]="'aple-sarkar' | transloco" data-bs-toggle="modal" class = "tags" data-bs-target="#gotowebsite">
+                      <img src="../../assets/images/aplesarkarlogo.jpg" class="card-img-top" alt="Aaple Sarkar">
+                      <div class="card-body">
+                        <h5 class="card-title" style="text-align: center;">{{ "aple-sarkar" | transloco }}</h5>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-12 pl-0 md:col-3 md:pr-2 md:pl-2 pr-0 pt-0 pb-5 position-relative">
+                  <div class="card">
+                    <a [attr.href]="pmayPortal" target="_blank" [title]="'pmay-portal' | transloco" data-bs-toggle="modal" class = "tags" data-bs-target="#gotowebsite">
+                      <img src="../../assets/images/pmay-logo.jpg" class="card-img-top" alt="Pmay Portal">
+                      <div class="card-body">
+                        <h5 class="card-title" style="text-align: center;">{{ "pmay-portal" | transloco }}</h5>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col-12 pl-0 md:col-3 md:pr-2 md:pl-2 pr-0 pt-0 pb-5 position-relative">
+                </div>
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-12 xl:col-1 lg:col-1"></div> -->
+    </div>
+  </div>
+</div>

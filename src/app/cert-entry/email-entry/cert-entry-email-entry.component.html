@@ -1,0 +1,33 @@
+<div class="grid m-0 background-image " style="min-height: 87.5%;">
+    <div class="col-12 sm:col-12 md:col-6 lg:col-4 md:col-offset-4 lg:col-offset-4 p-0 card-content ng-star-inserted">
+        <div class="col-12 mt-2 p-0 card">
+            <div class="col-12">
+                <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+                    {{"title-cert-entry-contact-emailid" | transloco}}
+                </div>
+                <div class="col-12 p-0 mt-2">
+                    <div class="col-12 p-0 mt-2">
+                        <form [formGroup]="form" #localForm="ngForm" (ngSubmit)="isSubmitDisabled = true; onSubmit()" class="grid p-2">
+                            <div class="field col-12">
+                                <label for="emailId" style="color: #979292;">
+                                    {{"label-emailid" | transloco}}
+                                </label>
+                                <input type="text" formControlName="emailId" id="emailId"
+                                    style="text-transform: lowercase"
+                                    class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                    maxlength="150" onchange="this.value = this.value.toLowerCase();"/>
+                                <field-error-component [controlName]="form.get('emailId')" [formSubmitted]="localForm.submitted"></field-error-component>
+                            </div>
+                            <div class="col-12 p-2 mt-6 mb-3">
+                                <button class="btn-medium shadow-4 mt-0" 
+                                    type="submit">
+                                    {{"button-submit" | transloco}}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+</div>

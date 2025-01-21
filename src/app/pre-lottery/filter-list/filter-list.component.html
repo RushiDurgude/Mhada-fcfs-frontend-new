@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-icon name="close-circle-sharp" 
+                (click)="cancel()" style="color: red;font-size: 26px;"></ion-icon>
+        </ion-buttons>
+        <ion-title class="pl-3">{{"title-header-filter" | transloco}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <form [formGroup]="filterForm" class="pb-3">
+        <div class="grid">
+            <div class="p-0 col-4 border-right-1 border-gray-400">
+                <div *ngFor="let link of links" (click)="filterLeftSideClick(link)" 
+                    class="border-bottom-2 cursor-pointer">
+                    <div [ngClass]="selectedLink === link ? 'p-2 font-bold text-primary' 
+                        : 'p-2 bg-gray-400'">{{link}}</div>
+                </div>
+            </div>
+            <div class="col-8 border-1 border-gray-400">
+                <div *ngIf="selectedLink === 'Lottery'">
+                    <div class="field mt-1" *ngFor="let lottery of lotteries">
+                        <div class="field-checkbox">
+                            <input type="checkbox" formControlName="filterLottery">
+                            <label for="filterLottery">
+                                {{lottery.lotteryCode}} {{' - '}}
+                                {{lottery.lotteryName}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="selectedLink === 'Scheme'">
+                    <div class="field mt-1" *ngFor="let scheme of schemes">
+                        <div class="field-checkbox">
+                            <input type="checkbox" formControlName="filterScheme">
+                            <label for="filterScheme">
+                                {{scheme.schemeCode}} {{' - '}}
+                                {{scheme.schemeName}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="selectedLink === 'Category'">
+                    <div class="field mt-1" *ngFor="let category of categories">
+                        <div class="field-checkbox">
+                            <input type="checkbox" formControlName="filterCategory">
+                            <label for="filterCategory">
+                                {{category.categoryCode}} {{' - '}}
+                                {{category.categoryName}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="selectedLink === 'EMD Status'">
+                    <div class="field mt-1" *ngFor="let link of ['EMD Paid', 'EMD not Paid']">
+                        <div class="field-checkbox">
+                            <input type="checkbox" formControlName="filterEmdStatus" [value]="link">
+                            <label for="filterEmdStatus">{{link}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ion-content>
+<ion-footer>
+    <div class="col-12 text-center mt-0">
+        <button class="btn-medium shadow-4 mt-0" type="button" (click)="onFilter()">
+            {{"button-filter" | transloco}}
+        </button>
+        <button class="btn-medium shadow-4 mt-0 ml-5" type="button">
+            {{"button-reset-filter" | transloco}}
+        </button>
+    </div>
+</ion-footer>

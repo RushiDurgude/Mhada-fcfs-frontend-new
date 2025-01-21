@@ -1,0 +1,43 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%; align-content: baseline;">
+    <div class="col-12 pl-4 pr-4" *ngIf="loaded && boardDocuments.length > 0">
+        <div class="col-12 card">
+            <div class="col-12 line-height-1 text-2xl" style="display: flex;justify-content: space-between;">
+                <a [routerLink]="['/app', 'select-board']" *ngIf="mode === 'APPLY'">
+                    <ion-icon color="dark" name="arrow-undo"></ion-icon>
+                </a>
+                <a [routerLink]="['/app', 'select-board', mode]" *ngIf="mode === 'VIEW'">
+                    <ion-icon name="arrow-undo"></ion-icon>
+                </a>
+                {{lang === 'en' ? boardDocuments[index].headerLabelEn : boardDocuments[index].headerLabelMr}}
+
+                <button type="button" class="btn shadow-4 mt-0" style="float: right;"
+                (click)="proceedToLottery()">Proceed</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 pl-4 pr-3 pb-3 grid" *ngIf="loaded && boardDocuments.length > 0">
+        <div class="grid col-12 p-2">
+            <div *ngIf="boardDocuments[index].fileType === 'PDF'" class="col-12">
+                <button mat-raised-button (click)="downloadPdf()" style="float: right;">
+                    <ion-icon color="dark" name="cloud-download" style="font-size: 20px"></ion-icon>
+                </button>
+                <div *ngIf="boardDocuments[index].fileType === 'PDF' && pdfSrc" class="col-12 flex justify-content-center">
+                    <pdf-viewer
+                        #pdf
+                        [src]="pdfSrc"
+                        [render-text]="true"
+                        [original-size]="false"
+                        [fit-to-page]="true"
+                        [autoresize]="true"
+                        style="width: 100%; height: 600px;max-width: 1200px; overflow-x: none;"
+                    ></pdf-viewer>
+                </div>
+            </div>
+            <div *ngIf="boardDocuments[index].fileType === 'HTML' && sanitizedUrl" class="col-12">
+                <iframe [src]="sanitizedUrl" 
+                    class="col-12" style="border: 0px;height: 450px; overflow-y: scroll;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+.icon{
+    height: 25px;
+    width: 25px;
+    color: red !important;
+}
+ion-icon{
+  pointer-events: none;
+}
+.iframecss{
+    display: flex;
+  }
+  .iframemobcss{
+    display: none;
+  }
+@media only screen and (max-device-width: 720px) {
+    .iframecss{
+      display: none;
+    }
+    .iframemobcss{
+        display: flex;
+    }
+}

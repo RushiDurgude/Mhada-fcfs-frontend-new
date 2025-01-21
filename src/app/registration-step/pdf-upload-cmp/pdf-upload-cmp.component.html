@@ -1,0 +1,33 @@
+<div class="grid col-12 text-center m-0 p-0 ng-star-inserted" *ngIf="uploadFileVisible">
+    <div class="grid col-12 card-border-dashed text-center m-0 p-0 mt-0">
+      <div class="col-12 error-message" *ngIf="errorMessageVisible">
+        {{"only-pdf-is-allowed" | transloco}}
+      </div>
+      <div class="col-12 ng-star-inserted" *ngIf="previewImage == ''">
+        <div class="grid" style="min-height: 400px; max-height: fit-content;">
+          <div class="col-12 file-upload-container cursor-pointer" (click)="presentActionSheet()">
+            <div class="grid centered-card-content text-center m-0 p-0">
+              <div class="col-12"><img src="assets/browse.png"></div>
+              <div class="col-12">
+                <label>{{"browseAndUpload" | transloco}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="previewImage != ''">
+        <div class="grid">
+          <div class="col-12">
+            <img [src]="previewImage" alt="PDF Preview" class="selected-image-to-upload" />
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+          <button (click)="reUploadFile()" class="p-2 bg-yellow-500" style="float: right;" title="{{ 're-upload' | transloco }}" *ngIf="previewImage != '' || reUploadFileVisible">
+              <ion-icon name="create-outline" slot="start" class="ml-1"></ion-icon>
+          </button>
+      </div>
+    </div>
+</div>
+<input type="file" id="fileupload" accept="application/pdf" style="display: none"
+    (change)="handleFileInput($event)" />

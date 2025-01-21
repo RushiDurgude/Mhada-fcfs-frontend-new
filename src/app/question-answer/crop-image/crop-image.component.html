@@ -1,0 +1,78 @@
+<!-- OLD CODE -->
+<!-- <div mat-dialog-content>
+  <div class="custom-cropper-dialog grid m-0 p-0">
+    <div class="col-10 text-left text-xl font-medium">Crop Image</div>
+    <div class="col-2 text-right">
+      <button mat-dialog-close="" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="col-12 text-center">
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="false"
+        [aspectRatio]="4 / 3"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+        backgroundColor="black"
+        [transform]="transform"
+        [canvasRotation]="canvasRotation"
+      ></image-cropper>
+    </div>
+    <div class="col-6 text-center">
+      <button mat-raised-button class="w-full" style="background: #fff" (click)="rotateRight()">
+        <label style="color: #000">Rotate</label>
+      </button>
+    </div>
+    <div class="col-6 text-right">
+      <button mat-raised-button class="w-full" style="background: #1061ff" (click)="close()">
+        <label style="color: #fff">Crop</label>
+      </button>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div mat-dialog-content> -->
+<div class="custom-cropper-dialog grid m-0 p-0">
+  <div class="col-10 text-left text-xl font-medium">{{ "crop-image" | transloco }}</div>
+  <div class="col-2 text-right">
+    <button mat-dialog-close="" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="col-12 text-center" style="min-height: fit-content; max-height: 70vh; overflow-y: auto;">
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="false"
+      [aspectRatio]="4 / 3"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+      backgroundColor="black"
+      [transform]="transform"
+      [canvasRotation]="canvasRotation"
+    ></image-cropper>
+  </div>
+  <!-- <div class="col-4 text-center">
+      <button mat-icon-button (click)="rotateLeft()">
+        <mat-icon>rotate_left</mat-icon>
+      </button>
+    </div> -->
+  <div class="col-6 text-center">
+    <button mat-raised-button class="w-full" style="background: #fff" (click)="rotateRight()">
+      <!-- <mat-icon>rotate_right</mat-icon> -->
+      <label style="color: #000">{{ "rotate" | transloco }}</label>
+    </button>
+  </div>
+  <div class="col-6 text-right">
+    <button mat-raised-button class="w-full" style="background: #1061ff" (click)="close()">
+      <label style="color: #fff">{{ "crop" | transloco }}</label>
+    </button>
+  </div>
+</div>
+<!-- </div> -->

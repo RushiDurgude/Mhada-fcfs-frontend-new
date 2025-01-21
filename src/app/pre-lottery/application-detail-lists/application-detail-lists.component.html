@@ -1,0 +1,106 @@
+<div class="grid m-0 p-0 background-image-new card-content" style="min-height: 100%;">
+  <div class="col-12 pl-4 pr-4">
+    <div class="col-12 card-round">
+      <h1 style="font-size: 18px; margin-top: 10px; padding-left: 15px; text-decoration: underline; ">
+        {{"menu-application-List" | transloco}}
+      </h1>
+
+      <div class="col-12 p-0 lg:pl-4 xl:pl-4 lg:pr-3 xl:pr-3 lg:pb-3 xl:pb-3">
+        <div class="col-12 p-0 lg:p-2 xl:p-2">
+          <div class="grid col-12 p-0 m-0 mt-0">
+            <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let element of dataSource.data">
+              <div class="application-card p-3 position-relative">
+                <!-- Application Info and Button -->
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="application-info d-flex">
+                    <span class="application-number">Application No: {{ element.applicationNo }}</span>
+                    <!-- <span class="application-status mx-2">• {{ element.applicationFormStatus }}</span> -->
+                  </div>
+                  <div class="d-flex gap-2 position-absolute top-right">
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment not received'" [routerLink]="['/app', 'payment', element.key]">
+                    {{ "button-pay-emd-fee" | transloco }}
+                  </button>
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null" [routerLink]="['/app', 'application-bookHome', element.key]">
+                    {{ "book-my-home" | transloco }}
+                  </button>
+                  <div style="height: 32px; float: left" 
+                  *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.pendingPayments && !verifyPaymentClicked">
+                  <button class="btn-medium hidden xl:block lg:block md:block" style="height: 34px; float: left; background-color: orange; color: white;border-radius: 4px;font-family: Poppins;    font-size: 12px;" 
+                    (click)="verifyPayment(element.key)"
+                    type="button">
+                    {{ "button-check-payment" | transloco }}
+                  </button>
+                </div>
+                  </div>
+                </div>
+            
+                <!-- Details Section -->
+                <div class="details-section">
+                  <div class="detail-label">
+                    <span class="detail-label">Scheme:</span> {{ element.schemeCode }} - {{ element.schemeName }}
+                  </div>
+                  <div class="detail-label" *ngIf="element.categoryCode && element.categoryName">
+                    <span class="detail-label">Category:</span> {{ element.categoryCode }} - {{ element.categoryName }}
+                  </div>
+                  <div class="detail-label" *ngIf="element.flatDetail">
+                    <span class="detail-label">Flat Details:</span> {{ element.flatDetail }}
+                  </div>
+                </div>
+            
+                <!-- Action Links -->
+                <div class="action-links mt-2">
+                  <a class="view-acknowledgment" (click)="showAcknowledgements(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">View Acknowledgment</span>
+                  </a>
+                
+                  <a class="more-receipts" *ngIf="element.applicationPaymentStatus === 'Payment received'"
+                  (click)="showReceipts(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">EMD Receipts</span>
+                  </a>
+                </div>
+                
+                <hr style="border: none; border-top: 2px solid #E6E6E6; margin: 16px 0;" />
+                <div class="status-buttons mt-3 d-flex">
+                  <!-- justify-content-between -->
+                  <button class="status-btn approve">{{ element.applicationFormStatus }}</button>
+                  <button class="status-btn pending" *ngIf="element.applicationPaymentStatus === 'Payment not received'">EMD Payment Pending</button>
+                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment received'">EMD Payment Recieved</button>
+                  <!-- <button class="status-btn reject">Reject</button>
+                  <button class="status-btn forward">Forward</button>
+                  <button class="status-btn forward">Forward</button> -->
+                </div>
+                <div class="d-flex justify-content-center gap-2">
+                  <!-- EMD Fee Button (Visible on smaller screens) -->
+                  <button class="applicant-btn block sm:block md:hidden mt-3"  [routerLink]="['/app', 'payment', element.key]" *ngIf="element.applicationPaymentStatus === 'Payment not received'">
+                    {{ "button-pay-emd-fee" | transloco }}
+                  </button>
+
+                  <button class="applicant-btn block sm:block md:hidden mt-3"  [routerLink]="['/app', 'payment', element.key]" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null">
+                    {{ "book-my-home" | transloco }}
+                  </button>
+            
+                  <!-- Check Payment Button -->
+                  <div *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.pendingPayments && !verifyPaymentClicked">
+                    <button class="btn-medium block sm:block md:hidden" style="height: 34px; background-color: orange; color: white; border-radius: 4px; font-family: Poppins; font-size: 12px;" 
+                      (click)="verifyPayment(element.key)" type="button">
+                      {{ "button-check-payment" | transloco }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>            
+
+            <!-- Empty Data Message -->
+            <div class="col-12 mt-2 text-center">
+              <div class="alert alert-info" *ngIf="dataLoaded && (!dataSource.data || dataSource.data.length === 0)">
+                {{"message-lotteries-empty" | transloco}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>    
+</div>

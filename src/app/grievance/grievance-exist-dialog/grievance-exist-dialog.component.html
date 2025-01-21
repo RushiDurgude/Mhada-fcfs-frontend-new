@@ -1,0 +1,14 @@
+<div style="text-align:center">
+  <ion-icon name="close-circle" class="icon"></ion-icon>
+</div>
+<h1>{{'exist-title'|transloco}}</h1>
+<div mat-dialog-content>
+  <p>{{'exist-msg'|transloco}}</p>
+</div><br />
+<div class="text-center">
+  <button mat-button (click)="onNoClick()" class="nobtn">{{'no-btn'|transloco}}</button>
+  <button mat-button (click)="OkClick()" class="actioncss" cdkFocusInitial>
+    <div style=" color: #003BAD;">{{'ok-btn'|transloco}}
+    </div>
+  </button>
+</div>

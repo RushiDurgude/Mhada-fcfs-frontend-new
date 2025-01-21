@@ -1,0 +1,149 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<div class="user-details">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details col-12">
+      <div class="title">{{ "title-confirm-selection" | transloco }}</div>
+    </div>
+    <div class="grid col-12 m-0">
+      <div class="mobile-header" style="border-radius: 0px">
+        <div class="flex align-items-center justify-content-between">
+          <div class="flex align-items-center">
+            <div class="title ml-2">
+              {{ "title-confirm-selection" | transloco }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-dashoard mt-4 py-2" *ngIf="showAcceptList">
+    <h4 class="col-12 text-center mb-1">
+      {{ "label-confirm-chosen-surrender-tenement" | transloco }}
+    </h4>
+    <table class="table-details1 col-12">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ "label-application-no" | transloco }}</th>
+          <th>{{ "table-header-lottery" | transloco }}</th>
+          <th>{{ "table-header-scheme-name" | transloco }}</th>
+          <th>{{ "table-header-category-code" | transloco }}</th>
+          <th>{{ "table-header-tenement-details" | transloco }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <div class="title mb-1 mt-1" style="font-size: 17px">
+              {{ singleSurrenderTenement.applicationNo }}
+            </div>
+            <div class="sub-title text-left mb-1">
+              <div class="mb-1 p-2 shadow-2">
+                {{ singleSurrenderTenement.lotteryCode }} -
+                {{ singleSurrenderTenement.lotteryName }}<br />
+                <hr
+                  style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  "
+                />
+                {{ singleSurrenderTenement.schemeCode }} -
+                {{ singleSurrenderTenement.schemeName }}<br />
+                <hr
+                  style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  "
+                />
+                {{ singleSurrenderTenement.category }}<br />
+                <hr
+                  style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  "
+                />
+                <b>Building No</b> - {{ singleSurrenderTenement.buildingNo }},
+                <b> Wing</b> - {{ singleSurrenderTenement.wing }},
+                <b> Floor</b> - {{ singleSurrenderTenement.floor }},
+                <b> Flat No</b> - {{ singleSurrenderTenement.flatNo }}
+              </div>
+              <br />
+            </div>
+          </td>
+          <td>
+            {{ singleSurrenderTenement?.lotteryCode }} -
+            {{ singleSurrenderTenement?.lotteryName }}
+          </td>
+          <td>
+            {{ singleSurrenderTenement?.schemeCode }} -
+            {{ singleSurrenderTenement?.schemeName }}
+          </td>
+          <td>{{ singleSurrenderTenement?.category }}</td>
+          <td>
+            <b>Building No</b> - {{ singleSurrenderTenement?.buildingNo }},
+            <b> Wing</b> - {{ singleSurrenderTenement?.wing }}, <b> Floor</b> -
+            {{ singleSurrenderTenement?.floor }}, <b> Flat No</b> -
+            {{ singleSurrenderTenement?.flatNo }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div
+    class="col-12 pl-0 md:col-6 lg:col-6 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+    style="margin-left: auto; margin-right: auto"
+  >
+    <label class="grid col-12 m-0 cursor-pointer pt-2">
+      <br />
+      <div class="col-1">
+        <input
+          type="checkbox"
+          #confirmed
+          class="mr-2"
+          style="scale: 1.5"
+          value="Y"
+          (change)="onCheckboxChange($event)"
+          required
+        />
+      </div>
+      <div class="col-11">
+        <span>
+          {{ "label-accept-multi-surrender-terms1" | transloco }}<br />
+        </span>
+      </div>
+    </label>
+  </div>
+  <div class="col-12 p-2 mb-5" style="background-color: #dfdfdf; color: black">
+    {{ "label-accept-multi-surrender-note" | transloco }}
+  </div>
+
+  <div
+    class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+    style="margin-left: auto; margin-right: auto"
+  >
+    <button
+      type="submit"
+      class="btn btn-secondary mr-3"
+      (click)="confirmTenement()"
+      [disabled]="!confirmed.checked"
+      mat-stroked-button
+    >
+      <span style="color: #f27900"> Submit </span>
+    </button>
+    <button
+      type="button"
+      [routerLink]="['/app', 'application-detail-list', 'post-apps']"
+      color="primery"
+      class="btn btn-primery"
+      mat-raised-button
+    >
+      Cancel
+    </button>
+  </div>
+</div>

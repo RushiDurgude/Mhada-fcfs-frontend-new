@@ -1,0 +1,62 @@
+
+.bill-summary-card {
+  width: 97%;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 16px;
+  height: 600px;
+  margin:20px;
+}
+
+.status-message-new {
+  font-family: Poppins;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: 0.0015em;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.applicant-btn {
+  width: 145px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: #1F71BB;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.36px;
+  text-transform: uppercase;
+  color: var(--On-Primary-White, var(--Schemes-On-Primary, #FFF));
+}
+
+.card p {
+  font-family: Poppins;
+  margin: 0;
+  line-height: 1.5;
+  color: #858585;
+}
+
+.card strong {
+  font-family: Poppins;
+  font-weight: bold;
+  color: #000;
+}
+
+
+@media (max-width: 768px) {
+
+  .bill-summary-card {
+      width: 97%; /* Full width on mobile */
+      margin: 10px; /* Adjust margins */
+      padding: 15px; /* Adjust padding */
+      margin-bottom: auto;
+  }
+}

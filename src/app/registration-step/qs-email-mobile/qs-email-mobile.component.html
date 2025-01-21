@@ -1,0 +1,73 @@
+<div class="grid m-0">
+  <div class="col-12 text-base">
+    <div class="col-12 lg:col-12 xl:col-12">
+      <div class="grid m-0 col-12 p-0">
+        <div class="col-12 md:col-6 p-2 form-outline">
+          <input type="email" [(ngModel)]="emailId" id="emailId" autocomplete="off" [disabled]="isInputDisabled" 
+          (change)="onChangeOfEmail($event)" class="col-12 outlined-input" placeholder="{{ 'label-emailid' | transloco }}" required />
+          <label for="emailId" class="bank-input-label outlined-label">
+            {{ 'label-emailid' | transloco }} <span style="color: red"> *</span>
+          </label>
+        </div>
+        <div class="col-12 md:col-6 p-2 form-outline">
+          <input type="text" appNumbersOnly [(ngModel)]="mobileNo" id="mobileNo" autocomplete="off" [disabled]="isInputDisabled" pattern="[0-9]*"
+          (change)="onChangeOfMobile($event)" class="col-12 outlined-input" placeholder="{{ 'label-mobileNo' | transloco }}" maxlength="10" required />
+          <label for="mobileNo" class="bank-input-label outlined-label">
+            {{ 'label-mobileNo' | transloco }} <span style="color: red"> *</span>
+          </label>
+        </div>
+      </div>
+      <div class="grid col-12 m-0 p-0" *ngIf="enterOtpFlag">
+        <div class="col-12 md:col-6 p-2 form-outline">
+          <input type="text" appNumbersOnly [(ngModel)]="emailIdOtp" id="emailIdOtp" autocomplete="off" pattern="[0-9]*"
+          (onkeyup)="evaluateProceed()" class="col-12 outlined-input" placeholder="{{ 'label-email-otp' | transloco }}" maxlength="8" required />
+          <label for="emailIdOtp" class="bank-input-label outlined-label">
+            {{ 'label-email-otp' | transloco }} <span style="color: red"> *</span>
+          </label>
+        </div>
+        <div class="col-12 md:col-6 p-2 form-outline">
+          <input type="text" appNumbersOnly [(ngModel)]="mobileNoOtp" id="mobileNoOtp" autocomplete="off" pattern="[0-9]*"
+          (onkeyup)="evaluateProceed()" class="col-12 outlined-input" placeholder="{{ 'label-mobile-otp' | transloco }}" maxlength="8" required />
+          <label for="mobileNoOtp" class="bank-input-label outlined-label">
+            {{ 'label-mobile-otp' | transloco }} <span style="color: red"> *</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-12 text-right mt-2 text-base">
+        <div class="loginLabel" *ngIf="showResendOtpBtn">
+          {{ "resend-otp-in" | transloco }} {{ resendOtpIn }}
+        </div>
+        <a class="loginLabel" style="
+            color: blue;
+            text-decoration: underline;
+            letter-spacing: 0.05rem;
+          " (click)="onResendOtpClick()" *ngIf="isResendOtpButtonVisible">
+          {{ "resend-otp" | transloco }}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 text-right">
+    <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''" *ngIf="!showSendOtpBtn"
+        [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+        [ngClass]="'flex-end warning-button mr-3'" 
+        (click)="edit()">
+        {{ "edit" | transloco }}
+    </button>
+    <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''" *ngIf="showSendOtpBtn"
+        [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+        [ngClass]="'flex-end active-button'" 
+        (click)="sendOtpToMail()">
+        {{ "sendOtp" | transloco }}
+    </button>
+    <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''" *ngIf="!showSendOtpBtn"
+      [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+      [ngClass]="
+        proceedEnabled == false
+          ? 'disabled-button'
+          : 'active-button flex-end'
+      " [disabled]="proceedEnabled == false" (click)="proceed()">
+      {{ "proceed" | transloco }}
+    </button>
+  </div>
+</div>

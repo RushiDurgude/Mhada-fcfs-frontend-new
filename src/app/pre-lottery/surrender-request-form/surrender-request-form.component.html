@@ -1,0 +1,310 @@
+<div class="flex align-items-center justify-content-between">
+  <div
+    class="col-12 line-height-1 text-2xl"
+    style="border-bottom: 1px solid grey"
+  >
+    <a *ngIf="true" [routerLink]="['/app/applicant-requests']">
+      <ion-icon name="arrow-undo"></ion-icon>
+    </a>
+    {{ "surrender-request-form" | transloco }}
+  </div>
+</div>
+
+<div class="add-lotteryDetails mt-2 pageScroll-bar">
+  <form
+    [formGroup]="form"
+    #localForm="ngForm"
+    (ngSubmit)="isSubmitDisabled = true; onSubmit()"
+  >
+    <div
+      class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-3"
+    >
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label style="color: #979292">
+          {{ "label-application-no" | transloco }} </label
+        ><br />
+        <label
+          class="col-12 p-2"
+          style="
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{ applicationDetials?.applicationNo }}
+        </label>
+      </div>
+
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label style="color: #979292">
+          {{ "applicant-name-label" | transloco }} </label
+        ><br />
+        <label
+          class="col-12 p-2"
+          style="
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{ applicationDetials?.applicantName }}
+        </label>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label style="color: #979292">
+          {{ "applicant-scheme-label" | transloco }} </label
+        ><br />
+        <label
+          class="col-12 p-2"
+          style="
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{
+            applicationDetials?.schemeCode +
+              " : " +
+              applicationDetials?.schemeName
+          }}
+        </label>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label style="color: #979292">
+          {{ "applicant-category-label" | transloco }} </label
+        ><br />
+        <label
+          class="col-12 p-2"
+          style="
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{ applicationDetials?.categoryCode }}
+        </label>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label style="color: #979292">
+          {{ "applicant-tenement-label" | transloco }} </label
+        ><br />
+        <label
+          class="col-12 p-2"
+          style="
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{
+            applicationDetials?.buildingNo +
+              ", " +
+              applicationDetials?.wing +
+              ", " +
+              applicationDetials?.floor +
+              ", " +
+              applicationDetials?.flatNo
+          }}
+        </label>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+        <label style="color: #979292">
+          {{ "application-lottery-label" | transloco }} </label
+        ><br />
+        <label
+          class="col-12 p-2"
+          style="
+            background-color: #dfdfdf;
+            color: black;
+            font-weight: 500;
+            min-height: 40px;
+          "
+        >
+          {{
+            applicationDetials?.lotteryCode +
+              "-" +
+              applicationDetials?.lotteryName
+          }}
+        </label>
+      </div>
+
+      <div class="col-12" *ngIf="isNewReq === 'N'">
+        <div class="table-dashoard mt-4 py-2" style="overflow-x: auto">
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            class="table-details"
+            matSort
+            matSortActive="key"
+            matSortDirection="asc"
+            style="width: 100%"
+            matSortDisableClear
+          >
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>#</th>
+              <td mat-cell *matCellDef="let element; index as i">
+                {{ currentPage * pageSize + i + 1 }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 15px">
+                {{ "surr-req-sts" | transloco }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="font-medium text-left mt-1">
+                  {{ element?.status }} <br />
+                  <div *ngIf="element?.status === 'REJECTED'">
+                    <span
+                      style="
+                        color: red;
+                        font-size: 12px;
+                        font-weight: 500;
+                        font-style: italic;
+                      "
+                    >
+                      {{ element?.rejectReason }}
+                    </span>
+                  </div>
+                </div>
+                <!-- <br>
+                          <div *ngIf="element.requestReason">
+                            {{element?.requestReason}}
+                          </div> -->
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td
+                class="mat-cell text-center no-data"
+                [attr.colspan]="displayedColumns.length"
+                style="width: 100%"
+                *ngIf="!isLoading"
+              >
+                <span>
+                  {{ "lable-no-data-match" | transloco }}
+                </span>
+              </td>
+            </tr>
+          </table>
+          <div
+            class="col-12 flex justify-content-center align-items-center"
+            *ngIf="isLoading"
+          >
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+          <div
+            class="bottom-header flex justify-content-between align-items-center"
+          >
+            <mat-paginator
+              #paginator
+              [length]="totalRows"
+              [pageIndex]="currentPage"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="pageChanged($event)"
+              aria-label="Select page"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isNewReq === 'Y' || hasRejectRecord === 'Y'">
+        <div class="col-12">
+          <label
+            >{{ "surr-req-reason" | transloco }}
+            <span style="color: red">*</span></label
+          ><br />
+          <textarea
+            id="surrReqReason"
+            formControlName="surrReqReason"
+            class="col-12"
+          ></textarea>
+          <field-error-component
+            [controlName]="form.get('surrReqReason')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component>
+        </div>
+        <div
+          class="col-12 sm:col-12 md:col-4 lg:col-4 field"
+          style="padding-top: 17px; width: fit-content"
+        >
+          <label for="file" style="color: #979292; width: max-content">
+            {{ "upld-surr-req-file" | transloco }}
+            <span class="text-red-900">*</span> </label
+          ><br />
+          <button
+            type="button"
+            (click)="file.click()"
+            style="float: left; width: max-content"
+            class="shadow-2 bg-primary text-white p-1"
+            style="background-color: #1061ff"
+          >
+            <mat-icon
+              style="
+                line-height: 25px;
+                margin-right: 5px;
+                float: left;
+                color: white;
+              "
+              >upload</mat-icon
+            >
+            <div
+              style="float: left; padding-top: 6px; background-color: #1061ff"
+            >
+              <span style="background-color: #1061ff; color: white">
+                {{ "upld-req-ltr" | transloco }}
+              </span>
+            </div>
+            <input
+              type="file"
+              [id]="file"
+              #file
+              formControlName="surrReqFile"
+              style="display: none"
+              (change)="onFileSelect($event)"
+              accept="application/pdf"
+            />
+          </button>
+          <div *ngIf="selectedFile" class="pl-2 pt-2" style="float: left">
+            {{ selectedFile?.name }}
+          </div>
+          <field-error-component
+            [controlName]="form.get('surrReqFile')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component
+          ><br />
+        </div>
+        <br />
+        <div class="col-12 mx-3 py-3" style="float: left">
+          <button
+            type="submit"
+            [disabled]="isSubmitDisabled"
+            class="btn btn-secondary mr-3"
+            style="height: 44px"
+            mat-stroked-button
+          >
+            <span style="color: #f27900"> Submit </span>
+          </button>
+          <button
+            type="button"
+            [routerLink]="['/app/applicant-requests']"
+            class="btn btn-primery"
+            style="height: 44px; margin-top: 10px"
+            mat-raised-button
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

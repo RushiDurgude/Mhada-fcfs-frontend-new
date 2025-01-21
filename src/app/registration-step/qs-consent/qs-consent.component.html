@@ -1,0 +1,56 @@
+<div class="col-12">
+  <div class="col-12">
+    <div class="grid">
+      <div class="col-12 text-base">
+        <div class="grid">
+          <div class="col-12">
+            <ul style="list-style-type: decimal">
+              <li>
+                <label style="font-weight: 500;">
+                  {{ "consent-aadhar-header" | transloco }}
+                </label>
+                <div class="grid mt-2">
+                  <div class="col-12 text-sm text-600">
+                    {{ "consent-aadhar-content" | transloco }}
+                  </div>
+                </div>
+              </li>
+              <li class="mt-3">
+                <label style="font-weight: 500;">
+                  {{ "consent-pan-header" | transloco }}
+                </label>
+                <div class="grid mt-2">
+                  <div class="col-12 text-sm text-600">
+                    {{ "consent-pan-content" | transloco }}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12">
+            <div id="parent">
+              <div id="narrow" class="mt-1">
+                <ion-checkbox color="primary" checked slot="start"
+                  [(ngModel)]="consentAccepted"></ion-checkbox>
+              </div>
+              <div id="wide" class="text-left text-sm">
+                {{ "consent-i-agree" | transloco }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-right">
+        <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+          [ngClass]="
+            consentAccepted == false
+              ? 'disabled-button'
+              : 'active-button'
+          " [disabled]="consentAccepted == false" (click)="proceed()">
+          {{ "proceed" | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

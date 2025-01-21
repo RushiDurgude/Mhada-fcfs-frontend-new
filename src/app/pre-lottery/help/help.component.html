@@ -1,0 +1,45 @@
+<!-- <div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%;">
+<div class="col-11 m-3 p-0 card">
+    <div class="col-12">
+        <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+            {{"title-header-help" | transloco}}
+        </div>
+        <div class="col-12 p-0 mt-2" *ngIf="dataLoaded">
+            <div class="col-12 p-0 mt-2 border-1 border-gray-400 shadow-2 border-round-x1">
+                <ion-list>
+                    <ion-item *ngFor="let helpVideo of helpVideos;">
+                        <ion-label position="stacked">
+                            {{helpVideo.announcementEn}}
+                        </ion-label>
+                        <iframe class="col-12 p-0 mt-3" height="200" 
+                            [src]="sanitize(helpVideo.externalLink)" 
+                            frameborder="0" allowfullscreen></iframe>
+                    </ion-item>
+                    <ion-item *ngIf="dataLoaded && (!helpVideos || helpVideos?.length == 0)">
+                        <ion-label position="stacked">
+                            {{"message-help-videos-empty" | transloco}}
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-list>
+                    <ion-item *ngFor="let helpLink of helpLinks;">
+                        <ion-label>
+                            <a [href]="helpLink.externalLink" download>{{helpLink.announcementEn}}</a>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item *ngIf="dataLoaded && (!helpLinks || helpLinks?.length == 0)">
+                        <ion-label position="stacked">
+                            {{"message-help-links-empty" | transloco}}
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>        
+    </div>
+</div>
+</div> -->
+<div class="col-12 p-2 mt-2 background-image card-content ng-star-inserted" style="height: calc(100% - 10px);">
+    <iframe src="https://pmrda.helpsite.com//" class="col-12 p-0" style="min-height: calc(100% - 100px); border: 1px solid #DFDFDF; border-radius: 30px;"></iframe>
+    
+</div>

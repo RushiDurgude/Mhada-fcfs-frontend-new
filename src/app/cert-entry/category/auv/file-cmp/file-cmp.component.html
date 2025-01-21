@@ -1,0 +1,32 @@
+<div class="field col-12 grid m-0" style="margin-bottom: -0.5rem;" [formGroup]="formGroup">
+    <label [for]="fieldName" style="color: #979292; font-size: 15px;">
+        {{fieldLabel}} <span style="color: red;" *ngIf="pageMode === 'EDIT'"> *</span>
+    </label><br>
+    <div class="col-12 p-0">
+        <button type="button" (click)="file.click()" style="float: left;" 
+            class="small-button shadow-4 bg-primary text-white p-1" *ngIf="pageMode === 'EDIT'">
+            <mat-icon style="line-height: 25px; margin-right: 5px; float: left; color: white;">upload</mat-icon>
+            <div style="float: left; padding-top: 6px;" class="text-white">{{"label-cert-select-file" | transloco}}</div>
+            <input type="file" [id]="fieldName" #file [formControlName]="fieldName"
+            style="display: none;" (change)="onFileSelect($event)" accept="application/pdf"/>
+        </button>
+        <button type="button" style="float: left;" 
+            class="small-button shadow-4 bg-primary text-white p-1" 
+            *ngIf="pageMode === 'VIEW' && fieldValue"
+            (click)="downloadFile()">
+            <mat-icon style="line-height: 25px; margin-right: 5px; float: left; color: white;">download</mat-icon>
+            <div style="float: left; padding-top: 6px;" class="text-white">{{"label-cert-download-file" | transloco}}</div>
+        </button>
+        <span class="pl-2" *ngIf="uploadedFileName">
+            <span class="pl-2" *ngIf="fileName">{{fileName}}</span>
+        </span>  
+    </div>
+    <field-error-component *ngIf="pageMode === 'EDIT'"
+        [controlName]="controlName" [formSubmitted]="formSubmitted"></field-error-component>
+    <div class="col-12 p-0 mt-2" *ngIf="help && pageMode === 'EDIT'">
+        <small style="font-size: 12px;">{{help}}</small>
+    </div>
+    <div class="col-12 p-0 mt-3 " *ngIf="template && pageMode === 'EDIT'">
+        <small><a [href]="template" target="_blank">{{"label-cert-download-template" | transloco}}</a></small>
+    </div>
+</div>

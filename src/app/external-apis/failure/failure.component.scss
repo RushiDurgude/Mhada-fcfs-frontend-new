@@ -1,0 +1,47 @@
+.checkmark,
+.cross{
+    display: inline-block;
+}  
+  
+.checkmark-check{
+    stroke-dasharray: 80px 80px;
+    stroke-dashoffset: -80px;
+    animation: checkAnimate 1s forwards cubic-bezier(0.895, 0.03, 0.685, 0.22);
+}  
+
+.cross-line{
+    stroke-dasharray: 80px 80px;
+    stroke-dashoffset: -80px;
+    animation: checkAnimate 1s forwards cubic-bezier(0.895, 0.03, 0.685, 0.22);
+}  
+
+//   &:nth-child(2)
+//     animation-delay: .25s
+
+@keyframes checkAnimate{
+    0%{
+        stroke-dashoffset: -80px;
+    }    
+  100%{
+    stroke-dashoffset: 0px;
+  }    
+}  
+
+::ng-deep .mat-dialog-container{
+    padding: 0 !important;
+    border-radius: 10px;
+  }
+
+  .center {
+    height: 100%;
+    position: relative;
+  }
+  
+  .center .content {
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

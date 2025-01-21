@@ -1,0 +1,387 @@
+<div
+  class="grid m-0 pl-3 pt-2 pr-3 background-image card-content ng-star-inserted"
+  style="height: calc(100% - 100px)"
+  *ngIf="formLoadStatus != null && formLoadStatus === 'SUCCESS'"
+>
+  <div
+    class="col-12 p-0 card"
+    *ngIf="!formSubmitted && applicationRefundFormModel"
+  >
+    <div class="col-12">
+      <div
+        class="col-12 line-height-1 text-2xl"
+        style="border-bottom: 1px solid grey"
+      >
+        <a
+          *ngIf="showBack"
+          [routerLink]="['/app', 'application-detail-list']"
+        >
+          <ion-icon
+            name="arrow-undo"
+            [color]="isDarkMode ? 'light' : 'dark'"
+          ></ion-icon>
+        </a>
+        {{ "title-header-refund-detail" | transloco }}
+      </div>
+      <div class="col-12 p-0 mt-2">
+        <form
+          [formGroup]="appForm"
+          #localForm="ngForm"
+          (ngSubmit)="isApplyDisabled = true; onSubmit()"
+          class="grid p-2"
+        >
+          <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+            <label for="applicationNo" style="color: #979292">
+              {{ "label-selected-applicationno" | transloco }} </label
+            ><br />
+            <label
+              class="col-12 p-2"
+              style="
+                background-color: #dfdfdf;
+                color: black;
+                font-weight: 500;
+                min-height: 40px;
+              "
+            >
+              {{ applicationNo }}
+            </label>
+          </div>
+          <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+            <label for="scheme" style="color: #979292">
+              {{ "label-selected-scheme" | transloco }} </label
+            ><br />
+            <label
+              class="col-12 p-2"
+              style="
+                background-color: #dfdfdf;
+                color: black;
+                font-weight: 500;
+                min-height: 40px;
+              "
+            >
+              {{ schemeCode }} - {{ schemeName }}
+            </label>
+          </div>
+          <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+            <label for="category" style="color: #979292">
+              {{ "label-selected-category" | transloco }} </label
+            ><br />
+            <label
+              class="col-12 p-2"
+              style="
+                background-color: #dfdfdf;
+                color: black;
+                font-weight: 500;
+                min-height: 40px;
+              "
+            >
+              {{ categoryCode }} - {{ categoryName }}
+            </label>
+          </div>
+          <div class="grid col-12 p-2">
+            <h5 class="col-12 p-2 text-primary border-bottom-1">
+              {{ "label-bank-details-for-refund" | transloco }}
+            </h5>
+            <div class="field col-12">
+              <label for="refundMode" style="color: #979292">
+                {{ "label-refund-mode" | transloco }}
+                <span class="text-red-900">*</span> </label
+              ><br />
+              <div class="formgroup-inline">
+                <div
+                  class="field-radiobutton"
+                  *ngIf="
+                    !applicationRefundFormModel.bankVerification &&
+                    applicationRefundFormModel.bankVerification !==
+                      'PENNY_TEST' &&
+                    applicationRefundFormModel.bankVerification !==
+                      'NO_BANK_VERIFICATION'
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="refundMode"
+                    id="REFUND_TO_SOURCE"
+                    (click)="showRefundDetails(false, null)"
+                    formControlName="refundMode"
+                    value="REFUND_TO_SOURCE"
+                  />
+                  <label for="REFUND_TO_SOURCE">{{
+                    "option-refund-to-source" | transloco
+                  }}</label>
+                </div>
+                <div class="field-radiobutton">
+                  <input
+                    type="radio"
+                    name="refundMode"
+                    id="REFUND_TO_BANK"
+                    (click)="showRefundDetails(true, null)"
+                    formControlName="refundMode"
+                    value="REFUND_TO_BANK"
+                  />
+                  <label for="REFUND_TO_BANK">{{
+                    "option-refund-to-bank" | transloco
+                  }}</label>
+                </div>
+              </div>
+              <field-error-component
+                [controlName]="appForm.get('refundMode')"
+                [formSubmitted]="localForm.submitted"
+              ></field-error-component>
+            </div>
+            <div class="grid m-0 p-0" [formGroup]="viewRefundForm()">
+              <div
+                class="field col-12 sm:col-6 md:col-6 lg:col-4"
+                *ngIf="
+                  appForm.value.refundMode &&
+                  appForm.value.refundMode === 'REFUND_TO_BANK'
+                "
+              >
+                <label for="nameAsOnBank" style="color: #979292">
+                  {{ "label-name-as-on-bank" | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+                <input
+                  type="text"
+                  formControlName="nameAsOnBank"
+                  id="nameAsOnBank"
+                  class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                  maxlength="200"
+                />
+                <field-error-component
+                  [controlName]="appForm.get('refundForm').get('nameAsOnBank')"
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+                <small *ngIf="nameAsOnAccountError" class="error-block">
+                  {{ "error-name-as-on-account" | transloco }}
+                </small>
+              </div>
+              <div
+                class="field col-12 sm:col-6 md:col-6 lg:col-4"
+                *ngIf="
+                  appForm.value.refundMode &&
+                  appForm.value.refundMode === 'REFUND_TO_BANK'
+                "
+              >
+                <label for="bankAccountNo" style="color: #979292">
+                  {{ "label-bank-accountno" | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+                <input
+                  type="password"
+                  formControlName="bankAccountNo"
+                  id="bankAccountNo"
+                  appBlockCopyPaste
+                  class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                  maxlength="19"
+                />
+                <field-error-component
+                  [controlName]="appForm.get('refundForm').get('bankAccountNo')"
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+              </div>
+              <div
+                class="field col-12 sm:col-6 md:col-6 lg:col-4"
+                *ngIf="
+                  appForm.value.refundMode &&
+                  appForm.value.refundMode === 'REFUND_TO_BANK'
+                "
+              >
+                <label for="confirmBankAccountNo" style="color: #979292">
+                  {{ "label-confirm-bank-accountno" | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+                <input
+                  type="text"
+                  formControlName="confirmBankAccountNo"
+                  id="confirmBankAccountNo"
+                  appBlockCopyPaste
+                  class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                  maxlength="19"
+                />
+                <field-error-component
+                  [controlName]="
+                    appForm.get('refundForm').get('confirmBankAccountNo')
+                  "
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+                <small
+                  *ngIf="bankAndConfirmBankAccountError"
+                  class="error-block"
+                >
+                  {{ "error-bank-ac-confirm-bank-ac" | transloco }}
+                </small>
+              </div>
+              <div
+                class="field col-12 sm:col-6 md:col-6 lg:col-4"
+                *ngIf="
+                  appForm.value.refundMode &&
+                  appForm.value.refundMode === 'REFUND_TO_BANK'
+                "
+              >
+                <label for="ifsc" style="color: #979292">
+                  {{ "label-ifsc-code" | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+                <input
+                  type="text"
+                  formControlName="ifsc"
+                  id="ifsc"
+                  (change)="fetchBankDetails()"
+                  class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                  maxlength="11"
+                />
+                <field-error-component
+                  [controlName]="appForm.get('refundForm').get('ifsc')"
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+                <small *ngIf="bankError" class="error-block">
+                  {{ "error-bank-required" | transloco }}
+                </small>
+              </div>
+              <div
+                class="field col-12 sm:col-6 md:col-6 lg:col-4"
+                *ngIf="
+                  appForm.value.refundMode &&
+                  appForm.value.refundMode === 'REFUND_TO_BANK'
+                "
+              >
+                <label for="ifsc" style="color: #979292">
+                  {{ "label-bank-cheque-passbook" | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+                <div class="col-12 p-0">
+                  <button
+                    type="button"
+                    (click)="file.click()"
+                    style="float: left"
+                    class="small-button shadow-4 bg-primary text-white p-1"
+                  >
+                    <mat-icon
+                      style="
+                        line-height: 25px;
+                        margin-right: 5px;
+                        float: left;
+                        color: white;
+                      "
+                      >upload</mat-icon
+                    >
+                    <div
+                      style="
+                        float: left;
+                        padding-top: 6px;
+                        background-color: #1061ff;
+                      "
+                      class="text-white"
+                    >
+                      {{ "label-bank-cheque-passbook" | transloco }}
+                    </div>
+                    <input
+                      type="file"
+                      id="uploadBankChequePassbookFile"
+                      #file
+                      formControlName="uploadBankChequePassbookFile"
+                      style="display: none"
+                      (change)="onBankChequePassbookFileSelect($event)"
+                      accept="application/pdf"
+                    />
+                  </button>
+                  <span class="pl-2" *ngIf="uploadedBankChequePassbookFileName">
+                    <span
+                      class="pl-2"
+                      *ngIf="uploadedBankChequePassbookFileName"
+                      >{{ uploadedBankChequePassbookFileName }}</span
+                    >
+                  </span>
+                </div>
+                <field-error-component
+                  [controlName]="
+                    appForm
+                      .get('refundForm')
+                      .get('uploadBankChequePassbookFile')
+                  "
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+              </div>
+            </div>
+            <div
+              class="field col-12 sm:col-6 md:col-6 lg:col-4"
+              *ngIf="
+                appForm.value.refundMode &&
+                appForm.value.refundMode === 'REFUND_TO_BANK'
+              "
+            >
+              <label for="bankName" style="color: #979292">
+                {{ "label-bank-name" | transloco }}
+                <span class="text-red-900">*</span> </label
+              ><br />
+              <label
+                class="col-12 p-2"
+                style="
+                  background-color: #dfdfdf;
+                  color: black;
+                  font-weight: 500;
+                  min-height: 40px;
+                "
+              >
+                {{ bankName }}
+              </label>
+            </div>
+            <div
+              class="field col-12 sm:col-6 md:col-6 lg:col-4"
+              *ngIf="
+                appForm.value.refundMode &&
+                appForm.value.refundMode === 'REFUND_TO_BANK'
+              "
+            >
+              <label for="branchName" style="color: #979292">
+                {{ "label-branch-name" | transloco }}
+                <span class="text-red-900">*</span> </label
+              ><br />
+              <label
+                class="col-12 p-2"
+                style="
+                  background-color: #dfdfdf;
+                  color: black;
+                  font-weight: 500;
+                  min-height: 40px;
+                "
+              >
+                {{ branchName }}
+              </label>
+            </div>
+          </div>
+          <div class="col-12 p-2 mt-6 mb-3">
+            <button class="btn-medium shadow-4 mt-0" type="submit">
+              {{ "button-submit" | transloco }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="grid m-0 p-0 background-image card-content ng-star-inserted"
+  style="height: calc(100% - 100px)"
+  *ngIf="formLoadStatus != null && formLoadStatus === 'ERROR'"
+>
+  <div class="col-11 m-3 p-0 card">
+    <div class="col-12">
+      <div class="col-12 p-0 mt-2">
+        <div class="grid">
+          <div class="col-12 text-center">
+            <ion-icon
+              name="warning-sharp"
+              style="font-size: 65px; color: orange"
+            ></ion-icon
+            ><br />
+            <div class="col-8 ml-7 p-2 status-message">
+              {{ formLoadErrorMessage }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

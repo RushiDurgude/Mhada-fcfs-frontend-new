@@ -1,0 +1,202 @@
+<div class="grid m-0 p-0 hidden-lg hidden-xl">
+  <div class="col-12 toolbar m-0 p-0">
+    <div class="grid m-0 p-0">
+      <div class="col-3 xl:col-8 lg:col-8 md:col-6 m-0 p-0 mt-2">
+        <img src="assets/cidco_icon.png" class="mhada-icon" (click)="getShowInfoFlag()" />
+        <button style="background: none">
+          <ion-menu-button [color]="'dark'"></ion-menu-button>
+        </button>
+        <div class="hidden-xs hidden-sm hidden-md text-xl -mt-7 text-margin-left line-height-4">
+          {{ "toolbar" | transloco }}
+        </div>
+      </div>
+      <div class="col-9 xl:col-4 lg:col-4 md:col-6 hidden-xs hidden-sm hidden-md">
+        <div class="grid m-0 p-0 text-center toolbar-info-font-size">
+          <div class="col-12 m-0 p-0 line-height-4 mt-2">
+            <ion-icon [color]="isDarkMode ? 'light' : 'dark'" name="call" slot="start" class="mr-2"></ion-icon><a
+              class="toolbar-helpline-anchor" routerLink="/contact-us">{{
+              "toolbar-helpline" | transloco
+              }}</a>&nbsp;&nbsp;&nbsp;
+            <button class="language-toggle-button shadow-4" (click)="changeLang()">
+              {{ activeLang == "en" ? "मराठी" : "English" }}
+            </button>
+            <button mat-mini-fab class="profile-button ml-5" (click)="toProfile()">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'" name="person" style="color: #ff5c00"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-9 xl:col-4 lg:col-4 md:col-6 hidden-lg hidden-xl">
+        <div class="grid m-0 p-0 toolbar-info-font-size">
+          <div class="col-12 m-0 p-0 line-height-4 mt-2 text-right">
+            <label style="float: left; line-height: 40px; font-size: 15px">{{
+              "toolbar" | transloco
+              }}</label>
+            <button class="language-toggle-button shadow-4 ml-2" (click)="changeLang()">
+              {{ activeLang == "en" ? "मराठी" : "English" }}
+            </button>
+            <button mat-mini-fab class="profile-button ml-3" (click)="toProfile()" *ngIf="
+                router.url != '/' &&
+                router.url != '/landing' &&
+                router.url != '/signIn' &&
+                router.url != '/forgot-password' &&
+                router.url != '/signUp'
+              " style="height: 40px; width: 45px">
+              <img [src]="userPhoto" *ngIf="isLoggedIn" class="border-circle -mt-2" style="height: 50px; width: 45px" />
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'" *ngIf="!isLoggedIn" name="person"
+                style="color: #ff5c00"></ion-icon>
+            </button>
+            <div class="mt-2">
+              <ion-icon color="dark" name="call" slot="start" class="mr-2"></ion-icon><a class="toolbar-helpline-anchor"
+                [ngStyle]="{
+                  'background-color': isDarkMode ? 'black' : 'white',
+                  color: isDarkMode ? 'white' : 'black'
+                }" routerLink="/contact-us">
+                {{ "toolbar-helpline" | transloco }}</a>&nbsp;&nbsp;&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="userName != ''" class="col-12 text-left font-medium" style="
+          width: fit-content;
+          z-index: 0;
+          position: absolute;
+          top: 62px;
+          left: 27px;
+        ">
+        Hello, {{ userName }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- for LARGE and EXTRA LARGE SCREENS -->
+<div class="grid m-0 p-0 hidden-sm hidden-xs hidden-md" *ngIf="!isLandingPage">
+  <div class="col-12 toolbar m-0 p-0" [ngStyle]="{ 'background-color': isDarkMode ? '#1a202e' : 'white' }">
+    <div class="grid m-0 p-0">
+      <!-- <div class="col-3 xl:col-9 lg:col-8 md:col-6 m-0 p-0 mt-0"></div> -->
+      <!-- <div class="col-9 xl:col-3 lg:col-4 md:col-6 text-right">
+        <div class="grid m-0 p-0 toolbar-info-font-size"> -->
+          <!-- <div class="col-12 m-0 p-0 line-height-1 mt-0">
+            <button (click)="increaseFontSize()" title="Increase Font Size" class="mr-2">
+              <strong class="button-strong">A<sup>+</sup></strong>
+            </button>
+            <button (click)="resetFontSize()" title="Reset Font Size" class="mr-2">
+              <strong class="button-strong">A</strong>
+            </button>
+            <button (click)="decreaseFontSize()" title="Decrease Font Size" class="mr-2">
+              <strong class="button-strong">A<sup>-</sup></strong>
+            </button>
+            <ion-icon (click)="toggleTheme()" title="theme" class="mr-2" style="cursor: pointer" color="dark"
+              name="contrast-outline"></ion-icon>&nbsp;&nbsp;
+            <ion-icon [color]="'dark'" name="call" slot="start" class="mr-2"></ion-icon>
+            <a class="toolbar-helpline-anchor text-sm" [ngStyle]="{
+                'background-color': isDarkMode ? 'black' : 'white',
+                color: isDarkMode ? 'white' : 'black'
+              }" routerLink="/contact-us">{{ "toolbar-helpline" | transloco }}</a>&nbsp;&nbsp;&nbsp;
+          </div> -->
+        <!-- </div>
+      </div> -->
+    </div>
+    <div class="grid m-0 p-0">
+      <div class="col-3 xl:col-7 lg:col-8 md:col-6 m-0 p-0 mt-1">
+        <div class="menu-and-logo-container">
+          <button style="background: none" class="menu-button">
+            <ion-menu-button [color]="'dark'"></ion-menu-button>
+          </button>
+          <img
+            style="border-radius: 0px 0px 15px 12px"
+            src="assets/cidco_icon.png"
+            class="mhada-icon"
+            (click)="getShowInfoFlag()"
+          />
+        </div>
+
+        <!-- <div class="text-xl -mt-6 text-margin-left-large-screen line-height-4">
+          {{ "landing-cidco-toolbar-title" | transloco }}
+        </div> -->
+      </div>
+      <div class="col-9 xl:col-3 lg:col-4 md:col-6 text-right" style="margin-top: -10px">
+        <div class="grid m-0 p-0 toolbar-info-font-size">
+          <div class="col-12 m-0 p-0 line-height-4 mt-0" style="margin-left: 17rem !important;">
+
+            <div class="mt-3 button-container" style="display: flex; align-items: center;">
+              <div class="dropdown-font">
+                <button class="dropbtn-font">{{"A"}}  <span class="arrow-font">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span></button>
+                <div class="dropdown-content-font">
+                  <a (click)="increaseFontSize()">A+</a>
+                  <a (click)="resetFontSize()">A</a>
+                  <a (click)="decreaseFontSize()">A-</a>
+                </div>
+                
+              </div>
+
+              <!-- <button class="like-this-btn" style="margin-left: 15px;">
+                <ion-icon name="sunny" (click)="toggleTheme()" style="font-size: 25px;"></ion-icon>
+              </button> -->
+
+              <!-- <button class="contact-but" style="margin-left: 15px;" routerLink="/contact-us">
+                <ion-icon name="call" class="contact-icon"></ion-icon>
+                {{ "toolbar-helpline" | transloco }}
+              </button> -->
+
+
+              <!-- Language Dropdown -->
+              <div class="dropdown-ihlms" style="margin-left: 15px;">
+                <button class="dropbtn-ihlms">
+                  {{ activeLang == "en" ? "ENG" : "MAR" }} 
+                  <span class="arrow-ihlms"> <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg></span>
+                </button>
+                <div class="dropdown-content-ihlms" [ngClass]="{'show': true}">
+                  <a (click)="changeLang()" *ngIf="activeLang == 'mr'">ENG</a>
+                  <a (click)="changeLang()" *ngIf="activeLang == 'en'">MAR</a>
+                </div>
+              </div>
+              
+
+              <!-- Profile Button -->
+              <button
+              *ngIf="!isLoggedIn"
+              class="login-button"
+              (click)="startNow()"
+            >
+              <ion-icon name="person-outline" class="icon"></ion-icon>
+              LOGIN
+            </button>
+            
+            <!-- Profile button for logged-in users -->
+            <button
+              mat-mini-fab
+              class="profile-button ml-5"
+              *ngIf="isLoggedIn && router.url != '/' &&
+                      router.url != '/landing' &&
+                      router.url != '/signIn' &&
+                      router.url != '/forgot-password' &&
+                      router.url != '/signUp'"
+              style="height: 40px; width: 45px; margin-left: 15px !important"
+              (click)="toProfileNew()"
+            >
+              <img [src]="userPhoto" class="border-circle -mt-2" style="height: 41px; width: 45px" />
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div *ngIf="userName != ''" class="col-12 text-right font-medium" style="
+          width: fit-content;
+          z-index: 0;
+          position: absolute;
+          top: 66px;
+          right: 0px;
+        ">
+        Hello, {{ userName }}
+      </div> -->
+    </div>
+  </div>
+</div>

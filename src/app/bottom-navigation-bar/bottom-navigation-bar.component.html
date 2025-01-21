@@ -1,0 +1,34 @@
+<div class="grid m-0 p-0 bottom-navigation-bar">
+  <div
+    class="col-3"
+    *ngFor="let menu of menus"
+    [routerLink]="menu.routerLink"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="active-bottom-navigation"
+    (click)="activeRoute(menu)"
+  >
+    <div class="grid m-0 p-0">
+      <div class="col-12 p-0 text-center">
+        <ion-icon [color]="isDarkMode ? 'light' : 'dark'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="selected-menu"
+          style="font-size: 20px"
+          [ngClass]="selectedRoute == menu.label ? 'selected-menu' : 'deactive-menu'"
+          [name]="menu.icon"
+        ></ion-icon>
+      </div>
+      <div class="col-12 p-0 text-center text-xs">
+        <label 
+          
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="selected-menu"
+          [ngClass]="selectedRoute == menu.label ? 'selected-menu' : 'deactive-menu'"
+        >
+          <p>
+            {{ menu.label }}
+          </p>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

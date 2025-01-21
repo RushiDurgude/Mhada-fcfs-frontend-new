@@ -1,0 +1,96 @@
+<div
+  class="m-0 p-0 background-image"
+  style="height: calc(100% - 100px); overflow: auto"
+  (scroll)="onScroll($event)"
+  #divToScroll
+>
+  <div class="container">
+    <div class="col-11 card m-3 p-3">
+      <div class="card-body">
+        <div class="grid m-0 p-1 col-12">
+          <div class="webth col-3 no-padding"></div>
+          <div class="col-6 line-height-1 lg:text-2xl text-center title-font-size no-padding">
+            {{ "my-grievances" | transloco }}
+          </div>
+          <div class="mobth col-3 no-padding"></div>
+          <div class="col-3 no-padding text-right p-0">
+            <button class="btncss" routerLink="/raise-grievance">
+              <div style="display: flex">
+                <ion-icon class="iconcss" slot name="add"></ion-icon>
+                <div class="webth" style="color: #003bad">{{ "raise-grievance" | transloco }}</div>
+                <div class="mobth" style="color: #003bad">{{ "raise-grievances" | transloco }}</div>
+              </div>
+            </button>
+          </div>
+          <div class="col-12 p-0 border-line"></div>
+        </div>
+        <div *ngIf="grievanceList.length == 0" class="text-center m1">
+          {{ "no-grievance-found" | transloco }}
+        </div>
+        <div style="margin-top: 10px" [ngClass]="grievanceList.length != 0 ? 'tbodycss' : 'tbodycss1'">
+          <table
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            id="datatableexample"
+            class="table table-hover table-striped table-bordered"
+            cellspacing="0"
+            width="100%"
+          >
+            <thead>
+              <tr>
+                <th class="webth">
+                  {{ "grievance-id" | transloco }}
+                </th>
+                <th class="webth">
+                  {{ "created-date" | transloco }}
+                </th>
+                <th class="webth">
+                  {{ "board" | transloco }}
+                </th>
+                <th class="webth">{{ "grievance-type" | transloco }}</th>
+                <th class="webth">{{ "subject" | transloco }}</th>
+                <th class="webth">{{ "grievance-view" | transloco }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of grievanceList">
+                <td class="aligncenter">
+                  <p class="row mobth font-weight">{{ "grievance-id" | transloco }} :</p>
+                  {{ user.pkUsgrid }}
+                </td>
+
+                <td class="aligncenter">
+                  <p class="mobth font-weight">{{ "created-date" | transloco }} :</p>
+                  {{ user.createdOn }}
+                </td>
+                <td class="aligncenter">
+                  <p class="mobth font-weight">{{ "board" | transloco }} :</p>
+                  {{ user.boardName }}
+                </td>
+                <td>
+                  <p class="mobth font-weight">{{ "grievance-type" | transloco }} :</p>
+                  {{ user.grivType }}
+                </td>
+                <td>
+                  <p class="mobth font-weight">{{ "subject" | transloco }} :</p>
+                  {{ user.usGriSubject }}
+                </td>
+                <td class="text-center center">
+                  <button
+                    class="eye-btn"
+                    (click)="viewGrievance(user.pkUsgrid)"
+                    title="View"
+                    style="background-color: white; text-align: center"
+                  >
+                    <ion-icon name="eye" style="font-size: 25px; color: #003bad !important"></ion-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

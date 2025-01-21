@@ -1,0 +1,46 @@
+<!-- <div mat-dialog-content> -->
+<div class="grid m-0 p-0">
+  <div class="col-10 hidden-lg hidden-xl">
+    <div class="grid m-0 p-0">
+      <div class="col-3 xl:col-8 lg:col-8 md:col-6 m-0 p-0 mt-2">
+        <img src="assets/mhada_icon.svg" class="mhada-icon" />
+        <div class="hidden-xs hidden-sm hidden-md text-xl -mt-7 text-margin-left line-height-4">
+          {{ "toolbar" | transloco }}
+        </div>
+      </div>
+      <div class="col-9 xl:col-4 lg:col-4 md:col-6 hidden-lg hidden-xl">
+        <div class="grid m-0 p-0 toolbar-info-font-size">
+          <div class="col-12 m-0 p-0 line-height-4 text-right">
+            <label style="float: left; line-height: 40px; font-size: 15px">{{ "toolbar" | transloco }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-10 m-0 p-0 hidden-sm hidden-xs hidden-md" style="height: 80px">
+    <div class="grid m-0 p-0">
+      <div class="col-12 m-0 p-0 mt-2">
+        <img src="assets/mhada_icon.svg" class="mhada-icon mt-2" />
+        <div class="text-xl -mt-6 text-margin-left-large-screen line-height-4">
+          {{ "landing-pmrda-toolbar-title" | transloco }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-2 mt-3 text-right">
+    <ion-icon name="close" class="text-xl cursor-pointer" mat-dialog-close=""></ion-icon>
+  </div>
+  <div class="col-12 text-center video-container">
+    <iframe
+      width="100%"
+      height="315"
+      [src]="videoSrc"
+      title="YouTube video player"
+      frameborder="0"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+<!-- </div> -->

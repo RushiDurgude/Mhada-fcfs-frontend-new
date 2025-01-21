@@ -1,0 +1,175 @@
+<div class="grid m-0 p-0 background-image card-content" style="overflow: auto; height: calc(100% - 100px)">
+  <div class="col-12 lg:col-4 xl:col-4 md:col-1 file-upload-container text-center"></div>
+  <div class="col-12 lg:col-4 xl:col-4 md:col-10 pl-3 pr-3 pb-0" #target [ngClass]="platform == 'ios' ? 'mb-6' : ''">
+    <div class="grid m-0 p-0 card">
+      <div class="col-12 text-center line-height-4 text-3xl font-medium">
+        {{ "label-login" | transloco }} ✨
+      </div>
+      <div class="col-12 mt-2 p-3 text-center">
+        <ion-radio-group [(ngModel)]="selectedLoginOption" (ionChange)="radioButtonClicked()">
+          <div class="grid">
+            <div class="col-6 m-0 p-0">
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="ion-no-padding">
+                <ion-label>&nbsp;&nbsp;&nbsp;{{ "label-pan-password-login" | transloco }}</ion-label>
+                <ion-radio mode="md" slot="start" value="pwd"></ion-radio>
+              </ion-item>
+            </div>
+            <div class="col-6 m-0 p-0">
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="ion-no-padding">
+                <ion-label>&nbsp;&nbsp;&nbsp;{{ "label-otp-based-login" | transloco }}</ion-label>
+                <ion-radio mode="md" slot="start" value="otp"></ion-radio>
+              </ion-item>
+            </div>
+          </div>
+        </ion-radio-group>
+      </div>
+
+      <!-- PAN Password LOGIN -->
+      <div class="col-12 vertical-center" *ngIf="selectedLoginOption == 'pwd'">
+        <div class="grid text-left">
+          <div class="col-12">
+            <label>{{ "pan" | transloco }}</label>
+          </div>
+          <div class="col-12">
+            <input class="input input-otp w-full" type="text" maxlength="10" [(ngModel)]="loginPanNo" required
+              style="text-transform: uppercase" onchange="this.value = this.value.toUpperCase();" />
+          </div>
+        </div>
+        <div class="grid text-left">
+
+          <!-- <mat-form-field appearance="outline" fxFill>
+            <mat-label>{{ "label-login-password" | transloco }}</mat-label>
+            <input matInput type="password" maxlength="20" [(ngModel)]="loginPassword" required />
+          </mat-form-field> -->
+
+          <div class="col-12">
+            <label>{{ "label-login-password" | transloco }}</label>
+          </div>
+          <div class="col-12">
+            <input class="input input-otp w-full" type="password" maxlength="20" [(ngModel)]="loginPassword" required />
+          </div>
+        </div>
+        <div class="grid text-right">
+          <div class="col-12">
+            <a routerLink="/forgot-password">{{ "label-forgot-password" | transloco }}</a>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col-12 mt-3 text-center">
+            <button [disabled]="loginPanNo == '' || loginPassword == ''"
+              [ngClass]="loginPanNo == '' || loginPassword == '' ? 'disabled-button-1' : 'active-button-1'"
+              (click)="loginUsingPassword()">
+              {{ "label-login" | transloco }}
+            </button>
+          </div>
+
+          <div class="col-12 mt-3 text-center">
+            {{ "label-dont-have-account" | transloco }}
+            <a routerLink="/signUp">{{ "label-dont-have-signup-link" | transloco }}</a>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-12 vertical-center" *ngIf="selectedLoginOption == 'pwd'">
+        <ion-item lines="none" class="ion-item" *ngIf="selectedLoginOption == 'pwd'">
+          <fieldset class="input-item">
+            <legend>{{ "pan" | transloco }}</legend>
+            <ion-input type="text" placeholder="Enter PAN" maxlength="10" [(ngModel)]="loginPanNo" required
+              style="text-transform: uppercase" (ionChange)="loginPanNo = loginPanNo.toUpperCase()"></ion-input>
+          </fieldset>
+        </ion-item>
+        
+        <ion-item lines="none" class="ion-item">
+          <fieldset class="input-item">
+            <legend>{{ "label-login-password" | transloco }}</legend>
+            <ion-input type="password" placeholder="Enter Password" maxlength="20" [(ngModel)]="loginPassword"
+              required></ion-input>
+          </fieldset>
+        </ion-item>
+        
+        <div class="text-right">
+          <div class="col-12">
+            <a routerLink="/forgot-password">{{ "label-forgot-password" | transloco }}</a>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col-12 mt-3 text-center">
+            <button [disabled]="loginPanNo == '' || loginPassword == ''"
+              [ngClass]="loginPanNo == '' || loginPassword == '' ? 'disabled-button-1' : 'active-button-1'"
+              (click)="loginUsingPassword()">
+              {{ "label-login" | transloco }}
+            </button>
+          </div>
+
+          <div class="col-12 mt-3 text-center">
+            {{ "label-dont-have-account" | transloco }}
+            <a routerLink="/signUp">{{ "label-dont-have-signup-link" | transloco }}</a>
+          </div>
+        </div>
+      </div> -->
+      
+
+      <!-- OTP BASED LOGIN -->
+      <div class="col-12 vertical-center" *ngIf="selectedLoginOption == 'otp'">
+        <div class="grid text-left">
+          <div class="col-12">
+            <label>{{ "pan" | transloco }}</label>
+          </div>
+          <div class="col-12">
+            <input class="input input-otp w-full" type="text" maxlength="10" [(ngModel)]="loginPanNo" required
+              style="text-transform: uppercase" [disabled]="isOtpVerificationVisible"
+              onchange="this.value = this.value.toUpperCase();" />
+          </div>
+        </div>
+
+        <div class="grid" *ngIf="!isOtpVerificationVisible">
+          <div class="col-12 mt-3 text-center">
+            <button [disabled]="loginPanNo == '' || loginPanNo.length < 10"
+              [ngClass]="loginPanNo == '' || loginPanNo.length < 10 ? 'disabled-button-1' : 'active-button-1'"
+              (click)="sendOtp()">
+              {{ "label-send-login-otp" | transloco }}
+            </button>
+          </div>
+        </div>
+
+        <div class="grid text-left" *ngIf="isOtpVerificationVisible">
+          <div class="col-12 text-sm">
+            <label>{{ "login-with-otp" | transloco }}</label>
+          </div>
+          <div class="col-12">
+            <input class="input input-otp w-full" type="text" maxlength="8" [(ngModel)]="loginOtp" required
+              style="text-transform: uppercase" (keypress)="numberOnly($event)" />
+
+              <!-- <ngx-otp-input #ngxOtpInput [(ngModel)]="loginOtp" [options]="otpOptions" [disabled]="disabled"
+                      (otpComplete)="onOtpComplete($event)"></ngx-otp-input> -->
+          </div>
+        </div>
+
+        <div class="grid" *ngIf="isOtpVerificationVisible">
+          <div class="col-12 mt-3 text-center">
+            <button [disabled]="loginOtp == '' || loginOtp.length < 8"
+              [ngClass]="loginOtp == '' || loginOtp.length < 8 ? 'disabled-button-1' : 'active-button-1'"
+              (click)="verifyOtp()">
+              {{ "label-verify-login-otp" | transloco }}
+            </button>
+          </div>
+
+          <div class="col-12 text-center text-base">
+            <div class="loginLabel" *ngIf="!isResendOtpButtonVisible">
+              {{ "resend-otp-in" | transloco }} {{ resendOtpIn }}
+            </div>
+            <div class="loginLabel" style="color: blue; text-decoration: underline; letter-spacing: 0.05rem"
+              (click)="onResendOtpClick()" *ngIf="isResendOtpButtonVisible">
+              {{ "resend-otp" | transloco }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 mt-3 text-center">
+          {{ "label-dont-have-account" | transloco }}
+          <a routerLink="/signUp">{{ "label-dont-have-signup-link" | transloco }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 lg:col-4 xl:col-4 md:col-1 file-upload-container text-center"></div>
+</div>

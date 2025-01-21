@@ -1,0 +1,26 @@
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<form
+  action="https://demosignergateway.emsigner.com/eMsecure/V3_0/Index"
+  *ngIf="obj"
+  id="frmdata"
+  method="post"
+  #submitForm
+>
+  <input
+    id="Parameter1"
+    name="Parameter1"
+    type="hidden"
+    value="jleEY03IScJq2F67z8j7v1YX9YifxCkXboUVHnxkNmc8Mk9D5vDKPdRh5FnkGS7eL6xJcGeDRVPx6Yvq5EANjnj+hfMpmiZ/e5VXLbiuC9oX52mDGhWUN/lRcPvL8bPFUGjWbnRwAGXz6HRQnn9mARVPsNc12Qgqu88ChE7TNAEU5uFX99ItkRwPGUh9YGtln5Fpo1D9aHzGZHw4rNk7R0znpeXvyryN8Lo+PgjUGNzpk+0ijDd8W4a0hvWJ5S39sSaGctQddiRSqykSqff8JciPanAk5NoqO025XZTi0GKqgG5RZQu9XR9yw4A0ciUm25adRzcsBigwezCwVIG+uA=="
+  />
+  <input id="Parameter2" name="Parameter2" type="hidden" value="" />
+  <input
+    id="Parameter3"
+    name="Parameter3"
+    type="hidden"
+    value="49K44NziF5PoWD+z/klvqs72JyXx/Yxic5C0D4NG7LaI5wvgktYEzxtv26Vx1vhh"
+  />
+  <input id="formAction2" name="formAction2" type="hidden" value="EsignWithASP" />
+  <button class="active-button" type="submit" id="btnEsignKYC" (click)="submitForm.submit()">Call To Edmudra</button>
+</form>

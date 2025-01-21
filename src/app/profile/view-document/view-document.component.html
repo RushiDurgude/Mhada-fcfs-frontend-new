@@ -1,0 +1,20 @@
+<div mat-dialog-content>
+  <div class="grid m-0 p-0">
+    <div class="col-10">
+      <label class="text-l">{{ data[0][activeLang] }}</label>
+      <label class="text-xs"> - ({{ data[1] }})</label>
+    </div>
+    <div class="col-2 text-right">
+      <ion-icon name="close-outline" style="font-size: 20px" mat-dialog-close></ion-icon>
+    </div>
+    <div class="col-12">
+      <img [src]="data[2]" class="w-full" />
+    </div>
+    <div class="col-12" *ngIf="data[3] != null">
+      <img [src]="data[3]" class="w-full" />
+    </div>
+    <div class="col-12" *ngIf="data[4] != null">
+      <object [attr.data]="data[4]" type="application/pdf" width="100%" height="200%"></object>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.bottom-navigation-bar{
+    background: white;
+    border-top: 2px solid black;
+    box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.active-bottom-navigation{
+    // background-color: #1061FF;
+    color: #fff !important;
+}
+
+.selected-menu{
+    color: red;
+}
+
+.deactive-menu{
+    color: black;
+}

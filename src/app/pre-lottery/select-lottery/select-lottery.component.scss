@@ -1,0 +1,126 @@
+.date-info-section {
+    margin-top: 1rem;
+}
+
+.icon-container {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E6EFFF;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.text-label {
+    color: #5A5A5A;
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.15px;
+}
+
+.date-value {
+    color: #5A5A5A;
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.15px;
+}
+
+.scheme-card {
+    padding: 1.5rem;
+    border: 1px solid #f0f0f0;
+    border-radius: 2px; /* Set border-radius to 4px */
+    //margin-bottom: 1.5rem;
+}
+
+.scheme-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px; /* 1.125rem */
+    font-weight: 700;
+    color: #333;
+    margin-top: -28px;
+}
+
+.top-right {
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    display: flex;
+    gap: 5px; /* Space between buttons */
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.date-info-section {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.top-center {
+    display: flex;
+    gap: 5px; /* Space between buttons */
+}
+
+.application-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #5A5A5A;
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.15px;
+}
+
+.application-date {
+    font-size: 13px;
+    color: #5A5A5A;
+    margin-top: 5px;
+    margin-left: 13px;
+}
+
+/* Styles for smaller screens */
+@media screen and (max-width: 768px) {
+    .application-info {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .application-date {
+        margin-top: 0;
+        margin-left: 5px;
+    }
+
+    .icon-container-new {
+        margin-right: 9px !important;
+        margin-bottom: 3px !important;
+    }
+}
+
+.icon-container-new {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E6EFFF;
+    border-radius: 50%;
+    margin-right: 5px;
+    margin-bottom: 23px;
+}

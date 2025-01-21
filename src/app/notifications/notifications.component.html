@@ -1,0 +1,25 @@
+<div class="grid m-0 p-3 background-image" style="height: calc(100% - 102px); overflow: auto" #divToScroll>
+  <div class="col-12 mt-2 card">
+    <div class="grid m-0 p-0">
+      <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+        {{ "notifications-header" | transloco }}
+      </div>
+      <div class="col-12 p-0 mt-2" *ngIf="notifications">
+        <div class="grid p-0 m-2 mt-2 border-gray-400 shadow-2 border-round-x1" *ngFor="let newsItem of notifications">
+          <div class="col-12 font-bold" style="border-radius: 10px">
+            {{ newsItem?.notMessage }}
+          </div>
+          <div class="text-xs w-full text-right font-medium pr-2 pb-1">
+            {{ newsItem?.notTimestamp | date : "dd-MMM-yy HH:mm:ss,a" }}
+          </div>
+        </div>
+        <div
+          class="col-12 p-3 mt-2 border-1 border-gray-400 shadow-2 border-round-x1"
+          *ngIf="dataLoaded && (!notifications || notifications.length === 0)"
+        >
+          {{ "message-news-empty" | transloco }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

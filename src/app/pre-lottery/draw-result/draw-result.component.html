@@ -1,0 +1,143 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%;">
+<div class="grid col-11 m-3 p-0">
+    <div class="col-12 card">
+        <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+            {{"menu-search-draw-result" | transloco}}
+        </div>
+        <div class="col-12 p-0 mt-2">
+            <form [formGroup]="form" #localForm="ngForm" (ngSubmit)="isSubmitDisabled = true; onSubmit()" class="grid p-2">
+                <div class="grid col-12 p-2">
+                    <div class="field col-12">
+                        <label for="applicationNo" style="color: #979292;">
+                            {{"label-application-no" | transloco}} <span class="text-red-900">*</span>
+                        </label>
+                        <input type="text" formControlName="applicationNo" id="applicationNo" 
+                        (keypress)="numberOnly($event)"
+                        class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary" 
+                        maxlength="10"/>
+                        <field-error-component [controlName]="form.get('applicationNo')" [formSubmitted]="localForm.submitted"></field-error-component>
+                    </div>
+                </div>
+                <div class="col-12 p-2 mt-1 mb-3 flex justify-content-center flex-wrap">
+                    <button class="btn-medium shadow-4 mt-0" 
+                        type="submit">
+                        {{"search-grievance" | transloco}}
+                    </button>
+                    <button class="btn-medium shadow-4 mt-0 ml-3"
+                        style="background-color: #ffeb3b !important; color: #a5462a;" 
+                        type="button" (click)="reset()">
+                        {{"button-reset" | transloco}}
+                    </button>
+                </div>
+            </form>
+        </div>                
+    </div>
+    <div class="col-12 card mt-2" *ngIf="applicationData">
+        <div class="col-12 p-0" >
+            <h4 style="text-align: center;">{{"header-application-detail" | transloco}}</h4>
+            <div class="grid col-12 m-0">
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1">
+                    <label for="applicationNo" style="color: #979292;">
+                        {{"label-selected-applicationno" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;">
+                        {{applicationData.applicationNo}}
+                    </label>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1" *ngIf="applicationData.isNomineeNameAdd !='Y'">
+                    <label for="applicationName" style="color: #979292;">
+                        {{"label-cert-applicant-name" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;">
+                        {{applicationData.applicantName}}
+                    </label>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1" *ngIf="applicationData.isNomineeNameAdd =='Y'">
+                    <label for="applicationName" style="color: #979292;">
+                        {{"label-cert-applicant-name" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;">
+                        {{applicationData.nomineeOfApplicantName}}
+                    </label>
+                </div>
+                
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1" *ngIf="applicationData.isNomineeNameAdd =='Y'">
+                    <label for="applicationName" style="color: #979292;">
+                        {{"nomineeOfAppName" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;">
+                        {{applicationData.applicantName}}
+                    </label>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1">
+                    <label for="scheme" style="color: #979292;">
+                        {{"label-scheme" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;">
+                        {{applicationData.schemeCode}} - {{applicationData.schemeName}}
+                    </label>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1">
+                    <label for="category" style="color: #979292;">
+                        {{"label-selected-category" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;">
+                        {{applicationData.categoryCode}} - {{applicationData.categoryName}}
+                    </label>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1">
+                    <label for="drawStatus" style="color: #979292;">
+                        {{"label-draw-status" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;" 
+                        *ngIf="(applicationData.applicationDrawStatus !== 'Draw winner' && applicationData.applicationDrawStatus !== 'Draw waitlist')">
+                        {{applicationData.applicationDrawStatus}}
+                    </label>
+                    <label class="col-12 p-2" style="background-color: greenyellow; color: 
+                        green;font-weight: 500; min-height: 40px;" 
+                        *ngIf="applicationData.applicationDrawStatus === 'Draw winner'">
+                        {{applicationData.applicationDrawStatus}}
+                    </label>
+                    <label class="col-12 p-2" style="background-color: #fff200; color: 
+                        brown;font-weight: 500; min-height: 40px;" 
+                        *ngIf="applicationData.applicationDrawStatus === 'Draw waitlist'">
+                        {{applicationData.applicationDrawStatus}}
+                    </label>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1" 
+                    *ngIf="applicationData.flatDetail && applicationData.applicationDrawStatus === 'Draw winner'">
+                    <label for="tenement" style="color: #979292;">
+                        {{"label-tenement" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;">
+                        {{applicationData.flatDetail}}
+                    </label>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-4 mb-1" 
+                    *ngIf="applicationData.applicationDrawStatus === 'Draw winner' || 
+                        applicationData.applicationDrawStatus === 'Draw waitlist'">
+                    <label for="priority" style="color: #979292;">
+                        {{"label-priority" | transloco}}
+                    </label><br>
+                    <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                        black;font-weight: 500; min-height: 40px;">
+                        {{applicationData.priority}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

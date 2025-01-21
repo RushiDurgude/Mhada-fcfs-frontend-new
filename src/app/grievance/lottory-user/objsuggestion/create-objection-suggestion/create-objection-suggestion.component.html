@@ -1,0 +1,221 @@
+<div
+  class="m-0 p-0 background-image"
+  style="height: calc(100% - 100px); overflow: auto"
+  (scroll)="onScroll($event)"
+  #divToScroll
+>
+  <div class="m-0 p-0 card-content ng-star-inserted" style="min-height: 87.5%">
+    <div class="col-11 m-3 p-0 card">
+      <div class="grid m2 p-3 col-12">
+        <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+          {{ "raise-objection-and-suggestions" | transloco }}
+        </div>
+        <div class="col-12 form-width">
+          <form [formGroup]="firstFormGroup" class="example-form">
+            <div class="row">
+              <div class="col-12 lg:col-6 xl:col-6 md:col-6 sm:col-12 xs:col-6">
+                <mat-form-field appearance="outline" class="my-form-field">
+                  <mat-label>{{ "select-board" | transloco }}</mat-label>
+                  <mat-select
+                    formControlName="boardCtrl"
+                    (selectionChange)="selectBoard($event.value)"
+                    placeholder="{{ 'select-board' | transloco }}"
+                    class="col-half-width"
+                  >
+                    <mat-option>
+                      <ngx-mat-select-search
+                        [formControl]="boardFilterCtrl"
+                        placeholderLabel="{{ 'find-board' | transloco }}"
+                        noEntriesFoundLabel="{{ 'no-matching-board-found' | transloco }}"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let board of filteredboards | async" [value]="board.key">
+                      {{ board.boardName }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-12 lg:col-6 xl:col-6 md:col-6 sm:col-12 xs:col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ "select-objection-suggestion-type" | transloco }}</mat-label>
+                  <mat-select
+                    formControlName="objectionSuggestionCtrl"
+                    placeholder="{{ 'select-objection-suggestion-type' | transloco }}"
+                    class="col-half-width"
+                  >
+                    <mat-option>
+                      <ngx-mat-select-search
+                        [formControl]="objectionSuggestionFilterCtrl"
+                        placeholderLabel="{{ 'find-objection-suggestion-type' | transloco }}"
+                        noEntriesFoundLabel="{{ 'no-matching-objType-found' | transloco }}"
+                      >
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let type of filteredObjectionSuggestion | async" [value]="type.pkOstid">
+                      {{ type.objectionSuggestion }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ "select-lottery" | transloco }}</mat-label>
+                  <mat-select
+                    formControlName="lotteryCtrl"
+                    placeholder="{{ 'select-lottery' | transloco }}"
+                    class="col-half-width"
+                  >
+                    <mat-option>
+                      <ngx-mat-select-search
+                        [formControl]="lotteryFilterCtrl"
+                        placeholderLabel="{{ 'find-lottery' | transloco }}"
+                        noEntriesFoundLabel="{{ 'no-matching-lottery' | transloco }}"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let l of filteredLottery | async" [value]="l.key">
+                      {{ l.lotteryName }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ "subject" | transloco }}</mat-label>
+                  <input
+                    type="text"
+                    maxlength="500"
+                    matInput
+                    placeholder="{{ 'subject' | transloco }}"
+                    formControlName="subjectCtrl"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ "description" | transloco }}</mat-label>
+                  <textarea
+                    matInput
+                    placeholder="{{ 'description' | transloco }}"
+                    maxlength="4000"
+                    formControlName="remarkCtrl"
+                    rows="6"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                class="col-12 p-1 boxcss text-center"
+                [ngClass]="filenm || filenm1 || filenm2 ? 'bordershow' : 'bordernone'"
+              >
+                <div class="resbox">
+                  <div style="font-weight: 450; padding: 10px" *ngIf="filenm || filenm1 || filenm2">
+                    {{ "attached-documents-lbl" | transloco }}
+                  </div>
+                  <div class="col-12 p-0 lg:col-3 xl:col-3 md:col-3 sm:col-10 xs:col-3">
+                    <input #attachments value="{{ filenm }}" readonly *ngIf="filenm" class="inputdoc" />
+                    <mat-icon *ngIf="isShowClose" title="Remove" style="font-size: medium" (click)="removeAttachment()"
+                      >close
+                    </mat-icon>
+                  </div>
+                  <div class="col-12 p-0 lg:col-3 xl:col-3 md:col-3 sm:col-10 xs:col-3">
+                    <input #attachments1 value="{{ filenm1 }}" readonly class="inputdoc" *ngIf="filenm1" />
+                    <mat-icon
+                      *ngIf="isShowClose1"
+                      title="Remove"
+                      style="font-size: medium"
+                      (click)="removeAttachment1()"
+                      >close
+                    </mat-icon>
+                  </div>
+                  <div class="col-12 p-0 lg:col-3 xl:col-3 md:col-3 sm:col-10 xs:col-3">
+                    <input #attachments2 value="{{ filenm2 }}" readonly class="inputdoc" *ngIf="filenm2" />
+                    <mat-icon
+                      *ngIf="isShowClose2"
+                      title="Remove"
+                      style="font-size: medium"
+                      (click)="removeAttachment2()"
+                      >close
+                    </mat-icon>
+                  </div>
+                </div>
+                <div class="col-12 p-0 text-center">
+                  <div *ngIf="filefirst">
+                    <input
+                      style="display: none"
+                      type="file"
+                      id="file1"
+                      (change)="onChange($event)"
+                      accept="image/png, image/gif, image/jpeg,image/jpg,application/pdf"
+                      #hiddenfileinput
+                    />
+                    <button (click)="upload1()" mat-raised-button class="uploadbtncss">
+                      <div style="color: #003bad">
+                        {{ "upload-file-btn" | transloco }}
+                      </div>
+                    </button>
+                  </div>
+                  <div *ngIf="fileSecond">
+                    <input
+                      style="display: none"
+                      type="file"
+                      id="file2"
+                      accept="image/png, image/gif, image/jpeg,image/jpg,application/pdf"
+                      (change)="onChange1($event)"
+                      #hiddenfileinput1
+                    />
+                    <button (click)="upload2()" mat-raised-button class="uploadbtncss">
+                      <div style="color: #003bad">
+                        {{ "upload-file-btn" | transloco }}
+                      </div>
+                    </button>
+                  </div>
+                  <div *ngIf="filethird">
+                    <input
+                      style="display: none"
+                      type="file"
+                      id="file3"
+                      accept="image/png, image/gif, image/jpeg,image/jpg,application/pdf"
+                      (change)="onChange2($event)"
+                      #hiddenfileinput2
+                    />
+                    <button (click)="upload3()" mat-raised-button class="uploadbtncss">
+                      <div style="color: #003bad">
+                        {{ "upload-file-btn" | transloco }}
+                      </div>
+                    </button>
+                  </div>
+                  <br />
+                  <p class="pl-2 text-center" style="color: #979292">
+                    <span class="text-red-900">*</span> {{ "file-max-msg" | transloco }}
+                    <span class="text-red-900">*</span> {{ "file-ext-msg" | transloco }}
+                    <span class="text-red-900">*</span> {{ "file-size-msg" | transloco }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 text-center">
+              <button
+                class="btnclass"
+                type="submit"
+                mat-raised-button
+                (click)="submitForm()"
+                [ngClass]="firstFormGroup.valid ? 'uploadbtncss' : 'uploaddisabled-button'"
+              >
+                <div [ngClass]="firstFormGroup.valid ? 'enablecolor' : 'disablecolor'">
+                  {{ "button-submit" | transloco }}
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

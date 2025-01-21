@@ -1,0 +1,308 @@
+.toolbar {
+  background: #fff;
+  box-shadow: 0px 0px 21px 5px rgba(0, 0, 0, 0.25);
+  // border-radius: 0px 0px 24px 23px;
+}
+.text-margin-left {
+  margin-left: 9rem;
+}
+.mhada-icon {
+  height: 52px;
+  width: 109px;
+  margin-left: -14px;
+  margin-bottom: 11px;
+}
+@media (max-width: 1024px) {
+  /* Adjustments for tablet/laptop view */
+  .mhada-icon {
+    height: 45px;
+    width: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Adjustments for mobile view */
+  .mhada-icon {
+    height: 50px;
+    width: 60px;
+  }
+}
+.div-border-bottom {
+  border-bottom: 1px solid #cbcbcb;
+  width: fit-content;
+}
+
+.button-strong {
+  border: 1px solid black;
+  padding: 3px;
+  display: inline-block;
+}
+
+.white-icon {
+  color: white;
+  background-color: black !important;
+}
+.white-icon svg {
+  fill: white;
+}
+
+.language-toggle-button {
+  background: #fff;
+  padding: 0.6rem 1.55rem;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+}
+.profile-button {
+  background: #ffe896;
+}
+.text-margin-left-large-screen {
+  margin-left: 12rem;
+}
+.toolbar-helpline-anchor {
+  text-decoration: underline;
+  color: #323232;
+  font-size: 12px;
+}
+
+.contact-but {
+  background-color: white; /* Button background color */
+  color: black; /* Button text color */
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 1px solid #ddd; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  display: inline-flex; /* Align items horizontally */
+  align-items: center; /* Vertically align icon and text */
+  justify-content: center;
+  gap: 8px; /* Space between icon and text */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.contact-icon {
+  font-size: 18px; /* Icon size */
+  margin-left: 0; /* Remove negative margin */
+}
+
+.contact-but:hover {
+  background-color: #f1f1f1; /* Hover background color */
+  color: black; /* Hover text color */
+}
+
+.dropdown-ihlms {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown button */
+.dropbtn-ihlms {
+  background-color: white; /* Button background color */
+  color: black; /* Button text color */
+  padding: 8px 7px;
+  border: 1px solid #ddd; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Space between text and arrow */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-family: Poppins;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 14px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content-ihlms {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 60px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1); /* Dropdown shadow */
+  z-index: 1;
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ddd; /* Border color */
+  font-family: Poppins;
+  font-size: 15px;
+    font-weight: 300;
+    line-height: 14px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+/* Dropdown content links */
+.dropdown-content-ihlms a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Show dropdown content on hover */
+.dropdown-ihlms:hover .dropdown-content-ihlms {
+  display: block;
+}
+
+/* Add hover effect to dropdown links */
+.dropdown-content-ihlms a:hover {
+  background-color: #f1f1f1; /* Highlight color */
+}
+
+/* Arrow styling */
+.arrow-ihlms {
+  font-size: 12px; /* Smaller size for the arrow */
+}
+
+.like-this-btn {
+  display: flex;
+  width: 47px;
+  height: 40px;
+  padding: 5px 10px 7px 10px;
+  align-items: center;
+  justify-content: center; /* Center the SVG horizontally */
+  gap: 5px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1px solid var(--For-Outline-Light-Gray, #E6E6E6);
+  background: var(--Schemes-On-Primary, #FFF);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  border: 1px solid #ddd; /* Border color */
+}
+
+.dropdown-font {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown button */
+.dropbtn-font {
+  background-color: white; /* Button background color */
+  color: #313638; /* Button text color */
+  padding: 10px 18px;
+  border: 1px solid #ddd; /* Border color */
+  border-radius: 40px; /* Rounded corners */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Space between text and arrow */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-family: Poppins;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 7px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content-font {
+  display: none;
+  position: absolute;
+  background-color: white;
+  //min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1); /* Dropdown shadow */
+  z-index: 1;
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ddd; /* Border color */
+  text-align: center;
+}
+
+/* Dropdown content links */
+.dropdown-content-font a {
+  color: #313638;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center text inside the links */
+  width: 100%; /* Full width for consistent alignment */
+  font-family: Poppins;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 7px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+/* Show dropdown content on hover */
+.dropdown-font:hover .dropdown-content-font {
+  display: block;
+}
+
+/* Add hover effect to dropdown links */
+.dropdown-content-font a:hover {
+  background-color: #f1f1f1; /* Highlight color */
+}
+
+/* Arrow styling */
+.arrow-font {
+  font-size: 12px; /* Smaller size for the arrow */
+}
+
+.menu-and-logo-container {
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Align menu and image vertically */
+  gap: 10px; /* Add space between the menu button and the CIDCO image */
+  margin-left: 20px
+}
+
+// .mhada-icon {
+//   height: 52px;
+//   width: 120px;
+//   cursor: pointer;
+//   margin-left: -12px;
+// }
+
+.menu-button {
+  border: none; /* Remove border from the button */
+  background: none; /* Remove background from the button */
+  cursor: pointer; /* Add pointer cursor */
+}
+
+.login-button {
+  background-color: #1F71BB;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 6px;
+  gap: 4px;
+  cursor: pointer;
+  margin-left: 14px;
+  font-family: Poppins;
+  font-size: 13px;
+  font-weight: 600;
+  /* line-height: 11px; */
+  letter-spacing: 0.05em;
+}
+
+.login-button:hover {
+  background-color: #1F71BB;
+  /* Slightly darker blue on hover */
+}
+
+.icon {
+  font-size: 35px;
+    color: white;
+    width: 14px;
+    height: 17px;
+}
+
+

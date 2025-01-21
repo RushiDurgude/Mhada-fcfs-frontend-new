@@ -1,0 +1,347 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<!-- <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher> -->
+<button
+  (click)="scrollIntoView()"
+  class="scrollToTop"
+  title="Top"
+  *ngIf="scrollToTopVisible"
+  [ngClass]="platform == 'ios' ? 'mb-6' : ''"
+>
+  <!-- <ion-icon name="arrow-up" style="color: white"></ion-icon> -->
+  <!-- <ion-icon name="arrow-dropup" style="color: white"></ion-icon> -->
+  <mat-icon style="color: white">expand_less</mat-icon>
+</button>
+<div
+  class="grid m-0 p-0 background-image"
+  style="height: calc(100% - 100px); overflow: auto"
+  (scroll)="onScroll($event)"
+  #divToScroll
+>
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+  <div class="col-12 lg:col-10 xl:col-10 md:col-10 pl-3 pr-3 pb-0" #target [ngClass]="platform == 'ios' ? 'mb-6' : ''">
+    <div class="grid m-0 p-0">
+      <div class="col-12 p-0 text-right">
+        <button mat-icon-button style="background: #fff" class="mb-1" (click)="refreshPage()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+      <div class="col-12 xl:col-2 lg:col-2"></div>
+      <div class="col-12 xl:col-8 lg:col-8 card">
+        <div class="grid m-0 p-0">
+          <div class="col-12 text-xl text-center">{{ "profile_header" | transloco }}</div>
+          <div class="col-4 xl:col-12 lg:col-12 text-center m-0 p-0"></div>
+          <div class="col-4 xl:col-2 lg:col-3 text-center">
+            <img [src]="photo" class="person shadow-3" />
+          </div>
+          <div class="col-12 xl:col-10 lg:col-9">
+            <div class="grid">
+              <div class="col-12">
+                <label class="profile-label"> {{ "name" | transloco }} </label>
+                <label> : {{ name }} </label>
+              </div>
+              <div class="col-12" *ngIf="nomineeOfAppName">
+                <label class="profile-label"> {{ "nomineeOfAppName" | transloco }} </label>
+                <label> : {{ nomineeOfAppName }} </label>
+              </div>
+              <div class="col-12" *ngIf="otherNames != ''">
+                <label class="profile-label"> {{ "other-names" | transloco }} </label>
+                <label>
+                  :
+                  {{ otherNames }}
+                </label>
+              </div>
+              <div class="col-12" *ngIf="aliasName != ''">
+                <label class="profile-label"> {{ "aliasName" | transloco }} </label>
+                <label> : {{ aliasName }} </label>
+              </div>
+              <div class="col-12">
+                <label class="profile-label"> {{ "mob" | transloco }} </label>
+                <label> : +91 {{ mobileNo }} </label>
+              </div>
+
+              <!-- <div class="col-12">
+                  <label class="profile-label"> Aadhar No </label>
+                  <label> : {{ aadharNo }} </label>
+                </div> -->
+              <div class="col-12">
+                <label class="profile-label"> {{ "pan" | transloco }} </label>
+                <label> : {{ panNo }} </label>
+              </div>
+              <div class="col-12">
+                <label class="profile-label"> {{ "dob" | transloco }} </label>
+                <label> : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ dob }} </label>
+              </div>
+              <!-- <div class="col-12" id="parent">
+                <div id="narrow">
+                  <label class="profile-label"> {{ "addr" | transloco }} </label>:
+                </div>
+                <div id="wide">
+                  <label>
+                    {{ address }}
+                  </label>
+                </div>
+              </div> -->
+              <div class="col-12">
+                <div class="grid p-2">
+                  <div class="col-12 p-0">
+                    <label class="profile-label"> {{ "addr" | transloco }} </label>:
+                  </div>
+                  <div class="col-12 p-0">
+                    <label>
+                      {{ address }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-12" id="parent" *ngIf="currentAddress != ''">
+                <div id="narrow">
+                  <label class="profile-label"> {{ "currAddr" | transloco }} </label>:
+                </div>
+                <div id="wide">
+                  <label>
+                    {{ currentAddress }}
+                  </label>
+                </div>
+              </div> -->
+              <div class="col-12" *ngIf="currentAddress != ''">
+                <div class="grid p-2">
+                  <div class="col-12 p-0">
+                    <label class="profile-label"> {{ "currAddr" | transloco }} </label>:
+                  </div>
+                  <div class="col-12 p-0">
+                    <label>
+                      {{ currentAddress }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 xl:col-12 lg:col-12 text-center m-0 p-0"></div>
+        </div>
+      </div>
+      <div class="col-12 xl:col-3 lg:col-2"></div>
+    </div>
+    <div class="grid m-0 p-0">
+      <!-- <div class="col-6 text-left text-l"></div> -->
+      <div class="col-6 xl:col-3 lg:col-3 text-right">
+        <!-- <button class="download-profile-btn shadow-3 text-l" disabled>Download Profile</button> -->
+      </div>
+      <div class="col-12 xl:col-3 text-center" [ngClass]="isEsignDisabled == true ? '' : 'pulsingButton'">
+        <button
+          [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+          [disabled]="isEsignDisabled"
+          (click)="generateEsignRequestV1()"
+          [ngClass]="isEsignDisabled == true ? 'disabled-button' : 'active-button'"
+          class="shadow-3 p-0"
+          style="width: 100%"
+        >
+          {{ "eSign" | transloco }}
+        </button>
+        <!-- <form
+          [formGroup]="contactsForm"
+          #addform="ngForm"
+          action="https://demosignergateway.emsigner.com/eMsecure/V3_0/Index"
+          (submit)="eMsecure($event)"
+          method="post"
+        >
+          <input id="Parameter1" name="Parameter1" type="hidden" formControlName="Parameter1" />
+          <input id="Parameter2" name="Parameter2" type="hidden" formControlName="Parameter2" />
+          <input id="Parameter3" name="Parameter3" type="hidden" formControlName="Parameter3" />
+          <input id="formAction2" name="formAction2" type="hidden" value="EsignWithASP" />
+          <button
+            [disabled]="isEsignDisabled"
+            [ngClass]="isEsignDisabled == true ? 'disabled-button' : 'active-button'"
+            class="shadow-3"
+            style="width: 100%"
+          >
+            {{ "eSign" | transloco }}
+          </button>
+        </form> -->
+      </div>
+
+      <div class="col-12 xl:col-3 text-center">
+        <button
+          [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+          [disabled]="applyNowBtnDisabled"
+          class="shadow-3"
+          (click)="applyNow()"
+          [ngClass]="applyNowBtnDisabled == true ? 'disabled-button' : 'active-button'"
+          style="width: 100%"
+        >
+          {{ "applyNow" | transloco }}
+        </button>
+      </div>
+      <div class="col-12 card">
+        <table class="table" style="width: 100%; background: #fff">
+          <thead class="table">
+            <th style="width: 90%">{{ "docName" | transloco }}</th>
+            <th style="width: 10%">{{ "actions" | transloco }}</th>
+          </thead>
+          <tbody>
+            <tr class="table" *ngFor="let document of documents">
+              <td style="width: 90%">
+                <div class="grid">
+                  <div 
+                    [ngClass]="
+                      document.qs_ans_status == 'Verified' ||
+                      document.qs_ans_status == 'Answered' ||
+                      document.qs_ans_status == 'Uploaded' ||
+                      document.qs_ans_status == 'Updated'
+                        ? 'verified'
+                        : document.qs_ans_status.toLowerCase().includes('rejected') ||
+                          document.qs_ans_status == 'MHADA Winner with Possession'
+                        ? 'rejected'
+                        : document.qs_ans_status == 'Not Answered'
+                        ? 'not-answered'
+                        : document.qs_ans_status == 'Pending'
+                        ? 'pending'
+                        : document.qs_ans_status == 'Pending for Moderator Check' ||
+                          document.qs_ans_status == 'Verification in Progress' ||
+                          document.qs_ans_status == 'Allowed with Condition' ||
+                          document.qs_ans_status == 'Existing Winner but ready to Surrender'
+                        ? 'pending'
+                        : 'not-applicable'
+                    "
+                    >
+                    <!-- {{
+                        document.qsCode == "Q_CASTE" || document.qsCode == "Q_MARITAL"
+                          ? document.qs_ans
+                          : document.qs_ans_status
+                      }} -->
+
+                    {{ document.qsCode != "Q_ADDRESS" ? document.qs_ans : "" }}
+                    {{ document.qsCode == "Q_ADDRESS" ? documentName : "" }}
+                    {{ document.qs_ans == null || document.qs_ans == "" || document.qs_ans == " " ? "" : "/" }}
+                    {{ document.qs_ans_status }} 
+                  </div>
+                  <div class="ml-2" *ngIf="document.qsCode === 'Q_STATE' ">
+
+                    <!-- <ion-icon (click)="openPopup(document.qsCode)" name="information-circle-outline"></ion-icon>  -->
+                    <mat-icon style="font-size: 16px; padding-top: 6px;" (click)="openPopup(document.qsCode)">info</mat-icon>
+              
+                  </div>
+                  <div class="ml-2" *ngIf="document.qsCode === 'Q_ITR' ">
+                    <mat-icon style="font-size: 16px; padding-top: 6px;" (click)="openPopup(document.qsCode)">info</mat-icon>
+                  </div>
+                  <div class="ml-2" *ngIf="document.qsCode === 'Q_ITR_SPOUSE' ">
+                    <mat-icon style="font-size: 16px; padding-top: 6px;" (click)="openPopup(document.qsCode)">info</mat-icon>
+                  </div>
+                  <div class="ml-2" *ngIf="document.qsCode === 'Q_INCOME_CERT' ">
+                    <mat-icon style="font-size: 16px; padding-top: 6px;" (click)="openPopup(document.qsCode)">info</mat-icon>
+                  </div>
+                </div>
+                {{ document.qsProfileDescription[activeLang] }}
+              </td>
+              <td style="width: 10%" class="text-center">
+                <ion-icon color="dark"
+                  name="settings"
+                  class="profile-button cursor-pointer"
+                  *ngIf="document.qsCode != 'Q_CONSENT'"
+                  (click)="presentActionSheet(document)"
+                ></ion-icon>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-12 xl:col-3 text-center">
+        <button
+          [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+          class="shadow-3"
+          [disabled]="downloadEsignDisabled"
+          [ngClass]="downloadEsignDisabled == true ? 'disabled-button' : 'active-button'"
+          style="width: 100%"
+          (click)="downloadEsignFile()"
+        >
+          {{ "downloadEsign" | transloco }}
+        </button>
+      </div>
+    </div>      
+  </div>
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+</div>
+
+<!-- <ng-template #popupQuesTemplate let-data>
+  <mat-dialog-content>
+    State Government Category: State government servants and employees of the Statutory boards, corporations, etc. (except the Maharashtra Housing and Area Development Authority) under the State Government including those who have already retired.
+  </mat-dialog-content>
+  <button
+  mat-icon-button
+  (click)="dialogRef.close()"
+  style="position: absolute; top: 0; right: 0; margin: 8px;"
+  aria-label="Close"
+>
+  <mat-icon>close</mat-icon>
+</button>
+</ng-template> -->
+<ng-template #popupQuesTemplate let-data>
+  <div style="position: relative;">
+    <mat-dialog-content>
+      State Government Category: State government servants and employees of the Statutory boards, corporations, etc. (except the Maharashtra Housing and Area Development Authority) under the State Government including those who have already retired.
+    </mat-dialog-content>
+    <button
+      mat-icon-button
+      (click)="closeDialog()"
+      style="position: absolute; top: 0; right: 0; margin: 0px;"
+      aria-label="Close"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</ng-template>
+
+
+
+<ng-template #popupQuesTemplateITR let-data>
+
+  <div style="position: relative;">
+    <button style="float: right; margin-top: 30px;"
+    mat-icon-button
+    (click)="closeDialog()"
+    aria-label="Close"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+    <mat-dialog-content>
+      Income : Family income comprises the combined income of the applicant and their spouse derived from any occupation, trade, business, employment, or other source constituting normal means of livelihood. As proof of income, the applicant may submit either an Income Tax Return (ITR) or an income certificate issued by the Tahsildar's office (Maharashtra state).If the applicant is married and both are working, then they must submit their individual income proofs (Separate ITR of self and spouse or Income certificate having combined income of self and spouse). For state government employees, central government employees, and MHADA employees, an ITR is mandatory. 
+    </mat-dialog-content>
+   
+  </div>
+</ng-template>
+
+<ng-template #popupQuesTemplateITR_SPOUSE let-data>
+  <div style="position: relative;">
+    <button style="float: right; margin-top: 30px;"
+    mat-icon-button
+    (click)="closeDialog()"
+    aria-label="Close"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-dialog-content>
+    Income : Family income comprises the combined income of the applicant and their spouse derived from any occupation, trade, business, employment, or other source constituting normal means of livelihood. As proof of income, the applicant may submit either an Income Tax Return (ITR) or an income certificate issued by the Tahsildar's office (Maharashtra state).If the applicant is married and both are working, then they must submit their individual income proofs (Separate ITR of self and spouse or Income certificate having combined income of self and spouse). For state government employees, central government employees, and MHADA employees, an ITR is mandatory. 
+  </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #popupQuesTemplateFamilyIncome let-data>
+  <div style="position: relative;">
+    <button style="float: right; margin-top: 30px;"
+    mat-icon-button
+    (click)="closeDialog()"
+    aria-label="Close"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-dialog-content>
+    Family Income : Family income comprises the combined income of the applicant and their spouse derived from any occupation, trade, business, employment, or other source constituting normal means of livelihood. As proof of income, the applicant may submit either an Income Tax Return (ITR) or an income certificate issued by the Tahsildar's office (Maharashtra state).If the applicant is married and both are working, then they must submit their individual income proofs (Separate ITR of self and spouse or Income certificate having combined income of self and spouse). For state government employees, central government employees, and MHADA employees, an ITR is mandatory. 
+  </mat-dialog-content>
+  </div>
+</ng-template>
+

@@ -1,0 +1,31 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="height: calc(100% - 100px);" *ngIf="!scanFlag">
+    <div class="col-12 pl-4 pr-4">
+        <div class="col-12 card">
+            <div class="col-12 line-height-1 text-2xl" style="display: flex;">
+                <div>
+                    {{"menu-verify-qr" | transloco}}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-6 text-center">
+            <button type="button" class="btn-medium shadow-4 mt-0" (click)="scanQrCode()">Scan QR Code</button>
+        </div>
+    </div>
+</div>
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="height: calc(100% - 100px);" *ngIf="scanFlag">
+    <div class="col-12 pl-4 pr-4">
+        <div class="col-12 card">
+            <div class="col-12 line-height-1 text-2xl" style="display: flex;">
+                <div>
+                    <a (click)="scanAgain()">
+                        <ion-icon name="arrow-undo"></ion-icon>
+                    </a>
+                    {{data?.documentType}}
+                </div>
+            </div>
+        </div>
+        <app-verify-scanned-document [data]="data" *ngIf="scanFlag"></app-verify-scanned-document>
+    </div>
+</div>

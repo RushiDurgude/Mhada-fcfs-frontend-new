@@ -1,0 +1,104 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-icon name="close-circle-sharp" 
+                (click)="cancel()" style="color: red;font-size: 26px;"></ion-icon>
+        </ion-buttons>
+        <ion-title class="pl-3">{{"title-header-terms-and-conditions" | transloco}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="p-1">
+    <div class="col-12" style="height: calc(100% - 60px);">
+      <div class="col-12 p-2" *ngIf="type === 'APPLICATION'">
+        {{"terms-and-conditions-application-1" | transloco}}
+        <br><br>
+        {{"terms-and-conditions-application-2" | transloco}}
+        <br><br>
+        {{"terms-and-conditions-application-3" | transloco}}
+      </div>
+      <div class="col-12 p-2" *ngIf="type === 'EMD_PAYMENT'">
+        <h4 style="text-decoration: underline;">
+          {{"terms-and-conditions-emd-payment-header-1" | transloco}}
+        </h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{{"terms-and-conditions-emd-payment-paragraph-1-col-hdr-1" | transloco}}</th>
+              <th>{{"terms-and-conditions-emd-payment-paragraph-1-col-hdr-2" | transloco}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mdrObj of mdrList">
+              <td>{{lang === 'mr' ? mdrObj.paymentModeMr : mdrObj.paymentModeEn}}</td>
+              <td>{{lang === 'mr' ? mdrObj.mdrRateMr : mdrObj.mdrRateEn}}</td>
+            </tr>
+            <!--tr>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl1-1" | transloco}}</td>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl1-2" | transloco}}</td>
+            </tr>
+            <tr>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl2-1" | transloco}}</td>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl2-2" | transloco}}</td>
+            </tr>
+            <tr>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl3-1" | transloco}}</td>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl3-2" | transloco}}</td>
+            </tr>
+            <tr>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl3-3" | transloco}}</td>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl3-4" | transloco}}</td>
+            </tr>
+            <tr>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl3-5" | transloco}}</td>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl3-6" | transloco}}</td>
+            </tr>
+            <tr>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl4-1" | transloco}}</td>
+              <td>{{"terms-and-conditions-emd-payment-paragraph-1-col-dtl4-2" | transloco}}</td>
+            </tr-->
+          </tbody>
+        </table><br><br>
+        <h4 style="text-decoration: underline;">
+          {{"terms-and-conditions-emd-payment-header-2" | transloco}}
+        </h4>
+        {{"terms-and-conditions-emd-payment-paragraph-21" | transloco}}<br><br>
+        {{"terms-and-conditions-emd-payment-paragraph-22" | transloco}}<br><br>
+        {{"terms-and-conditions-emd-payment-paragraph-23" | transloco}}<br><br>
+        {{"terms-and-conditions-emd-payment-paragraph-24" | transloco}}<br><br>
+        <h4 style="text-decoration: underline;">
+          {{"terms-and-conditions-emd-payment-header-3" | transloco}}
+        </h4>
+        {{"terms-and-conditions-emd-payment-paragraph-31" | transloco}}<br><br>
+      </div>
+
+      <div class="col-12 p-2" *ngIf="type === 'INS_PAYMENT'">
+        <h4 style="text-decoration: underline;">
+          {{"terms-and-conditions-ins-payment-header-1" | transloco}}
+        </h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{{"terms-and-conditions-ins-payment-paragraph-1-col-hdr-1" | transloco}}</th>
+              <th>{{"terms-and-conditions-ins-payment-paragraph-1-col-hdr-2" | transloco}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mdrObj of mdrList">
+              <td>{{lang === 'mr' ? mdrObj.paymentModeMr : mdrObj.paymentModeEn}}</td>
+              <td>{{lang === 'mr' ? mdrObj.mdrRateMr : mdrObj.mdrRateEn}}</td>
+            </tr>
+          </tbody>
+        </table><br><br>
+        <h4 style="text-decoration: underline;">
+          {{"terms-and-conditions-ins-payment-header-2" | transloco}}
+        </h4>
+        {{"terms-and-conditions-ins-payment-paragraph-22" | transloco}}<br><br>
+        {{"terms-and-conditions-ins-payment-paragraph-23" | transloco}}<br><br>
+        <h4 style="text-decoration: underline;">
+          {{"terms-and-conditions-ins-payment-header-3" | transloco}}
+        </h4>
+        {{"terms-and-conditions-ins-payment-paragraph-31" | transloco}}<br><br>
+      </div>
+
+    </div>
+</ion-content>

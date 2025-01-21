@@ -1,0 +1,282 @@
+.tags {
+    text-decoration: none;
+}
+
+
+@import "../../../../src/theme/ihlms-scss/core.scss";
+.add-user {
+  .title {
+    font-size: 20px;
+    color: $black;
+    font-weight: 500;
+  }
+}
+
+.borderBottom {
+  border-bottom: 1px solid $grayLight;
+  margin: 15px 15px 25px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+h1 {
+  margin: 0 auto;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.image-preview-container {
+  width: 30%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 10px;
+}
+
+@media (max-width: 768px) {
+  .image-preview-container {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+.image-preview-container img {
+  width: 100%;
+  display: none;
+  margin-bottom: 30px;
+}
+.image-preview-container input {
+  display: none;
+}
+
+.image-preview-container label {
+  display: block;
+  width: 50%;
+  height: 100%;
+  margin-left: 25%;
+  text-align: center;
+  background: #2196f3;
+  color: #fff;
+  font-size: 20px;
+  // text-transform: Uppercase;
+  font-weight: 400;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fileLabel {
+  display: inline-block;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #2196f3;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  user-select: none;
+  cursor: pointer;
+  box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.35);
+  border-radius: 3px;
+}
+
+.add-userDetails {
+  border-radius: 10px;
+  background-color: $white;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06);
+  max-height: 150vh;
+  height: auto;
+
+  .user-responsibilities {
+    .title {
+      font-size: 16px;
+      color: $black;
+      font-weight: 500;
+    }
+    .add-btn {
+      .btn {
+        width: 45px !important;
+        height: 45px;
+      }
+    }
+  }
+
+  .responsibilities-table {
+    width: 100%;
+    position: relative;
+
+    tr {
+      margin-bottom: 5px;
+      padding: 0 10px;
+      &:hover {
+        background-color: $hoverEffect;
+        border-radius: 10px;
+      }
+      .delete-btn {
+        display: block !important;
+      }
+
+      td {
+        color: $black;
+      }
+    }
+
+    tr:nth-child(even) {
+      background-color: $activeGray;
+    }
+
+    .responsibilities-details {
+      width: 97%;
+      position: relative;
+      .responsibilities-info {
+        width: 100%;
+        &.delete-btn {
+          width: 45px !important;
+          position: absolute;
+          right: -27px;
+          top: 27px;
+          display: none;
+        }
+
+        .btn {
+          color: $primery;
+        }
+      }
+    }
+  }
+}
+
+.add-btn1 {
+  margin: auto;
+  // width: 50%;
+}
+
+.delete-mobile,
+.mobile-header {
+  display: none;
+}
+
+// @media (max-width: 767px) {
+//   .flex {
+//     display: flex;
+//     flex-direction: column; /* or row, depending on your layout */
+//     align-items: center;
+//   }
+
+//   .add-btn1 {
+//     width: 100%;
+//   }
+// }
+
+@media (max-width: 767px) {
+  .add-user,
+  .delete-btn {
+    display: none !important;
+    .delete-btns {
+      display: none !important;
+    }
+  }
+
+  .add-btn1 {
+    width: 100%;
+  }
+
+  .responsibilities-details {
+    display: block !important;
+    width: 100% !important;
+    padding-bottom: 10px;
+  }
+
+  .add-userDetails {
+    margin-top: 0 !important;
+    max-height: calc(100vh - 165px) !important;
+  }
+
+  .mobile-btn {
+    padding: 10px 15px;
+    position: relative;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .delete-mobile {
+    display: block !important;
+    border-bottom: 1px solid $grayLight;
+    padding-bottom: 20px;
+  }
+
+  .add-btn-mobile {
+    border-bottom: 1px solid $grayLight;
+    margin-bottom: 30px;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 10px !important;
+  }
+
+  .selected-image-to-upload {
+    max-width: 200px;
+    height: auto;
+    // border: solid;
+  }
+  .selected-image {
+    height: 180px;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .mobile-header {
+    background-color: $white;
+    padding: 15px 10px;
+    border-radius: 0 0 20px 0;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.06);
+    display: block;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    .btn {
+      color: $primery;
+      box-shadow: none !important;
+    }
+
+    .title {
+      font-size: 20px;
+      color: $black;
+      font-weight: 500;
+    }
+  }
+
+  tr {
+    &:hover {
+      background-color: transparent !important;
+    }
+    &:nth-child(even) {
+      background-color: transparent !important;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .responsibilities-details {
+    .responsibilities-info {
+      &.delete-btn {
+        right: -19px !important;
+      }
+    }
+  }
+}

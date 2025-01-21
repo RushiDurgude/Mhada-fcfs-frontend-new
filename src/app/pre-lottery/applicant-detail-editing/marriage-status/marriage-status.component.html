@@ -1,0 +1,559 @@
+<div class="add-lotteryDetails">
+  <!-- pageScroll-bar mt-1 -->
+  <form
+    [formGroup]="form"
+    #localForm="ngForm"
+    (ngSubmit)="isSubmitDisabled = true; onSubmit()"
+  >
+    <div
+      class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-3"
+    >
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+        style="color: black"
+      >
+        <label for="currentMaritalStatus" class="label-input">
+          {{ "marriage-status" | transloco }}
+          <span class="text-red-900">*</span> </label
+        ><br />
+
+        <h3>
+          <span style="background-color: orange; color: white">{{
+            data?.marriageStatus
+          }}</span>
+        </h3>
+      </div>
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+        style="color: black"
+      >
+        <label for="newMaritalStatus" class="label-input">
+          {{ "new-marriage-status" | transloco }}
+          <span class="text-red-900">*</span>
+        </label>
+        <mat-select
+          id="newMaritalStatus"
+          formControlName="newMaritalStatus"
+          class="form-control select-dropdwon"
+          (selectionChange)="onSelectionChange($event.value)"
+        >
+          <mat-option value="">{{ "select" | transloco }}</mat-option>
+          <mat-option
+            *ngFor="let o of data?.newMaritalStatus | keyvalue"
+            [value]="o"
+          >
+            {{ o.value }}
+          </mat-option>
+        </mat-select>
+        <field-error-component
+          [controlName]="form.get('newMaritalStatus')"
+          [formSubmitted]="localForm.submitted"
+          class="position-absolute block"
+        >
+        </field-error-component>
+      </div>
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+        style="color: black"
+      ></div>
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-2 position-relative"
+        style="color: black"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      >
+        <label for="spouseName" class="label-input">
+          {{ "spouse-name" | transloco }} <span class="text-red-900">*</span>
+        </label>
+        <input
+          type="text"
+          id="spouseName"
+          formControlName="spouseName"
+          class="form-control"
+          autocomplete="off"
+          maxlength="180"
+        />
+        <field-error-component
+          [controlName]="form.get('spouseName')"
+          [formSubmitted]="localForm.submitted"
+          class="position-absolute block"
+        >
+        </field-error-component>
+      </div>
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-2 position-relative"
+        style="color: black"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      >
+        <label for="spousePan" class="label-input">
+          {{ "spouse-pan" | transloco }} <span class="text-red-900">*</span>
+        </label>
+        <input
+          type="text"
+          id="spousePan"
+          formControlName="spousePan"
+          class="form-control"
+          autocomplete="off"
+          maxlength="10"
+          onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"
+        />
+        <field-error-component
+          [controlName]="form.get('spousePan')"
+          [formSubmitted]="localForm.submitted"
+          class="position-absolute block"
+        >
+        </field-error-component>
+      </div>
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-2 position-relative"
+        style="color: black"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      >
+        <label for="spouseAadhaar" class="label-input">
+          {{ "spouse-aadhar" | transloco }} <span class="text-red-900">*</span>
+        </label>
+        <input
+          type="text"
+          inputmode="numeric"
+          id="spouseAadhaar"
+          formControlName="spouseAadhaar"
+          class="form-control"
+          autocomplete="off"
+          maxlength="12"
+          onkeypress="return /[0-9,]/i.test(event.key)"
+        />
+        <field-error-component
+          [controlName]="form.get('spouseAadhaar')"
+          [formSubmitted]="localForm.submitted"
+          class="position-absolute block"
+        >
+        </field-error-component>
+      </div>
+
+      <!-- <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-3 pb-2 position-relative"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      > -->
+      <!-- <div class="col-12 p-0"> -->
+      <!-- <div
+            class="col-12 sm:col-12 md:col-4 lg:col-4 field"
+            style="padding-top: 17px"
+          >
+            <label for="spousePanFile" style="color: #979292">
+              {{ "spouse-pan-file" | transloco
+              }}<span class="text-red-900">*</span> </label
+            ><br />
+            <input
+              type="file"
+              id="uploadBtn"
+              #file
+              accept=".jpg, .jpeg, .png"
+              formControlName="spousePanFile"
+              (change)="spousePanSelect($event)"
+              (click)="file.click()"
+            />
+            <label class="fileLabel" for="uploadBtn">
+              {{ "select-file" | transloco }}
+            </label>
+
+            <div *ngIf="selectedFile" class="pl-2 pt-2" style="float: left">
+              {{ selectedFile?.name }}
+            </div>
+          </div> -->
+      <div
+        class="image-preview-container"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      >
+        <div class="preview">
+          <img height="200px" width="220px" id="preview-selected-image-pan" />
+        </div>
+        <label for="spousePanFile">
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          {{ "spouse-pan-file" | transloco }}
+        </label>
+        <input
+          type="file"
+          id="spousePanFile"
+          #file
+          accept=".jpg, .jpeg, .png"
+          formControlName="spousePanFile"
+          (change)="spousePanSelect($event)"
+          (click)="file.click()"
+        />
+        <field-error-component
+          [controlName]="form.get('spousePanFile')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component>
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+
+      <div
+        class="image-preview-container"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      >
+        <div class="preview">
+          <img
+            height="200px"
+            width="220px"
+            id="preview-selected-image-aadhar"
+          />
+        </div>
+        <label for="spouseAadharFile">
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          {{ "spouse-aadhar-file" | transloco }}
+        </label>
+        <input
+          type="file"
+          id="spouseAadharFile"
+          #file1
+          accept=".jpg, .jpeg, .png"
+          formControlName="spouseAadharFile"
+          (change)="spouseAadharSelect($event)"
+          (click)="file1.click()"
+        />
+        <field-error-component
+          [controlName]="form.get('spouseAadharFile')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component>
+      </div>
+
+      <!-- <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-3 pb-4 position-relative"
+        style="color: black"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      >
+        <div class="col-12 p-0">
+          <div
+            class="col-12 sm:col-12 md:col-4 lg:col-6 field"
+            style="padding-top: 17px"
+          >
+            <label for="spouseAadharFile" style="color: #979292">
+              {{ "spouse-aadhar-file" | transloco }}
+              <span class="text-red-900">*</span> </label
+            ><br />
+            <input
+              type="file"
+              id="uploadBtn1"
+              #file1
+              accept=".jpg, .jpeg, .png"
+              formControlName="spouseAadharFile"
+              (change)="spouseAadharSelect($event)"
+              (click)="file1.click()"
+            />
+            <label class="fileLabel" for="uploadBtn1">
+              {{ "select-file" | transloco }}</label
+            >
+
+            <div *ngIf="selectedFile1" class="pl-2 pt-2" style="float: left">
+              {{ selectedFile1?.name }}
+            </div>
+          </div>
+          <field-error-component
+            [controlName]="form.get('spouseAadharFile')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component>
+        </div>
+      </div> -->
+
+      <div
+        class="image-preview-container-marriage"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      >
+        <div class="preview">
+          <img
+            height="200px"
+            width="220px"
+            id="preview-selected-image-marriageCertificate"
+          />
+        </div>
+        <label for="marriageCertificateFile">
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          {{ "spouse-marriage-file" | transloco }}
+        </label>
+        <input
+          type="file"
+          id="marriageCertificateFile"
+          #file2
+          accept=".jpg, .jpeg, .png"
+          formControlName="marriageCertificateFile"
+          (change)="spouseMarriageCertificateSelect($event)"
+          (click)="file2.click()"
+        />
+        <field-error-component
+          [controlName]="form.get('marriageCertificateFile')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component>
+      </div>
+
+      <!-- <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+        *ngIf="form.value.newMaritalStatus.value == 'Married'"
+      >
+        <div class="col-12 p-0">
+          <div
+            class="col-12 sm:col-12 md:col-4 lg:col-4 field"
+            style="padding-top: 17px"
+          >
+            <label for="marriageCertificateFile" style="color: #979292">
+              {{ "spouse-marriage-file" | transloco
+              }}<span class="text-red-900">*</span> </label
+            ><br />
+            <input
+              type="file"
+              id="uploadBtn2"
+              #file2
+              accept=".jpg, .jpeg, .png"
+              formControlName="marriageCertificateFile"
+              (change)="spouseMarriageCertificateSelect($event)"
+              (click)="file2.click()"
+            />
+            <label class="fileLabel" for="uploadBtn2">
+              {{ "select-file" | transloco }}</label
+            >
+            <div *ngIf="selectedFile2" class="pl-2 pt-2" style="float: left">
+              {{ selectedFile2?.name }}
+            </div>
+          </div>
+          <field-error-component
+            [controlName]="form.get('marriageCertificateFile')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="col-12 pl-2 md:col-12 md:pr-3 pr-2 pt-0 pb-2 position-relative">
+      <div
+        class="image-preview-container"
+        *ngIf="form.value.newMaritalStatus.value == 'Divorcee'"
+      >
+        <!-- style="margin-left: 15px" -->
+        <div class="preview">
+          <img
+            height="200px"
+            width="220px"
+            id="preview-selected-image-courtOrder"
+          />
+        </div>
+        <label for="courtOrderFile">
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          {{ "court-order-file" | transloco }}
+        </label>
+        <input
+          type="file"
+          id="courtOrderFile"
+          #file3
+          accept=".jpg, .jpeg, .png"
+          formControlName="courtOrderFile"
+          (change)="courtOrderSelect($event)"
+          (click)="file3.click()"
+        />
+        <field-error-component
+          [controlName]="form.get('courtOrderFile')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component>
+      </div>
+    </div>
+
+    <!-- <div
+      class="flex align-items-center border-bottom px-3 pt-3"
+      *ngIf="form.value.newMaritalStatus.value == 'Divorcee'"
+    >
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+        style="color: black"
+      >
+        <div class="col-12 p-0">
+          <div
+            class="col-12 sm:col-12 md:col-4 lg:col-6 field"
+            style="padding-top: 17px"
+          >
+            <label for="courtOrderFile" style="color: #979292">
+              {{ "court-order-file" | transloco }}
+              <span class="text-red-900">*</span> </label
+            ><br />
+            <input
+              type="file"
+              id="uploadBtn3"
+              #file3
+              accept=".jpg, .jpeg, .png"
+              formControlName="courtOrderFile"
+              (change)="courtOrderSelect($event)"
+              (click)="file3.click()"
+            />
+            <label class="fileLabel" for="uploadBtn3">
+              {{ "select-file" | transloco }}</label
+            >
+
+            <div *ngIf="selectedFile3" class="pl-2 pt-2" style="float: left">
+              {{ selectedFile3?.name }}
+            </div>
+          </div>
+          <field-error-component
+            [controlName]="form.get('courtOrderFile')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component>
+        </div>
+      </div>
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-2 pb-4 position-relative"
+        style="color: black"
+      ></div>
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+      ></div>
+    </div> -->
+    <div class="col-12 pl-2 md:col-12 md:pr-3 pr-2 pt-0 pb-2 position-relative">
+      <div
+        class="image-preview-container"
+        *ngIf="
+          form.value.newMaritalStatus.value == 'Widow' ||
+          form.value.newMaritalStatus.value == 'Widower'
+        "
+      >
+        <!-- style="margin-left: 5px" -->
+        <div class="preview">
+          <img
+            height="200px"
+            width="220px"
+            id="preview-selected-image-deathCertificate"
+          />
+        </div>
+        <label for="deathCertificateFile">
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          {{ "death-certificate" | transloco }}
+        </label>
+        <input
+          type="file"
+          id="deathCertificateFile"
+          #file3
+          accept=".jpg, .jpeg, .png"
+          formControlName="deathCertificateFile"
+          (change)="deathCertificateSelect($event)"
+          (click)="file3.click()"
+        />
+        <field-error-component
+          [controlName]="form.get('deathCertificateFile')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component>
+      </div>
+    </div>
+
+    <!-- <div
+      class="flex align-items-center border-bottom px-3 pt-3"
+      *ngIf="
+        form.value.newMaritalStatus.value == 'Widow' ||
+        form.value.newMaritalStatus.value == 'Widower'
+      "
+    >
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+        style="color: black"
+      >
+        <div class="col-12 p-0">
+          <div
+            class="col-12 sm:col-12 md:col-4 lg:col-6 field"
+            style="padding-top: 17px"
+          >
+            <label for="deathCertificateFile" style="color: #979292">
+              {{ "death-certificate" | transloco }}
+              <span class="text-red-900">*</span> </label
+            ><br />
+            <input
+              type="file"
+              id="uploadBtn4"
+              #file3
+              accept=".jpg, .jpeg, .png"
+              formControlName="deathCertificateFile"
+              (change)="deathCertificateSelect($event)"
+              (click)="file3.click()"
+            />
+            <label class="fileLabel" for="uploadBtn4">
+              {{ "select-file" | transloco }}</label
+            >
+
+            <div *ngIf="selectedFile4" class="pl-2 pt-2" style="float: left">
+              {{ selectedFile4?.name }}
+            </div>
+          </div>
+          <field-error-component
+            [controlName]="form.get('deathCertificateFile')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component>
+        </div>
+      </div>
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-2 pb-4 position-relative"
+        style="color: black"
+      ></div>
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+      ></div>
+    </div> -->
+
+    <div class="mx-3 py-3 add-btn-mobile mobile-btn">
+      <button
+        type="submit"
+        [disabled]="isSubmitDisabled"
+        class="btn btn-secondary mr-3"
+        mat-stroked-button
+      >
+        <span style="color: #f27900"> Submit </span>
+      </button>
+      <button
+        type="button"
+        [routerLink]="['/app', 'application-detail-list']"
+        color="primery"
+        class="btn btn-primery"
+        mat-raised-button
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

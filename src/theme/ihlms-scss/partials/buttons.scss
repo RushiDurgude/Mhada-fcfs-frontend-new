@@ -1,0 +1,61 @@
+@import "../partials/color.scss";
+
+.btn-primery {
+   background-color: $primery;
+   width: 150px;
+   color: $white;
+   box-shadow: none !important;
+   border-radius: 10px !important;
+   font-weight: 400;
+
+  &:hover {
+    box-shadow: 0 4px 9px 0 rgba(205,103,0,0.57) !important;
+    transition: 0.5s;
+  }
+  &:disabled {
+    background-color: $grayLight;
+    color:$disabled-btn;
+    cursor: no-drop !important;
+  }
+}
+
+.btn-secondary {
+  border: 1px solid $primery !important;
+  width: 150px;
+  color: $primery;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+  font-weight: 400;
+  background-color: $white;
+  
+ &:hover {
+   box-shadow: none !important;
+   background-color: rgba(242,121,0,0.07);
+   transition: 0.5s;
+ }
+ &:disabled {
+   border:1px solid $grayThin;
+   color:$disabled-btn;
+   cursor: no-drop !important;
+ }
+}
+
+.text-buttton {
+  color: $primery;
+  box-shadow: none !important;
+  border-radius: 10px !important;  
+ &:hover {
+   box-shadow: none !important;
+   background-color: rgba(242,121,0,0.07);
+   transition: 0.5s;
+   border-radius: 10px;
+
+ }
+ &:disabled {
+   color:$disabled-btn;
+   cursor: no-drop !important;
+   &:hover {
+    background-color: transparent !important;
+   }
+ }
+}

@@ -1,0 +1,449 @@
+<!--  TODO ADD TDS _CERT with TDS cond  -->
+<div class="user-details">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details">
+      <div class="title">
+        <a [routerLink]="['/app', applicationKey, 'installments']">
+          <ion-icon name="arrow-undo"></ion-icon>
+        </a>
+        TDS Certificate
+      </div>
+    </div>
+    <div class="mobile-header">
+      <div class="title">
+        <a [routerLink]="['/app', applicationKey, 'installments']">
+          <ion-icon name="arrow-undo"></ion-icon>
+        </a>
+        TDS Certificate
+      </div>
+    </div>
+
+    <div class="user-filter flex justify-content-between align-items-center">
+      <div class="md:mr-3">
+        <form class="search-form flex align-items-center">
+          <div class="mr-3">
+            <span
+              style="padding: 3px; color: white"
+              [class]="verificationStatus()"
+            >
+              {{ fileUploadStatus }}
+            </span>
+          </div>
+          <div class="add-User"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="title text-center mb-2 tdscost-title">
+  TDS Amount(1% of Tenement Cost) {{ cost | currencyinr }}
+</div>
+<div
+  *ngIf="fileUploadStatus === 'REJECTED'"
+  style="color: red; font-size: 12p"
+  class="text-center"
+>
+  Reject Remarks - {{ tdsRejectRemark }}
+</div>
+<!-- <app-tds-file-upload></app-tds-file-upload> -->
+<form [formGroup]="form" #localForm="ngForm" (ngSubmit)="submitTDSFile()">
+  <div class="grid m-0 col-12">
+    <!-- <div class="col-2"></div> -->
+    <div class="table-dashboard mt-0 py-2 bg-white mb-4 col-12">
+      <table class="table" style="width: 100%; background: #fff">
+        <thead class="table">
+          <th class="text-left">Document Name</th>
+          <!-- <th style="width: 5%">View</th> -->
+          <th style="width: 10%; padding: 10px 0">Actions</th>
+          <th style="width: 20%"></th>
+        </thead>
+        <tbody>
+          <tr class="table">
+            <td style="width: 70%; font-size: 18px">
+              Form 16-B
+              <span
+                style="color: red"
+                *ngIf="
+                  fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                  fileUploadStatus === 'REJECTED'
+                "
+              >
+                *</span
+              >
+            </td>
+            <td style="font-size: 15px">
+              <div class="add-upload">
+                <button
+                  *ngIf="
+                    !(
+                      fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                      fileUploadStatus === 'REJECTED'
+                    )
+                  "
+                  type="button"
+                  class="small-button shadow-4 bg-primary text-white p-1"
+                  (click)="showform16Bfile()"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >remove_red_eye</mat-icon
+                  >
+                  <span
+                    style="float: left; padding-top: 6px"
+                    class="text-white"
+                  >
+                    View File</span
+                  >
+                </button>
+
+                <button
+                  *ngIf="
+                    fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                    fileUploadStatus === 'REJECTED'
+                  "
+                  type="button"
+                  (click)="file2.click()"
+                  class="small-button shadow-4 bg-primary text-white p-1"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >upload</mat-icon
+                  >
+                  <div style="float: left; padding-top: 6px" class="text-white">
+                    Select File
+                  </div>
+                  <input
+                    type="file"
+                    [id]="file2"
+                    #file2
+                    formControlName="file1"
+                    style="display: none"
+                    (change)="onFileSelect2($event)"
+                    accept="application/pdf"
+                  />
+                </button>
+              </div>
+              <div
+                *ngIf="checkFileExtension1()"
+                class="pt-2"
+                style="float: right"
+              >
+                {{ selectedFile2?.name }}
+              </div>
+            </td>
+            <!-- <td style="width: 30%">
+              <div *ngIf="selectedFile2" class="pl-2 pt-2" style="float: left">
+                {{ selectedFile2?.name }}
+              </div>
+            </td> -->
+          </tr>
+          <tr class="table">
+            <td style="width: 70%; font-size: 18px">
+              26QB
+
+              <span
+                style="color: red"
+                *ngIf="
+                  fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                  fileUploadStatus === 'REJECTED'
+                "
+              >
+                *</span
+              >
+            </td>
+            <td style="font-size: 15px">
+              <div class="add-upload">
+                <button
+                  *ngIf="
+                    !(
+                      fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                      fileUploadStatus === 'REJECTED'
+                    ) && demoFile !== null
+                  "
+                  type="button"
+                  class="small-button shadow-4 bg-primary text-white p-1"
+                  (click)="showqbfile()"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >remove_red_eye</mat-icon
+                  >
+                  <span
+                    style="float: left; padding-top: 6px"
+                    class="text-white"
+                  >
+                    View File
+                  </span>
+                </button>
+
+                <button
+                  *ngIf="
+                    fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                    fileUploadStatus === 'REJECTED'
+                  "
+                  type="button"
+                  (click)="file.click()"
+                  style="float: left"
+                  class="small-button shadow-4 bg-primary text-white p-1"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >upload</mat-icon
+                  >
+                  <span
+                    style="float: left; padding-top: 6px"
+                    class="text-white"
+                  >
+                    Select File</span
+                  >
+                  <input
+                    type="file"
+                    [id]="file"
+                    #file
+                    formControlName="file"
+                    style="display: none"
+                    (change)="onFileSelect($event)"
+                    accept="application/pdf"
+                  />
+                </button>
+              </div>
+              <div
+                *ngIf="checkFileExtension2()"
+                class="pt-2"
+                style="float: right"
+              >
+                {{ selectedFile?.name }}
+              </div>
+            </td>
+            <!-- <td style="width: 30%">
+              <div *ngIf="selectedFile" class="pl-2 pt-2" style="float: left">
+                {{ selectedFile?.name }}
+              </div>
+            </td> -->
+          </tr>
+          <tr class="table">
+            <td style="width: 70%; font-size: 18px">
+              26AS
+              <span
+                *ngIf="
+                  fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                  fileUploadStatus === 'REJECTED'
+                "
+              >
+              </span>
+            </td>
+            <td style="font-size: 15px">
+              <div class="add-upload">
+                <button
+                  *ngIf="
+                    !(
+                      fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                      fileUploadStatus === 'REJECTED'
+                    ) && demoFile1 !== null
+                  "
+                  type="button"
+                  class="small-button shadow-4 bg-primary text-white p-1"
+                  (click)="showasfile()"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >remove_red_eye</mat-icon
+                  >
+                  <span
+                    style="float: left; padding-top: 6px"
+                    class="text-white"
+                  >
+                    View File</span
+                  >
+                </button>
+
+                <button
+                  *ngIf="
+                    fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                    fileUploadStatus === 'REJECTED'
+                  "
+                  type="button"
+                  (click)="file1.click()"
+                  style="float: left"
+                  class="small-button shadow-4 bg-primary text-white p-1"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >upload</mat-icon
+                  >
+                  <div style="float: left; padding-top: 6px" class="text-white">
+                    Select File
+                  </div>
+                  <input
+                    type="file"
+                    [id]="file1"
+                    #file1
+                    formControlName="file1"
+                    style="display: none"
+                    (change)="onFileSelect1($event)"
+                    accept="application/pdf"
+                  />
+                </button>
+              </div>
+              <div
+                *ngIf="checkFileExtension3()"
+                class="pt-2"
+                style="float: right"
+              >
+                {{ selectedFile1?.name }}
+              </div>
+            </td>
+            <!-- <td style="width: 30%">
+              <div *ngIf="selectedFile1" class="pl-2 pt-2" style="float: left">
+                {{ selectedFile1?.name }}
+              </div>
+            </td> -->
+          </tr>
+
+          <tr class="table">
+            <td style="width: 70%; font-size: 18px">
+              Challan
+              <span
+                *ngIf="
+                  fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                  fileUploadStatus === 'REJECTED'
+                "
+              >
+              </span>
+            </td>
+            <td style="font-size: 15px">
+              <div class="add-upload">
+                <button
+                  *ngIf="
+                    !(
+                      fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                      fileUploadStatus === 'REJECTED'
+                    ) && demoFile2 !== null
+                  "
+                  type="button"
+                  class="small-button shadow-4 bg-primary text-white p-1"
+                  (click)="showChallanfile()"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >remove_red_eye</mat-icon
+                  >
+                  <span
+                    style="float: left; padding-top: 6px"
+                    class="text-white"
+                  >
+                    View File</span
+                  >
+                </button>
+
+                <button
+                  *ngIf="
+                    fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+                    fileUploadStatus === 'REJECTED'
+                  "
+                  type="button"
+                  (click)="file3.click()"
+                  class="small-button shadow-4 bg-primary text-white p-1"
+                >
+                  <mat-icon
+                    style="
+                      line-height: 25px;
+                      margin-right: 5px;
+                      float: left;
+                      color: white;
+                    "
+                    >upload</mat-icon
+                  >
+                  <div style="float: left; padding-top: 6px" class="text-white">
+                    Select File
+                  </div>
+                  <input
+                    type="file"
+                    [id]="file3"
+                    #file3
+                    formControlName="file1"
+                    style="display: none"
+                    (change)="onFileSelect3($event)"
+                    accept="application/pdf"
+                  />
+                </button>
+              </div>
+              <div
+                *ngIf="checkFileExtension4()"
+                class="pt-2"
+                style="float: right"
+              >
+                {{ selectedFile3?.name }}
+              </div>
+            </td>
+            <!-- <td style="width: 30%">
+              <div *ngIf="selectedFile3" class="pl-2 pt-2" style="float: left">
+                {{ selectedFile3?.name }}
+              </div>
+            </td> -->
+          </tr>
+          <div
+            class="py-3 add-btn-mobile mobile-btn action-btn-wrapper"
+            *ngIf="
+              fileUploadStatus === 'FILE_UPLOAD_PENDING' ||
+              fileUploadStatus === 'REJECTED'
+            "
+          >
+            <button
+              class="btn-medium shadow-4"
+              style="height: 32px; width: 100px; background-color: #4c85f5"
+              type="button"
+              (click)="submitTDSFile()"
+            >
+              <span style="color: white">Submit</span>
+            </button>
+
+            <button
+              class="btn-medium cancel-btn shadow-4"
+              style="height: 32px; width: 100px"
+              type="button"
+              [routerLink]="['/app', applicationKey, 'installments']"
+            >
+              <span>Cancel</span>
+            </button>
+          </div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>

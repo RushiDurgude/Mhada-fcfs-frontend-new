@@ -1,0 +1,355 @@
+<div
+  class="m-0 p-0 background-image"
+  style="height: calc(100% - 100px); overflow: auto"
+  (scroll)="onScroll($event)"
+  #divToScroll
+>
+  <div class="grid m-0 p-0 card-content ng-star-inserted" style="min-height: 87.5%">
+    <div class="col-11 m-3 p-0 card1">
+      <div class="grid m2 p-3 col-12">
+        <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+          {{ "view-objection/suggestion" | transloco }}
+        </div>
+        <div class="col-12 p-0">
+          <div class="maintbl">
+            <div class="first-card">
+              <div class="grid col-12 updated-msg">
+                <div class="font-weight">{{ "objection/suggestion-raise-date" | transloco }}</div>
+                {{ createdOn | date : "dd/MM/yyyy hh:mm a" }}
+              </div>
+              <br />
+              <div class="grid col-12" style="padding: 0 0 8px 0">
+                <div class="col-12 lg:col-6 xl:col-6 md:col-12 sm:col-12 xs:col-6 grid fontsize">
+                  <div class="font-weight">{{ "objSuggestionID" | transloco }} :</div>
+                  {{ osid }}
+                </div>
+                <div
+                  class="col-12 lg:col-6 xl:col-6 md:col-12 sm:col-12 xs:col-6 grid fontsize"
+                  style="text-transform: capitalize"
+                >
+                  <div class="font-weight">{{ "current-status" | transloco }} :</div>
+                  {{ resstatus }}
+                </div>
+              </div>
+              <div class="grid col-12 fontsize" style="text-transform: capitalize; padding-top: 0px">
+                <div class="font-weight">{{ "board" | transloco }}:</div>
+                {{ boardName }}
+              </div>
+              <div class="grid col-12 fontsize" style="text-transform: capitalize">
+                <div class="font-weight">{{ "objection-suggestion-type" | transloco }} :</div>
+                {{ osType }}
+              </div>
+              <div class="grid col-12 fontsize" style="text-transform: capitalize">
+                <div class="font-weight">{{ "subject" | transloco }} :</div>
+                {{ subject }}
+              </div>
+              <div class="grid col-12 fontsize" style="text-transform: capitalize; display: flex">
+                <div class="font-weight">{{ "description" | transloco }} :</div>
+                <div>{{ remark }}</div>
+              </div>
+              <div class="grid col-12 doccss" *ngIf="documentList.length != 0">
+                <div
+                  class="col-12 grid p-1 m-0 text-center lg:col-4 xl:col-4 md:col-12 sm:col-12 xs:col-4"
+                  *ngFor="let d of documentList"
+                >
+                  <div class="col-4 p-0 lg:col-4 xl:col-4 md:col-12 sm:col-12 xs:col-4" class="attachdoc">
+                    <div style="margin: 5px; font-size: 14px; width: 90%">
+                      {{
+                        d
+                          .split("/")
+                          .pop()
+                          .substring(0, 30 - 4) + "...."
+                      }}
+                    </div>
+                    <mat-icon class="documentcss" title="Download" (click)="downloadAttachment(d)">download </mat-icon>
+                    <mat-icon class="documentcss" title="View" (click)="ViewdownloadAttachment(d)"
+                      >remove_red_eye
+                    </mat-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 text-center" *ngIf="osHistory.length == 0">{{ "no-history" | transloco }}</div>
+            <div class="scroll-content fontsize" #scrollMe *ngIf="osHistory.length != 0">
+              <div *ngIf="osHistory.length != 0">
+                <div class="row" *ngFor="let h of osHistory">
+                  <div class="admin-card" *ngIf="h.createdBy != null && h.ohRemark">
+                    <div class="updated-msg">
+                      {{ "mhada-reply-name" | transloco }}, {{ h.createdOn | date : "dd/MM/yyyy hh:mm a" }}
+                    </div>
+                    <br />
+                    <div
+                      *ngIf="h.ohDocument1 != null"
+                      class="userdoc"
+                      style="border-bottom: 1px solid rgb(214, 247, 247)"
+                    >
+                      <div style="width: 90%">
+                        {{
+                          h.ohDocument1
+                            .split("/")
+                            .pop()
+                            .substring(0, 30 - 4) + "...."
+                        }}
+                      </div>
+                      <mat-icon class="documentcss" title="Download" (click)="downloadAttachment(h.ohDocument1)"
+                        >download
+                      </mat-icon>
+                      <mat-icon class="documentcss" title="View" (click)="ViewdownloadAttachment(h.ohDocument1)"
+                        >remove_red_eye
+                      </mat-icon>
+                      <br />
+                    </div>
+                    <div style="padding: 5px; text-transform: capitalize">{{ h.ohRemark }}</div>
+                  </div>
+                  <div class="admin-card" *ngIf="h.createdBy != null && h.ohDocument2">
+                    <div class="updated-msg">
+                      {{ "mhada-reply-name" | transloco }}, {{ h.createdOn | date : "dd/MM/yyyy hh:mm a" }}
+                    </div>
+                    <br />
+                    <div class="userdoc">
+                      <div style="width: 90%">
+                        {{
+                          h.ohDocument2
+                            .split("/")
+                            .pop()
+                            .substring(0, 30 - 4) + "...."
+                        }}
+                      </div>
+                      <mat-icon class="documentcss" title="Download" (click)="downloadAttachment(h.ohDocument2)"
+                        >download
+                      </mat-icon>
+                      <mat-icon class="documentcss" title="View" (click)="ViewdownloadAttachment(h.ohDocument2)"
+                        >remove_red_eye
+                      </mat-icon>
+                      <br />
+                    </div>
+                  </div>
+                  <div class="admin-card" *ngIf="h.createdBy != null && h.ohDocument3">
+                    <div class="updated-msg">
+                      {{ "mhada-reply-name" | transloco }}, {{ h.createdOn | date : "dd/MM/yyyy hh:mm a" }}
+                    </div>
+                    <br />
+                    <div class="userdoc">
+                      <div style="width: 90%">
+                        {{
+                          h.ohDocument3
+                            .split("/")
+                            .pop()
+                            .substring(0, 30 - 4) + "...."
+                        }}
+                      </div>
+                      <mat-icon class="documentcss" title="Download" (click)="downloadAttachment(h.ohDocument3)"
+                        >download
+                      </mat-icon>
+                      <mat-icon class="documentcss" title="View" (click)="ViewdownloadAttachment(h.ohDocument3)">
+                        remove_red_eye
+                      </mat-icon>
+                      <br />
+                    </div>
+                  </div>
+                  <div class="user-card align-right" *ngIf="h.createdBy == null && h.ohRemark">
+                    <div class="updated-msg">
+                      {{ "you" | transloco }}, {{ h.createdOn | date : "dd/MM/yyyy hh:mm a" }}
+                    </div>
+                    <br />
+                    <div
+                      *ngIf="h.ohDocument1 != null"
+                      class="userdoc"
+                      style="border-bottom: 1px solid rgb(248, 215, 165)"
+                    >
+                      <div style="width: 90%">
+                        {{
+                          h.ohDocument1
+                            .split("/")
+                            .pop()
+                            .substring(0, 30 - 4) + "...."
+                        }}
+                      </div>
+                      <mat-icon class="documentcss" title="Download" (click)="downloadAttachment(h.ohDocument1)"
+                        >download
+                      </mat-icon>
+                      <mat-icon class="documentcss" title="View" (click)="ViewdownloadAttachment(h.ohDocument1)"
+                        >remove_red_eye
+                      </mat-icon>
+                    </div>
+                    <div style="padding: 5px; text-transform: capitalize">{{ h.ohRemark }}</div>
+                  </div>
+                  <div class="user-card align-right" *ngIf="h.createdBy == null && h.ohDocument2">
+                    <div class="updated-msg">
+                      {{ "you" | transloco }}, {{ h.createdOn | date : "dd/MM/yyyy hh:mm a" }}
+                    </div>
+                    <br />
+                    <div *ngIf="h.ohDocument2 != null" class="userdoc">
+                      <div style="width: 90%">
+                        {{
+                          h.ohDocument2
+                            .split("/")
+                            .pop()
+                            .substring(0, 30 - 4) + "...."
+                        }}
+                      </div>
+                      <mat-icon class="documentcss" title="Download" (click)="downloadAttachment(h.ohDocument2)"
+                        >download
+                      </mat-icon>
+                      <mat-icon class="documentcss" title="View" (click)="ViewdownloadAttachment(h.ohDocument2)"
+                        >remove_red_eye
+                      </mat-icon>
+                    </div>
+                  </div>
+                  <div class="user-card align-right" *ngIf="h.createdBy == null && h.ohDocument3">
+                    <div class="updated-msg">
+                      {{ "you" | transloco }}, {{ h.createdOn | date : "dd/MM/yyyy hh:mm a" }}
+                    </div>
+                    <br />
+                    <div *ngIf="h.ohDocument3 != null" class="userdoc">
+                      <div style="width: 90%">
+                        {{
+                          h.ohDocument3
+                            .split("/")
+                            .pop()
+                            .substring(0, 30 - 4) + "...."
+                        }}
+                      </div>
+                      <mat-icon class="documentcss" title="Download" (click)="downloadAttachment(h.ohDocument3)"
+                        >download
+                      </mat-icon>
+                      <mat-icon class="documentcss" title="View" (click)="ViewdownloadAttachment(h.ohDocument3)"
+                        >remove_red_eye
+                      </mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 p-0 reply-div" *ngIf="isShowReply">
+              <div class="last-card col-12">
+                <div>
+                  <mat-form-field appearance="outline" style="width: 100%">
+                    <mat-label>{{ "reply" | transloco }}</mat-label>
+                    <textarea
+                      matInput
+                      placeholder="{{ 'reply' | transloco }}"
+                      maxlength="4000"
+                      [formControl]="replyCtrl"
+                    ></textarea>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <div
+                    class="col-12 p-1 boxcss text-center"
+                    [ngClass]="filenm || filenm1 || filenm2 ? 'bordershow' : 'bordernone'"
+                  >
+                    <div class="resbox">
+                      <div style="font-weight: 450; padding: 10px" *ngIf="filenm || filenm1 || filenm2">
+                        {{ "attached-documents-lbl" | transloco }}
+                      </div>
+                      <div class="col-12 p-0 lg:col-3 xl:col-3 md:col-3 sm:col-12 xs:col-3">
+                        <input #attachments value="{{ filenm }}" readonly *ngIf="filenm" class="inputdoc" />
+                        <mat-icon
+                          *ngIf="isShowClose"
+                          title="Remove"
+                          style="font-size: medium"
+                          (click)="removeAttachment()"
+                          >close
+                        </mat-icon>
+                      </div>
+                      <div class="col-12 p-0 lg:col-3 xl:col-3 md:col-3 sm:col-12 xs:col-3">
+                        <input #attachments1 value="{{ filenm1 }}" readonly class="inputdoc" *ngIf="filenm1" />
+                        <mat-icon
+                          *ngIf="isShowClose1"
+                          title="Remove"
+                          style="font-size: medium"
+                          (click)="removeAttachment1()"
+                          >close
+                        </mat-icon>
+                      </div>
+                      <div class="col-12 p-0 lg:col-3 xl:col-3 md:col-3 sm:col-12 xs:col-3">
+                        <input #attachments2 value="{{ filenm2 }}" readonly class="inputdoc" *ngIf="filenm2" />
+                        <mat-icon
+                          *ngIf="isShowClose2"
+                          title="Remove"
+                          style="font-size: medium"
+                          (click)="removeAttachment2()"
+                          >close
+                        </mat-icon>
+                      </div>
+                    </div>
+                    <div class="col-12 text-center">
+                      <div *ngIf="filefirst">
+                        <input
+                          style="display: none"
+                          type="file"
+                          id="file1"
+                          accept="image/png, image/gif, image/jpeg,image/jpg,application/pdf"
+                          (change)="onChange($event)"
+                          #hiddenfileinput
+                        />
+                        <button (click)="upload1()" mat-raised-button class="uploadbtncss">
+                          <div class="enablecolor">{{ "upload-file-btn" | transloco }}</div>
+                        </button>
+                      </div>
+                      <div *ngIf="fileSecond">
+                        <input
+                          style="display: none"
+                          type="file"
+                          id="file2"
+                          accept="image/png, image/gif, image/jpeg,image/jpg,application/pdf"
+                          (change)="onChange1($event)"
+                          #hiddenfileinput1
+                        />
+                        <button (click)="upload2()" mat-raised-button class="uploadbtncss">
+                          <div class="enablecolor">{{ "upload-file-btn" | transloco }}</div>
+                        </button>
+                      </div>
+                      <div *ngIf="filethird">
+                        <input
+                          style="display: none"
+                          type="file"
+                          id="file3"
+                          accept="image/png, image/gif, image/jpeg,image/jpg,application/pdf"
+                          (change)="onChange2($event)"
+                          #hiddenfileinput2
+                        />
+                        <button (click)="upload3()" mat-raised-button class="uploadbtncss">
+                          <div class="enablecolor">{{ "upload-file-btn" | transloco }}</div>
+                        </button>
+                      </div>
+                    </div>
+                    <p class="pl-2" style="color: #979292">
+                      <span class="text-red-900">*</span> {{ "file-max-msg" | transloco }}
+                      <span class="text-red-900">*</span> {{ "file-ext-msg" | transloco }}
+                      <span class="text-red-900">*</span> {{ "file-size-msg" | transloco }}
+                    </p>
+                  </div>
+                </div>
+                <!-- <div class="text-center mt-3 ">
+                  <button mat-raised-button [ngClass]="replyCtrl.value ? 'active-button' : 'disabled-button'"
+                    (click)="replyTosupport()">
+                    {{'send'|transloco}} <mat-icon title="Send">send</mat-icon>
+                  </button>
+                </div> -->
+                <div class="text-center mt-3">
+                  <button
+                    mat-raised-button
+                    [ngClass]="replyCtrl.value ? 'uploadbtncss' : 'uploaddisabled-button'"
+                    (click)="replyTosupport()"
+                  >
+                    <div style="display: flex" [ngClass]="replyCtrl.value ? 'enablecolor' : 'disablecolor'">
+                      {{ "send" | transloco }}
+                      <mat-icon
+                        class="iconcss"
+                        title="Send"
+                        [ngClass]="replyCtrl.value ? 'enablecolor' : 'disablecolor'"
+                        >send</mat-icon
+                      >
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

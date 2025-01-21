@@ -1,0 +1,688 @@
+<div class="grid m-0 p-3 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%;">
+<div class="col-12 mt-1 p-0 card">
+    <div class="col-12">
+        <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+            <a (click)="goBack()">
+                <ion-icon name="arrow-undo"></ion-icon>
+            </a>
+            {{lang === 'en' ? categoryName.en : categoryName.mr}}
+            <mat-icon (click)="pageMode = 'EDIT'"
+            title="Edit" class="cursor-pointer" style="color: brown;" 
+            *ngIf="pageMode === 'VIEW' && (categoryCode !== 'JR' || (categoryCode === 'JR' && jrApprovalStatus === 'REJECTED'))">edit</mat-icon>
+        </div>
+        <div class="col-12 p-0 mt-2">
+            <div class="col-12 p-0 mt-2">
+                <p *ngIf="categoryCode === 'JR'">
+                    {{"message-cert-jr-submit-docs" | transloco}}
+                </p>
+                <p class="p-2 mb-2" style="background-color: #e4f7e4; color: green;"
+                    *ngIf="pageMode === 'VIEW' && categoryCode !== 'JR'">
+                    {{"message-certificate-signed-stamped" | transloco}}
+                </p>
+                <app-cert-issuing-authority [categoryCode]="categoryCode" *ngIf="categoryCode !== 'JR'"></app-cert-issuing-authority>
+
+                <div class="grid col-12" *ngIf="pageMode === 'VIEW' && categoryCode === 'JR'">
+                    <div class="field col-12 lg:col-4 md:col-6 ml-1" style="margin-bottom: -0.5rem;">
+                        <label for="jrApprovalStatus" style="color: #979292;">
+                            {{"lbl-cert-entry-jr-status" | transloco}} 
+                        </label>
+                        <label class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary" 
+                            style="background-color: #e7edc1; margin-bottom: 0px;" *ngIf="jrApprovalStatus === 'PENDING'">
+                            {{jrApprovalStatus}}
+                        </label>
+                        <label class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary" 
+                            style="background-color: rgb(250, 196, 205); margin-bottom: 0px; color: red;" *ngIf="jrApprovalStatus === 'REJECTED'">
+                            {{jrApprovalStatus}}
+                        </label>
+                        <label class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary" 
+                            style="background-color: rgb(125, 210, 247); margin-bottom: 0px; color: blue;" *ngIf="jrApprovalStatus == null">
+                            {{jrApprovalStatus}}
+                        </label>
+                        <label class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary" 
+                            style="background-color: rgb(129, 237, 165); margin-bottom: 0px; color: rgb(15, 16, 15);" *ngIf="jrApprovalStatus == 'APPROVED'">
+                            {{jrApprovalStatus}}
+                        </label>
+                    </div>
+
+                    <div class="field col-12 lg:col-4 md:col-6" style="margin-bottom: -0.5rem;"
+                        *ngIf="jrApprovalStatus == 'APPROVED' && esignedJrCertificate">
+                        <br>
+                        <button type="button" style="float: left;" 
+                            class="small-button shadow-4 bg-primary text-white p-1 mt-2" 
+                            (click)="downloadEsignedJRFile()">
+                            <mat-icon style="line-height: 25px; margin-right: 5px; float: left; color: white;">download</mat-icon>
+                            <div style="float: left; padding-top: 6px;" class="text-white">{{"label-cert-download-esigned-jrcert" | transloco}}</div>
+                        </button>                        
+                    </div>
+                    
+                    <div class="field col-12 lg:col-4 md:col-6" style="margin-bottom: -0.5rem;" *ngIf="jrApprovalStatus === 'REJECTED' && rejectReason !==null" >
+                        <label for="rejectReason" style="color: #979292; float: left!important;">
+                            {{"lbl-cert-entry-jr-remarks" | transloco}} 
+                        </label>
+                        <label class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary" 
+                            style="background-color: rgb(248, 248, 249); margin-bottom: 0px; float: left!important; ">
+                            {{rejectReason}}
+                        </label>
+                    </div>
+                </div>
+                
+                <form [formGroup]="form" #localForm="ngForm" (ngSubmit)="isSubmitDisabled = true; onSubmit()" class="grid p-1">
+                    
+                      
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('applicantName')"
+                        fieldName="applicantName"
+                        fieldLabel="{{'label-cert-applicant-name' | transloco}}"
+                        [fieldValue]="form.value?.applicantName"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('applicantName')"
+                    ></app-cert-entry-input-cmp>
+                    
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('experienceInYears')"
+                        fieldName="experienceInYears"
+                        fieldLabel="{{'label-cert-experience' | transloco}}"
+                        [fieldValue]="form.value?.experienceInYears"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="3"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('experienceInYears')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('artistType')"
+                        fieldName="artistType"
+                        fieldLabel="{{'label-cert-artist-type' | transloco}}"
+                        [fieldValue]="form.value?.artistType"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('artistType')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('departmentName')"
+                        fieldName="departmentName"
+                        fieldLabel="{{'label-cert-department-name' | transloco}}"
+                        [fieldValue]="form.value?.departmentName"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('departmentName')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('designation')"
+                        fieldName="designation"
+                        fieldLabel="{{'label-cert-designation' | transloco}}"
+                        [fieldValue]="form.value?.designation"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('designation')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('appointmentDate')"
+                        fieldName="appointmentDate"
+                        fieldLabel="{{'label-cert-appointment-date' | transloco}}"
+                        [fieldValue]="form.value?.appointmentDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        (change)="onAppointmentDateChange($event)"
+                        [controlName]="form.get('appointmentDate')"
+                    ></app-cert-entry-datepicker-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('constituencyName')"
+                        fieldName="constituencyName"
+                        fieldLabel="{{'label-cert-constituency-name' | transloco}}"
+                        [fieldValue]="form.value?.constituencyName"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('constituencyName')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('joiningDate')"
+                        fieldName="joiningDate"
+                        fieldLabel="{{'label-cert-joining-date' | transloco}}"
+                        [fieldValue]="form.value?.joiningDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        (change)="onJoiningDateChange($event)"
+                        [controlName]="form.get('joiningDate')"
+                    ></app-cert-entry-datepicker-cmp>
+
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('retirementDate')"
+                        fieldName="retirementDate"
+                        fieldLabel="{{'label-cert-retirement-date' | transloco}}"
+                        [fieldValue]="form.value?.retirementDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [max]="dfRetirementMaxDate"
+                        [min]="form.value?.joiningDate ? form.value?.joiningDate : dfRetirementDefaultMinDate"
+                        (change)="onRetirementDateChange($event)"
+                        [helpText]="!form.value?.joiningDate ? translate('label-cert-entry-joining-date-first') : null"
+                        [controlName]="form.get('retirementDate')"
+                    ></app-cert-entry-datepicker-cmp>
+                                        
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('cgRetirementDate')"
+                        fieldName="cgRetirementDate"
+                        fieldLabel="{{'label-cert-retirement-date' | transloco}}"
+                        [fieldValue]="form.value?.cgRetirementDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [max]="cgRetirementMaxDate"
+                        [min]="cgRetirementMinDate"
+                        [controlName]="form.get('cgRetirementDate')"
+                    ></app-cert-entry-datepicker-cmp>
+
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('sgRetirementDate')"
+                        fieldName="sgRetirementDate"
+                        fieldLabel="{{'label-cert-retirement-date' | transloco}}"
+                        [fieldValue]="form.value?.sgRetirementDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [max]="dfRetirementMaxDate"
+                        [mandatory]="false"
+                        (change)="onSgRetirementDateChange($event)"
+                        [min]="form.value?.appointmentDate ? form.value?.appointmentDate : dfRetirementDefaultMinDate"
+                        [helpText]="!form.value?.appointmentDate ? translate('label-cert-entry-appointment-date-first') : null"
+                        [controlName]="form.get('sgRetirementDate')"
+                    ></app-cert-entry-datepicker-cmp>
+
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('dfRetirementDate')"
+                        fieldName="dfRetirementDate"
+                        fieldLabel="{{'label-cert-retirement-date' | transloco}}"
+                        [fieldValue]="form.value?.dfRetirementDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [max]="dfRetirementMaxDate"
+                        [min]="form.value?.joiningDate ? form.value?.joiningDate : dfRetirementDefaultMinDate"
+                        (change)="onDFRetirementDateChange($event)"
+                        [helpText]="!form.value?.joiningDate ? translate('label-cert-entry-joining-date-first') : null"
+                        [controlName]="form.get('dfRetirementDate')"
+                    ></app-cert-entry-datepicker-cmp>
+                       
+                    <app-cert-entry-textarea-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('currentAddress')"
+                        fieldName="currentAddress"
+                        fieldLabel="{{'label-cert-current-address' | transloco}}"
+                        [fieldValue]="form.value?.currentAddress"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('currentAddress')"
+                    ></app-cert-entry-textarea-cmp>
+                    
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('staffQuarterAllotmentDate')"
+                        fieldName="staffQuarterAllotmentDate"
+                        fieldLabel="{{'label-cert-staff-quarter-allotment-date' | transloco}}"
+                        [fieldValue]="form.value?.staffQuarterAllotmentDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('staffQuarterAllotmentDate')"
+                    ></app-cert-entry-datepicker-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('defensePersonnelName')"
+                        fieldName="defensePersonnelName"
+                        fieldLabel="{{'label-cert-defense-personnel-name' | transloco}}"
+                        [fieldValue]="form.value?.defensePersonnelName"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('defensePersonnelName')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('serviceNo')"
+                        fieldName="serviceNo"
+                        fieldLabel="{{'label-cert-service-no' | transloco}}"
+                        [fieldValue]="form.value?.serviceNo"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('serviceNo')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('rank')"
+                        fieldName="rank"
+                        fieldLabel="{{'label-cert-rank' | transloco}}"
+                        [fieldValue]="form.value?.rank"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('rank')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('serviceYears')"
+                        fieldName="serviceYears"
+                        fieldLabel="{{'label-cert-service-years' | transloco}}"
+                        [fieldValue]="form.value?.serviceYears"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="3"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [disabled]="true"
+                        [controlName]="form.get('serviceYears')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('sgServiceYears')"
+                        fieldName="sgServiceYears"
+                        fieldLabel="{{'label-cert-service-years' | transloco}}"
+                        [fieldValue]="form.value?.sgServiceYears"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="3"
+                        [formGroup]="form"
+                        [disabled]="true"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('sgServiceYears')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('serviceMonths')"
+                        fieldName="serviceMonths"
+                        fieldLabel="{{'label-cert-service-months' | transloco}}"
+                        [fieldValue]="form.value?.serviceMonths"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="3"
+                        [formGroup]="form"
+                        [disabled]="true"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('serviceMonths')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('serviceName')"
+                        fieldName="serviceName"
+                        fieldLabel="{{'label-cert-service-name' | transloco}}"
+                        [fieldValue]="form.value?.serviceName"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('serviceName')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('exServiceYears')"
+                        fieldName="exServiceYears"
+                        fieldLabel="{{'label-cert-service-years' | transloco}}"
+                        [fieldValue]="form.value?.exServiceYears"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="3"
+                        [formGroup]="form"
+                        [disabled]="true"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('exServiceYears')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('identificationNo')"
+                        fieldName="identificationNo"
+                        fieldLabel="{{'label-cert-identification-no' | transloco}}"
+                        [fieldValue]="form.value?.identificationNo"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('identificationNo')"
+                    ></app-cert-entry-input-cmp>
+                        
+                    <app-cert-entry-select-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('exServiceManType')"
+                        fieldName="exServiceManType"
+                        fieldLabel="{{'label-cert-type' | transloco}}"
+                        [fieldValue]="form.value?.exServiceManType"
+                        [formSubmitted]="localForm.submitted"
+                        [lst]="{'EXSERVICEMAN': 'Ex-Serviceman', 'DEPENDENT_EXSERVICEMAN': 'Dependent of Ex-Serviceman'}"
+                        [formGroup]="form"
+                        (change)="onChangeExServiceman($event)"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('exServiceManType')"
+                    ></app-cert-entry-select-cmp>
+                    
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="(form.value?.freedomFighterType?.key === 'LEGAL_HEIR_FREEDOM_FIGHTER' 
+                            || form.value?.exServiceManType?.key === 'DEPENDENT_EXSERVICEMAN'
+                            || categoryCode === 'DF')"
+                        fieldName="relation"
+                        fieldLabel="{{'label-cert-relation' | transloco}}"
+                        [fieldValue]="form.value?.relation"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('relation')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="(form.value?.exServiceManType?.key === 'DEPENDENT_EXSERVICEMAN' 
+                            || categoryCode === 'DF' || categoryCode === 'FF')"
+                        fieldName="age"
+                        fieldLabel="{{'label-cert-age' | transloco}}"
+                        [fieldValue]="form.value?.age"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="3"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('age')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="form.value?.exServiceManType?.key === 'DEPENDENT_EXSERVICEMAN'"
+                        fieldName="exServiceManName"
+                        fieldLabel="{{'label-cert-ex-serviceman-name' | transloco}}"
+                        [fieldValue]="form.value?.exServiceManName"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('exServiceManName')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="form.value?.freedomFighterType?.key === 'LEGAL_HEIR_FREEDOM_FIGHTER'"
+                        fieldName="freedomFighterName"
+                        fieldLabel="{{'label-cert-freedom-fighter-name' | transloco}}"
+                        [fieldValue]="form.value?.freedomFighterName"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('freedomFighterName')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-input-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('organizationName')"
+                        fieldName="organizationName"
+                        fieldLabel="{{'label-cert-organization-name' | transloco}}"
+                        [fieldValue]="form.value?.organizationName"
+                        [formSubmitted]="localForm.submitted"
+                        maxlength="250"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('organizationName')"
+                    ></app-cert-entry-input-cmp>
+
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('fromDate')"
+                        fieldName="fromDate"
+                        fieldLabel="{{'label-cert-from-date' | transloco}}"
+                        [fieldValue]="form.value?.fromDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('fromDate')"
+                    ></app-cert-entry-datepicker-cmp>
+
+                    <app-cert-entry-datepicker-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('endDate')"
+                        fieldName="endDate"
+                        fieldLabel="{{'label-cert-end-date' | transloco}}"
+                        [fieldValue]="form.value?.endDate"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('endDate')"
+                    ></app-cert-entry-datepicker-cmp>
+
+                    <app-cert-entry-textarea-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="(form.value?.exServiceManType?.key === 'DEPENDENT_EXSERVICEMAN'
+                            || categoryCode === 'DF' || categoryCode === 'FF'
+                        )"
+                        fieldName="residentialAddress"
+                        fieldLabel="{{'label-cert-residential-address' | transloco}}"
+                        [fieldValue]="form.value?.residentialAddress"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('residentialAddress')"
+                    ></app-cert-entry-textarea-cmp>
+
+                    <app-cert-entry-select-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('type')"
+                        fieldName="type"
+                        fieldLabel="{{'label-cert-type' | transloco}}"
+                        [fieldValue]="form.value?.type"
+                        [formSubmitted]="localForm.submitted"
+                        [lst]="{'MP': 'MP', 'MLA': 'MLA', 'MLC': 'MLC'}"
+                        [formGroup]="form"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('type')"
+                    ></app-cert-entry-select-cmp>
+
+                    <app-cert-entry-select-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('freedomFighterType')"
+                        fieldName="freedomFighterType"
+                        fieldLabel="{{'label-cert-type' | transloco}}"
+                        [fieldValue]="form.value?.freedomFighterType"
+                        [formSubmitted]="localForm.submitted"
+                        [lst]="{'FREEDOM_FIGHTER': 'Freedom Fighter', 'LEGAL_HEIR_FREEDOM_FIGHTER': 'Legal Heir of Freedom Fighter'}"
+                        [formGroup]="form"
+                        (change)="onChangeFreedomFighter($event)"
+                        [pageMode]="pageMode"
+                        [controlName]="form.get('freedomFighterType')"
+                    ></app-cert-entry-select-cmp>
+
+                    <app-cert-entry-file-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('jrExperienceApptCert')"
+                        fieldName="jrExperienceApptCert"
+                        fieldLabel="{{'label-cert-jr-exp-appt-cert' | transloco}}"
+                        [fieldValue]="this.jrExperienceApptCertUploaded"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        fileName="ExperienceOrAppointmentCertificate.pdf"
+                        [pageMode]="pageMode"
+                        [limit]="limit"
+                        help="{{'label-cert-jr-expapp-cert-help' | transloco}}"
+                        (fileSelect)="jrExperienceApptCertFileSelect($event)"
+                        [controlName]="form.get('jrExperienceApptCert')"
+                    ></app-cert-entry-file-cmp>
+
+                    <app-cert-entry-file-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('jrIncomeProof')"
+                        fieldName="jrIncomeProof"
+                        fieldLabel="{{'label-cert-jr-inc-proof' | transloco}}"
+                        [fieldValue]="this.jrIncomeProofUploaded"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        fileName="IncomeProof.pdf"
+                        [pageMode]="pageMode"
+                        [limit]="limit"
+                        help="{{'label-cert-jr-inc-proof-help' | transloco}}"
+                        (fileSelect)="jrIncomeProofFileSelect($event)"
+                        [controlName]="form.get('jrIncomeProof')"
+                    ></app-cert-entry-file-cmp>
+
+                    <app-cert-entry-file-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('jrRecomLetter')"
+                        fieldName="jrRecomLetter"
+                        fieldLabel="{{'label-cert-jr-recom-letter' | transloco}}"
+                        [fieldValue]="this.jrRecomLetterUploaded"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        fileName="RecommendationLetter.pdf"
+                        [pageMode]="pageMode"
+                        [limit]="limit"
+                        help="{{'label-cert-jr-recom-letter-help' | transloco}}"
+                        (fileSelect)="jrRecomLetterFileSelect($event)"
+                        [controlName]="form.get('jrRecomLetter')"
+                    ></app-cert-entry-file-cmp>
+
+                    <app-cert-entry-radio-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('jrBylineArtOrVideo')"
+                        fieldName="jrBylineArtOrVideo"
+                        fieldLabel="{{'label-cert-jr-byline-or-video' | transloco}}"
+                        [fieldValue]="form.value?.jrBylineArtOrVideo"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        (click)="onClickJRBylineOrVideo($event)"
+                        [options]="['By Line Article', 'News Video']"
+                        [pageMode]="pageMode"
+                        [help]="form.value?.jrBylineArtOrVideo === 'News Video' ? 
+                        translate('label-cert-jr-video') : ''"
+                        [controlName]="form.get('jrBylineArtOrVideo')"
+                    ></app-cert-entry-radio-cmp>
+                    
+                    <app-cert-entry-file-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="form.get('jrBylineArticle')"
+                        fieldName="jrBylineArticle"
+                        fieldLabel="{{'label-cert-jr-byline-article' | transloco}}"
+                        [fieldValue]="this.jrBylineArticleUploaded ? this.jrBylineArticleUploaded : ''"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        fileName="BylineArticle.pdf"
+                        [pageMode]="pageMode"
+                        [limit]="limit"
+                        (fileSelect)="jrBylineArticleFileSelect($event)"
+                        [controlName]="form.get('jrBylineArticle')"
+                    ></app-cert-entry-file-cmp>
+
+                    <app-cert-entry-file-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('jrIdCard')"
+                        fieldName="jrIdCard"
+                        fieldLabel="{{'label-cert-jr-id-card' | transloco}}"
+                        [fieldValue]="this.jrIdCardUploaded ? this.jrIdCardUploaded : ''"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        fileName="IdCard.pdf"
+                        [pageMode]="pageMode"
+                        [limit]="limit"
+                        (fileSelect)="jrIdCardFileSelect($event)"
+                        [controlName]="form.get('jrIdCard')"
+                    ></app-cert-entry-file-cmp>
+
+                    <app-cert-entry-file-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('jrSelfDeclaration')"
+                        fieldName="jrSelfDeclaration"
+                        fieldLabel="{{'label-cert-jr-self-declaration' | transloco}}"
+                        [fieldValue]="this.jrSelfDeclarationUploaded ? this.jrSelfDeclarationUploaded : ''"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        fileName="SelfDeclaration.pdf"
+                        [pageMode]="pageMode"
+                        [limit]="limit"
+                        [template]="apiUrl+'/cert-entry/jrSelfDeclarationTemplate'"
+                        (fileSelect)="jrSelfDeclarationFileSelect($event)"
+                        [controlName]="form.get('jrSelfDeclaration')"
+                    ></app-cert-entry-file-cmp>
+
+                    <app-cert-entry-file-cmp
+                        class="col-12 sm:col-6 md:col-6 lg:col-4"
+                        *ngIf="showField('jrAgencyApprovlCert')"
+                        fieldName="jrAgencyApprovlCert"
+                        fieldLabel="{{'label-cert-jr-approval-cert' | transloco}}"
+                        [fieldValue]="this.jrAgencyApprovlCertUploaded ? this.jrAgencyApprovlCertUploaded : ''"
+                        [formSubmitted]="localForm.submitted"
+                        [formGroup]="form"
+                        fileName="AgencyApprovalCertificate.pdf"
+                        [pageMode]="pageMode"
+                        [limit]="limit"
+                        help="{{'label-cert-jr-approval-cert-help' | transloco}}"
+                        (fileSelect)="jrAgencyApprovlCertFileSelect($event)"
+                        [controlName]="form.get('jrAgencyApprovlCert')"
+                    ></app-cert-entry-file-cmp>
+
+                    <div class="col-12 p-3 mt-4 mb-3">
+                        <button class="btn-medium shadow-4 mt-0" 
+                            type="submit" *ngIf="pageMode === 'EDIT'">
+                            {{"button-submit" | transloco}}
+                        </button>
+                        <button class="btn-medium shadow-4 mt-0" 
+                            (click)="fetchCategoryCertificate()"
+                            type="button" 
+                            *ngIf="pageMode === 'VIEW' && (categoryCode !== 'JR' || (categoryCode === 'JR' && esignStatus === 'APPROVED'))">
+                            {{"button-fetch-caategory-certificate" | transloco}}
+                        </button>
+                        <br>
+                        <button class="btn-medium shadow-4 mt-4 ml-0" 
+                            (click)="emailCategoryCertificate()"
+                            type="button" 
+                            *ngIf="pageMode === 'VIEW' && (categoryCode !== 'JR' || (categoryCode === 'JR' && esignStatus === 'APPROVED'))">
+                            {{"button-mail-category-certificate" | transloco}}
+                        </button>
+                        <br>
+                        <button class="btn-medium shadow-4 mt-4 ml-0" 
+                            [routerLink]="['/']"
+                            type="button" *ngIf="pageMode === 'VIEW'">
+                            {{"button-go-to-home" | transloco}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>        
+    </div>
+</div>
+</div>

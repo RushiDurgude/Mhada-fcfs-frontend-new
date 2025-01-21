@@ -1,0 +1,24 @@
+<div class="grid m-0 p-0">
+    <div class="col-12">
+      <div>
+        The user with this PAN Number is already a <b>Winner</b> in previous PMRDA Lottery. Have you taken
+        <b>Possession & Allotment of the PMRDA</b> Tenement ?
+      </div>
+    </div>
+    <div class="col-6">
+      <button style="background: lightgrey; width: 90%" (click)="save('Yes')">
+        <label style="color: black">{{ "yes" | transloco }}</label>
+      </button>
+    </div>
+    <div class="col-6">
+      <button mat-raised-button style="background: lightgrey; width: 90%" (click)="save('No')">
+        <label style="color: black">{{ "no" | transloco }}</label>
+      </button>
+    </div>
+    <div class="col-12">
+      <button style="background: lightgrey; width: 100%" mat-raised-button (click)="save('Surrender')">
+        <label style="color: black">{{ "winner-pan-surrender-flat" | transloco }}</label>
+      </button>
+    </div>
+  </div>
+  

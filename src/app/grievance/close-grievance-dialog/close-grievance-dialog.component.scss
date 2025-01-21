@@ -1,0 +1,28 @@
+.icon{
+    height: 50px;
+    width: 50px;
+    color: orange !important;
+   
+}
+ion-icon{
+    pointer-events: none;
+}
+h1,.actioncss{
+    text-align: center;
+    margin: auto;
+    
+}
+.actioncss{
+    background: #BCD3FF;
+    width: fit-content;
+    border-radius: 12px;
+    margin: 2%;
+   
+}
+.nobtn{
+    background: lightgrey;
+    width: fit-content;
+    margin: 2%;
+    border-radius: 12px;
+    color: #003BAD;
+}

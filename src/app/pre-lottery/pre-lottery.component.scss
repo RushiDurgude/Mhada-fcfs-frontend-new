@@ -1,0 +1,144 @@
+$primary-color: #1061FF;
+$primary-color-text: white;
+$error-bg: #f2dede;
+$error-text: #a94442;
+$error-bg-border: #ebccd1;
+$success-bg: #dff0d8;
+$success-text: #3c763d;
+$success-bg-border: #d6e9c6;
+$warning-bg: #fcf8e3;
+$warning-text: #8a6d3b;
+$warning-bg-border: #faebcc;
+
+.btn:disabled, .btn-medium:disabled {
+    background-color: gray !important;
+}
+
+// .grid .card {
+//     height: 190vh;
+//   }
+
+.btn {
+    background: #4c85f5;
+    border-radius: 7px;
+    height: 30px;
+    color: #FFFFFF;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 20px;
+    cursor: pointer;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn-medium {
+    background: #4c85f5;
+    border-radius: 7px;
+    height: 45px;
+    color: #FFFFFF;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.span-success {
+    background-color: rgb(106, 240, 106);
+    padding: 3px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.span-danger {
+    background-color: rgb(247, 73, 73);
+    padding: 3px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.text-green-900 {
+    color: green !important;
+}
+
+.text-red-900 {
+    color: red !important;
+}
+
+.border-gray-400 {
+    border-color: #DFDFDF !important;
+}
+
+.border-gray-900 {
+    border-color: gray !important;
+}
+
+.bg-primary {
+    background-color: $primary-color !important;
+    color: $primary-color-text !important;
+}
+
+.border-primary-1 {
+    border-color: $primary-color !important;
+}
+
+.border-round-x1 {
+    border-radius: 0.75rem !important;
+}
+
+.error-message {
+    background-color: $error-bg !important;
+    color: $error-text !important;
+    border: 1px solid $error-bg-border;
+    font-size: smaller;
+    border-radius: 3px;
+    font-family: Poppins;
+}
+
+.success-message {
+    background-color: $success-bg !important;
+    color: $success-text !important;
+    border: 1px solid $success-bg-border;
+    font-size: smaller;
+    border-radius: 3px;
+    font-family: Poppins;
+}
+
+.warning-message {
+    background-color: $warning-bg !important;
+    color: $warning-text !important;
+    border: 1px solid $warning-bg-border;
+    font-size: smaller;
+    border-radius: 3px;
+    font-family: Poppins;
+}
+
+.link-style {
+    text-decoration: none !important;
+    font-size: 18px !important;
+}
+
+.status-message {
+    background-color: #e6f5f2;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 15px;
+}
+
+.card-border {
+    border-left: 4px solid #ffc251 !important;
+    border-bottom: 2px solid #58cf58 !important;
+}
+
+.error-block {
+    color: red;
+}
+
+
+@media screen and (max-width: 768px) {
+    div[style^="width: 50%"] {
+      width: 100%;
+    }
+  }

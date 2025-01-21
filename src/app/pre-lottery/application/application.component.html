@@ -1,0 +1,960 @@
+<div
+  class="grid m-0 pl-3 pt-2 pr-3 background-image-new card-content ng-star-inserted"
+  style="min-height: 100%"
+  *ngIf="formLoadStatus != null && formLoadStatus === 'SUCCESS'"
+>
+  <div class="col-12 p-0 card-round-new" *ngIf="!formSubmitted && applicationFormModel">
+    <div class="col-12">
+      <!-- <div
+        class="col-12 line-height-1 text-2xl"
+        style="border-bottom: 1px solid grey"
+      >
+        <a
+          *ngIf="showBack"
+          [routerLink]="[
+            '/app',
+            'scheme-detail',
+            boardKey,
+            lotteryKey,
+            schemeKey,
+            'APPLY'
+          ]"
+        >
+          <ion-icon color="dark" name="arrow-undo"></ion-icon>
+        </a>
+        {{ "title-header-application" | transloco }}
+      </div> -->
+      <div class="col-12 position-relative line-height-1 text-2xl hidden xl:block lg:block md:block">
+      <div style="display: flex; align-items: center;">
+        <a [routerLink]="['/app', 'select-lottery', boardKey]"
+          style="color: #6c757d; text-decoration: none;font-size: 14px;">
+          {{"title-header-select-lottery" | transloco}}
+        </a>
+        <span style="margin: 0 8px;">&#8250;</span>
+        <a [routerLink]="['/app', 'select-scheme', boardKey, lotteryKey, 'APPLY']"
+          style="color: #6c757d; text-decoration: none; font-size: 14px;">
+          {{applicationFormModel?.lotteryCode}} - {{applicationFormModel?.lotteryName}}
+          <!-- Selected Lottery -->
+        </a>
+        <span style="margin: 0 8px;">&#8250;</span> <!-- Corrected this span -->
+        <a [routerLink]="['/app', 'scheme-detail', boardKey, lotteryKey,schemeKey,'APPLY']"
+          style="color: #6c757d; text-decoration: none; font-size: 14px;">
+          {{applicationFormModel?.schemeCode}} - {{applicationFormModel?.schemeName}}
+          <!-- Selected Lottery -->
+        </a>
+        <span style="margin: 0 8px;">&#8250;</span> <!-- Corrected this span -->
+        <span style="font-weight: 500; font-size: 14px;">
+          {{ "title-header-application" | transloco }}
+        </span>
+        <!-- <button class="btn shadow-4 mt-0 d-flex gap-2 position-absolute top-right" style="float: right;" type="button"
+              [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]"
+              *ngIf="viewMode === 'APPLY'">
+        {{"title-header-apply" | transloco}}
+      </button> -->
+        <!-- <div class="d-flex gap-2 position-absolute top-right">
+        <button class="select-location-btn hidden xl:block lg:block md:block"
+        [routerLink]="['/app','application', boardKey, lotteryKey, scheme?.key]" *ngIf="viewMode === 'APPLY'">
+          <span class="text-white">
+            {{"title-header-apply" | transloco}}
+          </span>
+        </button>
+      </div> -->
+      </div>
+      </div>
+      <div class="col-12 line-height-1 text-2xl  hidden block sm:block md:hidden"
+      style="display: flex; align-items: center;">
+      <div style="display: flex; align-items: center;">
+        <a [routerLink]="['/app', 'scheme-detail', boardKey, lotteryKey,schemeKey,'APPLY']"
+          style="color: #6c757d; text-decoration: none; font-size: 14px;">
+          <ion-icon name="arrow-back-outline" style="margin-right: 8px; font-size: 18px; color: #080808;"></ion-icon>
+          <!-- Selected Lottery -->
+        </a>
+        <span style="font-weight: 500; font-size: 14px;">
+          {{ "title-header-application" | transloco }}
+        </span>
+      </div>
+    </div>
+
+      <div class="col-12 p-0 mt-2">
+        <form
+          [formGroup]="appForm"
+          #localForm="ngForm"
+          (ngSubmit)= "onSubmit()"
+          class="grid p-2"
+        >
+        <!-- (ngSubmit)="isApplyDisabled = true; -->
+          <!-- <div class="col-12" *ngIf="applicableCategoriesError">
+            <small class="error-block">
+              {{ "error-applicable-categories-empty" | transloco }}
+            </small>
+          </div> -->
+          <h5 class="col-12 p-2 text-primary" style="font-family: Poppins;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;color:#313638 !important">
+            {{ "label-selected-scheme" | transloco }}
+          </h5>
+          <div
+          class="field col-12 sm:col-6 md:col-6 lg:col-4 imagedetails"
+          >
+          <!-- Image Section -->
+          <div
+            class="image-section"
+            style="flex: 0 0 auto; width: 92px; height: 60px;">
+            <ng-container *ngIf="applicationFormModel?.buildingImages.length > 0; else defaultImage">
+              <img class="p-0" [src]="api_url + applicationFormModel?.buildingImages[0]" style="width: 100%; height: auto;" />
+            </ng-container>
+            <ng-template #defaultImage>
+              <img class="p-0" src="assets/default-building.png" alt="Default Image" style="width: 92px; height: 60px;" />
+            </ng-template>
+          </div>
+        
+          <!-- Text Content Section -->
+          <div
+            class="text-content"
+            style="padding-left: 15px; flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center;">
+            <div class="scheme-title text-dark mb-0 pb-1" style="font-size: 20px; font-weight: 500;">
+              {{ applicationFormModel?.schemeCode }} - {{ applicationFormModel?.schemeName }}
+            </div>
+            <p
+              class="mt-1 pt-0 pl-0 mb-1"
+              style="color: #5A5A5A; font-family: Poppins; font-size: 12px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px;">
+              {{ applicationFormModel?.address }}
+            </p>
+          </div>
+        </div>
+        
+          <div class="col-12 pl-2 pr-2">
+            <hr width="100%" size="2" style=background-color:#E6E6E6;height:2px>
+          </div>         
+            <!-- <label for="scheme" style="color: #5A5A5A;font-family: Poppins;font-size: 13px;font-style: normal">
+              {{ "label-selected-scheme" | transloco }} </label
+            ><br />
+            <label
+              class="col-12 p-2"
+              style="
+                background-color: #dfdfdf;
+                color: black;
+                font-weight: 400;
+                min-height: 45px;
+                border-radius: 4px;
+                padding: 12px !important;
+              "
+            >
+              {{ applicationFormModel?.schemeCode }} -
+              {{ applicationFormModel?.schemeName }}
+            </label> -->
+          <!-- <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+            <label for="lotteryCategoryKey" style="color: #5A5A5A;font-family: Poppins;font-size: 13px;font-style: normal">
+              {{ "label-category" | transloco }}
+              <span class="text-red-900">*</span>
+            </label>
+            <select
+              id="state"
+              formControlName="lotteryCategoryKey"
+              class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+              style="appearance: auto"
+            >
+              <option value="">{{ "option-select" | transloco }}</option>
+              <option
+                *ngFor="
+                  let lotteryCategory of applicationFormModel?.lotteryCategories
+                "
+                [value]="lotteryCategory.key"
+              >
+                {{ lotteryCategory.categoryCode }} -
+                {{ lotteryCategory.categoryName }}
+              </option>
+            </select>
+            <field-error-component
+              [controlName]="appForm.get('lotteryCategoryKey')"
+              [formSubmitted]="localForm.submitted"
+            ></field-error-component>
+          </div> -->
+
+          <div class="field mb-0 col-12" *ngIf="!stopForMCGMYes">
+            <label for="havingMCGMArea" style="color: #979292">
+              {{ "label-having-mcgm-area" | transloco }}
+              <span class="text-red-900">*</span> </label
+            ><br />
+            <div class="formgroup-inline">
+              <div class="field-radiobutton">
+                <input
+                  type="radio"
+                  name="havingMCGMArea"
+                  id="Y"
+                  (click)="showMcgmAreadDtl(true)"
+                  formControlName="havingMCGMArea"
+                  value="Y"
+                />
+                <label for="Y">{{ "option-yes" | transloco }}</label>
+              </div>
+              <div class="field-radiobutton">
+                <input
+                  type="radio"
+                  name="havingMCGMArea"
+                  id="N"
+                  (click)="showMcgmAreadDtl(false)"
+                  formControlName="havingMCGMArea"
+                  value="N"
+                />
+                <label for="N">{{ "option-no" | transloco }}</label>
+              </div>
+            </div>
+            <field-error-component
+              [controlName]="appForm.get('havingMCGMArea')"
+              [formSubmitted]="localForm.submitted"
+            ></field-error-component>
+          </div>
+
+          <div
+            class="field col-12 sm:col-12 md:col-12 lg:col-6"
+            *ngIf="appForm.value.havingMCGMArea === 'Y' && !stopForMCGMYes"
+          >
+            <label for="mcgmAreaDtl" style="color: #979292">
+              {{ "label-mcgm-area-dtl" | transloco }}
+              <span class="text-red-900">*</span>
+            </label>
+            <textarea
+              id="mcgmAreaDtl"
+              formControlName="mcgmAreaDtl"
+              class="text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              rows="3"
+            ></textarea>
+            <small *ngIf="mcgmAreaDtlError" class="error-block">
+              {{ "error-mcgm-area-dtl" | transloco }}
+            </small>
+          </div>
+
+          <!--Added By Lucifer Start-->
+          <div class="field mb-0 col-12" *ngIf="stopForMCGMYes">
+            <label for="havingMCGMArea" style="color: #313638;font-family: Poppins;font-style: normal;font-size: 14px">
+              {{ "label-mumbai-scheme-located-que" | transloco }}
+              <span class="text-red-900">*</span> </label
+            ><br />
+            <div class="formgroup-inline">
+              <div class="field-radiobutton">
+                <input
+                  type="radio"
+                  name="havingMCGMArea"
+                  (click)="showMcgmAreadDtl(true)"
+                  formControlName="havingMCGMArea"
+                  value="Y"
+                />
+                <label for="Y">{{ "option-yes" | transloco }}</label>
+              </div>
+              <div class="field-radiobutton">
+                <input
+                  type="radio"
+                  name="havingMCGMArea"
+                  (click)="showMcgmAreadDtl(false)"
+                  formControlName="havingMCGMArea"
+                  value="N"
+                />
+                <label for="N">{{ "option-no" | transloco }}</label>
+              </div>
+            </div>
+            <field-error-component
+              [controlName]="appForm.get('havingMCGMArea')"
+              [formSubmitted]="localForm.submitted"
+            ></field-error-component>
+          </div>
+
+          <div
+            class="field mb-0 col-12"
+            *ngIf="stopForMCGMYes && governmentAuthorityQue"
+          >
+            <label for="isTenementAllotted" style="color: #313638;font-family: Poppins;font-style: normal;font-size: 14px">
+              {{ "label-mumbai-government-authority-que" | transloco }}
+              <span class="text-red-900">*</span> </label
+            ><br />
+            <div class="formgroup-inline">
+              <div class="field-radiobutton">
+                <input
+                  type="radio"
+                  name="isTenementAllotted"
+                  (click)="oldFlatDetailQue(true)"
+                  formControlName="isTenementAllotted"
+                  value="Y"
+                />
+                <label for="Y">{{ "option-yes" | transloco }}</label>
+              </div>
+              <div class="field-radiobutton">
+                <input
+                  type="radio"
+                  name="isTenementAllotted"
+                  (click)="oldFlatDetailQue(false)"
+                  formControlName="isTenementAllotted"
+                  value="N"
+                />
+                <label for="N">{{ "option-no" | transloco }}</label>
+              </div>
+            </div>
+            <!-- <field-error-component [controlName]="appForm.get('isTenementAllotted')" [formSubmitted]="localForm.submitted"></field-error-component> -->
+            <small *ngIf="fieldIsrequired" class="error-block">
+              {{ "error-fields-required" | transloco }}
+            </small>
+          </div>
+
+          <div
+            class="field mb-0 col-12"
+            *ngIf="
+              stopForMCGMYes && oldTenementDetails && governmentAuthorityQue
+            "
+          >
+            <label for="isTenementSurrender" style="color: #313638;font-family: Poppins;font-style: normal;font-size: 14px">
+              {{ "label-mumbai-app-ten-surrender-que" | transloco }}
+              <span class="text-red-900">*</span> </label
+            ><br />
+            <div class="formgroup-inline">
+              <div class="field-radiobutton">
+                <input
+                  type="radio"
+                  name="isTenementSurrender"
+                  (click)="showTenementDeatailsBox(true)"
+                  formControlName="isTenementSurrender"
+                  value="Y"
+                />
+                <label for="Y">{{ "option-yes" | transloco }}</label>
+              </div>
+              <div class="field-radiobutton">
+                <input
+                  type="radio"
+                  name="isTenementSurrender"
+                  (click)="showTenementDeatailsBox(false)"
+                  formControlName="isTenementSurrender"
+                  value="N"
+                />
+                <label for="N">{{ "option-no" | transloco }}</label>
+              </div>
+            </div>
+            <small *ngIf="fieldIsrequired1" class="error-block">
+              {{ "error-fields-required" | transloco }}
+            </small>
+          </div>
+
+          <div
+            class="field mb-0 col-12"
+            *ngIf="
+              oldTenementDetails &&
+              stopForMCGMYes &&
+              appForm.value.isTenementSurrender === 'Y'
+            "
+          >
+            <!-- <label for="mcgmAreaDtl" style="color: #313638;font-family: Poppins;font-style: normal;font-size: 14px">
+              {{ "label-mumbai-old-tenement-details" | transloco }}
+              <span class="text-red-900">*</span> </label
+            ><br /> -->
+
+            <textarea
+              id="mcgmAreaDtl"
+              formControlName="mcgmAreaDtl"
+              placeholder="{{ 'label-mumbai-old-tenement-details' | transloco }} *"
+              class="text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              rows="3"
+            ></textarea>
+            <small *ngIf="tenementDetailsError" class="error-block">
+              {{ "error-tenement-dtl" | transloco }}
+            </small>
+          </div>
+
+          <!--Added By Lucifer End-->
+          <div class="col-12 pl-2 pr-2">
+            <hr width="100%" size="2" style=background-color:#E6E6E6;height:2px>
+          </div> 
+          <div class="grid col-12 p-2">
+            <h5 class="col-12 p-2 text-primary" style="font-family: Poppins;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;color:#313638 !important">
+              {{ "label-bank-details-for-refund" | transloco }}
+            </h5>
+            <div class="field col-12">
+              <label for="refundMode" style="color: #313638;font-family: Poppins;font-style: normal;font-size: 14px">
+                {{ "label-refund-mode" | transloco }}
+                <span class="text-red-900">*</span> </label
+              ><br />
+              <div class="formgroup-inline">
+                <div
+                  class="field-radiobutton"
+                  *ngIf="
+                    !applicationFormModel.bankVerification &&
+                    applicationFormModel.bankVerification !== 'PENNY_TEST' &&
+                    applicationFormModel.bankVerification !==
+                      'NO_BANK_VERIFICATION'
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="refundMode"
+                    id="REFUND_TO_SOURCE"
+                    (click)="showRefundDetails(false)"
+                    formControlName="refundMode"
+                    value="REFUND_TO_SOURCE"
+                  />
+                  <label for="REFUND_TO_SOURCE">{{
+                    "option-refund-to-source" | transloco
+                  }}</label>
+                </div>
+                <div class="field-radiobutton">
+                  <input
+                    type="radio"
+                    name="refundMode"
+                    id="REFUND_TO_BANK"
+                    (click)="showRefundDetails(true)"
+                    formControlName="refundMode"
+                    value="REFUND_TO_BANK"
+                  />
+                  <label for="REFUND_TO_BANK">{{
+                    "option-refund-to-bank" | transloco
+                  }}</label>
+                </div>
+              </div>
+              <field-error-component
+                [controlName]="appForm.get('refundMode')"
+                [formSubmitted]="localForm.submitted"
+              ></field-error-component>
+            </div>
+            <div class="grid col-12 m-0 p-0" [formGroup]="viewRefundForm()">
+              <div
+                class="field col-12 sm:col-6 md:col-6 lg:col-4"
+                *ngIf="appForm.value.refundMode === 'REFUND_TO_BANK'"
+              >
+                <!-- Mimicking mat-form-field functionality -->
+                <div class="col-12 p-0 form-outline">
+                  <input
+                  type="text"
+                  formControlName="nameAsOnBank"
+                  id="nameAsOnBank"
+                  class="col-12 outlined-input"
+                  placeholder="{{ 'label-name-as-on-bank' | transloco }}"
+                  maxlength="200"
+                  />
+                  <label for="nameAsOnBank" class="bank-input-label outlined-label">
+                    {{ 'label-name-as-on-bank' | transloco }}
+                    <span class="text-red-900">*</span>
+                  </label>
+
+                  <field-error-component
+                    [controlName]="appForm.get('refundForm').get('nameAsOnBank')"
+                    [formSubmitted]="localForm.submitted"
+                  ></field-error-component>
+
+                  <small *ngIf="nameAsOnAccountError" class="error-block">
+                    {{ "error-name-as-on-account" | transloco }}
+                  </small>
+                </div>
+              </div>  
+              <div
+              class="field col-12 sm:col-6 md:col-6 lg:col-4"
+              *ngIf="appForm.value.refundMode === 'REFUND_TO_BANK'"
+            >
+              <div class="col-12 p-0 form-outline">
+                <input
+                type="password"
+                formControlName="bankAccountNo"
+                id="bankAccountNo"
+                class="col-12 outlined-input"
+                placeholder="{{ 'label-bank-accountno' | transloco }}"
+                appBlockCopyPaste
+                maxlength="19"
+                />
+                <label for="bankAccountNo" class="bank-input-label outlined-label">
+                  {{ 'label-bank-accountno' | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+                <field-error-component
+                  [controlName]="appForm.get('refundForm').get('bankAccountNo')"
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+              </div>
+            </div>
+            <div
+            class="field col-12 sm:col-6 md:col-6 lg:col-4"
+            *ngIf="appForm.value.refundMode === 'REFUND_TO_BANK'"
+          >
+            <div class="col-12 p-0 form-outline">
+              <input
+                type="text"
+                formControlName="confirmBankAccountNo"
+                id="confirmBankAccountNo"
+                class="col-12 outlined-input"
+                placeholder="{{ 'label-confirm-bank-accountno' | transloco }}"
+                appBlockCopyPaste
+                maxlength="19"
+              />
+              <label for="confirmBankAccountNo" class="bank-input-label outlined-label">
+                {{ 'label-confirm-bank-accountno' | transloco }}
+                <span class="text-red-900">*</span>
+              </label>
+              <field-error-component
+                [controlName]="
+                  appForm.get('refundForm').get('confirmBankAccountNo')
+                "
+                [formSubmitted]="localForm.submitted"
+              ></field-error-component>
+              <small *ngIf="bankAndConfirmBankAccountError" class="error-block">
+                {{ "error-bank-ac-confirm-bank-ac" | transloco }}
+              </small>
+            </div>
+          </div>
+          <div
+          class="field col-12 sm:col-6 md:col-6 lg:col-4"
+          *ngIf="appForm.value.refundMode === 'REFUND_TO_BANK'"
+        >
+          <div class="col-12 p-0 form-outline">
+            <input
+            type="text"
+            formControlName="ifsc"
+            id="ifsc"
+            class="col-12 outlined-input"
+            placeholder=" "
+            (change)="fetchBankDetails()"
+            maxlength="11"
+            />
+            <label for="ifsc" class="bank-input-label outlined-label">
+              {{ 'label-ifsc-code' | transloco }}
+              <span class="text-red-900">*</span>
+            </label>
+            <field-error-component
+              [controlName]="appForm.get('refundForm').get('ifsc')"
+              [formSubmitted]="localForm.submitted"
+            ></field-error-component>
+            <small *ngIf="bankError" class="error-block">
+              {{ "error-bank-required" | transloco }}
+            </small>
+          </div>
+        </div>        
+        <div
+  class="field col-12 sm:col-6 md:col-6 lg:col-4"
+  *ngIf="appForm.value.refundMode === 'REFUND_TO_BANK'"
+>
+  <div class="form-outline">
+    <label class="bank-info-label-new">
+      <span class="placeholder-text">
+        {{ bankName ? bankName : ('label-bank-name' | transloco) }}
+      </span>
+    </label>
+  </div>
+</div>
+
+<!-- Branch Name Field -->
+<div
+  class="field col-12 sm:col-6 md:col-6 lg:col-4"
+  *ngIf="appForm.value.refundMode === 'REFUND_TO_BANK'"
+>
+  <div class="form-outline">
+    <label class="bank-info-label-new">
+      <span class="placeholder-text">
+        {{ branchName ? branchName : ('label-branch-name' | transloco) }}
+      </span>
+    </label>
+  </div>
+</div>
+            </div>
+            <div
+                class="field col-12"
+                *ngIf="
+                  appForm.value.refundMode &&
+                  appForm.value.refundMode === 'REFUND_TO_BANK'
+                "
+              >
+                <label for="ifsc" style="color: #979292" class="mb-0">
+                  {{ "label-bank-cheque-passbook" | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+                <div class="col-12 p-0">
+                  <!-- <button type="button" (click)="file.click()" style="float: left" class="small-button shadow-4 bg-primary text-white p-1">
+                    <mat-icon style=" line-height: 25px; margin-right: 5px; float: left; color: white; ">upload</mat-icon>
+                    <div
+                      style="
+                        float: left;
+                        padding-top: 6px;
+                        background-color: transparent;
+                      "
+                      class="text-white"
+                    >
+                      {{ "label-bank-cheque-passbook" | transloco }}
+                    </div>
+                    <input
+                      type="file"
+                      id="uploadBankChequePassbookFile"
+                      #file
+                      formControlName="uploadBankChequePassbookFile"
+                      style="display: none"
+                      (change)="onBankChequePassbookFileSelect($event)"
+                      accept="application/pdf"
+                    />
+                  </button> -->
+                  <div class="custom-height-wrapper">
+                  <app-pdf-upload-cmp [uploadFileVisible]="true" 
+                    [previewImage]="previewImage" [questionCode]="null" 
+                    (setPreviewImage)="setPreviewImage($event)" 
+                    (setFileObj)="setFileObj($event)"
+                    class="col-12" ></app-pdf-upload-cmp>
+                  </div>
+                  <span class="pl-2" *ngIf="uploadedBankChequePassbookFileName">
+                    <span
+                      class="pl-2"
+                      *ngIf="uploadedBankChequePassbookFileName"
+                      >{{ uploadedBankChequePassbookFileName }}</span
+                    >
+                  </span>
+                </div>
+                <small *ngIf="banPassbookOrCancelledChequeError" class="error-block">
+                  {{ "error-bank-ac-confirm-bank-ac" | transloco }}<!--TODO-->
+                </small>
+              </div>
+          </div>
+          <div class="col-12 pl-2 pr-2">
+            <hr width="100%" size="2" style=background-color:#E6E6E6;height:2px>
+          </div> 
+          <div class="grid col-12 p-2" *ngIf="showNominee">
+            <h5 class="col-12 p-2 text-primary" style="font-family: Poppins;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;color:#313638 !important"> <!--<border-bottom-1">-->
+              {{ "label-nominee-detail" | transloco }}
+              <!-- <button type="button" style="float: right;" 
+                            class="small-button shadow-4 bg-primary text-white p-1" 
+                            (click)="addNewNominee()">
+                            <mat-icon style="line-height: 25px; float: left; color: white;">add_box</mat-icon>
+                        </button> -->
+            </h5>
+            <!-- <h6 class="m-0">{{"label-nominee-header-help" | transloco}}</h6> -->
+            <!-- <table class="col-12">
+                        <thead>
+                            <tr>
+                                <th class="col-1">{{"label-nominee-priority" | transloco}}</th>
+                                <th class="col-11" style="text-align: left;">{{"label-nominee" | transloco}}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="col-12">
+                            <tr *ngFor="let nominee of nominees; index as i" class="col-12 m-0"
+                                formArrayName="nomineeDetailArray" >
+                                <td class="m-0 p-0 col-1 text-center" [formGroupName]="i">
+                                    {{i+1}}
+                                </td>
+                                <td class="grid m-0 p-0 col-11" [formGroupName]="i">
+                                    <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+                                        <label for="nomineeName" style="color: #979292;">
+                                            {{"label-nominee-name" | transloco}} <span class="text-red-900">*</span>
+                                        </label>
+                                        <input type="text" formControlName="nomineeName" id="nomineeName"
+                                        class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                        maxlength="200" />
+                                        <field-error-component [controlName]="nominee.get('nomineeName')" [formSubmitted]="localForm.submitted"></field-error-component>
+                                        <small *ngIf="nomineeNameError[i]" class="error-block">
+                                            {{"error-nominee-name" | transloco}}
+                                        </small>
+                                    </div>
+                                    <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+                                        <label for="nomineeRelationship" style="color: #979292;">
+                                            {{"label-nominee-relationship" | transloco}} <span class="text-red-900">*</span>
+                                        </label>
+                                        <input type="text" formControlName="nomineeRelationship" id="nomineeRelationship"
+                                        class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                        maxlength="200" />
+                                        <field-error-component [controlName]="nominee.get('nomineeRelationship')" [formSubmitted]="localForm.submitted"></field-error-component>
+                                        <small *ngIf="nomineeRelationshipError[i]" class="error-block">
+                                            {{"error-nominee-relationship" | transloco}}
+                                        </small>
+                                    </div>
+                                    <div class="field col-1">
+                                        <button type="button" title="Delete" style="background-color: red !important;" 
+                                            class="small-button shadow-4 bg-pink-500 text-white p-1 ml-2 mt-4" 
+                                            (click)="deleteNominee(i)" *ngIf="i > 0">
+                                            <mat-icon style="line-height: 25px; float: left; color: white;">delete</mat-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+            <div class="field col-12">
+              <div class="grid m-0 p-0" [formGroup]="viewNomineeDetailForm()">
+              <div class="field col-12 sm:col-6 md:col-6 lg:col-4" *ngIf="appForm.get('nomineeDetailForm').get('nomineeName')">
+                <!-- Mimicking mat-form-field functionality -->
+                <div class="col-12 p-0 form-outline">
+                  <input type="text" formControlName="nomineeName" id="nomineeName" class="col-12 outlined-input"
+                    placeholder="{{ 'label-nominee-name' | transloco }}" maxlength="200" />
+                  <label for="nomineeName" class="bank-input-label outlined-label">
+                    {{ 'label-nominee-name' | transloco }}
+                    <span class="text-red-900">*</span>
+                  </label>
+              
+                  <field-error-component [controlName]="appForm.get('nomineeDetailForm').get('nomineeName')"
+                    [formSubmitted]="localForm.submitted"></field-error-component>
+              
+                  <small *ngIf="nomineeNameError" class="error-block">
+                    {{ "error-nominee-name" | transloco }}
+                  </small>
+                </div>
+              </div>
+                              <!-- Nominee Relationship Field -->
+              <div
+              class="field col-12 sm:col-6 md:col-6 lg:col-4"
+              *ngIf="appForm.get('nomineeDetailForm').get('nomineeRelationship')"
+              >
+              <div class="col-12 p-0 form-outline">
+                <input
+                  type="text"
+                  formControlName="nomineeRelationship"
+                  id="nomineeRelationship"
+                  class="col-12 outlined-input"
+                  placeholder="{{ 'label-nominee-relationship' | transloco }}"
+                  maxlength="200"
+                />
+                <label for="nomineeRelationship" class="bank-input-label outlined-label">
+                  {{ 'label-nominee-relationship' | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+
+                <field-error-component
+                  [controlName]="
+                    appForm.get('nomineeDetailForm').get('nomineeRelationship')
+                  "
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+
+                <small *ngIf="nomineeRelationshipError" class="error-block">
+                  {{ "error-nominee-relationship" | transloco }}
+                </small>
+              </div>
+              </div>
+
+              <!-- Nominee Mobile Number Field -->
+              <div
+              class="field col-12 sm:col-6 md:col-6 lg:col-4"
+              *ngIf="appForm.get('nomineeDetailForm').get('nomineeMobileNumber')"
+              >
+              <div class="col-12 p-0 form-outline">
+                <input
+                  type="text"
+                  formControlName="nomineeMobileNumber"
+                  id="nomineeMobileNumber"
+                  class="col-12 outlined-input"
+                  placeholder="{{ 'label-nominee-mobilenumber' | transloco }}"
+                  maxlength="10"
+                />
+                <label for="nomineeMobileNumber" class="bank-input-label outlined-label">
+                  {{ 'label-nominee-mobilenumber' | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+
+                <field-error-component
+                  [controlName]="
+                    appForm.get('nomineeDetailForm').get('nomineeMobileNumber')
+                  "
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+
+                <small *ngIf="nomineeMobileNumberError" class="error-block">
+                  {{ "error-nominee-mobilenumber" | transloco }}
+                </small>
+              </div>
+              </div>
+              <div
+              class="field col-12 sm:col-6 md:col-6 lg:col-4"
+              *ngIf="appForm.get('nomineeDetailForm').get('nomineeEmailId')"
+            >
+              <div class="col-12 p-0 form-outline">
+                <input
+                  type="text"
+                  formControlName="nomineeEmailId"
+                  id="nomineeEmailId"
+                  class="col-12 outlined-input"
+                  placeholder="{{ 'label-nominee-emailid' | transloco }}"
+                  maxlength="150"
+                />
+                <label for="nomineeEmailId" class="bank-input-label outlined-label">
+                  {{ 'label-nominee-emailid' | transloco }}
+                  <span class="text-red-900">*</span>
+                </label>
+            
+                <field-error-component
+                  [controlName]="appForm.get('nomineeDetailForm').get('nomineeEmailId')"
+                  [formSubmitted]="localForm.submitted"
+                ></field-error-component>
+            
+                <small *ngIf="nomineeEmailIdError" class="error-block">
+                  {{ "error-nominee-emailid" | transloco }}
+                </small>
+              </div>
+            </div>            
+              </div>
+            </div>
+          </div>
+          <!-- <div class="field col-12 mt-0">
+            <div class="col-12 sm:col-6 md:col-6 lg:col-4">
+              <div class="col-12">
+                <img
+                  [src]="signature"
+                  *ngIf="signature"
+                  style="height: 100px; width: 200px"
+                />
+              </div>
+              <button
+                class="btn-mediums shadow-4 mt-0"
+                type="button"
+                (click)="addSignature()"
+                *ngIf="!signature"
+              >
+                {{ "button-add-signature-for" | transloco }}
+                {{ applicationFormModel?.applicantName }}
+              </button>
+              <button
+                class="btn-mediums shadow-4 mt-0"
+                type="button"
+                (click)="addSignature()"
+                *ngIf="signature"
+              >
+                {{ "button-edit-signature-for" | transloco }}
+                {{ applicationFormModel?.applicantName }}
+              </button>
+            </div>
+            <div class="col-12">
+              <small *ngIf="signatureError" class="error-block">
+                {{ "error-signature" | transloco }}
+              </small>
+            </div>
+          </div> -->
+          <div class="field col-12 mt-0">
+            <div class="field-checkbox mb-0">
+              <input type="checkbox" id="iAgree" formControlName="iAgree" />
+              <!-- <label for="iAgree">{{ "label-iagree" | transloco }}</label -->
+                <label for="iAgree">I agree to the <a (click)="showTermsAndConditions()" class="terms-link">Terms & Conditions</a></label
+              ><br />
+            </div>
+            <div class="field-checkbox mb-0">
+              <field-error-component
+                [controlName]="appForm.get('iAgree')"
+                [formSubmitted]="localForm.submitted"
+              ></field-error-component>
+            </div>
+            <!-- <a (click)="showTermsAndConditions()" class="ml-3 cursor-pointer">{{
+              "button-click-here" | transloco
+            }}</a> -->
+            <div class="col-12 p-2 mt-2 mb-2">
+              <button class="btn-mediums shadow-4 mt-0" type="submit">
+                {{ "button-submits" | transloco }}
+              </button>
+            </div>
+          </div>
+          <!-- <div class="col-12 p-2" *ngIf="!formValidMessage || !appForm.valid && appForm.touched">
+                    <div class="col-12 p-2 error-message">{{"error-required-fields" | transloco}}</div>
+                </div> -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 p-0 card-round" *ngIf="formSubmitted">
+    <div class="col-12 m-0 p-0">
+      <div
+        class="col-12 p-1 mb-3" style="margin-top: 30px;"
+        *ngIf="formSubmitted && application?.applicationNo"
+      > 
+      <!-- && application?.applicationNo -->
+        <div class="col-12 text-center">
+          <ion-icon
+          name="checkmark-circle-sharp"
+          class="animated-checkmark"
+          style="font-size: 65px; color: #3ec13e"
+        ></ion-icon>
+        <br />
+          <div class="status-message-new">
+            <span class="application-received-label">
+              {{ "label-application-received-success-new" | transloco }}
+            </span>
+            <br />
+            <span class="pay-emd-message-label">
+              {{ "label-pay-emd-message-new" | transloco }}
+            </span>
+          </div>
+          
+        </div>
+      </div>
+      <!-- <div class="col-12 m-0 p-2">
+        <div class="grid col-12 card pr-3 card-border m-0">
+          <div class="col-12 sm:col-6 md:col-6 lg:col-4 p-1">
+            <label style="color: #979292">{{
+              "label-application-no" | transloco
+            }}</label
+            ><br />
+            <p class="m-0 font-bold" style="font-size: 16px">
+              {{ application?.applicationNo }}
+            </p>
+          </div>
+          <div class="col-12 sm:col-6 md:col-6 lg:col-4 p-1">
+            <label style="color: #979292">{{
+              "label-scheme" | transloco
+            }}</label
+            ><br />
+            <p class="m-0 font-bold" style="font-size: 16px">
+              {{ application?.schemeCode }} - {{ application?.schemeName }}
+            </p>
+          </div>
+          <div class="col-12 sm:col-6 md:col-6 lg:col-4 p-1">
+            <label style="color: #979292">{{
+              "label-category" | transloco
+            }}</label
+            ><br />
+            <p class="m-0 font-bold" style="font-size: 16px">
+              {{ application?.categoryCode }} - {{ application?.categoryName }}
+            </p>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-12 text-center mt-0">
+        <button
+          class="btn-medium shadow-4 mt-0"
+          type="button"
+          [routerLink]="['/app', 'payment', application?.key]"
+        >
+          {{ "button-pay-emd-fee" | transloco }}
+        </button>
+      </div>
+      <div class="col-12 text-center mt-0">
+        <button
+          class="btn-medium shadow-2 mt-3"
+          type="button"
+          (click)="showAcknowledgement()"
+          style="background-color: #4c85f5"
+        >
+          <mat-icon style="color: white; float: left">remove_red_eye</mat-icon>
+          <div
+            style="float: left; color: white; margin-left: 5px; margin-top: 3px"
+          >
+            <span style="background-color: #4c85f5; color: white">
+              {{ "button-view-acknowledgement" | transloco }}
+            </span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="grid m-0 p-0 background-image card-content ng-star-inserted"
+  style="height: calc(100% - 100px)"
+  *ngIf="formLoadStatus != null && formLoadStatus === 'ERROR'"
+>
+  <div class="col-11 m-3 p-0 card">
+    <div class="col-12">
+      <div class="col-12 p-0 mt-2">
+        <div class="grid">
+          <div class="col-12 text-center">
+            <ion-icon
+              name="warning-sharp"
+              style="font-size: 65px; color: orange"
+            ></ion-icon
+            ><br />
+            <div class="col-8 ml-7 p-2 status-message">
+              {{ formLoadErrorMessage }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

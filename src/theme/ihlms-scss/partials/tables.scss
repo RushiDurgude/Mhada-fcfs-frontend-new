@@ -1,0 +1,198 @@
+@import "../partials/color.scss";
+
+.table-details {
+  width: 100%;
+  .mat-header-row {
+    border-bottom: 1px solid $grayLight;
+    //height: 40px;
+    th {
+      color: $gray;
+      font-weight: 400;
+    }
+  }
+  tbody {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+    padding-bottom: 15px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: $white;
+      margin: 2% 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      margin: 2% 0;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    tr {
+      display: block;
+      position: relative;
+      &:hover {
+        background-color: $hoverEffect;
+        .action-icon {
+          .btn {
+            display: block !important;
+          }
+        }
+      }
+      td {
+        color: $black;
+      }
+    }
+  }
+}
+
+.action-icon,
+.bottom-header,
+.responsibilities-info {
+  .mat-button-base,
+  .mat-focus-indicator {
+    box-shadow: none !important;
+    color: $primery;
+    &:hover {
+      background-color: rgba(242, 121, 0, 0.07);
+    }
+  }
+
+  .mat-button-disabled {
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+
+  .mat-paginator {
+    .mat-paginator-page-size {
+      .mat-paginator-page-size-label {
+        font-size: 12px;
+        color: $gray;
+      }
+      .mat-form-field {
+        margin: -7px 4px 0 4px !important;
+        .mat-form-field-wrapper {
+          .mat-form-field-underline {
+            .mat-form-field-ripple {
+              background-color: $primery;
+            }
+          }
+          .mat-select-arrow-wrapper {
+            .mat-select-arrow {
+              color: $primery !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.select-dropdwon {
+  .mat-select-trigger {
+    height: auto !important;
+    .mat-select-arrow-wrapper {
+      height: 34px !important;
+    }
+    .mat-select-arrow-wrapper {
+      .mat-select-arrow {
+        color: $primery;
+      }
+    }
+  }
+}
+
+.mat-select-panel-wrap {
+  .mat-select-panel {
+    .mat-option {
+      .mat-pseudo-checkbox-checked {
+        background-color: $primery !important;
+      }
+    }
+    .mat-active {
+      .mat-option-text {
+        // color: $primery !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .table-details {
+    thead {
+      display: none !important;
+    }
+    tbody {
+      height: calc(100vh - 246px) !important;
+      tr {
+        height: auto !important;
+        td {
+          &:nth-child(1),
+          &:nth-child(3),
+          &:nth-child(4),
+          &:nth-child(5) {
+            display: none !important;
+          }
+          &:nth-child(2) {
+            display: block !important;
+            width: 100% !important;
+            border-bottom: 1px solid $grayLight !important;
+            .title {
+              font-size: 14px;
+              color: $black;
+              font-weight: 500;
+              width: 85%;
+            }
+            .sub-title {
+              font-size: 14px;
+              color: $black;
+              display: block !important;
+            }
+
+            .mobile-menu {
+              display: block !important;
+              position: absolute;
+              top: 7px;
+              right: 9px;
+              .btn {
+                box-shadow: none !important;
+                color: $primery;
+              }
+            }
+
+          }
+        }
+        &:hover {
+          background-color: transparent !important;
+        }
+        &:nth-child(even) {
+          background-color: transparent !important;
+        }
+        &:last-child {
+          td {
+            &:nth-child(2) {
+              border-bottom: transparent !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .bottom-header {
+    .mat-paginator-container {
+      justify-content: start !important;
+      flex-direction:column-reverse;
+      .mat-paginator-range-label {
+        margin-left: 10px !important;
+      }
+      .mat-paginator-page-size {
+        margin-left: -8px;
+      }
+    }
+  }
+}
+
+tr.mat-row, tr.mat-footer-row {
+  height: auto !important;
+}

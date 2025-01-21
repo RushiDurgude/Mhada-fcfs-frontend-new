@@ -1,0 +1,24 @@
+<div class="grid m-0 p-0">
+  <div class="col-12">
+    <div>Multiple names found.</div>
+    <div class="mt-2">Use both?</div>
+  </div>
+  <div class="col-12">
+    <label class="text-xs">Name 1: </label>
+    <label class="text-lg font-semibold">{{ ocrName }}</label>
+  </div>
+  <div class="col-12">
+    <label class="text-xs">Name 2: </label>
+    <label class="text-lg font-semibold">{{ aliasName }}</label>
+  </div>
+  <div class="col-6">
+    <button mat-raised-button style="width: 90%" mat-dialog-close="No">
+      {{ "no" | transloco }}
+    </button>
+  </div>
+  <div class="col-6">
+    <button style="background: #1061ff; width: 90%" mat-raised-button mat-dialog-close="Yes">
+      <label style="color: white">{{ "yes" | transloco }}</label>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,212 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<div class="user-details">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details col-12">
+      <div class="title">{{ "title-confirm-selection" | transloco }}</div>
+    </div>
+    <div class="grid col-12 m-0">
+      <div class="mobile-header" style="border-radius: 0px">
+        <div class="flex align-items-center justify-content-between">
+          <div class="flex align-items-center">
+            <div class="title ml-2">
+              {{ "title-confirm-selection" | transloco }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-dashoard mt-4 py-2" *ngIf="showAcceptList">
+    <h4 class="col-12 text-center mb-1">
+      {{ "label-confirm-chosen-accept-tenement" | transloco }}
+    </h4>
+    <table class="table-details1 col-12">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ "label-application-no" | transloco }}</th>
+          <th>{{ "table-header-lottery" | transloco }}</th>
+          <th>{{ "table-header-scheme-name" | transloco }}</th>
+          <th>{{ "table-header-category-code" | transloco }}</th>
+          <th>{{ "table-header-tenement-details" | transloco }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <div class="title mb-1 mt-1" style="font-size: 17px">
+              {{ acceptTenement.applicationNo }}
+            </div>
+            <div class="sub-title text-left mb-1">
+              <div class="mb-1 p-2 shadow-2">
+                {{ acceptTenement.lotteryCode }} -
+                {{ acceptTenement.lotteryName }}<br />
+                <hr style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  " />
+                {{ acceptTenement.schemeCode }} - {{ acceptTenement.schemeName
+                }}<br />
+                <hr style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  " />
+                {{ acceptTenement.category }}<br />
+                <hr style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  " />
+                <b>Building No</b> - {{ acceptTenement.buildingNo }},
+                <b> Wing</b> - {{ acceptTenement.wing }}, <b> Floor</b> -
+                {{ acceptTenement.floor }}, <b> Flat No</b> -
+                {{ acceptTenement.flatNo }}
+              </div>
+              <br />
+            </div>
+          </td>
+          <td>
+            {{ acceptTenement?.lotteryCode }} -
+            {{ acceptTenement?.lotteryName }}
+          </td>
+          <td>
+            {{ acceptTenement?.schemeCode }} - {{ acceptTenement?.schemeName }}
+          </td>
+          <td>{{ acceptTenement?.category }}</td>
+          <td>
+            <b>Building No</b> - {{ acceptTenement?.buildingNo }},
+            <b> Wing</b> - {{ acceptTenement?.wing }}, <b> Floor</b> -
+            {{ acceptTenement?.floor }}, <b> Flat No</b> -
+            {{ acceptTenement?.flatNo }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+  <div class="col-12 pl-0 md:col-12 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+    <span *ngIf="showAcceptList" class="center-text" style="font-size: larger">
+      &bull; <strong>{{ "label-final-applicant-name-show" | transloco }}</strong><br />
+    </span>
+    <label class="cursor-pointer pt-2">
+      <br />
+      <mat-radio-group>
+        <mat-radio-button value="Aadhar_Name" (change)="toggleAppName($event)">
+          <label for="applicantAadharName" class="label-input ,bold-text" style="font-size: 14px">
+            AADHAR NAME - {{ applicantAadharName }} 
+            <!-- <span class="text-red-900">*</span> -->
+          </label>
+          <!-- <input
+                type="text"
+                id="applicantName"
+                formControlName="applicantAadharName"
+                class="form-control"
+                autocomplete="off"
+                maxlength="180"
+              /> -->
+          <!-- (change)="toggleChild($event)" -->
+          <!-- [controlName]="form.get('possApplicantName')" -->
+          <!-- ---Name as on Aadhaar - {{ applicantAadhaarName }} -->
+        </mat-radio-button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <mat-radio-button value="Pan_Name" (change)="toggleAppName($event)">
+          <label for="applicantPanName" class="label-input,bold-text" style="font-size: 14px">
+            PAN NAME - {{ applicantPanName }} 
+            <!-- <span class="text-red-900">*</span> -->
+          </label>
+          <!-- <input
+                type="text"
+                id="applicantName"
+                formControlName="applicantPanName"
+                class="form-control"
+                autocomplete="off"
+                maxlength="180"
+              /> -->
+          <!-- (change)="toggleChild($event)" -->
+          <!-- --Name as on PAN - {{ applicantPanName }} -->
+        </mat-radio-button>
+      </mat-radio-group>
+    </label>
+  </div>
+  <br>
+  <div class="d-flex align-items-center" class="col-12 pl-0 md:col-12 md:pr-3 md:pl-3 pr-0 pt-0 pb-6 position-relative"
+    *ngIf="gender === 'FEMALE' && maritalStatus === 'Married'">
+    <input type="checkbox" #confirmed class="mr-2" style="scale: 1.5" [checked]="spouseConditionVisible"
+      [value]="spouseConditionVisible ? 'Y' : 'N'" formControlName="checkboxFormSpouse"
+      (change)="onSpouseNameApplicableButton($event)" />
+    <span *ngIf="showAcceptList" style="font-size: larger">
+      <strong>{{ "label-show-spouse-name" | transloco }}</strong>
+    </span>
+  </div>
+ 
+  <div class="col-12 pl-0 md:col-12 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+   *ngIf="(gender === 'FEMALE' && spouseConditionVisible) || (gender === 'MALE' && maritalStatus === 'Married' )">
+    <span *ngIf="showAcceptList" class="center-text" style="font-size: larger">
+      &bull; <strong>{{ "label-final-spouse-name-show" | transloco }} </strong><br />
+    </span>
+    <label class="cursor-pointer pt-2">
+      <br />
+      <mat-radio-group>
+        <mat-radio-button value="Aadhar_Name" (change)="toggleSposName($event)">
+          <label for="spouseAadharName" class="label-input,bold-text" style="font-size: 14px">
+            AADHAR NAME - {{ spouseAadharName }} 
+          </label>
+        </mat-radio-button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <mat-radio-button value="Pan_Name" (change)="toggleSposName($event)">
+          <label for="spousePanName" class="label-input ,bold-text" style="font-size: 14px ">
+            PAN NAME - {{ spousePanName }} 
+          </label>
+        </mat-radio-button>
+      </mat-radio-group>
+    </label>
+  </div>
+  <div>
+
+
+    <div>
+      <div class="col-12 pl-0 md:col-6 lg:col-6 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+        style="margin-left: auto; margin-right: auto">
+        <label class="grid col-12 m-0 cursor-pointer pt-2">
+          <br />
+          <div class="col-1">
+            <input type="checkbox" #confirmed class="mr-2" style="scale: 1.5" value="Y"
+              (change)="onCheckboxChange($event)" required />
+          </div>
+
+          <div class="col-11">
+            <span *ngIf="showAcceptList">
+              {{ "label-accept-single-multi-terms1" | transloco }}<br />
+            </span>
+            <span *ngIf="showSurrenderList">
+              {{ "label-accept-multi-surrender-terms1" | transloco }}<br />
+            </span>
+          </div>
+        </label>
+      </div>
+      <div class="col-12 p-2 mb-5" style="background-color: #dfdfdf" *ngIf="showSurrenderList">
+        {{ "label-accept-multi-surrender-note" | transloco }}
+      </div>
+
+      <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+        style="margin-left: auto; margin-right: auto">
+        <button type="submit" class="btn btn-secondary mr-3" (click)="confirmTenement()" [disabled]="!confirmed.checked"
+          mat-stroked-button>
+          <span style="color: #f27900"> Submit </span>
+        </button>
+        <button type="button" [routerLink]="['/app', 'application-detail-list', 'post-apps']" color="primery"
+          class="btn btn-primery" mat-raised-button>
+          Cancel
+        </button>
+      </div>
+    </div>

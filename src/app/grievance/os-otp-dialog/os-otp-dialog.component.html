@@ -1,0 +1,17 @@
+<div class="text-center">
+  <h1>{{'otp-verification-title'|transloco}}</h1>
+  <div class="col-12" *ngIf="timeLeft!=1">
+    <input class="input input-otp" type="text" inputmode="numeric" maxlength="6" [(ngModel)]="mobileOtp"
+      (keypress)="numberOnly($event)" />
+  </div>
+  <p *ngIf="showOtp" style="color: red;text-align:center">{{showOtp}}</p>
+  <div class="text-center col-12">
+    <p *ngIf="timeLeft!=1">{{timeLeft}} {{'otp-timer'|transloco}}</p><br />
+    <button *ngIf="mobileOtp.length==6 && timeLeft!=1" class="btnclass" mat-raised-button (click)="validate()">
+      <div style=" color: #003BAD;">{{'grievance-verify-otp-btn'|transloco}} </div>
+    </button>
+    <button *ngIf="timeLeft==1" class="btnclass" mat-raised-button (click)="resendOtp()">
+      <div style=" color: #003BAD;">{{'resend-btn'|transloco}}</div>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-icon
+        name="close-circle-sharp"
+        (click)="cancel()"
+        style="color: red; font-size: 26px; cursor: pointer"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-title class="pl-3">{{ documentName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="p-1">
+  <div class="col-12 text-right p-0">
+    <button mat-raised-button (click)="downloadPdf()">
+      <ion-icon name="cloud-download" style="font-size: 20px"></ion-icon>
+    </button>
+  </div>
+  <div
+    class="col-12"
+    style="background-color: #dfdfdf; height: calc(100% - 60px)"
+  >
+    <pdf-viewer
+      #pdf
+      [src]="pdfSrc"
+      [render-text]="true"
+      [original-size]="false"
+      [fit-to-page]="true"
+      [autoresize]="true"
+      style="width: 100%; height: 600px; max-width: 1200px"
+    ></pdf-viewer>
+  </div>
+</ion-content>

@@ -1,0 +1,534 @@
+<div class="grid m-0 p-0 background-image" style="height: calc(100% - 100px); overflow: auto">
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+  <div class="col-12 lg:col-10 xl:col-10 md:col-10 pl-3 pr-3 pb-0" #target [ngClass]="platform == 'ios' ? 'mb-6' : ''">
+    <div class="grid m-0 p-0">
+      <div class="col-12 card">
+        <div class="grid m-0 p-0">
+          <div class="col-6 text-left">
+            <div id="parent" *ngIf="doNoShowAgain">
+              <div id="narrow">
+                <ion-checkbox color="primary" slot="start" (ionChange)="updateShowInfoFlag()"></ion-checkbox>
+              </div>
+              <div id="wide" class="text-left text-xs">{{ "documents-label-do-not-show-again" | transloco }}</div>
+            </div>
+          </div>
+          <div class="col-6 text-right">
+            <ion-button
+              [color]="isDarkMode ? 'light' : 'dark'"
+              fill="clear"
+              style="width: fit-content ;background-color: transparent;"
+              size="small"
+              class="p-0 m-0 -mt-2 ion-button-no-padding"
+              [routerLink]="['/landing']"
+            >
+              <label style="font-size: 12px">{{ "documents-label-skip-intro" | transloco }}</label>
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  style="font-size: 20px" slot="end" name="play-skip-forward-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="col-12 lg:col-2 xl:col-2 hidden-sm hidden-xs" style="background: transparent">
+            <ion-header>
+              <ion-toolbar translucent class="text-center">
+                <ion-title [color]="isDarkMode ? 'light' : 'dark'">{{ "menu" | transloco }}</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-list>
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  class="cursor-pointer" routerDirection="forward" [routerLink]="['/landing']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="home-sharp" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-home" | transloco }}
+              </ion-item>
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  class="cursor-pointer" routerDirection="forward" [routerLink]="['/app', 'news']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="volume-high-sharp" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-news" | transloco }}
+              </ion-item>
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  class="cursor-pointer" routerDirection="forward" [routerLink]="['/app', 'quick-links']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-quick-links" | transloco }}
+              </ion-item>
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  class="cursor-pointer" routerDirection="forward" [routerLink]="['/app', 'help']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-help" | transloco }}
+              </ion-item>
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'" 
+                class="cursor-pointer"
+                routerDirection="forward"
+                [routerLink]="['/notifications']"
+                *ngIf="authFlag"
+              >
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="notifications" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-notifications" | transloco }}
+              </ion-item>
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'" 
+                class="cursor-pointer"
+                routerDirection="forward"
+                [routerLink]="['/app', 'select-board']"
+                *ngIf="authFlag"
+              >
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-apply" | transloco }}
+              </ion-item>
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'" 
+                class="cursor-pointer"
+                routerDirection="forward"
+                [routerLink]="['/app', 'application-detail-list']"
+                *ngIf="authFlag"
+              >
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-application-List" | transloco }}
+              </ion-item>
+
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  routerDirection="forward" [routerLink]="['/my-grievances']" *ngIf="authFlag">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-my-issues" | transloco }}
+              </ion-item>
+              <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'"  routerDirection="forward" [routerLink]="['/my-objection-suggestion']" *ngIf="authFlag">
+                    <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+                    {{ "my-objections-suggestions" | transloco }}
+                  </ion-item> -->
+              <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'"  routerDirection="forward" [routerLink]="['/cert-entry', 'pan-validation']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-certificate-generation" | transloco }}
+              </ion-item> --> 
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  routerDirection="forward" [routerLink]="['/app', 'select-lottery','1','VIEW']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+                {{ "title-header-live-lottery" | transloco }}
+              </ion-item>
+              <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'"  routerDirection="forward" [routerLink]="['/app', 'old-lottery']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+                {{ "title-header-old-lottery" | transloco }}
+              </ion-item> -->
+              <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" 
+                routerDirection="forward"
+                [routerLink]="['/app', 'accepted-applications', 'accepted-applications-lottery']"
+              >
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-draft-list" | transloco }}
+              </ion-item> -->
+              <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'"  routerDirection="forward" [routerLink]="['/app', 'draw-result']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-draw-result" | transloco }}
+              </ion-item> -->
+
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  routerDirection="forward" routerLink="/important-links">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+                {{ "important-links" | transloco }}
+              </ion-item>
+              
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  routerDirection="forward" [routerLink]="['/contact-us']">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="call" slot="start" class="mr-2"></ion-icon>
+                {{ "label-contact-us" | transloco }}
+              </ion-item>
+
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'" 
+                routerDirection="forward"
+                routerLink="/privacy-policy"
+                *ngIf="
+                  router.url != '/privacy-policy' &&
+                  router.url != '/profile' &&
+                  (devicePlatform == 'browser' || devicePlatform == 'browser-local')
+                "
+              >
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="shield-checkmark-outline" slot="start" class="mr-2"></ion-icon>
+                {{ "privacy-policy" | transloco }}
+              </ion-item>
+              <ion-item [color]="isDarkMode ? 'dark' : 'light'"  class="cursor-pointer" routerDirection="forward" (click)="logout()" *ngIf="authFlag">
+                <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="log-out-outline" slot="start" class="mr-2"></ion-icon>
+                {{ "menu-logout" | transloco }}
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <div class="col-12 lg:col-10 xl:col-10">
+            <div class="grid m-0 p-0">
+              <div class="col-12 text-center text-xl font-medium underline">
+                {{ "documents-label-registration-process" | transloco }}
+              </div>
+              <div class="col-12 text-center">
+                {{ "documents-label-document-confirmation" | transloco }}
+              </div>
+              <div class="col-12 text-center">{{ "documents-label-list" | transloco }}</div>
+              <div class="col-12 lg:col-7 xl:col-7 pl-5">
+                <ul>
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="second">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label color="dark" class="accordion-no-word-wrap">{{
+                            "documents-label-mobile" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-mobile-content" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="second">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label color="dark" class="accordion-no-word-wrap">{{
+                            "documents-label-email" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-email-content" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="second">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-aadhar" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-aadhar-content" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="second">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{ "documents-label-pan" | transloco }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-pan-content" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="second">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-spouse-aadhar" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-spouse-aadhar-content" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="second">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-spouse-pan" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-spouse-pan-content" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="first">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-domicile" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-domicile-content-1" | transloco }}
+                          <!-- <a href="https://aaplesarkar.mahaonline.gov.in/en" target="_blank">{{
+                            "documents-label-domicile-content-1-link" | transloco
+                          }}</a>
+                          {{ "documents-label-domicile-content-2" | transloco }} -->
+                          <a href="https://aaplesarkar.mahaonline.gov.in/en" target="_blank">
+                            {{ "documents-label-domicile-content-2-link" | transloco }}
+                          </a>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <!-- <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="second">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label>{{ "documents-label-self-itr" | transloco }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-self-itr-content" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="third">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label>{{ "documents-label-spouse-itr" | transloco }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-spouse-itr-content" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li> -->
+
+                  <!-- <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="forth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{ "documents-label-itr" | transloco }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ul class="pl-3">
+                            <li>
+                              {{ "documents-label-income-proof-self-itr" | transloco }}
+                              <ul class="ml-3">
+                                <li>{{ "documents-label-income-proof-self-itr-content" | transloco }}</li>
+                              </ul>
+                            </li>
+
+                            <li class="mt-3">
+                              {{ "documents-label-income-proof-spouse-itr" | transloco }}
+                              <ul class="ml-3">
+                                <li>{{ "documents-label-income-proof-spouse-itr-content" | transloco }}</li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li> -->
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="forth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-self-itr" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ul class="pl-3">
+                            <li>
+                              {{ "documents-label-self-itr-header" | transloco }}
+                              <ul class="ml-3">
+                                <li>{{ "documents-label-self-itr-content" | transloco }}</li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="forth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-spouse-itr" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ul class="pl-3">
+                            <li>
+                              {{ "documents-label-spouse-itr-header" | transloco }}
+                              <ul class="ml-3">
+                                <li>{{ "documents-label-spouse-itr-content" | transloco }}</li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="forth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-income-proof" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          {{ "documents-label-income-certificate" | transloco }}
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="forth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-caste-reservation" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ul class="pl-3">
+                            <li>{{ "documents-label-caste-reservation-line-1" | transloco }}</li>
+                            <li>
+                              {{ "documents-label-caste-reservation-line-2" | transloco }}
+                            </li>
+                            <li>
+                              {{ "documents-label-caste-reservation-line-3" | transloco }}
+                            </li>
+                          </ul>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="fifth">
+                      <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                        <ion-label class="accordion-no-word-wrap">{{
+                        "documents-label-death-certificate-your-spouse" | transloco
+                        }}</ion-label>
+                      </ion-item>
+                      <div class="ion-padding" slot="content">
+                        <ul class="ml-3">
+                        <li>
+                          {{ "documents-label-death-certificate-your-spouse-content" | transloco }}
+                        </li>
+                        </ul>
+                      </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="fifth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-special-categories" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ul class="ml-3">
+                            <li>
+                              {{ "documents-label-special-categories-content" | transloco }}
+                              <a routerLink="/cert-entry/pan-validation">{{
+                                "documents-label-special-categories-link" | transloco
+                              }}</a>
+                            </li>
+                            <li>
+                              {{ "documents-label-special-categories-content-2" | transloco }}
+                            </li>
+                            <li>
+                              {{ "documents-label-special-categories-content-3" | transloco }}
+                            </li>
+                            <li>
+                              {{ "documents-label-special-categories-content-4" | transloco }}
+                            </li>
+                            <li>
+                              {{ "documents-label-special-categories-content-6" | transloco }}
+                            </li>
+                            
+                          </ul>
+                          <div class="w-full mt-3">
+                            {{ "documents-label-special-categories-special-info" | transloco }}
+                          </div>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+                  <!--PAP Document-->
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="forth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-pap" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ul class="pl-3">
+                            <li>{{ "documents-label-pap-line-1" | transloco }}</li>
+                          </ul>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+                  <!--RM Document-->
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="forth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-rm" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ul class="pl-3">
+                            <li>{{ "documents-label-rm-line-1" | transloco }}</li>
+                          </ul>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+                  <!--MH Document-->
+                  <li class="mb-3">
+                    <ion-accordion-group expand="inset">
+                      <ion-accordion value="forth">
+                        <ion-item [color]="isDarkMode ? 'dark' : 'light'"  slot="header" >
+                          <ion-label class="accordion-no-word-wrap">{{
+                            "documents-label-mh" | transloco
+                          }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ul class="pl-3">
+                            <li>{{ "documents-label-mh-line-1" | transloco }}</li>
+                          </ul>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 lg:col-5 xl:col-5">
+                <div class="w-full text-center font-medium line-height-4 text-xl" style="border-bottom: 1px solid grey">
+                  {{ "documents-label-cidco-videos" | transloco }}
+                </div>
+                <div
+                  class="grid m-0 p-0 videos"
+                  *ngFor="let video of videos"
+                  style="border-bottom: 1px solid lightgray"
+                  (click)="viewHelpVideo(video.videoUrl, $event)"
+                >
+                  <div class="col-5 lg:col-4 xl:col-4">
+                    <img alt="Silhouette of mountains" [src]="video.videoId" />
+                    <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" >
+                      <ion-thumbnail slot="start">
+                        <img alt="Silhouette of mountains" [src]="video.videoId" />
+                      </ion-thumbnail>
+                      <ion-label> Thumbnail Item </ion-label>
+                    </ion-item> -->
+                  </div>
+                  <div class="col-7 lg:col-8 xl:col-8 text-lg font-medium">
+                    {{ video.videoLink }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+</div>

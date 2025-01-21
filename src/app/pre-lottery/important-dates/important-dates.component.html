@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-icon
+        name="close-circle-sharp"
+        (click)="cancel()"
+        style="color: red; font-size: 26px"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-title [style]="{ color: isDarkMode ? 'white' : 'black' }" class="pl-3"
+      >{{ "title-header-important-dates" | transloco }}<br />
+      <span style="font-size: 13px">{{ lotteryName }}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <section id="cd-timeline" class="cd-container">
+    <div class="cd-timeline-block" *ngFor="let timelineItem of timelineData">
+      <div class="cd-timeline-picture dark">
+        <ion-icon
+          [name]="timelineItem.timelineIcon"
+          [class]="timelineItem.timelineIconClass"
+        ></ion-icon>
+      </div>
+      <div
+        [class]="
+          'cd-timeline-content shadow-4 ' + timelineItem.timelineContentClass
+        "
+      >
+        {{ timelineItem.timelineHeading }}<br />
+        <span style="color: grey" class="font-bold">{{
+          timelineItem.timelineContent | date : "dd MMM yyyy HH:mm"
+        }}</span>
+      </div>
+    </div>
+  </section>
+</ion-content>

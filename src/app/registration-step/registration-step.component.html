@@ -1,0 +1,79 @@
+<ng-template [ngIf]="dataLoaded">
+  <div class="grid m-0 p-0 background-image" style="overflow: auto; height: calc(100% - 100px)" id="containerDiv">
+    <div class="col-12 m-0 pl-3 md:pl-5 lg:pl-5 xl:pl-5 pr-3 md:pr-5 lg:pr-5 xl:pr-5 pb-0 mt-1 md:mt-5 lg:mt-5 xl:mt-5"
+      [ngClass]="platform == 'ios' ? 'mb-1' : ''">
+      <div class="grid" *ngIf="!isEdit">
+        <div class="col-12 text-left pb-0">
+          <label style="color: #1f3038" class="font-medium">{{ question.questionPercentage }}%</label>
+          <mat-progress-bar class="example-margin" color="green" mode="determinate"
+            [value]="question.questionPercentage">
+          </mat-progress-bar>
+        </div>
+      </div>
+      <div class="grid m-0 p-0 card">
+        <div class="flex col-12 lg:col-5 xl:col-5 md:col-5 m-0 p-3 align-items-center justify-content-center" style="background-color: #f2f7ff;">
+          <img [src]="question.actionImage" style="height: 65%;" />
+        </div>
+        <div class="col-12 lg:col-7 xl:col-7 md:col-7 m-0 p-3">
+          <div class="grid m-0 col-12 p-0">
+            <div class="col-12 m-0 p-0">
+              <div class="grid m-0">
+                <div class="col-12 pl-1">
+                  <a (click)="goBackQuestion(question.questionCode)" title="Back" class="flex align-items-center cursor-pointer text-600"
+                    *ngIf="['Q_CONSENT', 'Q_AADHAR', 'Q_AADHAAR_PAN_NAME_MISMATCH', 'Q_PAN', 'Q_PAN_OLD_WINNER', 'Q_SPOUSE_AADHAAR_PAN_NAME_MISMATCH', 
+                    'Q_SPOUSE_PAN', 'Q_SPOUSE_PAN_NOT_FOUND', 'Q_SPOUSE_PAN_OLD_WINNER', 'Q_EMAIL_MOBILE'].indexOf(question.questionCode) < 0">
+                    <ion-icon name="chevron-back-outline"></ion-icon> Back
+                  </a>
+                </div>
+                <div class="col-10 md:col-11 lg:col-11 xl:col-11 text-left pl-1">
+                  <label class="text-xl md:text-3xl lg:text-3xl xl:text-3xl font-medium">{{showQuestion(question?.question)}}</label>
+                </div>
+                <div class="col-2 md:col-1 lg:col-1 xl:col-1 text-center p-0" *ngIf="question?.helpVideo?.length > 0">
+                  <img src="assets/Video.png" (click)="viewHelpVideo()" class="cursor-pointer pulsingButton pt-1" title="Help" style="margin-top: -13px;"/>
+                </div>
+              </div>
+
+              <app-qs-consent *ngIf="question.questionCode === 'Q_CONSENT'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-consent>
+              <app-qs-aadhaar-pan *ngIf="question.questionCode === 'Q_AADHAR'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-aadhaar-pan>
+              <app-qs-multi-name *ngIf="question.questionCode === 'Q_AADHAAR_PAN_NAME_MISMATCH'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-multi-name>
+              <app-qs-old-winner *ngIf="question.questionCode === 'Q_PAN_OLD_WINNER'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-old-winner>
+              <app-qs-central *ngIf="question.questionCode === 'Q_CENTRAL'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()" (routeToCertEntry)="routeToCertEntry($event)"></app-qs-central>
+              <app-qs-marital *ngIf="question.questionCode === 'Q_MARITAL'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-marital>
+              <app-qs-state *ngIf="question.questionCode === 'Q_STATE'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()" (routeToCertEntry)="routeToCertEntry($event)"></app-qs-state>
+              <app-qs-mhada *ngIf="question.questionCode === 'Q_MHADA'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()" (routeToCertEntry)="routeToCertEntry($event)"></app-qs-mhada>
+              <app-qs-divorcee *ngIf="question.questionCode === 'Q_DIVORCEE'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-divorcee>
+              <app-qs-death-cert *ngIf="question.questionCode === 'Q_DEATH_CERT'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-death-cert>
+              <app-qs-work-status *ngIf="question.questionCode === 'Q_WORK_STATUS'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-work-status>
+              <app-qs-itr-inccert *ngIf="question.questionCode === 'Q_ITR_INCCERT'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-itr-inccert>
+              <app-qs-ex-service-man *ngIf="question.questionCode === 'Q_EXSERVICEMAN'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()" (routeToCertEntry)="routeToCertEntry($event)"></app-qs-ex-service-man>
+              <app-qs-domicle *ngIf="question.questionCode === 'Q_DOMICILE'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()"></app-qs-domicle>
+              <app-qs-self-itr *ngIf="question.questionCode === 'Q_SELF_ITR'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-self-itr>
+              <app-qs-spouse-itr *ngIf="question.questionCode === 'Q_SPOUSE_ITR'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-spouse-itr>
+              <app-qs-income-cert *ngIf="question.questionCode === 'Q_INCOME_CERT'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()"></app-qs-income-cert>
+              <app-qs-self-income-cert *ngIf="question.questionCode === 'Q_SELF_INCOME_CERT'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()"></app-qs-self-income-cert>
+              <app-qs-spouse-income-cert *ngIf="question.questionCode === 'Q_SPOUSE_INCOME_CERT'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()"></app-qs-spouse-income-cert>
+              <app-qs-caste *ngIf="question.questionCode === 'Q_CASTE'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-caste>
+              <app-qs-cast-cert *ngIf="question.questionCode === 'Q_CAST_CERT'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()"></app-qs-cast-cert>
+              <app-qs-cast-valid *ngIf="question.questionCode === 'Q_CAST_VALID'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()"></app-qs-cast-valid>
+              <app-qs-pap *ngIf="question.questionCode === 'Q_PAP'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-pap>
+              <app-qs-pap-vanshavali *ngIf="question.questionCode === 'Q_PAP_VANSHAVALI'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-pap-vanshavali>
+              <app-qs-pap-award-copy *ngIf="question.questionCode === 'Q_PAP_AWARD_COPY'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-pap-award-copy>
+              <app-qs-pap-metro-city-document *ngIf="question.questionCode === 'Q_PAP_METRO_CITY_DOCUMENT'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-pap-metro-city-document>
+              <app-qs-mh *ngIf="question.questionCode === 'Q_MH'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-mh>
+              <app-qs-rm *ngIf="question.questionCode === 'Q_RM'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-rm>
+              <app-qs-spouse-aadhaar *ngIf="question.questionCode === 'Q_SPOUSE_AADHAR'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-spouse-aadhaar>
+              <!-- <app-qs-spouse-pan *ngIf="question.questionCode === 'Q_SPOUSE_AADHAAR_PAN_NAME_MISMATCH'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-spouse-pan> -->
+              <app-qs-spouse-pan *ngIf="question.questionCode === 'Q_SPOUSE_PAN'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-spouse-pan>
+              <app-qs-spouse-old-winner *ngIf="question.questionCode === 'Q_SPOUSE_PAN_OLD_WINNER'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-spouse-old-winner>
+              <app-qs-address *ngIf="question.questionCode === 'Q_ADDRESS'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-address>
+              <app-qs-journalist *ngIf="question.questionCode === 'Q_JOURNALIST'" [activeLang]="activeLang" (proceedNext)="proceedNext()" (routeToCertEntry)="routeToCertEntry($event)"></app-qs-journalist>
+              <app-qs-pmay *ngIf="question.questionCode === 'Q_PMAY'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-pmay>
+              <app-qs-handicapped *ngIf="question.questionCode === 'Q_HANDICAPED'" [activeLang]="activeLang" [ocrToBeDone]="ocrToBeDone" (proceedNext)="proceedNext()" (routeToCertEntry)="routeToCertEntry($event)"></app-qs-handicapped>
+              <app-qs-email-mobile *ngIf="question.questionCode === 'Q_EMAIL_MOBILE'" [activeLang]="activeLang" (proceedNext)="proceedNext()"></app-qs-email-mobile>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

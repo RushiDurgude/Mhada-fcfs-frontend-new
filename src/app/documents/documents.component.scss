@@ -1,0 +1,37 @@
+.videos:hover{
+    box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.ion-button-no-padding {
+    --padding-start: 0px !important;
+    --padding-end: 0px !important;
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  #parent {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+  #narrow {
+    width: fit-content;
+    /* Just so it's visible */
+  }
+  #wide {
+    flex: 1;
+    margin-left: 0.5rem;
+    font-size: 15px;
+    color: #767676;
+    /* Grow to rest of container */
+    /* Just so it's visible */
+  }
+  
+  .accordion-no-word-wrap{
+    white-space: unset !important;
+  }

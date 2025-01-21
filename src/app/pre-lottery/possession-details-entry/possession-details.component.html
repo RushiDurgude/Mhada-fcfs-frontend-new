@@ -1,0 +1,739 @@
+<div class="flex align-items-center justify-content-between">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details col-12">
+      <div
+        class="col-12 line-height-1 text-2xl"
+        style="border-bottom: 1px solid grey"
+      >
+        <a *ngIf="true" [routerLink]="['/app/application-detail-list']">
+          <ion-icon name="arrow-undo"></ion-icon>
+        </a>
+
+        {{ "possession-details-entry" | transloco }}
+      </div>
+    </div>
+  </div>
+  <!-- <div class="mobile-header">
+    <div class="flex align-items-center">
+      <div>
+        <button
+          type="button"
+          class="btn"
+          mat-icon-button
+          [routerLink]="['/app/application-detail-list']"
+        >
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+      </div>
+      <div class="title ml-2">{{ pageMode }} Possession Detail</div>
+    </div>
+   
+  </div> -->
+</div>
+
+<div class="add-userDetails">
+  <form
+    [formGroup]="form"
+    #localForm="ngForm"
+    (ngSubmit)="isSubmitDisabled = true; onSubmit()"
+  >
+    <div
+      class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-3"
+    >
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-2 md:pl-2 pr-0 pt-0 pb-5 position-relative"
+      >
+        <!-- *ngIf="maritalStatus === 'Married'" -->
+        <label for="possApplicantName" class="label-input">
+          {{ "possession-applicant-name" | transloco }}
+          <span style="color: red">*</span>
+        </label>
+        <!-- multiple="true" -->
+        <mat-select
+          style="padding: 10px"
+          id="possApplicantName"
+          formControlName="possApplicantName"
+          [compareWith]="showApplicantName"
+          class="form-control select-dropdwon"
+        >
+          <!-- <mat-option value="">Select</mat-option> -->
+          <mat-option *ngFor="let name of applicantName" [value]="name.key">
+            {{ name.label }}
+          </mat-option>
+        </mat-select>
+        <field-error-component
+          [controlName]="form.get('possApplicantName')"
+          [formSubmitted]="localForm.submitted"
+          class="position-absolute block"
+        >
+        </field-error-component>
+      </div>
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-0 md:pl-6 pr-0 pt-0 pb-5 position-relative"
+        *ngIf="maritalStatus === 'Married'"
+      >
+        <label for="spouseName" class="label-input">
+          {{ "spouse-name" | transloco }} <span style="color: red">* </span>
+        </label>
+        <input
+          type="text"
+          style="width: 98%"
+          id="spouseName"
+          formControlName="spouseName"
+          class="form-control focus:border-primary"
+          autocomplete="off"
+        />
+        <field-error-component
+          [controlName]="form.get('spouseName')"
+          [formSubmitted]="localForm.submitted"
+          class="position-absolute block"
+        >
+        </field-error-component>
+      </div>
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-1 md:pl-6 pr-0 pt-0 pb-5 position-relative"
+        *ngIf="maritalStatus === 'Married'"
+      >
+        <label for="spouseEmailId" class="label-input">
+          {{ "possession-spouse-emailId" | transloco }}
+          <span style="color: red">*</span>
+        </label>
+        <input
+          type="text"
+          style="width: 98%"
+          id="spouseEmailId"
+          formControlName="spouseEmailId"
+          class="form-control focus:border-primary"
+          autocomplete="off"
+        />
+        <field-error-component
+          [controlName]="form.get('spouseEmailId')"
+          [formSubmitted]="localForm.submitted"
+          class="position-absolute block"
+        >
+        </field-error-component>
+      </div>
+
+      <div
+        class="col-12 pl-0 md:col-12 md:pr-3 md:pl-3 pr-0 pt-0 pb-6 position-relative"
+        *ngIf="gender === 'FEMALE' && maritalStatus === 'Married'"
+      >
+        <label class="cursor-pointer pt-2">
+          <br />
+          <input
+            type="checkbox"
+            class="mr-2"
+            style="scale: 1.5"
+            [checked]="isSpouseButtonVisible"
+            [value]="isSpouseButtonVisible ? 'Y' : 'N'"
+            formControlName="checkboxFormSpouse"
+            (change)="onSpouseNameApplicableButton($event)"
+          />
+          {{ "skip-spouse-name" | transloco }}
+        </label>
+      </div>
+
+      <!-- <div class="image-preview-container">
+        <div class="preview">
+          <img height="250px" width="250px" id="preview-selected-image" />
+        </div>
+        <label for="applicantPhoto"
+          ><mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >{{ "possession-applicant-photo" | transloco }}</label
+        >
+        <input
+          type="file"
+          id="applicantPhoto"
+          #file
+          accept=".jpg, .jpeg, .png"
+          formControlName="applicantPhoto"
+          (click)="file.click()"
+          (change)="applicantPhotoSelect($event)"
+        />
+        <field-error-component
+          [controlName]="form.get('applicantPhoto')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component>
+      </div> -->
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 md:pl-3 pr-0 pt-0 pb-2 position-relative"
+      >
+        <div class="col-12 text-center file-upload-container m-0 p-0">
+          <div class="grid p-1">
+            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+            <div class="col-12 lg:col-10 xl:col-8 md:col-8">
+              <div
+                class="grid card-border-dashed text-center"
+                (click)="presentActionSheet()"
+              >
+                <div class="grid">
+                  <div class="col-12 line-height-4"></div>
+                </div>
+                <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                  Only image is allowed.
+                </div>
+                <div class="col-12">
+                  <div class="grid centered-file-upload-image">
+                    <div class="col-12" *ngIf="!applicantPhoto">
+                      <img src="assets/browse.png" />
+                      <div class="col-12">
+                        <label for="applicantPhoto">{{
+                          "possession-applicant-photo" | transloco
+                        }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" *ngIf="applicantPhoto != ''">
+                  <div class="grid">
+                    <div class="col-12">
+                      <img
+                        style="height: 300px"
+                        [src]="applicantPhoto"
+                        class="selected-image-to-upload"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="add-btn1 mb-2" *ngIf="applicantPhoto">
+                  <button
+                    style="
+                      height: 42px;
+                      background-color: #4c85f5;
+                      border-radius: 35px;
+                      width: 70px;
+                    "
+                    type="button"
+                    (click)="presentActionSheet()"
+                  >
+                    <mat-icon style="color: aliceblue">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+          </div>
+          <input
+            type="file"
+            id="fileupload"
+            formControlName="applicantPhoto"
+            accept="image/png,image/jpeg,image/jpg"
+            style="display: none"
+            (change)="handleFileInput($event)"
+            *ngIf="fileUploadVisible"
+          />
+          <field-error-component
+            [controlName]="form.get('applicantPhoto')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component>
+        </div>
+      </div>
+      <!-- <div class="image-preview-container">
+        <div class="preview">
+          <img
+            height="250px"
+            width="250px"
+            id="preview-selected-image-family"
+          />
+        </div>
+        <label for="familyPhoto">
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          {{ "possession-family-photo" | transloco }}</label
+        >
+
+        <input
+          type="file"
+          id="familyPhoto"
+          #file2
+          accept=".jpg, .jpeg, .png"
+          formControlName="familyPhoto"
+          (click)="file2.click()"
+          (change)="familyPhotoSelect($event)"
+        />
+        <field-error-component
+          [controlName]="form.get('familyPhoto')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component>
+      </div> -->
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 md:pl-6 pr-0 pt-0 pb-2 position-relative"
+      >
+        <div class="col-12 text-center file-upload-container m-0 p-0">
+          <div class="grid p-1">
+            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+            <div class="col-12 lg:col-10 xl:col-8 md:col-8">
+              <div
+                class="grid card-border-dashed text-center"
+                (click)="presentActionSheetForFamily()"
+              >
+                <div class="grid">
+                  <div class="col-12 line-height-4"></div>
+                </div>
+                <div
+                  class="col-12 error-message"
+                  *ngIf="errorMessageVisibleFamily"
+                >
+                  Only image is allowed.
+                </div>
+                <div class="col-12">
+                  <div class="grid centered-file-upload-image">
+                    <div class="col-12" *ngIf="!familyPhoto">
+                      <img src="assets/browse.png" />
+                      <div class="col-12">
+                        <label for="familyPhoto">
+                          {{ "possession-family-photo" | transloco }}</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" *ngIf="familyPhoto != ''">
+                  <div class="grid">
+                    <div class="col-12">
+                      <img
+                        style="height: 300px"
+                        [src]="familyPhoto"
+                        class="selected-image-to-upload"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="add-btn1 mb-2" *ngIf="familyPhoto">
+                  <button
+                    style="
+                      height: 42px;
+                      background-color: #4c85f5;
+                      border-radius: 35px;
+                      width: 70px;
+                    "
+                    type="button"
+                    (click)="presentActionSheetForFamily()"
+                  >
+                    <mat-icon style="color: aliceblue">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+          </div>
+          <input
+            type="file"
+            id="fileupload1"
+            formControlName="familyPhoto"
+            accept="image/png,image/jpeg,image/jpg"
+            style="display: none"
+            (change)="handleFileInputForFamily($event)"
+            *ngIf="fileUploadVisibleFamily"
+          />
+          <field-error-component
+            [controlName]="form.get('familyPhoto')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component>
+        </div>
+      </div>
+
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 md:pl-4 pr-0 pt-0 pb-2 position-relative"
+        *ngIf="maritalStatus === 'Married'"
+      >
+        <div class="col-12 text-center file-upload-container m-0 p-0">
+          <div class="grid p-1">
+            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+            <div class="col-12 lg:col-10 xl:col-8 md:col-8">
+              <div
+                class="grid card-border-dashed text-center"
+                (click)="presentActionSheetForSpouse()"
+              >
+                <div class="grid">
+                  <div class="col-12 line-height-4"></div>
+                </div>
+                <div
+                  class="col-12 error-message"
+                  *ngIf="errorMessageVisibleSpouse"
+                >
+                  Only image is allowed.
+                </div>
+                <div class="col-12" *ngIf="!spousePhoto">
+                  <div class="grid centered-file-upload-image">
+                    <div class="col-12">
+                      <img src="assets/browse.png" />
+                      <div class="col-12">
+                        <label for="spousePhoto">
+                          {{ "possession-spouse-photo" | transloco }}</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" *ngIf="spousePhoto != ''">
+                  <div class="grid">
+                    <div class="col-12">
+                      <img
+                        style="height: 300px"
+                        [src]="spousePhoto"
+                        class="selected-image-to-upload"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="add-btn1 mb-2" *ngIf="spousePhoto">
+                  <button
+                    style="
+                      height: 42px;
+                      background-color: #4c85f5;
+                      border-radius: 35px;
+                      width: 70px;
+                    "
+                    type="button"
+                    (click)="presentActionSheetForSpouse()"
+                  >
+                    <mat-icon style="color: aliceblue">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+          </div>
+          <input
+            type="file"
+            id="fileupload2"
+            accept="image/png,image/jpeg,image/jpg"
+            style="display: none"
+            formControlName="spousePhoto"
+            (change)="handleFileInputForSpouse($event)"
+            *ngIf="fileUploadVisibleSpouse"
+          />
+          <field-error-component
+            [controlName]="form.get('spousePhoto')"
+            [formSubmitted]="localForm.submitted"
+          ></field-error-component>
+        </div>
+      </div>
+      <!-- <div
+        style="margin-left: 20px; margin-top: 20px"
+        class="image-preview-container"
+        *ngIf="maritalStatus === 'Married'"
+      >
+        <div class="preview">
+          <img
+            height="250px"
+            width="250px"
+            id="preview-selected-image-spouse"
+          />
+        </div>
+        <label for="spousePhoto">
+          <mat-icon
+            style="
+              line-height: 25px;
+              margin-right: 5px;
+              float: left;
+              color: white;
+            "
+            >cloud_upload</mat-icon
+          >
+          {{ "possession-spouse-photo" | transloco }}
+        </label>
+
+        <input
+          type="file"
+          id="spousePhoto"
+          #file1
+          accept=".jpg, .jpeg, .png"
+          formControlName="spousePhoto"
+          (click)="file1.click()"
+          (change)="spousePhotoSelect($event)"
+        />
+        <field-error-component
+          [controlName]="form.get('spousePhoto')"
+          [formSubmitted]="localForm.submitted"
+        ></field-error-component>
+      </div> -->
+
+      <!-- <div
+        class="col-12 pl-0 md:col-4 md:pr-3 md:pl-3 pr-0 pt-0 pb-2 position-relative"
+      >
+        <div class="col-12 text-center file-upload-container m-0 p-0">
+          <div class="grid p-1">
+            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+            <div class="col-12 lg:col-10 xl:col-8 md:col-8">
+              <div class="grid card-border-dashed text-center">
+                <div class="grid">
+                  <div class="col-12 line-height-4"></div>
+                </div>
+                <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                  Only image is allowed.
+                </div>
+                <div class="col-12">
+                  <div class="grid centered-file-upload-image">
+                    <div class="col-12" (click)="presentActionSheet()">
+                      <img src="assets/browse.png" />
+                      <div class="col-12">
+                        <label>{{
+                          "possession-applicant-photo" | transloco
+                        }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" *ngIf="applicantPhoto != ''">
+                  <div class="grid">
+                    <div class="col-12">
+                      <img
+                        [src]="applicantPhoto"
+                        class="selected-image-to-upload"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+          </div>
+          <input
+            type="file"
+            id="fileupload"
+            accept="image/png,image/jpeg,image/jpg"
+            style="display: none"
+            (change)="handleFileInput($event)"
+            *ngIf="fileUploadVisible"
+          />
+        </div>
+      </div> -->
+    </div>
+    <div class="borderBottom"></div>
+    <div class="user-responsibilities">
+      <div class="flex align-items-center justify-content-between mb-4 px-3">
+        <div class="title">{{ "possession-family-member" | transloco }}</div>
+        <div class="add-btn">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="addFamilyMemberDetails()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <table class="responsibilities-table">
+        <tbody>
+          <tr
+            *ngFor="let responsibility of DetailOfFamilyMembers; index as i"
+            formArrayName="userResponsibilityLst"
+          >
+            <td
+              class="flex align-items-center justify-content-between responsibilities-details px-3"
+              [formGroupName]="i"
+            >
+              <div class="responsibilities-info mr-3 mb-4">
+                <label for="memberName{{ i }}" class="label-input">
+                  {{ "family-member-name" | transloco }}
+                  <span style="color: red">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="memberName{{ i }}"
+                  formControlName="memberName"
+                  class="form-control"
+                  autocomplete="off"
+                  maxlength="80"
+                  (input)="validateInput($event)"
+                  onpaste="return false;"
+                />
+                <!-- onkeypress="return /[ a-zA-Z]/i.test(event.key)" -->
+                <!-- maxlength="12" -->
+                <field-error-component
+                  [controlName]="form.get('memberName')"
+                  [formSubmitted]="localForm.submitted"
+                  class="position-absolute block"
+                >
+                </field-error-component>
+              </div>
+
+              <div class="responsibilities-info mr-3 mb-4">
+                <label for="memberAge{{ i }}" class="label-input">
+                  {{ "family-member-age" | transloco }}
+                  <span style="color: red">*</span>
+                </label>
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  id="memberAge{{ i }}"
+                  formControlName="memberAge"
+                  class="form-control"
+                  autocomplete="off"
+                  maxlength="3"
+                  onkeypress="return /[0-9,]/i.test(event.key)"
+                  onpaste="return false;"
+                />
+                <field-error-component
+                  [controlName]="form.get('memberAge')"
+                  [formSubmitted]="localForm.submitted"
+                  class="position-absolute block"
+                >
+                </field-error-component>
+              </div>
+
+              <div class="responsibilities-info mr-3 mb-4">
+                <label for="memberRelation{{ i }}" class="label-input">
+                  {{ "family-member-relation" | transloco }}
+                  <span style="color: red">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="memberRelation{{ i }}"
+                  formControlName="memberRelation"
+                  class="form-control"
+                  autocomplete="off"
+                  maxlength="50"
+                  (input)="validateInput($event)"
+                  onpaste="return false;"
+                />
+                <!-- onkeypress="return /[ a-zA-Z]/i.test(event.key)" -->
+                <field-error-component
+                  [controlName]="form.get('memberRelation')"
+                  [formSubmitted]="localForm.submitted"
+                  class="position-absolute block"
+                >
+                </field-error-component>
+              </div>
+
+              <div class="responsibilities-info delete-btn">
+                <button
+                  type="button"
+                  mat-icon-button
+                  title="Delete"
+                  class="btn delete-btns"
+                  (click)="deleteResponsibility(i)"
+                  *ngIf="i !== 0"
+                >
+                  <mat-icon class="material-icons">delete_outline</mat-icon>
+                </button>
+              </div>
+
+              <div class="responsibilities-info delete-mobile">
+                <button
+                  type="button"
+                  mat-button
+                  title="Delete"
+                  class="btn text-buttton"
+                  (click)="deleteResponsibility(i)"
+                  *ngIf="i !== 0"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-1"
+      >
+        <div
+          class="col-12 pl-0 md:col-4 md:pr-3 md:pl-0 pr-0 pt-0 pb-1 position-relative"
+        >
+          <!-- <div class="mx-3 py-3 add-btn-mobile mobile-btn"> -->
+          <button
+            class="btn-medium shadow-4 col-12"
+            style="
+              height: 36px;
+              background-color: #4c85f5;
+              border-radius: 7px;
+              width: 100px;
+            "
+            (click)="viewDocumentPdf()"
+            type="button"
+          >
+            <span style="color: white">{{ "view" | transloco }}</span>
+          </button>
+          <!-- </div> -->
+        </div>
+      </div>
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 md:pl-3 pr-0 pt-0 pb-2 position-relative"
+      ></div>
+      <div
+        class="col-12 pl-0 md:col-4 md:pr-3 md:pl-3 pr-0 pt-0 pb-2 position-relative"
+      ></div>
+
+      <div
+        class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-0"
+      >
+        <div
+          class="col-12 pl-0 md:col-10 md:pr-3 md:pl-1 pr-0 pt-0 pb-3 position-relative"
+        >
+          <label class="cursor-pointer pt-2">
+            <br />
+            <input
+              type="checkbox"
+              class="mr-2"
+              style="scale: 1.5"
+              value="Y"
+              formControlName="checkboxForm"
+              (change)="onCheckboxChangeButton($event)"
+            />
+            Are you sure the data entered in is correct as No Change/Edit of
+            application will be allowed after "Complete Submission".
+          </label>
+        </div>
+        <div
+          class="col-12 pl-0 md:col-2 md:pr-3 md:pl-3 pr-0 pt-0 pb-2 position-relative"
+        ></div>
+        <!-- <div
+          class="col-12 pl-0 md:col-2 md:pr-3 md:pl-3 pr-0 pt-0 pb-2 position-relative"
+        ></div> -->
+      </div>
+      <div
+        class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-1 pb-2"
+      >
+        <div
+          class="col-12 pl-0 md:col-4 md:pr-3 md:pl-1 pr-0 pt-0 pb-2 mb-2 position-relative"
+        >
+          <!-- <div class="mx-3 py-3 add-btn-mobile mobile-btn"> -->
+          <button
+            type="submit"
+            [disabled]="!isButtonVisible"
+            class="btn btn-secondary mr-3"
+            mat-stroked-button
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            [routerLink]="['/app', 'application-detail-list']"
+            color="primery"
+            class="btn btn-primery"
+            mat-raised-button
+          >
+            Cancel
+          </button>
+          <!-- </div> -->
+        </div>
+        <div
+          class="col-12 pl-0 md:col-4 md:pr-3 md:pl-3 pr-0 pt-0 pb-2 position-relative"
+        ></div>
+        <div
+          class="col-12 pl-0 md:col-4 md:pr-3 md:pl-3 pr-0 pt-0 pb-2 position-relative"
+        ></div>
+      </div>
+    </div>
+  </form>
+</div>

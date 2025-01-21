@@ -1,0 +1,6 @@
+.table>thead>tr>th, .table>tbody>tr>td {
+  border: 1px solid #DFDFDF;
+  font-size: 14px;
+  padding: 2px;
+  text-align: center;
+}

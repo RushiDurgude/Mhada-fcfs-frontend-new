@@ -1,0 +1,361 @@
+<div class="flex align-items-center justify-content-between">
+    <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+        <a *ngIf="true" [routerLink]="['/noc/noc-list']">
+            <ion-icon name="arrow-undo"></ion-icon>
+        </a>
+        {{"Page-heading-apply-noc" | transloco}}
+
+        
+    </div>
+</div>
+ 
+<div class="add-lotteryDetails mt-4 pageScroll-bar">
+    <form [formGroup]="form" #localForm="ngForm" (ngSubmit)="isSubmitDisabled = true; onSubmit()">
+
+        <div class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-3">
+
+
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative" style="color: black;">
+                <label for="application" class="label-input">
+                    {{"select-application-id" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <mat-select id="applicationKey" formControlName="applicationKey" [compareWith]="showApplication"
+                    class="form-control select-dropdwon" (selectionChange)="onDropdownChange($event)">
+                    <mat-option value="">Select</mat-option>
+                    <mat-option *ngFor="let o of applicationList | keyvalue" [value]="o">
+                        {{o.value}}
+                    </mat-option>
+                </mat-select>
+                <field-error-component [controlName]="form.get('applicationKey')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+
+
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-applicant-name" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{applicatName}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-applicant-scheme" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{scheme}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-applicant-category" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{category}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-applicant-tenement" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{tenement}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-application-lottery" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{lotteryName}}
+                </label>
+            </div>
+
+
+
+
+
+
+            <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey" *ngIf="secondNoc">
+
+                {{"previous-noc" | transloco}}
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4" *ngIf="secondNoc">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-bank-name" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{pBankName}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4" *ngIf="secondNoc">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-branch-name" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{pBranchName}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4" *ngIf="secondNoc">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-loan-amount" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{pLoanAmount}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4" *ngIf="secondNoc">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-rate-of-intrest" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{pRateOfInterest}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4" *ngIf="secondNoc">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-tenure-year" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{pTenureYear}}
+                </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-4" *ngIf="secondNoc">
+                <label for="applicationNo" style="color: #979292;">
+                    {{"noc-tenure-months" | transloco}}
+                </label><br>
+                <label class="col-12 p-2" style="background-color: #DFDFDF; color: 
+                    black;font-weight: 500; min-height: 40px;">
+                    {{pTenureMonth}}
+                </label>
+            </div>
+            <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+                {{"fill-noc-details" | transloco}}
+            </div>
+            <br><br><br><br><br><br><br>
+
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="bankName" class="label-input">
+                    {{"noc-bank-name" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="text" id="bankName" formControlName="bankName" class="form-control" autocomplete="off" 
+                required pattern=[a-zA-Z-\]+/>
+                <field-error-component [controlName]="form.get('bankName')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="branchName" class="label-input">
+                    {{"noc-branch-name" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="text" id="branchName" formControlName="branchName" class="form-control" autocomplete="off"
+                    required pattern="[a-zA-Z0-9\-_/-\]+" />
+                <field-error-component [controlName]="form.get('branchName')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="loanAmount" class="label-input">
+                    {{"noc-loan-amount" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="text" appFloatOnly min="0"
+                    
+                    id="loanAmount" formControlName="loanAmount" class="form-control " autocomplete="off" 
+                    (blur)="onBlurField('LOAN_AMOUNT')"/>
+                <field-error-component [controlName]="form.get('loanAmount')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="loanIntrest" class="label-input">
+                    {{"noc-rate-of-intrest" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="text" appNumbersWithFloatOnly pattern="\d{0,5}(\.\d{0,2})?" min="0"
+                (blur)="onBlurField('LOAN_INTEREST')"
+                id="loanIntrest" formControlName="loanIntrest" class="form-control " autocomplete="off" />
+                <field-error-component [controlName]="form.get('loanIntrest')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="tenureYear" class="label-input">
+                    {{"noc-tenure-year" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="text" numberTwoDigitOnly min="0" maxlength="2"        
+                  
+                    id="tenureYear" formControlName="tenureYear" class="form-control " autocomplete="off" />
+                <field-error-component [controlName]="form.get('tenureYear')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="tenureMonths" class="label-input">
+                    {{"noc-tenure-months" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="text" limit="2" numberTwoDigitUptoTwelveOnly min="0" max="12"  maxlength="2"
+                   
+                    id="tenureMonths" formControlName="tenureMonths" class="form-control " autocomplete="off" />
+                <field-error-component [controlName]="form.get('tenureMonths')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+
+
+            <!-- <button mat-raised-button color="primary">Primary</button> -->
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <div class="col-12 sm:col-12 md:col-4 lg:col-4 field" style="padding-top: 17px;">
+                    <label for="file" style="color: #979292; width: max-content;">
+                        {{"noc-payment-receipt-upload" | transloco}} <span class="text-red-900">*</span>
+                    </label><br>
+                    <button type="button" (click)="file.click()" style="float: left; width: max-content;" 
+                    class="small-button shadow-4 bg-primary text-white p-1">
+                    <mat-icon style="line-height: 25px; margin-right: 5px; float: left; color: white;">upload</mat-icon>
+                    <div  style="float: left; padding-top: 6px;" 
+                    class="text-white"> {{"noc-payment-receipt" | transloco}}
+                    </div>
+                    <input type="file" [id]="file" #file formControlName="Nocfile"
+                        style="display: none;" (change)="onFileSelect($event)" accept="application/pdf"/>
+                    </button>
+                    <div *ngIf="selectedFile" class="pl-2 pt-2" style="float: left;">
+                        <!-- {{"noc-payment-receipt" | transloco}} -->
+                        {{selectedFile?.name}}
+                    </div>
+                </div>
+                <field-error-component [controlName]="form.get('Nocfile')"
+                    [formSubmitted]="localForm.submitted"></field-error-component>
+            </div>
+
+
+
+
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <div class="col-12 sm:col-12 md:col-4 lg:col-4 field" style="padding-top: 17px;">
+                    <label for="file1" style="color: #979292; width: max-content;">
+                        {{"noc-sanction-letter-upload" | transloco}} <span class="text-red-900">*</span>
+                    </label><br>
+                    <button type="button" (click)="file1.click()" style="float: left; width: max-content;" 
+                    class="small-button shadow-4 bg-primary text-white p-1">
+                    <mat-icon style="line-height: 25px; margin-right: 5px; float: left; color: white;">upload</mat-icon>
+                    <div style="float: left; padding-top: 6px;" 
+                    class="text-white"> {{"noc-sanction-letter" | transloco}}
+                    </div>
+                    <input type="file" [id]="file1" #file1 formControlName="sanctionLetterFile"
+                        style="display: none;" (change)="onSanctionLetter($event)" accept="application/pdf"/>
+                    </button>
+                    <div *ngIf="sanctionLetter" class="pl-2 pt-2" style="float: left;">
+                        <!-- {{"noc-sanction-letter" | transloco}} -->
+                        {{sanctionLetter?.name}}
+                    </div>
+                </div>
+                <field-error-component [controlName]="form.get('sanctionLetterFile')"
+                    [formSubmitted]="localForm.submitted"></field-error-component>
+            </div>
+
+
+            <!-- <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <div class="col-12 sm:col-12 md:col-4 lg:col-4 field" style="padding-top: 17px;">
+                    <label for="file1" style="color: #979292;">
+                        {{"noc-sanction-letter" | transloco}} <span class="text-red-900">*</span>
+                    </label><br>
+                    <button mat-raised-button color="secondary" (click)="file1.click()" style="float: left;">
+                        <mat-icon style="line-height: 25px; margin-right: 5px; float: left;">cloud_upload</mat-icon>
+                        <div style="float: left; padding-top: 6px;">Select File</div>
+                        <input type="file" id="file1" #file1 formControlName="sanctionLetterFile" style="display: none;"
+                            (change)="onSanctionLetter($event)" accept=".pdf" />
+                    </button>
+                    <div *ngIf="sanctionLetter" class="pl-2 pt-2" style="float: left;">
+                        {{"noc-sanction-letter" | transloco}}
+                    </div>
+                </div>
+                <field-error-component [controlName]="form.get('sanctionLetterFile')"
+                    [formSubmitted]="localForm.submitted"></field-error-component>
+            </div> -->
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative" *ngIf="form.get('cancelNocLetterFile')">
+                <div class="col-12 sm:col-12 md:col-4 lg:col-4 field" style="padding-top: 17px;">
+                    <label for="file2" style="color: #979292;width: max-content;">
+                        {{"cancel-noc-letter" | transloco}} <span class="text-red-900">*</span>
+                    </label><br>
+                    <button type="button" (click)="file2.click()" style="float: left; width: max-content;" 
+                    class="small-button shadow-4 bg-primary text-white p-1">
+                    <mat-icon style="line-height: 25px; margin-right: 5px; float: left; color: white;">upload</mat-icon>
+                    <div style="float: left; padding-top: 6px;" class="text-white"> {{"cancel-noc-letter" | transloco}}</div>
+                    <input type="file" [id]="file2" #file2 formControlName="cancelNocLetterFile"
+                        style="display: none;" (change)="onCancelNoc($event)" accept="application/pdf"/>
+                    </button>
+                    <div *ngIf="cancelNocLetter" class="pl-2 pt-2" style="float: left;">
+                        <!-- {{"cancel-noc-letter" | transloco}} -->
+                        {{cancelNocLetter?.name}}
+                    </div>
+                </div>
+                <field-error-component [controlName]="form.get('cancelNocLetterFile')"
+                    [formSubmitted]="localForm.submitted"></field-error-component>
+            </div>
+
+
+
+
+            <!-- <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative"
+                *ngIf="form.get('cancelNocLetterFile')">
+                <div class="col-12 sm:col-12 md:col-4 lg:col-4 field" style="padding-top: 17px;">
+                    <label for="file2" style="color: #979292;">
+                        {{"cancel-noc-letter" | transloco}} <span class="text-red-900">*</span>
+                    </label><br>
+                    <button mat-raised-button color="secondary" (click)="file2.click()" style="float: left;">
+                        <mat-icon style="line-height: 25px; margin-right: 5px; float: left;">cloud_upload</mat-icon>
+                        <div style="float: left; padding-top: 6px;">Select File</div>
+                        <input type="file" id="file2" #file2 formControlName="cancelNocLetterFile"
+                            style="display: none;" (change)="onCancelNoc($event)" accept=".pdf" />
+                    </button>
+                    <div *ngIf="cancelNocLetter" class="pl-2 pt-2" style="float: left;">
+                        {{"cancel-noc-letter" | transloco}}
+                        {{cancelNocLetter?.name}}
+                    </div>
+                </div>
+                <field-error-component [controlName]="form.get('cancelNocLetterFile')"
+                    [formSubmitted]="localForm.submitted"></field-error-component>
+            </div> -->
+
+
+        </div>
+
+        <div class="col-12 flex justify-content-center align-items-center" *ngIf="isLoading">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div class="borderBottom">
+        </div>
+
+        <div class="mx-3 py-3" style="float: right;">
+            <button type="submit" [disabled]="isSubmitDisabled" class="btn btn-secondary mr-3" style="height: 44px;"
+                mat-stroked-button>Submit</button>
+            <button type="button" [routerLink]="['/noc/noc-list']"  class="btn btn-primery" style="height: 44px;"
+                mat-raised-button>Cancel</button>
+        </div>
+
+
+
+    </form>
+</div>

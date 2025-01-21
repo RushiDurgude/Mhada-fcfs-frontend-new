@@ -1,0 +1,190 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<div class="user-details">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details col-12">
+      <div
+        class="col-12 line-height-1 text-2xl"
+        style="border-bottom: 1px solid grey"
+      >
+        <a *ngIf="true" [routerLink]="['/app/application-detail-list']">
+          <ion-icon name="arrow-undo"></ion-icon>
+        </a>
+
+        {{ "edit-request" | transloco }}
+      </div>
+    </div>
+    <div class="grid col-12 p-0 m-0">
+      <div class="mobile-header" style="border-radius: 0px">
+        <div class="flex align-items-center justify-content-between">
+          <div class="flex align-items-center">
+            <div class="title ml-2">
+              <a
+                *ngIf="true"
+                [routerLink]="['/app/application-detail-list']"
+              >
+                <ion-icon name="arrow-undo"></ion-icon>
+              </a>
+
+              {{ "edit-request" | transloco }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-dashoard mt-4 py-2">
+    <div
+      class="user-filter flex justify-content-end align-items-center mt-2 col-12"
+    >
+      <div class="md:mr-3">
+        <ng-container *ngIf="!hasPendingSelectedType(dataSource.data)">
+          <div *ngFor="let dataItem of dataSource.data; let isFirst = first">
+            <ng-container *ngIf="isFirst">
+              <button
+                *ngIf="
+                  (dataItem.selectedType === 'APPROVED' &&
+                    (dataItem.status === 'Marital Status' ||
+                      dataItem.status === 'Photo')) ||
+                  (dataItem.selectedType === 'REJECTED' &&
+                    (dataItem.status === 'Marital Status' ||
+                      dataItem.status === 'Photo'))
+                "
+                type="button"
+                color="primary"
+                class="btn btn-secondary btn-auto"
+                [routerLink]="[
+                  '/app',
+                  'applicant-detail-editing',
+                  dataItem.applicationNo,
+                  dataItem.selectedType,
+                  dataItem.status
+                ]"
+                mat-raised-button
+              >
+                <!-- (click)="editApplicantDetail()" -->
+                {{ "edit-button" | transloco }}
+              </button>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="table-details"
+      matSort
+      matSortActive="applicationNo"
+      matSortDirection="asc"
+      matSortDisableClear
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let element; index as i">
+          {{ currentPage * pageSize + i + 1 }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="applicationNo">
+        <th mat-header-cell *matHeaderCellDef class="applicantnumber">
+          {{ "label-application-no" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="title mb-1 mt-1" style="font-size: 17px">
+            {{ element.applicationNo }}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ " type-of-change" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="title mb-2 mt-1">
+            {{ element.status }}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+        <th mat-header-cell *matHeaderCellDef>{{ "date" | transloco }}</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="title mb-2 mt-1">
+            {{ formatDate(element.createdDate) }}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="selectedType">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "edit-status" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="title mb-2 mt-1">
+            <!-- {{ element.selectedType }} -->
+            <span
+              [class]="
+                'text-white p-1 text-sm border-round ' +
+                viewClassForStatus(element.selectedType)
+              "
+            >
+              {{ element.selectedType }}
+            </span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="action">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          style="font-size: 15px; margin-left: 83%; margin-top: -3.5%"
+        >
+          {{ "label-actions" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="grid m-0">
+            <div class="grid col-12 m-0 pt-0 mt-2">
+             
+              <button
+                type="button"
+                class="btn-medium shadow-4 col-12"
+                style="height: 32px"
+                color="primery"
+              >
+                <mat-icon style="float: left; color: white"
+                  >remove_red_eye</mat-icon
+                >
+                {{ "view" | transloco }}
+              </button>
+            </div>
+          </div>
+        </td>
+      </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div
+      class="col-12 flex justify-content-center align-items-center"
+      *ngIf="isLoading"
+    >
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div class="bottom-header flex justify-content-between align-items-center">
+      <mat-paginator
+        #paginator
+        [pageIndex]="currentPage"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageChanged($event)"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

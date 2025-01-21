@@ -1,0 +1,51 @@
+
+  <div class="col-12">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 text-base">
+          <div class="grid">
+            <div class="col-12 lg:col-12 xl:col-12">
+              <ion-radio-group [(ngModel)]="selectedRadioOption" (ngModelChange)="radioButtonClicked($event)">
+                <div class="grid">
+                  <div class="col-12 m-0 p-0 lg:col-6">
+                    <ion-item class="ion-no-padding" style="--padding-end: 0px; --inner-padding-end: 0px;">
+                      <ion-label>&nbsp;&nbsp;&nbsp;{{"option-yes" | transloco}}</ion-label>
+                      <ion-radio mode="md" slot="start" value="Yes"></ion-radio>
+                    </ion-item>
+                  </div>
+                  <div class="col-12 m-0 p-0 lg:col-6">
+                    <ion-item class="ion-no-padding" style="--padding-end: 0px; --inner-padding-end: 0px;">
+                      <ion-label>&nbsp;&nbsp;&nbsp;{{"option-no" | transloco}}</ion-label>
+                      <ion-radio mode="md" slot="start" value="No"></ion-radio>
+                    </ion-item>
+                  </div>
+                </div>
+                <div *ngIf="selectedRadioOption === 'No'">
+                    <div class="col-12">
+                      <label>{{ "currentAddress" | transloco }}</label>
+                    </div>
+                    <div class="col-12">
+                      <textarea rows="4" class="input-address w-full address-field" type="text" maxlength="500"
+                        (paste)="false" [(ngModel)]="noOptionText" (input)="onInputChange($event)"></textarea>
+                      <label class="text-xs address-note">
+                        {{"note-copy-paste-not-allowed" | transloco}}
+                      </label>
+                    </div>
+                  </div>
+              </ion-radio-group>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 text-right mt-4">
+            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                    [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                    [ngClass]="proceedEnabled ? 'active-button' : 'disabled-button'"
+                    [disabled]="!proceedEnabled" 
+                    (click)="proceed()">
+              {{ "proceed" | transloco }}
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+  

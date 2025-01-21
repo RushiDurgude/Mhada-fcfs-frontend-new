@@ -1,0 +1,103 @@
+<div class="add-lotteryDetails">
+  <!-- pageScroll-ba -->
+  <!-- (ngSubmit)="onSubmit()" -->
+  <form [formGroup]="form" #localForm="ngForm" (ngSubmit)="onSubmit()">
+    <div
+      class="flex align-items-center justify-content-between flex-wrap border-bottom px-3 pt-3"
+    >
+      <div class="grid col-12 pb-2 mb-2 pt-3">
+        <div class="col-12 sm:col-12 md:col-4 lg:col-4">
+          <img [src]="data?.applicantPhoto" height="300px" width="300px" />
+          <!-- <label for="">kiran varekar photo</label> -->
+        </div>
+        <div class="col-12 sm:col-12 md:col-8 lg:col-8">
+          <!-- <div class="col-12" style="display: flex; align-items: center">
+            <div class="col-6">
+              <label for="file" style="color: #979292">
+                {{ "photo-file" | transloco }}
+                <span class="text-red-900">*</span> </label
+              ><br />
+              <input
+                type="file"
+                id="uploadBtn"
+                #file
+                accept=".jpg, .jpeg, .png"
+                formControlName="file"
+                (change)="handleFileInput($event)"
+                (click)="file.click()"
+              />
+              <label class="fileLabel" for="uploadBtn">
+                {{ "select-photo" | transloco }}</label
+              >
+            </div>
+            <div class="col-6">
+              <div *ngIf="selectedImage" class="image-preview">
+                <img
+                  [src]="selectedImage"
+                  height="300px"
+                  width="300px"
+                  alt="Selected Image"
+                />
+              </div>
+            </div>
+          </div> -->
+          <div class="image-preview-container">
+            <div class="preview">
+              <img
+                height="230px"
+                width="250px"
+                id="preview-selected-image-applicant"
+              />
+            </div>
+            <label for="file">
+              <mat-icon
+                style="
+                  line-height: 25px;
+                  margin-right: 5px;
+                  float: left;
+                  color: white;
+                "
+                >cloud_upload</mat-icon
+              >
+              {{ "photo-file" | transloco }}</label
+            >
+            <input
+              type="file"
+              id="file"
+              #file
+              accept=".jpg, .jpeg, .png"
+              formControlName="file"
+              (change)="handleFileInput($event)"
+              (click)="file.click()"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- <div *ngIf="selectedChild">
+        {{ selectedChild }}
+      </div> -->
+    </div>
+    <!-- <div
+      class="col-12 flex justify-content-center align-items-center"
+      *ngIf="isLoading"
+    >
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div> -->
+    <!-- <div class="borderBottom"></div> -->
+    <div class="mx-3 py-3 add-btn-mobile mobile-btn">
+      <button type="submit" class="btn btn-secondary mr-3" mat-stroked-button>
+        <!-- (click)="saveNewImage()" -->
+        <span style="color: #f27900"> Submit </span>
+      </button>
+      <button
+        type="button"
+        [routerLink]="['/app', 'application-detail-list']"
+        color="primery"
+        class="btn btn-primery"
+        mat-raised-button
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

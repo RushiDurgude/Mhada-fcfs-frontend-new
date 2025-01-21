@@ -1,0 +1,365 @@
+.active-button {
+  font-weight: 500 !important;
+  font-size: 16px;
+}
+
+.col-half-width {
+
+  width: 100%;
+  height: 12px;
+  justify-content: space-around;
+  border: 1px solid white;
+  border-radius: 12px;
+  height: 40px;
+  padding: 5px;
+  font-size: 14px
+}
+
+.first-row {
+  display: flex;
+  width: 100%;
+  margin: auto;
+}
+
+.seachbar {
+  width: 80%;
+  margin: auto;
+}
+
+.btnsearch {
+  // width: 10%;
+  text-align: center;
+  margin: auto;
+}
+
+tbody {
+  border-radius: 20px;
+}
+
+th,
+td {
+  width: max-content;
+  padding: 10px;
+  border-bottom: 1px solid #CFCFCF;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+
+  .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    display: table;
+    border-collapse: collapse;
+    margin: 0px;
+  }
+}
+
+.scroll-content {
+  overflow-y: auto;
+  text-align: justify;
+  position: relative;
+  height: 400px;
+  padding: 10px;
+}
+
+.maintbl {
+  width: 100%;
+
+  height: fit-content;
+  margin: 2% auto;
+  margin-bottom: 0%;
+  padding: 2%;
+  display: block;
+  border-radius: 24px 24px 0px 0px;
+  border: 1px solid rgb(238, 236, 236);
+  float: center;
+  padding: 0px;
+  background-color: #ECE5DD;
+}
+
+.icon-button {
+  font-size: 30px;
+  color: #828282;
+}
+
+.admin-card {
+  width: fit-content;
+  padding: 5px;
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: azure;
+  margin-top: 10px;
+  // margin-right: 10px;
+}
+
+.first-card {
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  border: 1px solid rgb(238, 236, 236);
+  background-color: white;
+  padding: 4px;
+}
+
+.p-3 {
+  padding: 15px 6px 15px 6px !important;
+}
+
+
+.updated-msg {
+  font-size: small;
+}
+
+.user-card {
+  width: fit-content;
+  padding: 5px;
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: blanchedalmond;
+  margin: 2%;
+}
+
+.replay-card {
+  width: 100%;
+  background-color: white;
+  position: bottom;
+  text-align: center;
+  bottom: 0px;
+
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+}
+
+.row {
+  display: block;
+  margin: auto;
+}
+
+.font-weight {
+  font-weight: 450;
+}
+
+
+
+@media(max-width:567px) {
+  .maintbl {
+    width: 100%;
+  }
+
+  .attachdoc {
+    display: flex;
+  }
+
+  .scroll-content {
+    height: 600px;
+  }
+
+  .fontsize {
+    font-size: 14px;
+  }
+}
+
+.align-right {
+  margin: 2% 1% 1% auto;
+}
+
+
+
+.maticon {
+  font-size: 25px;
+  overflow: none !important;
+  margin: 5%;
+}
+
+:host ::ng-deep .mat-form-field-wrapper {
+  margin: 0 !important;
+  padding: 0;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0 1em 0;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  padding: 0.5em 0;
+  border-top: 0.5em solid transparent;
+}
+
+:host ::ng-deep .mat-icon {
+  overflow: none !important;
+}
+
+.mat-form-field {
+  margin: auto;
+}
+
+textarea:focus,
+textarea {
+  outline: none !important;
+  outline-style: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+.reply-div {
+  width: 100%;
+  height: fit-content;
+  margin: auto;
+  margin-bottom: 0%;
+  padding: 2%;
+  display: block;
+  float: center;
+  padding: 4px;
+  background-color: azure;
+}
+
+.last-card {
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 10px;
+  display: block;
+  border-radius: 0px 0px 24px 24px;
+}
+
+.iconDoc {
+  font-size: 20px;
+  margin: 5px;
+}
+
+.btncolor {
+  background-color: transparent;
+  padding-left: -10px;
+
+}
+
+.attachdoc {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #e9edef;
+}
+
+.userdoc {
+  display: flex;
+}
+
+ion-icon {
+  pointer-events: none;
+}
+
+@media (max-width:740px) {
+  .doccss {
+    display: block;
+  }
+}
+
+.boxcss {
+  display: block;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 10px;
+}
+
+@media (max-width:735px) {
+  .removeiconcss {
+    display: contents;
+  }
+}
+
+
+@media (min-width:735px) {
+  .resbox {
+    display: flex;
+  }
+
+  .removeiconcss {
+    display: table-row;
+  }
+}
+
+@media (max-width:736px) {
+  .resbox {
+    display: block;
+  }
+}
+
+.resbox {
+  padding: 5px;
+}
+
+@media (max-width: 767px) {
+  .row {
+    display: block;
+    margin: auto;
+  }
+
+  .inputdoc {
+    margin-top: 10px;
+  }
+
+}
+
+.inputdoc {
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  padding: 10px;
+  width: 80%;
+}
+
+.bordershow {
+  border: 1px solid lightgrey;
+  margin-top: 10px;
+}
+
+.bordernone {
+  border: none;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -0.5rem;
+  margin-left: 0rem;
+  margin-top: -0.5rem;
+}
+
+
+.card1 {
+  background: white;
+  box-shadow: 0px 0px 8px 4px rgb(0 0 0 / 10%);
+  border-radius: 24px;
+  height: fit-content;
+}
+.documentcss{
+  margin-left:10px;
+  color: #003BAD !important;
+   overflow: inherit !important
+}
+
+.uploadbtncss{
+  align-items: center;
+  background: #BCD3FF;
+  border-radius: 12px;
+}
+.uploaddisabled-button{
+  background:lightgray;
+  border-radius: 12px; 
+}
+.enablecolor{
+  color: #003BAD;
+}
+.iconcss {
+  // color: #003BAD;
+  font-size: 20px;
+  margin-top: 8px;
+}
+.text-red-900{
+  color: red;
+}

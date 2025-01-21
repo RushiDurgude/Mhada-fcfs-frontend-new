@@ -1,0 +1,299 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<div class="user-details">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details col-12">
+      <div class="title">{{ "page-heading" | transloco }}</div>
+      <div class="user-filter flex justify-content-end align-items-center mt-2 col-12">
+        <div class="md:mr-3">
+            <div>
+              <button type="button" *ngIf="allowedForApply && !showCancelNoc" [routerLink]="['/app', 'noc', 'noc-form']"
+              color="primery" class="btn btn-secondary btn-auto " mat-raised-button>
+              {{ "Page-heading-apply-noc" | transloco }}
+            </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="grid m-0 col-12">
+      <div class="mobile-header" style="border-radius: 0px">
+        <div class="flex align-items-center justify-content-between ">
+          <div class="flex align-items-center">
+            <div class="title ml-2">{{ "page-heading" | transloco }}</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="user-filter flex justify-content-end align-items-center mt-2 col-12">
+        <div class="md:mr-3">
+            <div>
+              <button type="button" *ngIf="allowedForApply && !showCancelNoc" [routerLink]="['/app', 'noc', 'noc-form']"
+              color="primery" class="btn btn-secondary btn-auto " mat-raised-button>
+              {{ "Page-heading-apply-noc" | transloco }}
+            </button>
+            </div>
+        </div>
+        
+    </div>
+
+
+    </div>
+  </div>
+
+    <!-- <div class="col-12 mt-4 card" *ngIf="isAllowedForLOI"> -->
+
+    <!-- </div> -->
+      <!-- <ng-template mat-tab-label>
+                {{"header-applications" | transloco}}<br />
+                {{"sub-header-applications" | transloco}}
+            </ng-template> -->
+      <div class="table-dashoard mt-4 py-2">
+        <table mat-table [dataSource]="dataSource" class="table-details" matSort matSortActive="applicationNo"
+          matSortDirection="asc" matSortDisableClear>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let element; index as i">
+              {{ currentPage * pageSize + i + 1 }}
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="applicationNo">
+            <th mat-header-cell *matHeaderCellDef class="applicantnumber">
+              {{ "label-application-no" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="title mb-1 mt-1" style="font-size: 17px">
+                {{ element.applicationNo }}
+              </div>
+              <div class="sub-title text-left mb-1">
+                <div class="mb-1 p-2 shadow-2">
+                  {{ element.schemeCode }} - {{ element.schemeName }}<br />
+                  <hr style="
+                      border-bottom: 1px solid black;
+                      margin-top: 7px;
+                      margin-bottom: 7px;
+                    " />
+                  {{ element.bankName }} - 
+
+                  <span [class]="'text-white p-1 text-sm border-round ' + 
+                  viewClassForNocStatus(element.nocStatus)">
+                    {{ element.nocStatus }}
+                  </span>
+
+                </div>
+                <br />
+
+                <div class="mb-1 p-2 shadow-2">
+                  <!-- <app-application-status
+                    class="col-12 p-0"
+                    [statusIcon]="element.applicationFormStatusIcon"
+                    [statusMsg]="element.applicationFormStatus"
+                    type="APPLICATION_FORM_STATUS"
+                    [key]="element.key"
+                    [draftListPublished]="element.draftListPublished"
+                    [finalListPublished]="element.finalListPublished"
+                    [rejectMessage]="element.rejectMessage"
+                    [pendingPayments]="element.pendingPayments"
+                  ></app-application-status> -->
+
+                  <!-- <app-application-status
+                    class="col-12 p-0"
+                    [statusIcon]="element.applicationPaymentStatusIcon"
+                    [statusMsg]="element.applicationPaymentStatus"
+                    type="APPLICATION_PAYMENT_STATUS"
+                    [key]="element.key"
+                    [lotteryStage]="element.lotteryStage"
+                    [pendingPayments]="element.pendingPayments"
+                  ></app-application-status> -->
+
+                  <!-- <app-application-status
+                    class="col-12 p-0"
+                    [statusIcon]="element.applicationDrawStatusIcon"
+                    [statusMsg]="element.applicationDrawStatus"
+                    type="APPLICATION_DRAW_STATUS"
+                    [key]="element.key"
+                    [priority]="element.priority?.toString()"
+                    [flatDetail]="element.flatDetail"
+                    [pendingPayments]="element.pendingPayments"
+                  ></app-application-status> -->
+
+
+                  <div class="grid col-12 m-0 pt-0 mt-2">
+                    <button  *ngIf="element.nocStatus === 'APPROVED' || element.nocStatus === 'CANCELLED' 
+                              || element.nocStatus === 'CANCEL_REQUESTED' || element.nocStatus === 'PENDING'"
+                    class="btn-medium shadow-4 col-12" style="height: 32px" type="button"
+                      (click)="viewNocForm(element.key)">
+                      <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+                      {{ "view" | transloco }}
+                    </button>
+                  </div>
+
+                  <div class="grid col-12 m-0 pt-0 mt-2">
+                    <button *ngIf="element.nocStatus === 'REJECTED' && !showCancelNoc"  type="button" 
+                    class="btn-medium shadow-4 col-12" style="height: 32px" color="primery"
+                      (click)="editNocForm(element.key)">
+                      {{ "edit" | transloco }}
+                    </button>
+                  </div>
+
+                  <div class="grid col-12 m-0 pt-0 mt-2">
+                    <button *ngIf="element.nocStatus === 'NOC_PAYMENT_PENDING' && !showCancelNoc"  type="button" 
+                    class="btn-medium shadow-4 col-12" style="height: 32px" color="primery"
+                      (click)="payNoc(element.registrationKey)">
+                      {{ "button-pay-noc" | transloco }}
+                    </button>
+                  </div>
+                  <!-- (click)="viewNocForm(element.key)" -->
+                  <div class="grid col-12 m-0 pt-0 mt-2">
+                    <button class="btn-medium-cancel shadow-4 col-12" 
+                      *ngIf="element.nocStatus === 'APPROVED' && !showCancelNoc"
+                      style="height: fit-content" type="button" color="red"
+                      (click)="viewNocCancelRequestForm(element.key)">
+                      <mat-icon style="float: left; color: white">cancel_presentation</mat-icon>
+                      {{ "btn-noc-cancel" | transloco }}
+                    </button>
+                  </div>
+                  <div class="grid col-12 m-0 pt-0 mt-2">
+                    <span *ngIf="element.nocStatus === 'APPROVED' && showCancelNoc" 
+                    style="height: fit-content" color="red">
+                      {{ "cancel-noc-not-eligible" | transloco }}
+                    </span>
+                  </div>
+
+                </div>
+
+
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="schemeName">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "table-header-scheme-name" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="title mb-2 mt-1 schemecode">
+                {{ element.schemeCode }} - {{ element.schemeName }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="categoryCode">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "noc-bank-name" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="title mb-2 mt-1">
+                {{ element.bankName }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="applicationEmdPaymentStatus">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center">
+              {{ "label-lottery" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="p-0">
+              <div class="grid col-12 m-0 p-0">
+                <div class="title mb-2 mt-1">
+                  {{ element.lotteryEventName }}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="applicationDrawStatus">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;margin-left: 51%;margin-top: -4%;">
+              {{ "noc-status" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="p-0">
+              <div class="grid col-12 m-0 p-0">
+                <div class="title mb-2 mt-1">
+                  <!-- {{ element.nocStatus }} -->
+                  <span [class]="'text-white p-1 text-sm border-round ' + 
+                  viewClassForNocStatus(element.nocStatus)">
+                    {{ element.nocStatus }}
+                  </span>
+
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+
+
+          <ng-container matColumnDef="sanctionLetter">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 15px;margin-left: 69%;margin-top: -6.5%;">
+              {{ "label-actions" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="grid m-0">
+                <div class="grid col-12 m-0 pt-0 mt-2">
+                  <button *ngIf="element.nocStatus === 'APPROVED' || element.nocStatus === 'CANCELLED' 
+                            || element.nocStatus === 'CANCEL_REQUESTED' || element.nocStatus === 'PENDING'" type="button" 
+                  class="btn-medium shadow-4 col-12" style="height: 32px" color="primery"
+                    (click)="viewNocForm(element.key)">
+                    <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+                    {{ "view" | transloco }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 pt-0 mt-2">
+                  <button *ngIf="element.nocStatus === 'REJECTED' && !showCancelNoc"  type="button" 
+                  class="btn-medium shadow-4 col-12" style="height: 32px" color="primery"
+                    (click)="editNocForm(element.key)">
+                    {{ "edit" | transloco }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 pt-0 mt-2">
+                  <button *ngIf="element.nocStatus === 'NOC_PAYMENT_PENDING' && !showCancelNoc"  type="button" 
+                  class="btn-medium shadow-4 col-12" style="height: 32px" color="primery"
+                    (click)="payNoc(element.registrationKey)">
+                    {{ "button-pay-noc" | transloco }}
+                  </button>
+                </div>
+                <!-- (click)="CancleNoc(element.key)"  -->
+                <div class="grid col-12 m-0 pt-0 mt-2">
+                  <button *ngIf="element.nocStatus === 'APPROVED' && !showCancelNoc" type="button"
+                    class="btn-medium-cancel shadow-4 col-12" style="height: fit-content" color="red"
+                    (click)="viewNocCancelRequestForm(element.key)">
+                    <mat-icon style="float: left; color: white">cancel_presentation</mat-icon>
+                    {{ "btn-noc-cancel" | transloco }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 pt-0 mt-2">
+                  <span *ngIf="element.nocStatus === 'APPROVED' && showCancelNoc" 
+                  style="height: fit-content" color="red">
+                    {{ "cancel-noc-not-eligible" | transloco }}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr class="mat-row col-12" *matNoDataRow>
+            <td class="mat-cell text-center no-data col-12" [attr.colspan]="displayedColumns.length" style="width: 100%;"  *ngIf="dataLoaded">
+              <div class="col-12" *ngIf="allowedForApply"> {{ "label-noc-record-not-found" | transloco }} </div>
+              <div class="col-12" *ngIf="!allowedForApply" style="background-color: #4baaf5"> {{ "label-pol-not-generated" | transloco }} </div>
+              
+            </td>
+              <div class="mobile-header" style="border-radius: 0px">
+                <div class="col-12" *ngIf="allowedForApply"> {{ "label-noc-record-not-found" | transloco }} </div>
+                <div class="col-12" *ngIf="!allowedForApply" style="background-color: #4baaf5"> {{ "label-pol-not-generated" | transloco }} </div>
+                <div class="col-12" *ngIf="isNotEligibleError" style="background-color: #4baaf5">{{isNotEligibleError}}</div>
+              </div>
+          </tr>
+        </table>
+        <div class="col-12 flex justify-content-center align-items-center" *ngIf="isLoading">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div class="bottom-header flex justify-content-between align-items-center">
+          <mat-paginator #paginator [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="pageChanged($event)" aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+</div>

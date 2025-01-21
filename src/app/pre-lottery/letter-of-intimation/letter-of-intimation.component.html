@@ -1,0 +1,78 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-icon name="close-circle-sharp" 
+                (click)="cancel()" style="color: red;font-size: 26px;"></ion-icon>
+        </ion-buttons>
+        <ion-title class="pl-3">{{"title-header-letter-of-intimation" | transloco}}        
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <!-- <section id="cd-timeline" class="cd-container">
+        <div class="cd-timeline-block" *ngFor="let dataItem of data">
+            <div class="cd-timeline-picture dark">
+                <ion-icon [name]="timelineItem.timelineIcon" [class]="timelineItem.timelineIconClass"></ion-icon>
+            </div>
+            <div 
+                [class]="'cd-timeline-content shadow-4 ' + timelineItem.timelineContentClass">
+                {{dataItem.timelineHeading}}<br>
+                <span class="font-bold">{{dataItem.timelineContent| date:'dd MMM yyyy HH:mm'}}</span>
+            </div>
+        </div>
+    </section> -->
+    <div class="table-dashoard mt-4 py-2">
+        <table mat-table [dataSource]="dataSource" class="table-details" matSort matSortActive="key"
+            matSortDirection="asc" matSortDisableClear>
+            <ng-container matColumnDef="key">
+                <th mat-header-cell *matHeaderCellDef> # </th>
+                <td mat-cell *matCellDef="let element; index as i"> {{(currentPage * pageSize) + i + 1}} </td>
+            </ng-container>
+            <ng-container matColumnDef="lottery">
+                <th mat-header-cell *matHeaderCellDef class="lottery"> {{"label-lottery" | transloco}} </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="title mb-1 mt-1" style="font-size: 17px;">
+                        {{element.lotteryCode}} - {{element.lotteryName}}
+                        <br>
+                        <span *ngIf="element.applicationNos" style="font-size: 13px;">{{element.applicationNos}}</span>
+                    </div>
+                    <div class="sub-title mb-1">
+                        <button class="btn-medium shadow-4 mt-0" style="height: 32px;" type="button"
+                                (click)="downloadLOI(element.registrationLetterKey)">
+                            <mat-icon style="float: left;color: white">download</mat-icon>
+                            <span style="float: left; color: white;">{{"button-download-loi" | transloco}}</span>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> {{"label-actions" | transloco}} </th>
+                <td mat-cell *matCellDef="let element">
+                    <button class="btn-medium shadow-4 mt-0" style="height: 32px;" type="button"
+                            (click)="downloadLOI(element.registrationLetterKey)">
+                        <mat-icon style="float: left;color: white">download</mat-icon>
+                        <span style="float: left; color: white;">{{"button-download-loi" | transloco}}</span>
+                    </button>
+                </td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length" *ngIf="dataLoaded">
+                    <span>
+                        No records.
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <div class="col-12 flex justify-content-center align-items-center" *ngIf="isLoading">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div class="bottom-header flex justify-content-between align-items-center">
+            <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+                [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</ion-content>

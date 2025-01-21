@@ -1,0 +1,43 @@
+<div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey"
+    *ngIf="issuingAuthorities && issuingAuthorities?.lst?.length > 0 && !categoryCode">
+    {{"title-cert-entry-issuing-authority" | transloco}}
+</div>
+<div class="col-12 p-0 mt-2" *ngIf="issuingAuthorities && issuingAuthorities?.lst?.length > 0">
+    <table class="col-12">
+        <thead>
+            <tr>
+                <th>{{"lbl-cert-entry-tbl-header" | transloco}}</th>
+                <th class="hidden-xs">{{"title-cert-entry-issuing-authority" | transloco}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let s of (lang === 'en' ? issuingAuthorities?.lst : issuingAuthorities?.lstMr)">
+                <td>
+                    {{s.configKey}}
+                    <span class="hidden-md hidden-lg">
+                        <br><br><br>
+                        <b><u>{{"title-cert-entry-issuing-authority" | transloco}}</u></b><br>
+                        {{s.configValue}}
+                        <button class="btn-medium shadow-4 mt-0" *ngIf="apply 
+                        && s.configKey.indexOf('(ME)') < 0 && s.configKey.indexOf('(PH)') < 0"
+                            type="button" 
+                            [routerLink]="['/cert-entry', 'pan-validation']"
+                            >
+                            {{"button-apply" | transloco}}
+                        </button>
+                    </span>
+                </td> 
+                <td class="hidden-xs">
+                    {{s.configValue}}<br><br>
+                    <button class="btn-medium shadow-4 mt-0" *ngIf="apply 
+                     && s.configKey.indexOf('(ME)') < 0 && s.configKey.indexOf('(PH)') < 0"
+                        type="button" 
+                        [routerLink]="['/cert-entry', 'pan-validation']"
+                        >
+                        {{"button-apply" | transloco}}
+                    </button>
+                </td> 
+            </tr>
+        </tbody>
+    </table>    
+</div>

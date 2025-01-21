@@ -1,0 +1,137 @@
+.bank-info-label-new {
+  display: block; /* Ensures the label takes up the full width */
+  background-color: #dfdfdf; /* Background color */
+  color: black;
+  font-weight: 400;
+  min-height: 45px;
+  border-radius: 4px;
+  padding: 12px !important;
+  box-sizing: border-box; /* Include padding in total width and height */
+  position: relative;
+}
+
+.placeholder-text {
+  color: #161616; /* Placeholder color */
+  font-size: 14px; /* Font size for the placeholder text */
+  display: block; /* Ensures the text block takes up full width */
+}
+
+.status-message-new {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.application-received-label {
+  color: var(--For-Headings-Light-Black, #313638);
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.045px;
+}
+
+.pay-emd-message-label {
+  color: var(--For-Text-Content-Dark-Gray, #5A5A5A);
+  font-family: Poppins;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.033px;
+  max-width: 90%; /* Makes it responsive */
+  display: inline-block;
+  word-wrap: break-word; /* Ensures long text wraps */
+  margin: 0 auto; /* Centers the content */
+}
+
+@media (min-width: 768px) {
+  .pay-emd-message-label {
+    max-width: 70%; /* Larger screens */
+  }
+}
+
+@media (min-width: 1024px) {
+  .pay-emd-message-label {
+    max-width: 70%; /* Even larger screens */
+  }
+}
+
+.animated-checkmark {
+  animation: scaleFadeIn 1s ease-in-out forwards;
+}
+
+@keyframes scaleFadeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.terms-link {
+  color: #000000;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.btn-mediums{
+  background: #1F71BB;
+  height: 45px;
+  color: #FFFFFF;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 6px;
+}
+
+.custom-height-wrapper ::ng-deep .grid {
+  min-height: 157px !important;
+  // max-height: 300px !important;
+}
+
+@media (max-width: 768px) {
+  .field {
+    flex-direction: column; /* Stack elements vertically on small screens */
+  }
+  .image-section {
+    margin-bottom: 10px; /* Add spacing between image and text */
+  }
+  .imagedetails {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+  }
+}
+
+.imagedetails {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}

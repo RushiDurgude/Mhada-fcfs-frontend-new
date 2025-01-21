@@ -1,0 +1,45 @@
+<div mat-dialog-content>
+  <div class="grid m-0 p-0">
+    <div class="col-10 font-medium">Important Note</div>
+    <div class="col-2 text-right -mt-2">
+      <button mat-icon-button mat-dialog-close="">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="col-12" *ngIf="data[1] == 'rejected'">Your following certificate/s are rejected by system.</div>
+    <div class="col-12" *ngIf="data[1] == 'esign'">Verification of the following document/s is still in progress.</div>
+    <div class="col-12 font-medium mt-1 p-0" *ngFor="let que of data[0]; let i = index">
+      {{ i + 1 }}. {{ que.qsProfileDescription[activeLang] }}
+      <div class="w-full text-sm font-normal" *ngIf="que.mlRemarks != null" style="color: red">
+        Remark : {{ que.mlRemarks }}
+      </div>
+      <!-- <div class="w-full text-right mt-2 mb-2" *ngIf="que.qsCode == 'Q_DOMICILE'">
+        <input
+          [(ngModel)]="domicileToken"
+          style="height: 40px"
+          class="input input-otp text-left font-normal p-1 text-base p-0 w-full"
+          type="text"
+          maxlength="25"
+          placeholder="Enter Application No/Id of Aaple Sarkar"
+        />
+        <button
+          class="mt-2 font-normal p-1 text-sm"
+          style="height: fit-content; width: fit-content"
+          [disabled]="domicileToken == '' || domicileToken.length < 8"
+          [ngClass]="domicileToken == '' || domicileToken.length < 8 ? 'disabled-button' : 'active-button'"
+          (click)="updateDomicileToken()"
+        >
+          {{ "button-submit" | transloco }}
+        </button>
+      </div> -->
+      <div class="w-full text-right mt-2 mb-2" *ngIf="data[1] == 'esign'">
+        <button class="mt-2 font-normal p-1 text-sm active-button" style="width: 50px" (click)="closeEsignDialog()">
+          {{ "ok-btn" | transloco }}
+        </button>
+      </div>
+    </div>
+    <div class="col-12" *ngIf="data[1] == 'rejected'">
+      Request you to Re-upload another Certificate/s or Remove those.
+    </div>
+  </div>
+</div>

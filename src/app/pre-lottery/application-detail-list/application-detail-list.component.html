@@ -1,0 +1,1027 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<div class="user-details">
+  <div class="user-info flex justify-content-between align-items-center">
+    <div class="desktop-details">
+      <div class="title">{{ "menu-application-List" | transloco }}</div>
+    </div>
+    <div class="grid m-0">
+      <div class="mobile-header" style="border-radius: 0px">
+        <div class="flex align-items-center justify-content-between">
+          <div class="flex align-items-center">
+            <div class="title ml-2">
+              {{ "menu-application-List" | transloco }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-filter flex justify-content-between align-items-center mt-2">
+        <div class="md:mr-3">
+          <form class="search-form flex align-items-center" [formGroup]="filterForm"
+            (ngSubmit)="isSearchDisabled = true; onSearch()">
+            <div class="mr-3">
+              <input type="text" id="filterText" formControlName="filterText" class="form-control"
+                placeholder="{{ 'label-application-placeholder' | transloco }}" autocomplete="off" />
+            </div>
+            <div>
+              <button type="submit" title="Search" [disabled]="isSearchDisabled"
+                class="btn btn-secondary btn-auto md:mr-3 mr-2" mat-stroked-button>
+                <mat-icon>search</mat-icon>
+              </button>
+              <button type="button" title="Refresh" (click)="resetFilter($event)" class="btn btn-secondary btn-auto"
+                mat-stroked-button>
+                <mat-icon>refresh</mat-icon>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 mt-4">
+    <div class="grid">
+      <div class="col-12 md:col-2 lg:col-2" *ngIf="isAllowedForLOI">
+        <button class="btn shadow-4 mt-0" type="button" (click)="openModal()">
+          {{ "title-header-letter-of-intimation" | transloco }}
+        </button>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <button class="btn shadow-4 mt-0" type="button" (click)="openModalForCorrigendum()">
+          {{ "corresspondence-name" | transloco }}
+        </button>
+      </div>
+      <!-- <div class="col-6">
+                <button class="btn shadow-4 mt-0" type="button" 
+                style="float: right;"
+                [routerLink]="['/app', 'confirm-tenement','surrender']">
+                    {{"title-header-surrender" | transloco}}
+                </button>
+            </div> -->
+    </div>
+  </div>
+
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [selectedIndex]="selectedTab"
+    (selectedTabChange)="resetFilter($event)">
+    <!-- <div class="col-12 mt-4 card" *ngIf="isAllowedForLOI"> -->
+
+    <!-- </div> -->
+    <mat-tab class="mb-4">
+      <ng-template mat-tab-label>
+        {{ "header-applications" | transloco }}
+        <!-- <br />
+        {{ "sub-header-applications" | transloco }} -->
+      </ng-template>
+      <div class="table-dashoard mt-4 py-2">
+        <table mat-table [dataSource]="dataSource" class="table-details" matSort matSortActive="applicationNo"
+          matSortDirection="asc" matSortDisableClear>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let element; index as i">
+              {{ currentPage * pageSize + i + 1 }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="applicationNo">
+            <th mat-header-cell *matHeaderCellDef class="applicantnumber">
+              {{ "label-application-no" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="title mb-1 mt-1" style="font-size: 17px">
+                {{ element.applicationNo }}
+              </div>
+              <div class="sub-title text-left mb-1">
+                <div class="mb-1 p-2 shadow-2">
+                  {{ element.schemeCode }} - {{ element.schemeName }}<br />
+                  <hr style="
+                      border-bottom: 1px solid black;
+                      margin-top: 7px;
+                      margin-bottom: 7px;
+                    " />
+                  {{ element.categoryCode }} - {{ element.categoryName }}
+                </div>
+                <br />
+                <div class="mb-1 p-2 shadow-2">
+                  <app-application-status class="col-12 p-0" [statusIcon]="element.applicationFormStatusIcon"
+                    [statusMsg]="element.applicationFormStatus" type="APPLICATION_FORM_STATUS" [key]="element.key"
+                    [draftListPublished]="element.draftListPublished" [finalListPublished]="element.finalListPublished"
+                    [rejectMessage]="element.rejectMessage"
+                    [lotteryStage]="element.lotteryStage"
+                    [pendingPayments]="element.pendingPayments"></app-application-status>
+
+                  <app-application-status class="col-12 p-0" [statusIcon]="element.applicationPaymentStatusIcon"
+                    [statusMsg]="element.applicationPaymentStatus" type="APPLICATION_PAYMENT_STATUS" [key]="element.key"
+                    [lotteryStage]="element.lotteryStage"
+                    [pendingPayments]="element.pendingPayments"></app-application-status>
+
+                  <app-application-status class="col-12 p-0" [statusIcon]="element.applicationDrawStatusIcon"
+                    [statusMsg]="element.applicationDrawStatus" type="APPLICATION_DRAW_STATUS" [key]="element.key"
+                    [priority]="element.priority?.toString()" [flatDetail]="element.flatDetail"
+                    [pendingPayments]="element.pendingPayments"></app-application-status>
+                </div>
+                <div class="grid col-12 m-0 pt-0 mt-2" *ngIf="element.lotteryStage === 'APPLICATION_RECEIVING'">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" [routerLink]="[
+                      '/app',
+                      'edit-refund-detail',
+                      element.key
+                    ]" type="button">
+                    <mat-icon style="float: left; color: white">edit</mat-icon>
+                    {{ "button-edit-refund-detail" | transloco }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 pt-0 mt-2">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" [routerLink]="[
+                      '/app',
+                      'application-detail',
+                      element.key
+                    ]" type="button">
+                    {{ "button-application-detail" | transloco }}
+                  </button>
+                </div>
+              </div>
+              <!-- <div class="mobile-menu">
+                                <button mat-icon-button  class="btn" [matMenuTriggerFor]="menu" style="background: none;">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item [routerLink]="['/app', 'edit-refund-detail', element.key]">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>{{"button-edit-refund-detail" | transloco}}</span>
+                                    </button>
+                                    <button mat-menu-item class="border-bottom" *ngIf="element.activeFlag === 'Y'"
+                                        [routerLink]="['/app', 'application-detail', element.key]">
+                                        <span>{{"button-application-detail" | transloco}}</span>
+                                    </button>
+                                </mat-menu>
+                            </div> -->
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="schemeName">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "table-header-scheme-name" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="title mb-2 mt-1 schemecode">
+                {{ element.schemeCode }} - {{ element.schemeName }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="categoryCode">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "table-header-category-code" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="title mb-2 mt-1">
+                {{ element.categoryCode }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="applicationFormStatus">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center">
+              {{ "label-application-status" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="p-0">
+              <div class="grid col-12 m-0 p-0">
+                <app-application-status class="col-12 p-0" [statusIcon]="element.applicationFormStatusIcon"
+                  [statusMsg]="element.applicationFormStatus" type="APPLICATION_FORM_STATUS" [key]="element.key"
+                  [draftListPublished]="element.draftListPublished" [finalListPublished]="element.finalListPublished"
+                  [rejectMessage]="element.rejectMessage"
+                  [lotteryStage]="element.lotteryStage"
+                  [pendingPayments]="element.pendingPayments"></app-application-status>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="applicationEmdPaymentStatus">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center">
+              {{ "label-emd-payment-status" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="p-0">
+              <div class="grid col-12 m-0 p-0">
+                <app-application-status class="col-12 p-0" [statusIcon]="element.applicationPaymentStatusIcon"
+                  [statusMsg]="element.applicationPaymentStatus" type="APPLICATION_PAYMENT_STATUS" [key]="element.key"
+                  [lotteryStage]="element.lotteryStage"
+                  [pendingPayments]="element.pendingPayments"></app-application-status>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="applicationDrawStatus">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center">
+              {{ "label-draw-status" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="p-0">
+              <div class="grid col-12 m-0 p-0">
+                <app-application-status class="col-12 p-0" [statusIcon]="element.applicationDrawStatusIcon"
+                  [statusMsg]="element.applicationDrawStatus" type="APPLICATION_DRAW_STATUS" [key]="element.key"
+                  [priority]="element.priority?.toString()" [flatDetail]="element.flatDetail"
+                  [pendingPayments]="element.pendingPayments"></app-application-status>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 15px">
+              {{ "table-header-lottery-action" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="grid m-0">
+                <div class="grid col-12 m-0 pt-0 mt-2" *ngIf="element.lotteryStage === 'APPLICATION_RECEIVING'">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" [routerLink]="[
+                      '/app',
+                      'edit-refund-detail',
+                      element.key
+                    ]" type="button">
+                    <mat-icon style="float: left; color: white">edit</mat-icon>
+                    {{ "button-edit-refund-detail" | transloco }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 pt-0 mt-2">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" [routerLink]="[
+                      '/app',
+                      'application-detail',
+                      element.key
+                    ]" type="button">
+                    {{ "button-application-detail" | transloco }}
+                  </button>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" *ngIf="dataLoaded">
+              <span> No data matching the filter or No data. </span>
+            </td>
+          </tr>
+        </table>
+        <!-- <div class="col-12 flex justify-content-center align-items-center" *ngIf="isLoading">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div> -->
+        <div class="bottom-header flex justify-content-between align-items-center">
+          <mat-paginator #paginator [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="pageChanged($event)" aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- <mat-tab class="mb-4">
+      <ng-template mat-tab-label>
+        {{ "header-applications" | transloco }}<br />
+        {{ "sub-header-applications-pl" | transloco }}
+      </ng-template>
+      <div class="table-dashoard-post-lottery mt-4 py-2">
+        <table mat-table [dataSource]="dataSourcePostLottery" class="table-details" matSort
+          matSortActive="applicationNo" matSortDirection="asc" matSortDisableClear>
+          <ng-container matColumnDef="applicationId">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let element1; index as i">
+              {{ currentPage * pageSize + i + 1 }}
+            </td>
+          </ng-container> -->
+          <!-- <ng-container matColumnDef="applicationNo">
+                        <th mat-header-cell *matHeaderCellDef> {{"label-application-no" | transloco}}</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="title mb-2 mt-1">
+                                {{element.applicationNo}}
+                            </div>
+                        </td>
+                    </ng-container> -->
+
+          <!-- <ng-container matColumnDef="applicationNo">
+            <th mat-header-cell *matHeaderCellDef class="applicantnumber">
+              {{ "label-application-no" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element1">
+              <div class="title mb-1 mt-1" style="font-size: 17px">
+                {{ element1.applicationNo }}
+              </div>
+              <div class="sub-title text-left mb-1">
+                <div class="mb-1 p-2 shadow-2">
+                  {{ element1.schemeCode }} - {{ element1.schemeName }}<br />
+                  <hr style="
+                      border-bottom: 1px solid black;
+                      margin-top: 7px;
+                      margin-bottom: 7px;
+                    " />
+                  {{ element1.categoryCode }} - {{ element1.categoryName }}
+                </div>
+                <br />
+                <div class="mb-1 p-2 shadow-2">
+                  <app-application-status class="col-12 p-0" [statusIcon]="element1.applicationDrawStatusIcon"
+                    [statusMsg]="element1.applicationDrawStatus" type="APPLICATION_DRAW_STATUS" [key]="element1.key"
+                    [priority]="element1.priority?.toString()" [flatDetail]="element1.flatDetail"
+                    [pendingPayments]="element1.pendingPayments"></app-application-status>
+
+                  <app-application-status class="col-12 p-0" [statusIcon]="element1.postLotteryStatusIcon" [statusMsg]="
+                      element1.postLotteryStatus === 'ELIGIBLE_FOR_ALLOTMENT'
+                        ? 'APPROVED BY ACCOUNT OFFICER'
+                        : element1.postLotteryStatus
+                    " [ineligibityRemarks]="
+                      element1.ineligibityRemarks !== null
+                        ? element1.ineligibityRemarks
+                        : ''
+                    " type="APPLICATION_POST_LOTTERY_STATUS" [key]="element1.key"></app-application-status>
+
+                  <app-application-status class="col-12 p-0 mt-2" [statusIcon]="element1.installmentPaymentStatusIcon"
+                    [statusMsg]="element1.installmentPaymentStatus" type="APPLICATION_INSTALLMENT_STATUS"
+                    [installmentType]="element1.installmentType" [key]="element1.key"></app-application-status>
+                  <app-application-status class="col-12 p-0" [statusIcon]="element1.instPaymentRefundedIcon"
+                    [statusMsg]="
+                      element1.instPaymentRefunded === 'PAYMENT REFUNDED'
+                        ? 'PAYMENT REFUNDED'
+                        : ''
+                    " type="APPLICATION_POST_LOTTERY_STATUS" [key]="element1.key"></app-application-status>
+                </div>
+                <div class="grid col-12 m-0 pt-0 mt-2">
+                  <div class="grid col-12 m-0">
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.allowedForAppDtl">
+                      <button class="btn-medium shadow-4 col-12" style="
+                          height: 32px;
+                          background-color: rgb(244, 166, 11);
+                        " type="button" [routerLink]="[
+                          '/app',
+                          'applicant-detail-editing',
+                          element1.applicationNo
+                        ]">
+                        {{ "applicant-details" | transloco }}
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showAcceptSurrenderEsign">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                        *ngIf="element1.acceptanceSurrenderStatus != null"
+                        (click)="showAcceptedApplicationPdf(element1.key)" type="button">
+                        <mat-icon style="float: left; color: white">download</mat-icon>
+                        <span style="color: white" *ngIf="
+                            element1.acceptanceSurrenderStatus != null &&
+                            element1.acceptanceSurrenderStatus ===
+                              'Accepted tenement'
+                          ">{{
+                          "button-download-esign-acceptance" | transloco
+                          }}</span>
+                        <span style="color: white" *ngIf="
+                            element1.acceptanceSurrenderStatus != null &&
+                            element1.acceptanceSurrenderStatus ===
+                              'Surrendered tenement'
+                          ">{{
+                          "button-download-esign-surrender" | transloco
+                          }}</span>
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.pol">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px" (click)="showPOL(element1.key)"
+                        type="button">
+                        <span style="color: white">{{
+                          "button-view-pol" | transloco
+                          }}</span>
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showAcceptenceButton">
+                      <button class="btn-medium shadow-4 col-12"
+                        style="height: 32px; background-color: rgb(33, 219, 33)"
+                        (click)="validateAcceptences(element1.key)" type="button">
+                        {{ "button-accept-tenement" | transloco }}
+                      </button>
+                    </div>
+
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showMyInstallmentButton">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px" [routerLink]="[
+                          '/app',
+                          element1.key,
+                          'installments'
+                        ]" type="button">
+                        {{ "button-my-installment" | transloco }}
+                      </button>
+                    </div>
+
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showFirstInstallmentButton">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px" [routerLink]="[
+                          '/app',
+                          'installment-payment',
+                          element1.key,
+                          'FIRST_INSTALLMENT'
+                        ]" type="button">
+                        {{ "button-pay-firstins" | transloco }}
+                      </button>
+                    </div>
+
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showFirstInstallmentReceipt">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                        (click)="showReceipt(element1.key)" type="button">
+                        <mat-icon style="float: left; color: white">download</mat-icon>
+                        <span style="color: white">{{
+                          "button-view-installment-receipt" | transloco
+                          }}</span>
+                      </button>
+                    </div>
+
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.allotmentLetter">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                        (click)="showAllotmentLetter(element1.key)" type="button">
+                        <span style="color: white">{{
+                          "button-view-allotmentletter" | transloco
+                          }}</span>
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="
+                        element1.draftAllotmentLetter &&
+                        !element1.allotmentLetter
+                      ">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                        (click)="showDraftAllotmentLetter(element1.key)" type="button">
+                        <span style="color: white">{{
+                          "button-view-draftallotmentletter" | transloco
+                          }}</span>
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="
+                        element1.allowedForPossUpd &&
+                        element1.possessiondtlupdtStatus === null
+                      ">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px" type="button" [routerLink]="[
+                          '/app',
+                          'possession-details-entry',
+                          element1.applicationNo,
+                          element1.registrationKey
+                        ]">
+                        <mat-icon style="float: left; color: white">edit</mat-icon>
+
+                        {{ "possession-details" | transloco }}
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.allowedForERegistration">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                        (click)="eRegistrationCall(element1.key)" type="button">
+                        <span style="color: white">{{
+                          "button-e-registration" | transloco
+                          }}</span>
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.agrmntUploadAllowed">
+                      <button type="button" (click)="file1.click()" style="height: 32px"
+                        class="btn-medium shadow-4 col-12 text-white">
+                        <mat-icon style="float: left; color: white">upload</mat-icon>
+                        {{ "upload-agreement-letter" | transloco }}
+                        <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                            agrmntLtrUpload(
+                              $event,
+                              element1.registrationKey,
+                              element1.applicationNo
+                            )
+                          " accept="application/pdf" />
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.indx2UploadAllowed">
+                      <button type="button" (click)="file1.click()" style="height: 32px"
+                        class="btn-medium shadow-4 col-12 text-white">
+                        <mat-icon style="float: left; color: white">upload</mat-icon>
+                        {{ "upload-index2-letter" | transloco }}
+                        <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                            indx2LtrUpload(
+                              $event,
+                              element1.registrationKey,
+                              element1.applicationNo
+                            )
+                          " accept="application/pdf" />
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.possessionLetter">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                        (click)="showPossessionLetter(element1.key)" type="button">
+                        <span style="color: white">{{
+                          "button-view-possessionletter" | transloco
+                          }}</span>
+                      </button>
+                    </div>
+
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showFinalScrutinyLetter">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                        (click)="showFinalScrutinyLetterPdf(element1.key)" type="button">
+                        <mat-icon style="float: left; color: white">download</mat-icon>
+                        {{
+                        "button-download-final-scrutiny-letter" | transloco
+                        }}
+                      </button>
+                    </div>
+
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showFinalIneligibleLetter">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px; background-color: red"
+                        (click)="showFinalIneligibleLetterPdf(element1.key)" type="button">
+                        <mat-icon style="float: left; color: white">download</mat-icon>
+                        {{
+                        "button-download-ineligible-scrutiny-letter"
+                        | transloco
+                        }}
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showSurrenderButton">
+                      <button class="btn-medium shadow-4 col-12" style="height: 32px; background-color: red"
+                        [routerLink]="[
+                          '/app',
+                          'surrender-tenement',
+                          'surrender',
+                          element1.key
+                        ]" type="button">
+                        {{ "button-surrender-tenement" | transloco }}
+                      </button>
+                    </div>
+
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showApplyCasteValidityReferenceLetter">
+                      <button class="btn-medium shadow-4 col-12" style="height: 50px" [routerLink]="[
+                          '/app',
+                          'apply-for-caste-validity-ref-letter',
+                          element1.key
+                        ]" type="button">
+                        {{
+                        "button-apply-for-caste-validity-ref-letter"
+                        | transloco
+                        }}
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showReApplyCasteValidityReferenceLetter">
+                      <button class="btn-medium shadow-4 col-12" style="height: 50px" [routerLink]="[
+                          '/app',
+                          'apply-for-caste-validity-ref-letter',
+                          element1.key
+                        ]" type="button">
+                        {{
+                        "button-reapply-for-caste-validity-ref-letter"
+                        | transloco
+                        }}
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.downloadApplyCasteValidityReferenceLetter">
+                      <button class="btn-medium shadow-4 col-12" style="height: 50px"
+                        (click)="downloadCasteValidityRefLetter(element1.key)" type="button">
+                        {{
+                        "button-view-caste-validity-ref-letter" | transloco
+                        }}
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.agrmntAllowed">
+                      <button class="btn-medium shadow-4 col-12" type="button" style="height: 32px" (click)="
+                          showAgreement(
+                            element1.registrationKey,
+                            element1.applicationNo
+                          )
+                        ">
+                        <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+                        {{ "agreement-letter" | transloco }}
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.indx2Allowed">
+                      <button class="btn-medium shadow-4 col-12" type="button" style="height: 32px" (click)="
+                          showIndex2Ltr(
+                            element1.registrationKey,
+                            element1.applicationNo
+                          )
+                        ">
+                        <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+                        {{ "index-2-letter" | transloco }}
+                      </button>
+                    </div> -->
+                    <!-- <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.eligibilityDocDate">
+                      <button class="btn-medium shadow-3 col-12" style="height: 50px" [routerLink]="[
+                          '/app',
+                          'apply-for-applicant-hearing',
+                          'DOCUMENT_DEFAULTER',
+                          element1.key
+                        ]" type="button">
+                        {{ "button-appeal-document" | transloco }}
+                      </button>
+                    </div>
+
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.paymentDefaulter">
+                      <button class="btn-medium shadow-3 col-12" style="height: 50px" [routerLink]="[
+                          '/app',
+                          'apply-for-applicant-hearing',
+                          'PAYMENT_DEFAULTER',
+                          element1.key
+                        ]" type="button">
+                        {{ "button-appeal-payment" | transloco }}
+                      </button>
+                    </div>
+                    <div class="grid col-12 m-0 p-0 mt-2" *ngIf="
+                        element1.acceptanceSurrenderStatus ===
+                        'Accepted tenement'
+                      ">
+                      <button class="btn-medium shadow-3 col-12" style="height: 50px" [routerLink]="[
+                          '/app',
+                          'application-other-documents',
+                          element1.key
+                        ]" type="button">
+                        {{ "upload-other-document" | transloco }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="schemeName">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "table-header-scheme-name" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element1">
+              <div class="title mb-2 mt-1 schemecode">
+                {{ element1.schemeCode }} - {{ element1.schemeName }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="categoryCode">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "table-header-category-code" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element1">
+              <div class="title mb-2 mt-1">
+                {{ element1.categoryCode }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="applicationDrawStatus">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "label-draw-status" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element1">
+              <div class="grid col-12 m-0 p-0">
+                <app-application-status class="col-12 p-0" [statusIcon]="element1.applicationDrawStatusIcon"
+                  [statusMsg]="element1.applicationDrawStatus" type="APPLICATION_DRAW_STATUS" [key]="element1.key"
+                  [priority]="element1.priority?.toString()" [flatDetail]="element1.flatDetail"
+                  [pendingPayments]="element1.pendingPayments"></app-application-status>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="postLotteryStatus">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "label-post-lottery-status" | transloco }}
+            </th>
+
+            <td mat-cell *matCellDef="let element1">
+              <div class="grid col-12 m-0 p-0">
+                <app-application-status class="col-12 p-0" [statusIcon]="element1.postLotteryStatusIcon" [statusMsg]="
+                    element1.postLotteryStatus === 'ELIGIBLE_FOR_ALLOTMENT'
+                      ? 'APPROVED BY ACCOUNT OFFICER'
+                      : element1.postLotteryStatus
+                  " [ineligibityRemarks]="
+                    element1.ineligibityRemarks !== null
+                      ? element1.ineligibityRemarks
+                      : ''
+                  " type="APPLICATION_POST_LOTTERY_STATUS" [key]="element1.key"></app-application-status>
+
+                  <app-application-status *ngIf="element1.pendingDoc != null" class="col-12 p-0" [statusIcon]="'FAILURE'" [pendingDoc]="element1.pendingDoc !== null
+                      ? element1.pendingDoc
+                      : ''
+                  " type="APPLICATION_POST_LOTTERY_STATUS" [key]="element1.key"></app-application-status> -->
+
+                <!-- <app-application-status
+                  class="col-12 p-0"
+                  [statusMsg]="
+                    element1.ineligibityRemarks !== null
+                      ? element1.ineligibityRemarks
+                      : ''
+                  "
+                  type="APPLICATION_POST_LOTTERY_STATUS"
+                  [key]="element1.key"
+                ></app-application-status> -->
+
+                <!-- <app-application-status class="col-12 p-0 mt-2" [statusIcon]="element1.installmentPaymentStatusIcon"
+                  [statusMsg]="element1.installmentPaymentStatus" [installmentType]="element1.installmentType"
+                  type="APPLICATION_PAYMENTREFUND_STATUS" [key]="element1.key"></app-application-status>
+
+                <app-application-status class="col-12 p-0" [statusIcon]="element1.instPaymentRefundedIcon" [statusMsg]="
+                    element1.instPaymentRefunded === 'PAYMENT REFUNDED'
+                      ? 'PAYMENT REFUNDED'
+                      : ''
+                  " type="APPLICATION_POST_LOTTERY_STATUS" [key]="element1.key"></app-application-status>
+
+                  <app-application-status class="col-12 p-0" [statusIcon]="" [statusMsg]="
+                    element1.pendingDoc
+                  " type="APPLICATION_POST_LOTTERY_STATUS" [key]="element1.key"></app-application-status>
+
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 15px">
+              {{ "table-header-lottery-action" | transloco }}
+            </th>
+            <td mat-cell *matCellDef="let element1">
+              <div class="grid m-0">
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.allowedForAppDtl">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px; background-color: rgb(244, 166, 11)"
+                    type="button" [routerLink]="[
+                      '/app',
+                      'applicant-detail-editing',
+                      element1.applicationNo
+                    ]">
+                    <mat-icon style="float: left; color: white">edit</mat-icon>
+
+                    {{ "applicant-details" | transloco }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showAcceptSurrenderEsign">
+                  <button class="btn-medium shadow-4 col-12" *ngIf="element1.acceptanceSurrenderStatus != null"
+                    style="height: 32px" (click)="showAcceptedApplicationPdf(element1.key)" type="button">
+                    <mat-icon style="float: left; color: white">download</mat-icon>
+                    <span style="color: white" *ngIf="
+                        element1.acceptanceSurrenderStatus != null &&
+                        element1.acceptanceSurrenderStatus ===
+                          'Accepted tenement'
+                      ">{{
+                      "button-download-esign-acceptance" | transloco
+                      }}</span>
+                    <span style="color: white" *ngIf="
+                        element1.acceptanceSurrenderStatus != null &&
+                        element1.acceptanceSurrenderStatus ===
+                          'Surrendered tenement'
+                      ">{{ "button-download-esign-surrender" | transloco }}</span>
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.pol">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" (click)="showPOL(element1.key)"
+                    type="button">
+                    <span style="color: white">{{
+                      "button-view-pol" | transloco
+                      }}</span>
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showAcceptenceButton">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px; background-color: rgb(33, 219, 33)"
+                    (click)="validateAcceptences(element1.key)" type="button">
+                    {{ "button-accept-tenement" | transloco }}
+                  </button>
+                </div>
+
+                
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showMyInstallmentButton">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" [routerLink]="[
+                      '/app',
+                      element1.key,
+                      'installments'
+                    ]" type="button">
+                    {{ "button-my-installment" | transloco }}
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showFirstInstallmentButton">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" [routerLink]="[
+                      '/app',
+                      'installment-payment',
+                      element1.key,
+                      'FIRST_INSTALLMENT'
+                    ]" type="button">
+                    {{ "button-pay-firstins" | transloco }}
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showFirstInstallmentReceipt">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" (click)="showReceipt(element1.key)"
+                    type="button">
+                    <mat-icon style="float: left; color: white">download</mat-icon>
+                    <span style="color: white">{{
+                      "button-view-installment-receipt" | transloco
+                      }}</span>
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.allotmentLetter">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                    (click)="showAllotmentLetter(element1.key)" type="button">
+                    <span style="color: white">{{
+                      "button-view-allotmentletter" | transloco
+                      }}</span>
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="
+                    element1.draftAllotmentLetter && !element1.allotmentLetter
+                  ">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                    (click)="showDraftAllotmentLetter(element1.key)" type="button">
+                    <span style="color: white">{{
+                      "button-view-draftallotmentletter" | transloco
+                      }}</span>
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="
+                    element1.allowedForPossUpd &&
+                    element1.possessiondtlupdtStatus === null
+                  ">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px" type="button" [routerLink]="[
+                      '/app',
+                      'possession-details-entry',
+                      element1.applicationNo,
+                      element1.registrationKey
+                    ]">
+                    <mat-icon style="float: left; color: white">edit</mat-icon>
+
+                    {{ "possession-details" | transloco }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.allowedForERegistration">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                    (click)="eRegistrationCall(element1.key)" type="button">
+                    <span style="color: white">{{
+                      "button-e-registration" | transloco
+                      }}</span>
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.agrmntUploadAllowed">
+                  <button type="button" (click)="file1.click()" style="height: 32px"
+                    class="btn-medium shadow-4 col-12 text-white">
+                    <mat-icon style="float: left; color: white">upload</mat-icon>
+                    {{ "upload-agreement-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        agrmntLtrUpload(
+                          $event,
+                          element1.registrationKey,
+                          element1.applicationNo
+                        )
+                      " accept="application/pdf" />
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.indx2UploadAllowed">
+                  <button type="button" (click)="file1.click()" style="height: 32px"
+                    class="btn-medium shadow-4 col-12 text-white">
+                    <mat-icon style="float: left; color: white">upload</mat-icon>
+                    {{ "upload-index2-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        indx2LtrUpload(
+                          $event,
+                          element1.registrationKey,
+                          element1.applicationNo
+                        )
+                      " accept="application/pdf" />
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.possessionLetter">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                    (click)="showPossessionLetter(element1.key)" type="button">
+                    <span style="color: white">{{
+                      "button-view-possessionletter" | transloco
+                      }}</span>
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.agrmntAllowed">
+                  <button class="btn-medium shadow-4 col-12" type="button" style="height: 32px" (click)="
+                      showAgreement(
+                        element1.registrationKey,
+                        element1.applicationNo
+                      )
+                    ">
+                    <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+                    {{ "agreement-letter" | transloco }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.indx2Allowed">
+                  <button class="btn-medium shadow-4 col-12" type="button" style="height: 32px" (click)="
+                      showIndex2Ltr(
+                        element1.registrationKey,
+                        element1.applicationNo
+                      )
+                    ">
+                    <mat-icon style="float: left; color: white">remove_red_eye</mat-icon>
+                    {{ "index-2-letter" | transloco }}
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showFinalScrutinyLetter">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px"
+                    (click)="showFinalScrutinyLetterPdf(element1.key)" type="button">
+                    <mat-icon style="float: left; color: white">download</mat-icon>
+                    {{ "button-download-final-scrutiny-letter" | transloco }}
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showFinalIneligibleLetter">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px; background-color: red"
+                    (click)="showFinalIneligibleLetterPdf(element1.key)" type="button">
+                    <mat-icon style="float: left; color: white">download</mat-icon>
+                    {{
+                    "button-download-ineligible-scrutiny-letter" | transloco
+                    }}
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showSurrenderButton">
+                  <button class="btn-medium shadow-4 col-12" style="height: 32px; background-color: red" [routerLink]="[
+                      '/app',
+                      'surrender-tenement',
+                      'surrender',
+                      element1.key
+                    ]" type="button">
+                    {{ "button-surrender-tenement" | transloco }}
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showApplyCasteValidityReferenceLetter">
+                  <button class="btn-medium shadow-4 col-12" style="height: fit-content;" [routerLink]="[
+                      '/app',
+                      'apply-for-caste-validity-ref-letter',
+                      element1.key
+                    ]" type="button">
+                    {{
+                    "button-apply-for-caste-validity-ref-letter" | transloco
+                    }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.showReApplyCasteValidityReferenceLetter">
+                  <button class="btn-medium shadow-4 col-12" style="height: fit-content;" [routerLink]="[
+                      '/app',
+                      'apply-for-caste-validity-ref-letter',
+                      element1.key
+                    ]" type="button">
+                    {{
+                    "button-reapply-for-caste-validity-ref-letter" | transloco
+                    }}
+                  </button>
+                </div>
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.downloadApplyCasteValidityReferenceLetter">
+                  <button class="btn-medium shadow-4 col-12" style="height: fit-content;"
+                    (click)="downloadCasteValidityRefLetter(element1.key)" type="button">
+                    {{ "button-view-caste-validity-ref-letter" | transloco }}
+                  </button>
+                </div> -->
+                <!-- <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.eligibilityDocDate">
+                  <button class="btn-medium shadow-3 col-12" style="height: 50px" [routerLink]="[
+                      '/app',
+                      'apply-for-applicant-hearing',
+                      'DOCUMENT_DEFAULTER',
+                      element1.key
+                    ]" type="button">
+                    {{ "button-appeal-document" | transloco }}
+                  </button>
+                </div>
+
+                <div class="grid col-12 m-0 p-0 mt-2" *ngIf="element1.paymentDefaulter">
+                  <button class="btn-medium shadow-3 col-12" style="height: 50px" [routerLink]="[
+                      '/app',
+                      'apply-for-applicant-hearing',
+                      'PAYMENT_DEFAULTER',
+                      element1.key
+                    ]" type="button">
+                    {{ "button-appeal-payment" | transloco }}
+                  </button>
+                </div> -->
+                <!-- Rushi D code end -->
+                <!-- <div
+                  class="grid col-12 m-0 p-0 mt-2"
+                  *ngIf="element1.showSurrenderButton"
+                >
+                  <button
+                    class="btn-medium shadow-4 col-12"
+                    style="height: 32px; background-color: orange"
+                    type="button"
+                    (click)="downloadCorrigendum(element1.registrationKey)"
+                  >
+                    <mat-icon style="float: left; color: red"
+                      >download</mat-icon
+                    >
+                    Corrigendum
+                  </button>
+                </div> -->
+                <!-- <div class="grid col-12 m-0 p-0 mt-2" *ngIf="
+                    element1.acceptanceSurrenderStatus === 'Accepted tenement'
+                  ">
+                  <button class="btn-medium shadow-3 col-12" style="height: 50px" [routerLink]="[
+                      '/app',
+                      'application-other-documents',
+                      element1.key
+                    ]" type="button">
+                    {{ "upload-other-document" | transloco }}
+                  </button>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsPostLottery"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsPostLottery"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumnsPostLottery.length" *ngIf="dataLoaded">
+              <span> No data matching the filter or No data. </span>
+            </td>
+          </tr>
+        </table>
+        <div class="col-12 flex justify-content-center align-items-center" *ngIf="isLoading">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div class="bottom-header flex justify-content-between align-items-center">
+          <mat-paginator #paginator1 [pageIndex]="currentPage1" [pageSize]="pageSize1"
+            [pageSizeOptions]="pageSizeOptions1" (page)="pageChanged1($event)" aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+    </mat-tab> -->
+  </mat-tab-group>
+</div>

@@ -1,0 +1,62 @@
+<div class="col-12">
+  <div class="col-12">
+    <div class="grid">
+      <div class="col-12 text-base">
+        <div class="grid">
+          <div class="col-12 lg:col-12 xl:col-12" *ngIf="workingStatus == 'Both'">
+            {{"select-spouse-self-income-or-itr" | transloco}}
+          </div>
+          <div class="col-12 lg:col-12 xl:col-12">
+            <ion-radio-group [(ngModel)]="selectedRadioOption" (ngModelChange)="radioButtonClicked($event)">
+              <div class="grid">
+                <div class="col-12 m-0 p-0 lg:col-6" *ngIf="workingStatus == 'Both' || workingStatus == 'Self' || workingStatus == 'None' || workingStatus == 'Yes' || workingStatus == 'No'">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-itr" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="ITR"></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 p-0 lg:col-6" *ngIf="workingStatus == 'Spouse'">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-spouse-itr" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Spouse ITR"></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 p-0 lg:col-6" *ngIf="workingStatus == 'Both'">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-family-income-cert" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Family Income Certificate"></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 p-0 lg:col-6" *ngIf="workingStatus == 'Self' 
+                  || workingStatus == 'None' || workingStatus == 'Yes' || workingStatus == 'No'">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-income-Certificate" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Self Income Certificate"></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 p-0 lg:col-6" *ngIf="workingStatus == 'Spouse'">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"option-income-Certificate" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Spouse Income Certificate"></ion-radio>
+                  </ion-item>
+                </div>
+              </div>
+              &nbsp;&nbsp;&nbsp;
+            </ion-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-right">
+        <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+          [style.fontSize]="activeLang == 'mr' ? '18px' : ''" 
+          [ngClass]="
+            proceedEnabled == false
+              ? 'disabled-button'
+              : 'active-button flex-end'
+          " [disabled]="proceedEnabled == false" (click)="proceed()" style="align-self:flex-end;">
+          {{ "proceed" | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

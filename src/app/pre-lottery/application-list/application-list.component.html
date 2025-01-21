@@ -1,0 +1,117 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+    style="height: calc(100% - 100px);">
+<div class="col-12 pl-4 pr-4">
+    <div class="col-12 card">
+        <div class="col-12 line-height-1 text-2xl" style="display: flex;">
+            {{"title-header-applications" | transloco}} 
+            <div style="margin-left: 5px;" *ngIf="dataLoaded">
+                <span class="p-2 pb-0 pt-0" style="background-color: #c6f1f3;
+                font-size: 16px;
+                color: #11112e;
+                border-radius: 6px;
+                border: 1px solid #b4b4e1;">
+                    {{applicationList.length}}
+                </span>
+            </div>
+        </div>
+        <div style="margin-top: -35px; float: right; display: none;" *ngIf="!dataFiltered">
+            <ion-icon name="filter-circle-outline" style="font-size: 30px; cursor: pointer;"
+                (click)="openFilter()">
+            </ion-icon>
+        </div>
+        <div style="margin-top: -35px; float: right; display: none;" *ngIf="dataFiltered">
+            <ion-icon name="filter-circle" style="font-size: 30px; cursor: pointer;"
+                (click)="openFilter()">
+            </ion-icon>
+        </div>
+    </div>
+</div>
+<div class="col-12 pl-4 pr-3 pb-3 grid" *ngIf="applicationList" 
+    style="height: calc(100% - 60px);">
+    <div class="col-12 p-0 md:col-6 lg:col-4 mt-2 mb-2" style="border-radius: 0.75em;" 
+        *ngFor="let application of applicationList">
+        <div class="card card-border ml-1">
+            <div class="col-12 p-2 text-l mb-0 pb-1">
+                <span class="font-bold" style="font-size: 18px;">
+                    {{application.applicationNo}}
+                </span>
+                <span class="p-2" style="background-color: #128512;
+                    font-size: 14px; color: white; padding: 2px !important;
+                    border-radius: 6px; float: right;">
+                    {{application.categoryCode}}
+                </span>
+            </div>
+            <ion-accordion-group>
+                <ion-accordion value="first">
+                    <ion-item slot="header" color="light">
+                        <ion-label style="font-size: 14px;">
+                            <span>
+                                {{application.schemeCode}} - {{application.schemeName}}
+                            </span>
+                        </ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content">
+                        <ul class="list-disc text-sm ml-6">
+                            <li>
+                                <label class="font-bold">{{"label-builtup-area" | transloco}} - </label>{{application?.builtupArea}} {{application?.builtupAreaUnit}} 
+                            </li>
+                            <li>
+                                <label class="font-bold">{{"label-carpet-area" | transloco}} - </label>{{application?.carpetArea}} {{application?.carpetAreaUnit}} 
+                            </li>
+                            <li>
+                                <label class="font-bold">{{"label-cost" | transloco}} - </label>&#8377; {{application?.cost}}
+                            </li>
+                        </ul>
+                    </div>
+                </ion-accordion>
+            </ion-accordion-group>
+            <div class="grid col-12 m-0 pt-0" style="border-top: 1px solid gray;">
+                <app-application-status 
+                    class="col-12 p-0"
+                    [statusIcon]="application.applicationFormStatusIcon"
+                    [statusMsg]="application.applicationFormStatus"
+                    type="APPLICATION_FORM_STATUS"
+                    [key]="application.key"
+                    [lotteryStage]="application.lotteryStage"
+                    [pendingPayments]="application.pendingPayments"
+                    ></app-application-status>
+                <app-application-status 
+                    class="col-12 p-0"
+                    [statusIcon]="application.applicationPaymentStatusIcon"
+                    [statusMsg]="application.applicationPaymentStatus"
+                    type="APPLICATION_PAYMENT_STATUS"
+                    [key]="application.key"
+                    [lotteryStage]="application.lotteryStage"
+                    [pendingPayments]="application.pendingPayments"
+                    ></app-application-status>
+                <app-application-status 
+                    class="col-12 p-0"
+                    [statusIcon]="application.applicationDrawStatusIcon"
+                    [statusMsg]="application.applicationDrawStatus"
+                    type="APPLICATION_DRAW_STATUS"
+                    [key]="application.key"
+                    [flatDetail]="application.flatDetail"
+                    [pendingPayments]="application.pendingPayments"
+                    ></app-application-status>
+            </div>
+            <div class="grid col-12 m-0 pt-0 mt-2" 
+                *ngIf="application.lotteryStage === 'APPLICATION_RECEIVING'">
+                <button class="btn-medium shadow-4 col-12" 
+                    style="height: 32px;"
+                    [routerLink]="['/app', 'edit-refund-detail', application.key]"
+                    type="button">
+                    {{"button-edit-refund-detail" | transloco}}
+                </button>
+            </div>
+            <div class="grid col-12 m-0 pt-0 mt-2">
+                <button class="btn-medium shadow-4 col-12" 
+                    style="height: 32px;"
+                    [routerLink]="['/app', 'application-detail', application.key]"
+                    type="button">
+                    {{"button-application-detail" | transloco}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

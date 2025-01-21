@@ -1,0 +1,44 @@
+.pl-5-4 {
+    padding-left: 2.4rem !important;
+}
+
+.profile-picture {
+    border-radius: 100px;
+    height: 10em;
+    width: 10em;
+    margin-top: -70px;
+    border: 3px white solid;
+}
+
+.successStatus {
+    background-color: #bdf9bd;
+    display: revert;
+    padding: 5px 15px 5px;
+    color: #098e09;
+    font-weight: 500;
+}
+
+.warningStatus {
+    background-color: #eded8f;
+    display: revert;
+    padding: 5px 15px 5px;
+    color: #cc5b5b;
+    font-weight: 500;
+}
+
+.errorStatus {
+    background-color: rgb(249, 171, 171);
+    display: revert;
+    padding: 5px 15px 5px;
+    color: #943838;
+    font-weight: 500;
+}
+
+.pending {
+    height: 1.4em;
+    width: 1.4em;
+    border: 2px dashed;
+    border-radius: 30px;
+    margin-left: 3px;
+    margin-right: 4px;
+}

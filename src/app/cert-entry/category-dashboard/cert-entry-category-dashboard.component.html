@@ -1,0 +1,29 @@
+<div class="grid m-0 p-3 background-image card-content ng-star-inserted" 
+    style="min-height: 87.5%;">
+<div class="col-12 mt-1 p-0 card">
+    <div class="col-12">
+        <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+            {{"title-cert-entry-category-dashboard" | transloco}}
+        </div>
+        <div class="grid col-12 p-2">
+            <div class="col-12 sm:col-6 md:col-4 lg:col-3 m-0 p-0 cursor-pointer"
+                *ngFor="let cat of categories | keyvalue" (click)="categoryClick(cat.key)">
+                <div class="col-11 shadow-2 p-3 m-2" style="background-color: #ffedb6; color: #ab7339; font-weight: 500;">
+                    {{lang === 'en' ? cat.value.en : cat.value.mr}}
+                </div>
+            </div>
+        </div>
+        <app-cert-issuing-authority></app-cert-issuing-authority>
+        <br><br>
+        <div class="col-12 line-height-1 text-2xl" style="border-bottom: 1px solid grey">
+            {{"title-cert-entry-contact-emailid" | transloco}}
+        </div>
+        <div class="col-12 p-0 mt-2">
+            <span class="p-2" style="color: blue;">{{emailId}}</span>
+            <mat-icon [routerLink]="['/cert-entry', 'email-entry', this.pan]"
+            title="Edit" class="cursor-pointer" style="color: brown;">edit</mat-icon>
+            
+        </div>  
+    </div>
+</div>
+</div>

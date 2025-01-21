@@ -1,0 +1,2556 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<!-- <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher> -->
+<!-- <iframe [src]="url" *ngIf="url" style="width: 100%; height: 100%" scrolling="yes"></iframe> -->
+<ng-template [ngIf]="isContentVisible">
+  <div class="grid m-0 p-0 background-image card-content" style="overflow: auto; height: calc(100% - 100px)"
+    id="containerDiv">
+    <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+    <div class="col-12 lg:col-10 xl:col-10 md:col-10 m-0 pl-3 pr-3 pb-0 -mt-2"
+      [ngClass]="platform == 'ios' ? 'mb-6' : ''">
+      <div class="grid" *ngIf="isEdit != 'true'">
+        <div class="col-12 text-left">
+          <label style="color: #1f3038" class="font-medium">{{ displayedQuestion.qsPercentage }}%</label>
+          <mat-progress-bar class="example-margin" color="green" mode="determinate"
+            [value]="displayedQuestion.qsPercentage">
+          </mat-progress-bar>
+        </div>
+      </div>
+          <div class="grid m-0 p-0 card">
+            <div class="col-12 lg:col-6 xl:col-6 md:col-6 m-0 p-0 image-holder">
+              <!-- <mat-accordion class="hidden-md hidden-lg hidden-xl">
+              <mat-expansion-panel [expanded]="panelOpenState" hideToggle="true">
+                <mat-expansion-panel-header> </mat-expansion-panel-header>
+                <img src="assets/aadhar.jpeg" class="image" />
+              </mat-expansion-panel>
+              </mat-accordion>
+              <mat-panel-title class="w-full hidden-md hidden-lg hidden-xl">
+              <div class="w-full text-center m-0 p-0">
+                <button
+                  class="expansion-panel-btn"
+                  type="button"
+                  (click)="panelOpenState = !panelOpenState"
+                  [ngClass]="panelOpenState == false ? 'rotatedown' : 'rotateup'"
+                >
+                  <ion-icon name="chevron-up-outline" style="color: #778386"></ion-icon>
+                </button>
+              </div>
+              </mat-panel-title>
+              <img src="assets/aadhar.jpeg" class="hidden-sm hidden-xs image" /> -->
+              <img [src]="displayedQuestion.qsImage" class="image" />
+            </div>
+            <!-- <div class="col-12 text-center">Total time taken = {{ timeTaken }} seconds</div> -->
+            <div class="col-12 lg:col-6 xl:col-6 md:col-6 m-0 p-0">
+              <ng-container>
+                <div class="col-12 p-4">
+                  <div class="grid">
+                    <div class="col-12 m-0 p-0">
+                      <div class="grid">
+                        <div class="col-12 lg:col-1 xl:col-1 text-center text-2xl" style="border-bottom: 3px solid #d7d7d7">
+                        </div>
+                        <div class="col-10 text-center text-2xl" style="border-bottom: 3px solid #d7d7d7" *ngIf="
+                            !(
+                              displayedQuestion.qsCode == 'Q_SELF_WORKING' ||
+                              displayedQuestion.qsCode == 'Q_WORK_STATUS'
+                            )
+                          ">
+                          <label *ngIf="!isOtpVerificationVisible">{{
+                            displayedQuestion.qsQuestion[activeLang]
+                            }}</label>
+                          <label *ngIf="isOtpVerificationVisible">{{
+                            "enter-otp" | transloco
+                            }}</label>
+                        </div>
+                        <div class="col-10 text-center text-2xl" style="border-bottom: 3px solid #d7d7d7" *ngIf="
+                            displayedQuestion.qsCode == 'Q_SELF_WORKING' ||
+                            displayedQuestion.qsCode == 'Q_WORK_STATUS'
+                          ">
+                          <label *ngIf="!isOtpVerificationVisible">Income Details</label>
+                        </div>
+                        <div class="col-2 lg:col-1 xl:col-1 text-center p-0" style="border-bottom: 3px solid #d7d7d7">
+                          <!-- <ion-icon
+                            name="help-circle"
+                            class="cursor-pointer"
+                            style="color: #778386"
+                            (click)="viewHelpVideo()"
+                          ></ion-icon> -->
+                          <img src="assets/help1.png" (click)="viewHelpVideo()" class="w-full pulsingButton" />
+                        </div>
+                        <!-- <div class="col-12 mt-4 text-xl">
+                        {{ displayedQuestion.qsQuestion }}
+                        </div> -->
+                        <!-- <div class="col-12 text-sm">
+                          <div id="parent">
+                            <div id="narrow">
+                              <img src="assets/info.svg" />
+                            </div>
+                            <div id="wide">
+                              {{ displayedQuestion.qsDescription }}
+                            </div>
+                          </div>
+                        </div> -->
+                      </div>
+
+                      <!-- FOR CONSENT -->
+                      <div class="col-12" *ngIf="
+                          displayedQuestion.qsOption1[activeLang] == null &&
+                          displayedQuestion.qsOption2[activeLang] == null &&
+                          displayedQuestion.qsCode == 'Q_CONSENT'
+                        ">
+                        <div class="col-12">
+                          <div class="grid">
+                            <div class="col-12 text-base">
+                              <div class="grid">
+                                <div class="col-12 text-center text-xl">
+                                  {{ "consent-header" | transloco }}
+                                </div>
+                                <div class="col-12">
+                                  <ul style="list-style-type: decimal">
+                                    <li>
+                                      <label style="
+                                          text-decoration: underline;
+                                          font-style: italic;
+                                        ">
+                                        {{ "consent-aadhar-header" | transloco }}
+                                      </label>
+                                      <div class="grid">
+                                        <div class="col-12 text-sm">
+                                          {{ "consent-aadhar-content" | transloco }}
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <label style="
+                                          text-decoration: underline;
+                                          font-style: italic;
+                                        ">
+                                        {{ "consent-pan-header" | transloco }}
+                                      </label>
+                                      <div class="grid">
+                                        <div class="col-12 text-sm">
+                                          {{ "consent-pan-content" | transloco }}
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <!-- <li>
+                                    <label style="text-decoration: underline; font-style: italic">
+                                      Utility Bills/ ID Card issued by Employer/Disability certificate/Freedom fighter
+                                      certificates/ Ex-servicemen certificate/etc.
+                                    </label>
+                                    <div class="grid">
+                                      <div class="col-12 text-sm">
+                                        I also provide my expressed & written consent to validate above documents through
+                                        API services & provide consent to stored the details.
+                                      </div>
+                                    </div>
+                                  </li> -->
+
+                                    <!-- <label class="font-semibold" style="text-decoration: underline; font-style: italic"
+                                    >Software Requirement:-</label
+                                  >
+                                  <ul style="list-style-type: lower-roman">
+                                    <li>Need to assign unique consent id to each consent displayed</li>
+                                    <li>Store unique consent id, Date, Time, Consent version no. & user IP address</li>
+                                  </ul> -->
+                                  </ul>
+                                </div>
+                                <div class="col-12">
+                                  <div id="parent">
+                                    <div id="narrow">
+                                      <ion-checkbox color="primary" checked slot="start"
+                                        [(ngModel)]="consentAccepted"></ion-checkbox>
+                                    </div>
+                                    <div id="wide" class="text-left text-xs">
+                                      {{ "consent-i-agree" | transloco }}
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- <div class="col-12 text-xs">
+                                (Your consent to share personal information is entirely voluntary and you may refuse to give
+                                consent. However, without this consent you cannot proceed for MHADA Lottery Registration.)
+                              </div> -->
+                              </div>
+                            </div>
+                            <div class="col-12 lg:col-8 xl:col-9"></div>
+
+                            <div class="col-12 text-center">
+                              <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                                [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [ngClass]="
+                                  consentAccepted == false
+                                    ? 'disabled-button'
+                                    : 'active-button'
+                                " [disabled]="consentAccepted == false" (click)="proceed('consent')">
+                                {{ "proceed" | transloco }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- FOR AADHAR UPLOAD ONLY -->
+                      <div class="grid text-center m-0 p-0 mt-5" *ngIf="displayedQuestion.qsCode == 'Q_AADHAR'">
+                        <div class="col-12 text-center file-upload-container m-0 p-0" *ngIf="displayedQuestion?.qs_ans == null">
+                          <div class="grid p-1">
+                            <div class="col-12 lg:col-12 xl:col-12 md:col-12">
+                              <span>
+                                Digi Locker<br><br>
+                              </span>
+                              <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                                [style.fontSize]="activeLang == 'mr' ? '18px' : ''" class="active-button"
+                                (click)="proceedToDigiLocker()">
+                                {{ "proceed" | transloco }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="grid card-border-dashed text-center m-0 p-0 mt-5" *ngIf="selectedImage != ''">
+                            <div class="col-12">
+                              <div class="grid" style="min-height: 400px; max-height: fit-content">
+
+                                <div class="col-12 file-upload-container" *ngIf="selectedImage != ''">
+                                  <div class="grid centered-card-content text-center m-0 p-0">
+                                    <div class="col-12 p-2" *ngIf="scannedQrData.length > 0">
+                                      {{ scannedQrData[0]["uid"] }}
+                                    </div>
+                                    <div class="col-12 p-2">
+                                      <img [src]="selectedImage" class="selected-image" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" *ngIf="
+                                isQrScan == true ||
+                                (selectedImage != '')
+                              " (click)="next()" [disabled]="
+                                isQrScan == false &&
+                                selectedImage == ''
+                              " [ngClass]="
+                                isQrScan == false &&
+                                selectedImage == ''
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              ">
+                              {{ nextButtonLabel | transloco }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Only For Q_PAN -->
+                      <div class="grid text-center m-0 p-0 mt-5" *ngIf="
+                            displayedQuestion.qsOption1[activeLang] == null &&
+                            displayedQuestion.qsOption2[activeLang] == null &&
+                            displayedQuestion.qsCode == 'Q_PAN'">
+                        <div class="col-12">
+                          <div class="grid card-border-dashed text-center m-0 p-0 mt-5">
+                            <div class="col-12" *ngIf="selectedImage != ''">
+                              <div class="grid" style="min-height: 400px; overflow: auto">
+                                <div class="col-12 file-upload-container">
+                                  <div class="grid centered-card-content text-center m-0 p-0">
+                                    <div class="col-12">
+                                      <img [src]="selectedImage" class="selected-image-to-upload" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="grid mt-5">
+                            <div class="col-12" *ngIf="selectedImage != '' && isImageUploaded == true">
+                                <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                                  [style.fontSize]="activeLang == 'mr' ? '18px' : ''" class="active-button"
+                                  (click)="proceed('image')">
+                                  {{ "verify" | transloco }}
+                                </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- FOR IMAGE UPLOAD -->
+                      <div class="grid text-center m-0 p-0 mt-5" *ngIf="
+                          displayedQuestion.qsOption1[activeLang] == null &&
+                          displayedQuestion.qsOption2[activeLang] == null &&
+                          displayedQuestion.qsCode != 'Q_EMAIL' &&
+                          displayedQuestion.qsCode != 'Q_AADHAR' &&
+                          displayedQuestion.qsCode != 'Q_CONSENT' &&
+                          displayedQuestion.qsCode != 'Q_ITR' &&
+                          displayedQuestion.qsCode != 'Q_ITR_SPOUSE' &&
+                          displayedQuestion.qsCode != 'Q_PAN'
+                        ">
+                        <div class="col-12">
+                          <div class="grid card-border-dashed text-center m-0 p-0 mt-5">
+                            <div class="grid">
+                              <div class="col-12 line-height-4" [innerHtml]="ocrMessage">
+                                <!-- {{ ocrMessage }} -->
+                              </div>
+                            </div>
+                            <div class="col-12" *ngIf="selectedImage == ''">
+                              <div class="grid" style="min-height: 400px; max-height: fit-content">
+                                <div class="col-12 file-upload-container" (click)="presentActionSheet()">
+                                  <div class="grid centered-card-content text-center m-0 p-0">
+                                    <div class="col-12">
+                                      <img src="assets/browse.png" />
+                                    </div>
+                                    <div class="col-12">
+                                      <label>{{
+                                        "browseAndUpload" | transloco
+                                        }}</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-12" *ngIf="selectedImage != ''">
+                              <div class="grid" style="min-height: 400px; overflow: auto">
+                                <div class="col-12 file-upload-container">
+                                  <div class="grid centered-card-content text-center m-0 p-0">
+                                    <div class="col-12">
+                                      <img [src]="selectedImage" class="selected-image-to-upload" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="grid mt-5">
+                            <div class="col-12" *ngIf="selectedImage == ''">
+                              <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                                [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [ngClass]="
+                                  selectedImage == ''
+                                    ? 'disabled-button'
+                                    : 'active-button'
+                                ">
+                                {{ "upload" | transloco }}
+                              </button>
+                            </div>
+                            <div class="col-6" *ngIf="selectedImage != ''">
+                              <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                                [style.fontSize]="activeLang == 'mr' ? '18px' : ''" class="retry-button"
+                                (click)="reUploadImage()" *ngIf="displayedQuestion.qsCode != 'Q_PAN'">
+                                {{ "re-upload" | transloco }}
+                              </button>
+                            </div>
+                            <div class="col-6" *ngIf="selectedImage != '' && isImageUploaded == true">
+                              <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                                [style.fontSize]="activeLang == 'mr' ? '18px' : ''" class="active-button"
+                                (click)="proceed('image')">
+                                {{ "verify" | transloco }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- FOR EMAIL INPUT -->
+                      <div class="col-12 container" *ngIf="
+                          displayedQuestion.qsOption1[activeLang] == null &&
+                          displayedQuestion.qsOption2[activeLang] == null &&
+                          displayedQuestion.qsCode == 'Q_EMAIL'
+                        ">
+                        <div class="col-12 vertical-center" *ngIf="isEmailVisible">
+                          <div class="grid text-center">
+                            <div class="col-12">
+                              <label>{{ "emailIDLabel" | transloco }}</label>
+                            </div>
+                            <div class="col-12">
+                              <input class="input input-otp" type="text" maxlength="50" [(ngModel)]="emailId" name="email"
+                                #email="ngModel" [pattern]="emailPattern" required style="text-transform: lowercase"
+                                onchange="this.value = this.value.toUpperCase();" />
+                              <div *ngIf="email.errors">
+                                <div *ngIf="email.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+                                  <p style="color: red">
+                                    {{ "emailError" | transloco }}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="grid text-center">
+                            <div class="col-12">
+                              <label>{{ "phoneNoLabel" | transloco }}</label>
+                            </div>
+                            <div class="col-12">
+                              <input class="input input-otp" type="text" inputmode="numeric" maxlength="10"
+                                [(ngModel)]="mobileNo" name="mobNo" #mobNo="ngModel" [pattern]="mobilePattern" required />
+                              <div *ngIf="mobNo.errors">
+                                <div *ngIf="mobNo.errors?.['pattern']" class="ui-g-12 ui-lg-12 ui-md-12">
+                                  <p style="color: red">
+                                    {{ "phoneNoError" | transloco }}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="grid">
+                            <div class="col-12 mt-3 text-center">
+                              <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                                [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [disabled]="
+                                  emailId == '' ||
+                                  email.errors ||
+                                  mobileNo == '' ||
+                                  mobNo.errors
+                                " [ngClass]="
+                                  emailId == '' ||
+                                  email.errors ||
+                                  mobileNo == '' ||
+                                  mobNo.errors
+                                    ? 'disabled-button'
+                                    : 'active-button'
+                                " (click)="sendOtpToMail()">
+                                {{ "next" | transloco }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12" *ngIf="isOtpVerificationVisible">
+                          <div class="grid text-center">
+                            <div class="col-12">
+                              <div class="grid">
+                                <div class="col-12 text-xs">
+                                  <label>{{ "emailOtpLabel" | transloco }}</label>
+                                </div>
+                                <div class="col-12">
+                                  <input class="input input-otp" type="text" inputmode="numeric" maxlength="8"
+                                    id="fileupload" [(ngModel)]="otp" (keypress)="numberOnly($event)" />
+                                </div>
+                                <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                                  {{ "emailOtpError" | transloco }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 mt-2">
+                              <div class="grid">
+                                <div class="col-12 text-xs">
+                                  <label>{{ "phoneNoOtpLabel" | transloco }}</label>
+                                </div>
+                                <div class="col-12">
+                                  <input class="input input-otp" type="text" inputmode="numeric" maxlength="8"
+                                    id="fileupload" [(ngModel)]="mobileOtp" (keypress)="numberOnly($event)" />
+                                </div>
+                                <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                                  {{ "phoneNoOtpError" | transloco }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="grid">
+                            <div class="col-12 text-center">
+                              <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                                [style.fontSize]="activeLang == 'mr' ? '18px' : ''" (click)="proceed('email')" [ngClass]="
+                                  otp == '' ||
+                                  otp.length < 8 ||
+                                  mobileOtp == '' ||
+                                  mobileOtp.length < 8
+                                    ? 'disabled-button'
+                                    : 'active-button'
+                                " [disabled]="
+                                  otp == '' ||
+                                  otp.length < 8 ||
+                                  mobileOtp == '' ||
+                                  mobileOtp.length < 8
+                                ">
+                                {{ "proceed" | transloco }}
+                              </button>
+                            </div>
+
+                            <div class="col-12 text-center mt-2 text-base">
+                              <div class="loginLabel" *ngIf="!isResendOtpButtonVisible">
+                                {{ "resend-otp-in" | transloco }} {{ resendOtpIn }}
+                              </div>
+                              <div class="loginLabel" style="
+                                  color: blue;
+                                  text-decoration: underline;
+                                  letter-spacing: 0.05rem;
+                                " (click)="onResendOtpClick()" *ngIf="isResendOtpButtonVisible">
+                                {{ "resend-otp" | transloco }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- FOR MULTIPLE CHOICE QUESTION -->
+                      <div class="col-12" *ngIf="
+                          (displayedQuestion.qsCode != 'Q_WORK_STATUS' &&
+                            displayedQuestion.qsCode != 'Q_CASTE' &&
+                            displayedQuestion.qsCode != 'Q_CONSENT' &&
+                            displayedQuestion.qsCode != 'Q_MARITAL' &&
+                            displayedQuestion.qsCode != 'Q_EXSERVICEMAN' &&
+                            displayedQuestion.qsCode != 'Q_JOURNALIST' &&
+                            displayedQuestion.qsOption1[activeLang] != null &&
+                            displayedQuestion.qsOption2[activeLang] != null) ||
+                          displayedQuestion.qsCode == 'Q_ITR' ||
+                          displayedQuestion.qsCode == 'Q_ITR_SPOUSE'
+                        ">
+                        <div class="grid">
+                          <div class="col-12 lg:col-12 xl:col-12" *ngIf="
+                              displayedQuestion.qsCode == 'Q_HANDICAPED' ||
+                              displayedQuestion.qsCode == 'Q_FREEDOM' ||
+                              displayedQuestion.qsCode == 'Q_ARTIST' ||
+                              displayedQuestion.qsCode == 'Q_EXSERVICEMAN' ||
+                              displayedQuestion.qsCode == 'Q_DEP_EXSERMAN' ||
+                              displayedQuestion.qsCode == 'Q_MLA' ||
+                              displayedQuestion.qsCode == 'Q_CENTRAL' ||
+                              displayedQuestion.qsCode == 'Q_STATE' ||
+                              displayedQuestion.qsCode == 'Q_MHADA' ||
+                              displayedQuestion.qsCode == 'Q_FIC_ITR'
+                            ">
+                            <div class="grid m-0 p-0" *ngIf="
+                                displayedQuestion.qsCode != 'Q_MHADA' &&
+                                displayedQuestion.qsCode != 'Q_HANDICAPED' &&
+                                displayedQuestion.qsCode != 'Q_FIC_ITR'
+                              ">
+                              <div class="col-12">
+                                If you are
+                                <b>{{
+                                  displayedQuestion.qsCode == "Q_CENTRAL"
+                                  ? "Central Govt. Employee"
+                                  : displayedQuestion.qsCode == "Q_STATE"
+                                  ? "State Govt. Employee"
+                                  : displayedQuestion.qsCode == "Q_FREEDOM"
+                                  ? "Freedom Fighter"
+                                  : displayedQuestion.qsCode == "Q_ARTIST"
+                                  ? "Artist"
+                                  : displayedQuestion.qsCode == "Q_EXSERVICEMAN"
+                                  ? "Serviceman"
+                                  : displayedQuestion.qsCode == "Q_DEP_EXSERMAN"
+                                  ? "Dependant Exserviceman"
+                                  : displayedQuestion.qsCode == "Q_JOURNALIST"
+                                  ? "Journalist"
+                                  : "MP / MLA / MLC"
+                                  }}</b>
+                                , you need to generate
+                                <b>{{
+                                  displayedQuestion.qsCode == "Q_CENTRAL"
+                                  ? "Central Govt. Employee"
+                                  : displayedQuestion.qsCode == "Q_STATE"
+                                  ? "State Govt. Employee"
+                                  : displayedQuestion.qsCode == "Q_FREEDOM"
+                                  ? "Freedom Fighter"
+                                  : displayedQuestion.qsCode == "Q_ARTIST"
+                                  ? "Artist"
+                                  : displayedQuestion.qsCode == "Q_EXSERVICEMAN"
+                                  ? "Serviceman"
+                                  : displayedQuestion.qsCode == "Q_DEP_EXSERMAN"
+                                  ? "Dependant Exserviceman"
+                                  : displayedQuestion.qsCode == "Q_JOURNALIST"
+                                  ? "Journalist"
+                                  : "MP / MLA / MLC"
+                                  }}</b>
+                                certificate from the system. Get it signed stamped
+                                from the competent authority and upload it in the
+                                below box.
+                              </div>
+                              <div class="col-12">
+                                To generate
+                                <b>{{
+                                  displayedQuestion.qsCode == "Q_CENTRAL"
+                                  ? "Central Govt. Employee"
+                                  : displayedQuestion.qsCode == "Q_STATE"
+                                  ? "State Govt. Employee"
+                                  : displayedQuestion.qsCode == "Q_FREEDOM"
+                                  ? "Freedom Fighter"
+                                  : displayedQuestion.qsCode == "Q_ARTIST"
+                                  ? "Artist"
+                                  : displayedQuestion.qsCode == "Q_EXSERVICEMAN"
+                                  ? "Serviceman"
+                                  : displayedQuestion.qsCode == "Q_DEP_EXSERMAN"
+                                  ? "Dependant Exserviceman"
+                                  : displayedQuestion.qsCode == "Q_JOURNALIST"
+                                  ? "Journalist"
+                                  : "MP / MLA / MLC"
+                                  }}</b>
+                                certificate -
+                                <a (click)="routeToCertEntry()">CLICK HERE</a>
+                              </div>
+
+                              <div class="col-12" *ngIf="
+                                  displayedQuestion.qsCode == 'Q_FREEDOM' ||
+                                  displayedQuestion.qsCode == 'Q_ARTIST' ||
+                                  displayedQuestion.qsCode == 'Q_MLA'
+                                ">
+                                If you do not have certificate then your category
+                                verification is subject to submission and validation
+                                of
+                                <b>{{
+                                  displayedQuestion.qsCode == "Q_FREEDOM"
+                                  ? "Freedom Fighter"
+                                  : displayedQuestion.qsCode == "Q_ARTIST"
+                                  ? "Artist"
+                                  : "MP / MLA / MLC"
+                                  }}</b>
+                                certificate before possession.
+                              </div>
+                            </div>
+
+                            <div class="grid m-0 p-0" *ngIf="displayedQuestion.qsCode == 'Q_MHADA'">
+                              <div class="col-12">
+                                If you are <b>MHADA Employee</b> who have completed
+                                minimum <b>5 Years</b> service at MHADA, Upload your
+                                <b>MHADA ID Card</b> with Employee Code / ID on it
+                                in the below box.
+                              </div>
+                            </div>
+
+                            <div class="grid m-0 p-0" *ngIf="displayedQuestion.qsCode == 'Q_HANDICAPED'">
+                              <div class="col-12">
+                                If you are <b>Physically Handicapped</b> you need to
+                                have UDID Card -
+                                <a href="https://www.swavlambancard.gov.in/" target="_blank">Apply Here</a>
+                                . Upload your <b>UDID Card with UD ID</b> on it in
+                                the below box.
+                              </div>
+                            </div>
+
+                            <div class="grid m-0 p-0" *ngIf="displayedQuestion.qsCode == 'Q_FIC_ITR'">
+                              <div class="col-12">
+                                {{"select-spouse-self-income-or-itr" | transloco}}
+                              </div>
+                            </div>
+                          </div>
+
+                          &nbsp;&nbsp;&nbsp;
+                          <div class="col-12 lg:col-12 xl:col-12" *ngIf="displayedQuestion.qsCode == 'Q_SELF_WORKING'">
+                            <!-- <div class="grid"> -->
+                            <div class="col-12 m-0 p-0">
+                              <div class="grid">
+                                <div class="col-12 m-0 p-0">
+                                  {{"income-detail-correct-label" | transloco}}
+                                </div>
+                              </div>
+                              <br>
+                              <div class="grid">
+                                <div class="col-12 m-0 p-0 lg:col-4">
+                                  <ion-label>&nbsp;&nbsp;&nbsp;{{"financial-year" | transloco}}<span style="color: red"> *</span></ion-label>
+                                </div>
+                                <div class="col-12 m-0 p-0 lg:col-8">
+                                  <select id="financialYearSelect" (change)="onFinancialYearChange($event)"
+                                    [(ngModel)]="selectedFinancialYear">
+                                    <option value="" selected>
+                                      Select Financial Year
+                                    </option>
+                                    <option *ngFor="let year of financialYearList" [value]="year.pkRfyid">
+                                      {{ year.financialYear }}
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            <div class="col-12 m-0 p-0">
+                              <div class="grid">
+                                <div class="col-12 m-0 p-0 lg:col-4">
+                                  <ion-label>&nbsp;&nbsp;&nbsp;{{"self-income" | transloco}}:<span style="color: red"> *</span></ion-label>
+                                </div>
+                                <div class="col-12 m-0 p-0 lg:col-8">
+                                  <input type="text" id="filterText" (keypress)="numberOnly($event)" inputmode="numeric"
+                                    maxlength="7" [(ngModel)]="incomeAmount" (input)="onInputChange($event)"
+                                    class="form-control" placeholder="" autocomplete="off" />
+                                </div>
+                              </div>
+                            </div>
+                            <!-- </div> -->
+                            &nbsp;&nbsp;&nbsp;
+                          </div>
+
+                          
+                          <div class="col-12 lg:col-12 xl:col-12" *ngIf="displayedQuestion.qsCode == 'Q_SELF_WORKING'">
+                              <div class="col-12 pl-0">
+                                <label style="font-weight: bold" *ngIf="displayedQuestion.qsCode == 'Q_SELF_WORKING'">{{"working-status" | transloco}}</label>
+                              </div>
+                              
+                              <ion-radio-group [(ngModel)]="selectedRadioOption" (ionChange)="radioButtonClicked($event)">
+                                <div class="grid">
+                                  <div class="col-12 m-0 p-0 lg:col-6">
+                                    <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="ion-no-padding" style="
+                                        --padding-end: 0px;
+                                        --inner-padding-end: 0px;
+                                      ">
+                                      <ion-label>   {{
+                                        displayedQuestion.qsOption1[activeLang]
+                                        }} </ion-label>
+                                      <ion-radio mode="md" slot="start" value="Yes" disabled></ion-radio>
+                                    </ion-item>
+                                  </div>
+                                  <div class="col-12 m-0 p-0 lg:col-6">
+                                    <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="ion-no-padding">
+                                         
+                                      <ion-label style="white-space: normal">{{
+                                        displayedQuestion.qsOption2[activeLang]
+                                        }}</ion-label>
+                                      <ion-radio mode="md" slot="start" value="No" disabled></ion-radio>
+                                    </ion-item>
+                                  </div>
+                                </div>
+                              </ion-radio-group>
+                            </div>
+
+                          <div class="col-12 lg:col-12 xl:col-12" *ngIf="
+                              displayedQuestion.qsCode != 'Q_ITR' &&
+                              displayedQuestion.qsCode != 'Q_ITR_SPOUSE' &&
+                              displayedQuestion.qsCode != 'Q_SELF_WORKING'
+                            ">
+                            <ion-radio-group [(ngModel)]="selectedRadioOption" (ionChange)="radioButtonClicked($event)">
+                              <div class="grid">
+                                <div class="col-12 m-0 p-0 lg:col-6">
+                                  <ion-item class="ion-no-padding" style="
+                                      --padding-end: 0px;
+                                      --inner-padding-end: 0px;
+                                    ">
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption1[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Yes"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 m-0 p-0 lg:col-6" *ngIf="(displayedQuestion.qsCode == 'Q_SELF_ITR' && incomeCertificateVisible) || displayedQuestion.qsCode != 'Q_SELF_ITR'">
+                                  <ion-item class="ion-no-padding">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <ion-label style="white-space: normal">{{
+                                      displayedQuestion.qsOption2[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="No"></ion-radio>
+                                  </ion-item>
+                                </div>
+                              </div>
+
+                              &nbsp;&nbsp;&nbsp;
+                            </ion-radio-group>
+                          </div>
+
+                          <div class="col-12 lg:col-12 xl:col-12" *ngIf="
+                              (displayedQuestion.qsCode == 'Q_ARTIST' ||
+                                displayedQuestion.qsCode == 'Q_FREEDOM' ||
+                                displayedQuestion.qsCode == 'Q_MLA') &&
+                              selectedRadioOption == 'Yes'
+                            ">
+                            <ion-radio-group [(ngModel)]="selectedAllowedWithConditionRadioOption"
+                              (ionChange)="radioButtonForAllowedWithCondition()">
+                              <div class="grid">
+                                <div class="col-12 m-0 p-0 lg:col-6">
+                                  <ion-item class="ion-no-padding" style="
+                                      --padding-end: 0px;
+                                      --inner-padding-end: 0px;
+                                    ">
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      "allowed-with-condition-question-radio-option-yes"
+                                      | transloco
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Yes"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 m-0 p-0 lg:col-6">
+                                  <ion-item class="ion-no-padding" style="
+                                      --padding-end: 0px;
+                                      --inner-padding-end: 0px;
+                                    ">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <ion-label style="white-space: normal">{{
+                                      "allowed-with-condition-question-radio-option-no"
+                                      | transloco
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="No"></ion-radio>
+                                  </ion-item>
+                                </div>
+                              </div>
+
+                              &nbsp;&nbsp;&nbsp;
+                            </ion-radio-group>
+                          </div>
+
+                          <div class="col-12 text-center file-upload-container m-0 p-0">
+                            <div class="grid text-center m-0 p-0">
+                              <div class="col-12 lg:col-3 xl:col-4 m-0 p-0"></div>
+                              <div class="col-12 lg:col-12 xl:col-12 m-0 p-0 mb-1" *ngIf="
+                                  displayedQuestion.qsCode == 'Q_ADDRESS' &&
+                                  selectTypeOfDocToUploadVisible
+                                ">
+                                <div class="grid text-center">
+                                  <div class="col-12">
+                                    <label>{{
+                                      "currentAddress" | transloco
+                                      }}</label>
+                                  </div>
+                                  <div class="col-12">
+                                    <textarea rows="4" class="input-address w-full" type="text" maxlength="500"
+                                      (paste)="(false)" [(ngModel)]="currentAddress"></textarea>
+                                    <label class="text-xs">Note: Copy-Paste is not allowed. Please type
+                                      your Address</label>
+                                  </div>
+                                </div>
+
+                                <!-- <ion-list>
+                                <ion-item class="ion-no-padding">
+                                  <ion-select
+                                    style="width: 100%"
+                                    interface="popover"
+                                    placeholder="{{ 'uploadList' | transloco }}"
+                                    [(ngModel)]="selectedDocToUpload"
+                                    (ionChange)="docSelectedToUpload()"
+                                  > -->
+                                <!-- <ion-select-option value="electricityBill" style="width: 100%">{{
+                                    "elecBill" | transloco
+                                  }}</ion-select-option>
+                                  <ion-select-option style="width: 100%" value="drivingLicense">{{
+                                    "drivingLicense" | transloco
+                                  }}</ion-select-option>
+                                  <ion-select-option style="width: 100%" value="gasBill1">{{
+                                    "gasBill" | transloco
+                                  }}</ion-select-option>
+                                  <ion-select-option style="width: 100%" value="telephoneBill1">{{
+                                    "teleBill" | transloco
+                                  }}</ion-select-option> -->
+                                <!-- <ion-select-option value="51" style="width: 100%">{{
+                                      "elecBill" | transloco
+                                    }}</ion-select-option> -->
+                                <!-- <ion-select-option value="51" style="width: 100%">{{
+                                      "elecBillMseb" | transloco
+                                    }}</ion-select-option>
+                                    <ion-select-option value="52" style="width: 100%">{{
+                                      "elecBillBest" | transloco
+                                    }}</ion-select-option>
+                                    <ion-select-option value="53" style="width: 100%">{{
+                                      "elecBillTorrent" | transloco
+                                    }}</ion-select-option>
+                                    <ion-select-option value="54" style="width: 100%">{{
+                                      "elecBillAdani" | transloco
+                                    }}</ion-select-option> -->
+
+                                <!-- <ion-select-option style="width: 100%" value="55">{{
+                                      "drivingLicense" | transloco
+                                    }}</ion-select-option>
+                                    <ion-select-option style="width: 100%" value="56">{{
+                                      "gasBill" | transloco
+                                    }}</ion-select-option>
+                                    <ion-select-option style="width: 100%" value="57">{{
+                                      "rentAggrement" | transloco
+                                    }}</ion-select-option>
+                                  </ion-select>
+                                </ion-item>
+                              </ion-list> -->
+                              </div>
+
+                              <div class="col-12 lg:col-12 xl:col-12 m-0 p-0 mb-1" *ngIf="domicileTokenTextFieldVisible">
+                                <div class="grid text-center">
+                                  <div class="col-12">
+                                    <label>{{
+                                      "label-domicile" | transloco
+                                      }}</label>
+                                  </div>
+                                  <div class="col-12">
+                                    <input class="input-address w-full" type="text" maxlength="25"
+                                      [(ngModel)]="domicileToken" />
+                                  </div>
+                                  <div class="col-12">
+                                    <div id="parent">
+                                      <div id="narrow">
+                                        <ion-checkbox color="primary" checked slot="start"
+                                          (ionChange)="domicileCheckBox($event)"
+                                          [(ngModel)]="domicileConsentAccepted"></ion-checkbox>
+                                      </div>
+                                      <div id="wide" class="text-left text-xs">
+                                        {{ "domicile-consent-label" | transloco }}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <label class="text-xs" style="color: red">
+                                      {{ "domicile-note-label" | transloco }}</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 lg:col-3 xl:col-4 m-0 p-0"></div>
+                            </div>
+
+                            <div class="grid p-1">
+                              <div class="col-12 lg:col-1 xl:col-2 md:col-2" *ngIf="
+                                  (this.displayedQuestion.qsCode != 'Q_ITR' &&
+                                    this.displayedQuestion.qsCode != 'Q_SELF_ITR' &&
+                                    this.displayedQuestion.qsCode != 'Q_SPOUSE_ITR' &&
+                                    this.displayedQuestion.qsCode != 'Q_ITR_SPOUSE')
+                                "></div>
+                              <div class="col-12 lg:col-1 xl:col-2 md:col-2" *ngIf="
+                                  (this.displayedQuestion.qsCode == 'Q_ITR' ||
+                                    this.displayedQuestion.qsCode == 'Q_SELF_ITR' ||
+                                    this.displayedQuestion.qsCode ==
+                                      'Q_SPOUSE_ITR' ||
+                                    this.displayedQuestion.qsCode ==
+                                      'Q_ITR_SPOUSE') &&
+                                  this.selectedRadioOption == 'No'
+                                "></div>
+                              <div class="col-12 lg:col-12 xl:col-12 md:col-12" *ngIf="
+                                  (this.displayedQuestion.qsCode == 'Q_ITR' ||
+                                    this.displayedQuestion.qsCode == 'Q_SELF_ITR' ||
+                                    this.displayedQuestion.qsCode ==
+                                      'Q_SPOUSE_ITR' ||
+                                    this.displayedQuestion.qsCode ==
+                                      'Q_ITR_SPOUSE') &&
+                                  itrStatus == 'Verified'
+                                ">
+                                <object [attr.data]="selectedPdf" type="application/pdf" width="100%"
+                                  height="140%"></object>
+
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " [ngClass]="'active-button'" (click)="
+                                    proceedForBothFICItr(
+                                      this.displayedQuestion.qsCode == 'Q_ITR' ||
+                                        this.displayedQuestion.qsCode ==
+                                          'Q_SELF_ITR'
+                                        ? 'SPOUSE'
+                                        : 'OTHER'
+                                    )
+                                  ">
+                                  {{ "proceed" | transloco }}
+                                </button>
+                              </div>
+                              <div class="col-12 lg:col-12 xl:col-12 md:col-12" *ngIf="
+                                  (this.displayedQuestion.qsCode == 'Q_ITR' ||
+                                    this.displayedQuestion.qsCode == 'Q_SELF_ITR' ||
+                                    this.displayedQuestion.qsCode ==
+                                      'Q_SPOUSE_ITR' ||
+                                    this.displayedQuestion.qsCode ==
+                                      'Q_ITR_SPOUSE') &&
+                                  (showReVerifySelfItr || showReVerifySpouseItr)
+                                ">
+                                <span *ngIf="showItrErrorMessage" style="color: red">
+                                  {{ "reject-reason" | transloco }} - {{ showItrErrorMessage
+                                  }}<br /><br />
+                                </span>
+                                <span *ngIf="
+                                    itrStatus == 'API-Authorization-Pending' ||
+                                    itrStatus == 'Not-Verified'
+                                  ">
+                                  {{ "itr-verification-progress" | transloco }}<br /><br />
+                                </span>
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " class="active-button" (click)="showReVerifyItr()">
+                                  {{ "re-verify" | transloco }}
+                                </button>
+                              </div>
+                              <div class="col-12 lg:col-12 xl:col-12 md:col-12" *ngIf="
+                                  (selfItrPasswordBlock || spouseItrPasswordBlock) && (displayedQuestion.qsCode == 'Q_FIC_ITR'
+                                  || displayedQuestion.qsCode == 'Q_ITR' || displayedQuestion.qsCode == 'Q_SELF_ITR' || 
+                                  displayedQuestion.qsCode == 'Q_SPOUSE_ITR' || displayedQuestion.qsCode == 'Q_ITR_SPOUSE')
+                                ">
+                                <!-- <div class="col-12 p-0 text-left">
+                                  {{ "note" | transloco }} <br />1) ITR is verified using API
+                                  Service(provided by Signzy), We use OTP/Password
+                                  for Login to Income Tax Portal to verify
+                                  Income.<br />
+                                  2) Applicant{{
+                                  spouseItrPasswordBlock ? "'s Spouse" : ""
+                                  }}
+                                  should not be logged in to Income Tax Portal
+                                  during Income Verification.<br />
+                                  3) OTP/Password entered by Applicant is not stored
+                                  in IHLMS System.<br />
+                                </div> -->
+                                <div class="col-12 p-0 text-left">
+                                  <span *ngIf="spouseItrPasswordBlock">
+                                    {{ "note" | transloco }} <br />{{ "itr-or-income-note-1" | transloco }}<br/>
+                                    {{ "itr-or-income-note-2-true" | transloco }} <br>
+                                    {{ "itr-or-income-note-3" | transloco }}<br />
+                                  </span>
+                                  <span *ngIf="!spouseItrPasswordBlock">
+                                    {{ "note" | transloco }} <br />{{ "itr-or-income-note-1" | transloco }}<br/>
+                                    {{ "itr-or-income-note-2-false" | transloco }}<br>
+                                    {{ "itr-or-income-note-3" | transloco }}<br />
+                                  </span>
+                                </div>
+                                <div class="grid col-12 p-0 text-left mt-4" *ngIf="firstItrApi">
+                                  <div class="col-12">
+                                    <re-captcha *ngIf="isCaptchaVisible" #captchaElem (resolved)="resolved($event)"
+                                      [siteKey]="siteKey" errorMode="default"></re-captcha>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="field-checkbox mb-2 cursor-pointer">
+                                      <input type="checkbox" id="iAgree" [(ngModel)]="iAgree" />
+                                      <label for="iAgree" class="cursor-pointer">
+                                        <span *ngIf="spouseItrPasswordBlock">
+                                          {{ "itr-or-income-agree-true" | transloco}}
+                                        </span>
+                                        <span *ngIf="!spouseItrPasswordBlock">
+                                          {{ "itr-or-income-agree-false" | transloco}}
+                                        </span><br />
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="grid col-12 p-0 text-left mt-4" *ngIf="secondItrApi">
+                                  <div class="grid col-6 text-left" *ngIf="secondItrApiOtp">
+                                    <div class="col-12 pb-0">
+                                      <label>{{ "otp-for-itr-portal" | transloco }}
+                                        <span style="color: red"> *</span></label>
+                                    </div>
+                                    <div class="col-12 pt-0">
+                                      <input class="input input-otp w-full" type="password" maxlength="6"
+                                        [(ngModel)]="itrPortalOtp" appBlockCopyPaste name="itrPortalOtp" required />
+                                    </div>
+                                  </div>
+                                  <div class="grid col-6 text-left" *ngIf="secondItrApiPassword">
+                                    <div class="col-12 pb-0">
+                                      <label>{{ "password-for-itr-portal" | transloco }}
+                                        <span style="color: red"> *</span></label>
+                                    </div>
+                                    <div class="col-12 pt-0">
+                                      <input class="input input-otp w-full" type="password" maxlength="250"
+                                        [(ngModel)]="itrPortalPassword" appBlockCopyPaste name="itrPortalPassword"
+                                        required />
+                                    </div>
+                                  </div>
+                                  <div class="grid col-6 text-left" *ngIf="secondItrApiPassword">
+                                    <div class="col-12 pb-0">
+                                      <label>{{ "confirm-password-for-itr-portal" | transloco }}
+                                        <span style="color: red"> *</span></label>
+                                    </div>
+                                    <div class="col-12 pt-0">
+                                      <input class="input input-otp w-full" type="text" maxlength="250"
+                                        [(ngModel)]="itrPortalConfirmPassword" appBlockCopyPaste
+                                        name="itrPortalConfirmPassword" required />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 lg:col-10 xl:col-8 md:col-8" *ngIf="isUploadImageVisible">
+                                <div class="grid card-border-dashed text-center">
+                                  <div class="grid">
+                                    <div class="col-12 line-height-4" [innerHtml]="ocrMessage">
+                                      <!-- {{ ocrMessage }} -->
+                                    </div>
+                                  </div>
+                                  <div class="col-12"></div>
+                                  <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                                    Only image is allowed.
+                                  </div>
+                                  <div class="col-12" (click)="presentActionSheet()" *ngIf="selectedImage == ''">
+                                    <div class="grid centered-file-upload-image">
+                                      <div class="col-12">
+                                        <img src="assets/browse.png" />
+                                      </div>
+                                      <div class="col-12">
+                                        <label>{{
+                                          "browseAndUpload" | transloco
+                                          }}</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12" *ngIf="selectedImage != ''">
+                                    <div class="grid">
+                                      <div class="col-12">
+                                        <img [src]="selectedImage" class="selected-image-to-upload" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- <div class="grid mt-5">
+                                <div class="col-6" *ngIf="selectedImage == ''">
+                                  <button [ngClass]="selectedImage == '' ? 'disabled-button' : 'active-button'">
+                                    Upload
+                                  </button>
+                                </div>
+                                <div class="col-6" *ngIf="selectedImage != ''">
+                                  <button class="retry-button" (click)="reUploadImage()">Re-Upload</button>
+                                </div>
+                              </div> -->
+                              </div>
+                              <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                            </div>
+                          </div>
+                          <div class="col-12" *ngIf="displayedQuestion.qsCode == 'Q_DOMICILE'">
+                            {{ "label-domicile-link" | transloco }}
+                            <br />
+                            <a href="https://aaplesarkar.mahaonline.gov.in/en" target="_blank">{{
+                              "label-domicile-aaple-sarkar" | transloco }}</a>
+                          </div>
+
+                          <div class="col-12">
+                            <div class="grid mt-5">
+                              <div class="col-6 text-center" *ngIf="selectedImage == '' && isUploadImageVisible">
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " [ngClass]="
+                                    selectedImage == ''
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  ">
+                                  {{ "upload" | transloco }}
+                                </button>
+                              </div>
+                              <div class="col-6 text-center" *ngIf="selectedImage != '' && isUploadImageVisible">
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " class="retry-button" (click)="reUploadImage()" *ngIf="
+                                    this.displayedQuestion.qsCode !== 'Q_SELF_ITR' && this.displayedQuestion.qsCode !== 'Q_SPOUSE_ITR'
+                                  ">
+                                  {{ "re-upload" | transloco }}
+                                </button>
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " class="retry-button" (click)="reUploadImageIncCert()" *ngIf="
+                                    this.displayedQuestion.qsCode === 'Q_SELF_ITR' || this.displayedQuestion.qsCode === 'Q_SPOUSE_ITR'
+                                  ">
+                                  {{ "re-upload" | transloco }}
+                                </button>
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " class="retry-button" (click)="reUploadImageIncCert()" *ngIf="
+                                    this.displayedQuestion.qsCode === 'Q_SPOUSE_ITR'
+                                  ">
+                                  {{ "re-upload" | transloco }}
+                                </button>
+                              </div>
+                              <div class="col-6 text-center" *ngIf="!isUploadImageVisible"></div>
+                              <div class="col-6 text-center">
+                                  <!-- FOR ADDRESS VERIFICATION -->
+                                  <!-- <button
+                                  *ngIf="displayedQuestion.qsCode == 'Q_ADDRESS'"
+                                  [disabled]="
+                                    selectedRadioOption == '' ||
+                                    (selectedRadioOption == 'No' && selectedDocToUpload == null && selectedImage == '')
+                                  "
+                                  [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    (selectedRadioOption == 'No' && selectedDocToUpload == null && selectedImage == '')
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  "
+                                  (click)="proceed('radio')"
+                                >
+                                  {{ selectedRadioOption == "No" ? ("proceed" | transloco) : ("proceed" | transloco) }}
+                                </button> -->
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="displayedQuestion.qsCode == 'Q_ADDRESS'" [disabled]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == ' ' ||
+                                    (selectedRadioOption == 'No' &&
+                                      currentAddress == '')
+                                  " [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == ' ' ||
+                                    (selectedRadioOption == 'No' &&
+                                      currentAddress == '')
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="proceed('radio')">
+                                  {{
+                                  selectedRadioOption == "No"
+                                  ? ("proceed" | transloco)
+                                  : ("proceed" | transloco)
+                                  }}
+                                </button>
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="displayedQuestion.qsCode == 'Q_DOMICILE'" [disabled]="
+                                    selectedRadioOption == '' ||
+                                    (selectedRadioOption == 'No' &&
+                                      (domicileToken.length < 8 ||
+                                        !domicileConsentAccepted)) ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      selectedImage == '')
+                                  " [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    (selectedRadioOption == 'No' &&
+                                      (domicileToken.length < 8 ||
+                                        !domicileConsentAccepted)) ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      selectedImage == '')
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="proceed('radio')">
+                                  {{
+                                  selectedRadioOption == "No"
+                                  ? ("proceed" | transloco)
+                                  : ("proceed" | transloco)
+                                  }}
+                                </button>
+
+                                <!-- FOR SELF WORKING -->
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="
+                                    displayedQuestion.qsCode == 'Q_ARTIST' ||
+                                    displayedQuestion.qsCode == 'Q_FREEDOM' ||
+                                    displayedQuestion.qsCode == 'Q_MLA'
+                                  " [disabled]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == null ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      selectedAllowedWithConditionRadioOption ==
+                                        '') ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      selectedAllowedWithConditionRadioOption ==
+                                        'Yes' &&
+                                      selectedImage == '')
+                                  " [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == null ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      selectedAllowedWithConditionRadioOption ==
+                                        '') ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      selectedAllowedWithConditionRadioOption ==
+                                        'Yes' &&
+                                      selectedImage == '')
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="proceed('allowedWithCondition')">
+                                  {{ "proceed" | transloco }}
+                                </button>
+
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="
+                                    displayedQuestion.qsCode == 'Q_CENTRAL' ||
+                                    displayedQuestion.qsCode == 'Q_STATE' ||
+                                    displayedQuestion.qsCode == 'Q_JOURNALIST'
+                                  " [disabled]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == null ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      selectedImage == '')
+                                  " [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == null ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      selectedImage == '')
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="proceed('radio')">
+                                  {{ "proceed" | transloco }}
+                                </button>
+
+                                <!-- FOR ITR and INCOME CERT -->
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="displayedQuestion.qsCode == 'Q_FIC_ITR'" [disabled]="selectedRadioOption == ''"
+                                  [ngClass]="
+                                    selectedRadioOption == ''
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="proceedForBothFICItr('SELF')">
+                                  {{ "proceed" | transloco }}
+                                </button>
+
+                                <!--For Financial Year-->
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="
+                                    displayedQuestion.qsCode == 'Q_SELF_WORKING'
+                                  " [disabled]="
+                                    selectedRadioOption == '' ||
+                                    !selectedFinancialYear ||
+                                    incomeAmount === null
+                                  " [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    !selectedFinancialYear ||
+                                    incomeAmount === null
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="proceed('radio')">
+                                  {{ "proceed" | transloco }} 
+                                </button>
+
+                                <!-- FOR SELF WORKING and SPOUSE WORKING -->
+                                <div class="col-12 p-0" *ngIf="firstItrApi">
+                                  <button type="button" [style.fontWeight]="
+                                      activeLang == 'mr' ? '600' : ''
+                                    " [style.fontSize]="
+                                      activeLang == 'mr' ? '18px' : ''
+                                    " *ngIf="
+                                      (displayedQuestion.qsCode == 'Q_ITR' &&
+                                        (selectedRadioOption == '' ||
+                                          selectedRadioOption == 'Yes')) ||
+                                      (displayedQuestion.qsCode == 'Q_ITR_SPOUSE' &&
+                                        (selectedRadioOption == '' ||
+                                          selectedRadioOption == 'Yes')) ||
+                                      (displayedQuestion.qsCode == 'Q_SELF_ITR' &&
+                                        (selectedRadioOption == '' ||
+                                          selectedRadioOption == 'Yes')) ||
+                                      (displayedQuestion.qsCode == 'Q_SPOUSE_ITR' &&
+                                        (selectedRadioOption == '' ||
+                                          selectedRadioOption == 'Yes'))
+                                    " [disabled]="
+                                      selectedRadioOption == '' ||
+                                      (selectedRadioOption == 'No' &&
+                                        selectedImage == '')
+                                    " [ngClass]="
+                                      selectedRadioOption == '' ||
+                                      (selectedRadioOption == 'No' &&
+                                        selectedImage == '')
+                                        ? 'disabled-button'
+                                        : 'active-button'
+                                    " (click)="proceedForFirstITRApi()">
+                                    {{ "proceed" | transloco }}
+                                  </button>
+                                </div>
+                                <div class="col-12 p-0" *ngIf="secondItrApi">
+                                  <button type="button" [style.fontWeight]="
+                                      activeLang == 'mr' ? '600' : ''
+                                    " [style.fontSize]="
+                                      activeLang == 'mr' ? '18px' : ''
+                                    " *ngIf="
+                                      (displayedQuestion.qsCode == 'Q_ITR' &&
+                                        (selectedRadioOption == '' ||
+                                          selectedRadioOption == 'Yes')) ||
+                                      (displayedQuestion.qsCode == 'Q_ITR_SPOUSE' &&
+                                        (selectedRadioOption == '' ||
+                                          selectedRadioOption == 'Yes')) ||
+                                      (displayedQuestion.qsCode == 'Q_SELF_ITR' &&
+                                        (selectedRadioOption == '' ||
+                                          selectedRadioOption == 'Yes')) ||
+                                      (displayedQuestion.qsCode == 'Q_SPOUSE_ITR' &&
+                                        (selectedRadioOption == '' ||
+                                          selectedRadioOption == 'Yes'))
+                                    " [disabled]="
+                                      selectedRadioOption == '' ||
+                                      (selectedRadioOption == 'No' &&
+                                        selectedImage == '')
+                                    " [ngClass]="
+                                      selectedRadioOption == '' ||
+                                      (selectedRadioOption == 'No' &&
+                                        selectedImage == '')
+                                        ? 'disabled-button'
+                                        : 'active-button'
+                                    " (click)="proceedForSecondITRApi()">
+                                    {{ "proceed" | transloco }}
+                                  </button>
+                                </div>
+
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="
+                                    (displayedQuestion.qsCode == 'Q_SELF_ITR' &&
+                                      selectedRadioOption == 'No') ||
+                                    (displayedQuestion.qsCode == 'Q_SPOUSE_ITR' &&
+                                      selectedRadioOption == 'No')
+                                  " [disabled]="
+                                    selectedRadioOption == '' ||
+                                    (selectedRadioOption == 'No' &&
+                                      selectedImage == '')
+                                  " [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    (selectedRadioOption == 'No' &&
+                                      selectedImage == '')
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="proceed('radio')">
+                                  {{ "proceed" | transloco }}
+                                </button>
+
+                                <!-- REMAINING QUESTIONS -->
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="
+                                    displayedQuestion.qsCode != 'Q_ADDRESS' &&
+                                    displayedQuestion.qsCode != 'Q_DOMICILE' &&
+                                    displayedQuestion.qsCode != 'Q_SELF_WORKING' &&
+                                    displayedQuestion.qsCode != 'Q_FREEDOM' &&
+                                    displayedQuestion.qsCode != 'Q_EXSERVICEMAN' &&
+                                    displayedQuestion.qsCode != 'Q_ARTIST' &&
+                                    displayedQuestion.qsCode != 'Q_CENTRAL' &&
+                                    displayedQuestion.qsCode != 'Q_STATE' &&
+                                    displayedQuestion.qsCode != 'Q_JOURNALIST' &&
+                                    displayedQuestion.qsCode != 'Q_MLA' &&
+                                    displayedQuestion.qsCode != 'Q_FIC_ITR' &&
+                                    displayedQuestion.qsCode != 'Q_SELF_ITR' &&
+                                    displayedQuestion.qsCode != 'Q_SPOUSE_ITR' &&
+                                    displayedQuestion.qsCode != 'Q_ITR' &&
+                                    displayedQuestion.qsCode != 'Q_ITR_SPOUSE'
+                                  " [disabled]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == null ||
+                                    (selectedRadioOption == 'No' &&
+                                      this.selectedImage == '' &&
+                                      displayedQuestion.qsOption1NextQuestion ==
+                                        99 &&
+                                      displayedQuestion.qsOption2NextQuestion ==
+                                        99) ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      this.selectedImage == '')
+                                  " [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == null ||
+                                    (selectedRadioOption == 'No' &&
+                                      this.selectedImage == '' &&
+                                      displayedQuestion.qsOption1NextQuestion ==
+                                        99 &&
+                                      displayedQuestion.qsOption2NextQuestion ==
+                                        99) ||
+                                    (selectedRadioOption == 'Yes' &&
+                                      this.selectedImage == '')
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="proceed('radio')">
+                                  {{
+                                  selectedRadioOption == "No"
+                                  ? ("proceed" | transloco)
+                                  : ("verify" | transloco)
+                                  }}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- FOR MULTIPLE CHOICE QUESTION (WORK STATUS) -->
+                      <div class="col-12" *ngIf="
+                          displayedQuestion.qsCode == 'Q_WORK_STATUS' &&
+                          displayedQuestion.qsOption1[activeLang] != null &&
+                          displayedQuestion.qsOption2[activeLang] != null &&
+                          displayedQuestion.qsOption3[activeLang] != null &&
+                          displayedQuestion.qsOption4[activeLang] != null
+                        ">
+                        <div class="grid">
+                          <!-- <div class="col-12 lg:col-12 xl:col-12">
+                        <ion-radio-group [(ngModel)]="selectedRadioOption" class="col-6">
+                          <div class="grid">
+                            <div class="col-12 lg:col-12">
+                              <ion-item>
+                                <ion-label>&nbsp;&nbsp;&nbsp;{{ displayedQuestion.qsOption1[activeLang] }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="Both"></ion-radio>
+                              </ion-item>
+                            </div>
+                            <div class="col-12 lg:col-12">
+                              <ion-item>
+                                <ion-label>&nbsp;&nbsp;&nbsp;{{ displayedQuestion.qsOption2[activeLang] }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="Self"></ion-radio>
+                              </ion-item>
+                            </div>
+                            <div class="col-12 lg:col-12">
+                              <ion-item>
+                                <ion-label>&nbsp;&nbsp;&nbsp;{{ displayedQuestion.qsOption3[activeLang] }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="Spouse"></ion-radio>
+                              </ion-item>
+                            </div>
+                            <div class="col-12 lg:col-12">
+                              <ion-item>
+                                &nbsp;&nbsp;&nbsp;
+                                <ion-label style="white-space: normal">{{
+                                  displayedQuestion.qsOption4[activeLang]
+                                  }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="None"></ion-radio>
+                              </ion-item>
+                            </div>
+                          </div>
+                        </ion-radio-group>
+                      </div> -->
+                          <div class="col-12 lg:col-12 xl:col-12">
+                            <ion-radio-group [(ngModel)]="selectedRadioOption" class="col-6">
+                              <div class="grid">
+                                <div class="col-12 m-0 p-0">
+                                  {{"income-detail-correct-label" | transloco}}
+                                </div>
+                              </div>
+                              <br>
+                              <div class="grid">
+                                <div class="col-4 lg:col-4">
+                                  <ion-label>&nbsp;&nbsp;&nbsp;{{"financial-year" | transloco}}<span style="color: red"> *</span></ion-label>
+                                </div>
+                                <div class="col-8 lg:col-8">
+                                  <select id="financialYearSelect" (change)="onFinancialYearChange($event)"
+                                    [(ngModel)]="selectedFinancialYear">
+                                    <option value="" selected>
+                                      Select Financial Year
+                                    </option>
+                                    <option *ngFor="let year of financialYearList" [value]="year.pkRfyid">
+                                      {{ year.financialYear }}
+                                    </option>
+                                  </select>
+                                </div>
+
+                                <div class="col-3 lg:col-3">
+                                  <ion-label>&nbsp;&nbsp;{{"self-income" | transloco}}<span style="color: red"> *</span></ion-label>
+                                </div>
+                                <div class="col-3 lg:col-3">
+                                  <input type="text" id="filterText" (keypress)="numberOnly($event)" inputmode="numeric"
+                                    maxlength="7" [(ngModel)]="incomeAmount" (input)="checkMaritalIncomeAmount()"
+                                    class="form-control" placeholder="" autocomplete="off" />
+                                </div>
+
+                                <div class="col-3 lg:col-3">
+                                  <ion-label>&nbsp;&nbsp;{{"spouse-income" | transloco}}<span style="color: red"> *</span></ion-label>
+                                </div>
+                                <div class="col-3 lg:col-3">
+                                  <input type="text" id="filterText" (keypress)="numberOnly($event)" inputmode="numeric"
+                                    maxlength="7" [(ngModel)]="spouseIcomeAmount" (input)="checkMaritalIncomeAmount()"
+                                    class="form-control" placeholder="" autocomplete="off" />
+                                </div>
+
+                                <hr />
+                                <label style="font-weight: bold" *ngIf="
+                                    displayedQuestion.qsCode == 'Q_WORK_STATUS'
+                                  ">Working Status</label>
+
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption1[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Both" disabled></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption2[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Self" disabled></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption3[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Spouse" disabled></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <ion-label style="white-space: normal">{{
+                                      displayedQuestion.qsOption4[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="None" disabled></ion-radio>
+                                  </ion-item>
+                                </div>
+                              </div>
+                            </ion-radio-group>
+                          </div>
+
+                          <div class="col-12 text-center mt-4 mb-5 file-upload-container">
+                            <div class="grid p-1">
+                              <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                              <div class="col-12 lg:col-10 xl:col-8 md:col-8" *ngIf="isUploadImageVisible">
+                                <div class="grid">
+                                  <div class="col-12 line-height-4" [innerHtml]="ocrMessage">
+                                    <!-- {{ ocrMessage }} -->
+                                  </div>
+                                </div>
+                                <div class="grid card-border-dashed text-center">
+                                  <div class="col-12"></div>
+                                  <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                                    Only image is allowed.
+                                  </div>
+                                  <div class="col-12" (click)="presentActionSheet()" *ngIf="selectedImage == ''">
+                                    <div class="grid centered-file-upload-image">
+                                      <div class="col-12">
+                                        <img src="assets/browse.png" />
+                                      </div>
+                                      <div class="col-12">
+                                        <label>{{
+                                          "browseAndUpload" | transloco
+                                          }}</label>
+                                      </div>
+                                      <div class="col-12"></div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12" *ngIf="selectedImage != ''">
+                                    <div class="grid">
+                                      <div class="col-12">
+                                        <img [src]="selectedImage" class="selected-image-to-upload" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="grid mt-5">
+                                  <div class="col-12" *ngIf="selectedImage == ''">
+                                    <button [style.fontWeight]="
+                                        activeLang == 'mr' ? '600' : ''
+                                      " [style.fontSize]="
+                                        activeLang == 'mr' ? '18px' : ''
+                                      " [ngClass]="
+                                        selectedImage == ''
+                                          ? 'disabled-button'
+                                          : 'active-button'
+                                      ">
+                                      {{ "upload" | transloco }}
+                                    </button>
+                                  </div>
+                                  <div class="col-12 lg:col-12" *ngIf="selectedImage != ''">
+                                    <button [style.fontWeight]="
+                                        activeLang == 'mr' ? '600' : ''
+                                      " [style.fontSize]="
+                                        activeLang == 'mr' ? '18px' : ''
+                                      " class="retry-button" (click)="reUploadImage()">
+                                      {{ "re-upload" | transloco }}
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                            </div>
+                          </div>
+
+                          <div class="col-12 text-right">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [disabled]="
+                                selectedRadioOption == '' ||
+                                (selectedRadioOption == 'No' &&
+                                  this.selectedImage == '')
+                              " [ngClass]="
+                                selectedRadioOption == '' ||
+                                (selectedRadioOption == 'No' &&
+                                  this.selectedImage == '')
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              " (click)="updateWorkingStatus()">
+                              {{ "proceed" | transloco }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- FOR MULTIPLE CHOICE QUESTION (CASTE) -->
+                      <div class="col-12" *ngIf="
+                          displayedQuestion.qsCode == 'Q_CASTE' &&
+                          displayedQuestion.qsOption1[activeLang] != null &&
+                          displayedQuestion.qsOption2[activeLang] != null &&
+                          displayedQuestion.qsOption3[activeLang] != null &&
+                          displayedQuestion.qsOption4[activeLang] != null
+                        ">
+                        <div class="grid">
+                          <div class="col-12 lg:col-12 xl:col-12">
+                            <ion-radio-group [(ngModel)]="selectedRadioOption" class="col-6">
+                              <div class="grid">
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption1[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="SC"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption2[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="ST"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption3[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="NT"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <ion-label style="white-space: normal">{{
+                                      displayedQuestion.qsOption4[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="DT"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-12">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption5[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="OPEN"></ion-radio>
+                                  </ion-item>
+                                </div>
+                              </div>
+                            </ion-radio-group>
+                          </div>
+
+                          <div class="col-12 text-right">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [disabled]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null
+                              " [ngClass]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              " (click)="updateCaste()">
+                              {{ "proceed" | transloco }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- FOR MULTIPLE CHOICE QUESTION (JOURNALIST) -->
+                      <div class="col-12" *ngIf="displayedQuestion.qsCode == 'Q_JOURNALIST'">
+                        <div class="grid">
+                          <div class="col-12 lg:col-12 xl:col-12">
+                            <div class="grid m-0 p-0" *ngIf="displayedQuestion.qsCode == 'Q_JOURNALIST'">
+                              <div class="col-12">
+                                If you are
+                                <b>{{
+                                  displayedQuestion.qsCode == "Q_JOURNALIST"
+                                  ? "Journalist"
+                                  : ""
+                                  }}</b>
+                                , you need to generate
+                                <b>{{
+                                  displayedQuestion.qsCode == "Q_JOURNALIST"
+                                  ? "Journalist"
+                                  : ""
+                                  }}</b>
+                                certificate from the system. Get it signed stamped
+                                from the competent authority and upload it in the
+                                below box.
+                              </div>
+                              <div class="col-12">
+                                To generate
+                                <b>{{
+                                  displayedQuestion.qsCode == "Q_JOURNALIST"
+                                  ? "Journalist"
+                                  : ""
+                                  }}</b>
+                                certificate -
+                                <a (click)="routeToCertEntry()">CLICK HERE</a>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-12 lg:col-12 xl:col-12">
+                            <ion-radio-group [(ngModel)]="selectedRadioOption">
+                              <div class="grid">
+                                <div class="col-12 m-0 p-0 lg:col-6">
+                                  <ion-item class="ion-no-padding" style="
+                                      --padding-end: 0px;
+                                      --inner-padding-end: 0px;
+                                    ">
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption1[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Yes"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 m-0 p-0 lg:col-6">
+                                  <ion-item class="ion-no-padding">
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption2[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="No"></ion-radio>
+                                  </ion-item>
+                                </div>
+                              </div>
+
+                              &nbsp;&nbsp;&nbsp;
+                            </ion-radio-group>
+                          </div>
+
+                          <div class="col-12 text-center file-upload-container m-0 p-0" *ngIf="
+                              isEdit == 'true' &&
+                              selectedRadioOption == 'Yes' &&
+                              selectedImage != ''
+                            ">
+                            <div class="grid p-1">
+                              <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                              <div class="col-12 lg:col-10 xl:col-8 md:col-8" *ngIf="isUploadImageVisible">
+                                <div class="grid card-border-dashed text-center">
+                                  <div class="grid">
+                                    <div class="col-12 line-height-4" [innerHtml]="ocrMessage"></div>
+                                  </div>
+                                  <div class="col-12"></div>
+                                  <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                                    Only image is allowed.
+                                  </div>
+                                  <div class="col-12" (click)="presentActionSheet()" *ngIf="selectedImage == ''">
+                                    <div class="grid centered-file-upload-image">
+                                      <div class="col-12">
+                                        <img src="assets/browse.png" />
+                                      </div>
+                                      <div class="col-12">
+                                        <label>{{
+                                          "browseAndUpload" | transloco
+                                          }}</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12" *ngIf="selectedImage != ''">
+                                    <div class="grid">
+                                      <div class="col-12">
+                                        <img [src]="selectedImage" class="selected-image-to-upload" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <div class="grid mt-5">
+                              <div class="col-6 text-center"></div>
+                              <div class="col-6 text-center">
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " *ngIf="displayedQuestion.qsCode == 'Q_JOURNALIST'" [disabled]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == null
+                                  " [ngClass]="
+                                    selectedRadioOption == '' ||
+                                    selectedRadioOption == null
+                                      ? 'disabled-button'
+                                      : 'active-button'
+                                  " (click)="journalistRadioButtonClicked()">
+                                  {{ "proceed" | transloco }}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- FOR MULTIPLE CHOICE QUESTION (MARITAL STATUS) OLD -->
+                      <!-- <div
+                        class="col-12"
+                        *ngIf="
+                          displayedQuestion.qsCode == 'Q_MARITAL' &&
+                          displayedQuestion.qsOption1[activeLang] != null &&
+                          displayedQuestion.qsOption2[activeLang] != null &&
+                          displayedQuestion.qsOption3[activeLang] != null &&
+                          displayedQuestion.qsOption4[activeLang] != null
+                        "
+                        >
+                        <div class="grid">
+                          <div class="col-12 lg:col-12 xl:col-12">
+                            <ion-radio-group [(ngModel)]="selectedRadioOption" class="col-6">
+                              <div class="grid">
+                                <div class="col-12 lg:col-6 xl:col-6">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{ displayedQuestion.qsOption1[activeLang] }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Unmarried"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-6 xl:col-6">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{ displayedQuestion.qsOption2[activeLang] }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Divorcee"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-6 xl:col-6">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{ displayedQuestion.qsOption3[activeLang] }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Widow"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-6 xl:col-6">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{ displayedQuestion.qsOption4[activeLang] }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Married"></ion-radio>
+                                  </ion-item>
+                                </div>
+                              </div>
+                            </ion-radio-group>
+                          </div>
+
+                          <div class="col-12 text-right">
+                            <button
+                              [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                              [disabled]="selectedRadioOption == '' || selectedRadioOption == null"
+                              [ngClass]="
+                                selectedRadioOption == '' || selectedRadioOption == null
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              "
+                              (click)="updateMarriedStatus()"
+                            >
+                              {{ "proceed" | transloco }}
+                            </button>
+                          </div>
+                        </div>
+                      </div> -->
+
+                      <!-- FOR MULTIPLE CHOICE QUESTION (MARITAL STATUS) NEW -->
+                      <div class="col-12" *ngIf="
+                          displayedQuestion.qsCode == 'Q_MARITAL' &&
+                          displayedQuestion.qsOption1[activeLang] != null &&
+                          displayedQuestion.qsOption2[activeLang] != null &&
+                          displayedQuestion.qsOption3[activeLang] != null &&
+                          displayedQuestion.qsOption4[activeLang] != null
+                        ">
+                        <div class="grid">
+                          <div class="col-12 lg:col-12 xl:col-12">
+                            <ion-radio-group [(ngModel)]="selectedRadioOption" class="col-6"
+                              (ngModelChange)="checkSelectedOption()">
+                              <div class="grid">
+                                <div class="col-12 lg:col-6 xl:col-6">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption1[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Unmarried"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-6 xl:col-6">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption2[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Divorcee"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-6 xl:col-6">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption3[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Widow"></ion-radio>
+                                  </ion-item>
+                                </div>
+                                <div class="col-12 lg:col-6 xl:col-6">
+                                  <ion-item>
+                                    <ion-label>&nbsp;&nbsp;&nbsp;{{
+                                      displayedQuestion.qsOption4[activeLang]
+                                      }}</ion-label>
+                                    <ion-radio mode="md" slot="start" value="Married"></ion-radio>
+                                  </ion-item>
+                                </div>
+                              </div>
+                            </ion-radio-group>
+                          </div>
+
+                          <div class="col-12 lg:col-12 xl:col-12" *ngIf="selectedRadioOption == 'Married'">
+                            <p>Please ensure that your spouse's PAN card is linked to their Digilocker account. To check the linking status, please visit the <a href="https://www.digilocker.gov.in/login" target="_blank">Digilocker website</a>.</p>
+                          </div>
+
+                          <!--ravi-->
+                          <!-- Add a condition to display static radio buttons -->
+                          <div class="col-12 lg:col-12 xl:col-12" *ngIf="showStaticRadioButtons">
+                            <div class="col-12 p-3" *ngIf="selectedRadioOption =='Divorcee'">
+                              <label style="font-weight: bold">{{"divorce-decree" | transloco}}</label>
+                            </div>
+                            <div class="col-12 p-3" *ngIf="selectedRadioOption =='Widow'">
+                              <label style="font-weight: bold">{{"upd-spouse-death-cert" | transloco}}</label>
+                            </div>
+                            <div class="col-12 p-3">
+                              <ion-radio-group [(ngModel)]="selectedStaticRadioOption" class="col-6"
+                                (ionChange)="radioButtonClicked($event)">
+                                <div class="grid">
+                                  <div class="col-12 lg:col-4 xl:col-4">
+                                    <ion-item>
+                                      <ion-label>&nbsp;&nbsp;&nbsp;{{"yes" | transloco}}</ion-label>
+                                      <ion-radio mode="md" slot="start" value="Yes"></ion-radio>
+                                    </ion-item>
+                                  </div>
+                                  <div class="col-12 lg:col-8 xl:col-8" *ngIf="selectedRadioOption !='Widow'">
+                                    <ion-item>
+                                      <ion-label>&nbsp;&nbsp;&nbsp;{{"will-submit-later" | transloco}}</ion-label>
+                                      <!-- <ion-label>&nbsp;&nbsp;&nbsp;No,Will submit later</ion-label> -->
+                                      <ion-radio mode="md" slot="start" value="No"></ion-radio>
+                                    </ion-item>
+                                  </div>
+                                </div>
+                              </ion-radio-group>
+                            </div>
+
+                            <div class="col-12 text-center file-upload-container m-0 p-0"
+                              *ngIf="selectedStaticRadioOption == 'Yes'">
+                              <div class="grid p-1">
+                                <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                                <div class="col-12 lg:col-10 xl:col-8 md:col-8" *ngIf="isUploadImageVisible">
+                                  <div class="grid card-border-dashed text-center">
+                                    <div class="grid">
+                                      <div class="col-12 line-height-4" [innerHtml]="ocrMessage">
+                                        <!-- {{ ocrMessage }} -->
+                                      </div>
+                                    </div>
+                                    <div class="col-12"></div>
+                                    <div class="col-12 error-message" *ngIf="errorMessageVisible">
+                                      Only image is allowed.
+                                    </div>
+                                    <div class="col-12" (click)="presentActionSheet()" *ngIf="selectedImage == ''">
+                                      <div class="grid centered-file-upload-image">
+                                        <div class="col-12">
+                                          <img src="assets/browse.png" />
+                                        </div>
+                                        <div class="col-12">
+                                          <label>{{
+                                            "browseAndUpload" | transloco
+                                            }}</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-12" *ngIf="selectedImage != ''">
+                                      <div class="grid">
+                                        <div class="col-12">
+                                          <img [src]="selectedImage" class="selected-image-to-upload" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Marital status end-->
+
+                          <!-- <div class="col-12 text-right">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [disabled]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null
+                              " [ngClass]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              " (click)="updateMarriedStatus()">
+                              {{ "proceed" | transloco }}
+                            </button>
+                          </div> -->
+                          <!--today change-->
+                          <!-- <div class="col-6 text-left" *ngIf="selectedImage != '' && isUploadImageVisible">
+                            <button [style.fontWeight]="
+                              activeLang == 'mr' ? '600' : '' "
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : '' "
+                              class="retry-button" (click)="reUploadImage()"
+                              [ngClass]="isProceedButtonEnabled ? 'active-button' : 'disabled-button'">
+                              {{ "re-upload" | transloco }}
+                            </button>
+                          </div>
+                          <div class="col-6 text-right">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                              [disabled]="!isProceedButtonEnabled"
+                              [ngClass]="isProceedButtonEnabled ? 'active-button' : 'disabled-button'"
+                              (click)="updateMarriedStatus()">
+                              {{ "proceed" | transloco }}
+                            </button>
+                          </div> -->
+                          <div class="col-12">
+                            <div class="grid mt-5">
+                              <div class="col-6 text-center" *ngIf="selectedImage != '' && isUploadImageVisible">
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " class="retry-button" (click)="reUploadImage()">
+                                  {{ "re-upload" | transloco }}
+                                </button>
+                              </div>
+                              <div class="col-6 text-center" *ngIf="!isUploadImageVisible"></div>
+                              <div class="col-6 text-center">
+                                <button [style.fontWeight]="
+                                    activeLang == 'mr' ? '600' : ''
+                                  " [style.fontSize]="
+                                    activeLang == 'mr' ? '18px' : ''
+                                  " [ngClass]="
+                                    ((selectedRadioOption == 'Divorcee' ||
+                                      selectedRadioOption == 'Widow') &&
+                                      ((selectedStaticRadioOption == 'Yes' &&
+                                        selectedImage != '') ||
+                                        selectedStaticRadioOption == 'No')) ||
+                                    selectedRadioOption == 'Unmarried' ||
+                                    selectedRadioOption == 'Married'
+                                      ? 'active-button'
+                                      : 'disabled-button'
+                                  " 
+                                  [disabled]="!(((selectedRadioOption == 'Divorcee' ||
+                                  selectedRadioOption == 'Widow') &&
+                                  ((selectedStaticRadioOption == 'Yes' &&
+                                    selectedImage != '') ||
+                                    selectedStaticRadioOption == 'No')) ||
+                                selectedRadioOption == 'Unmarried' ||
+                                selectedRadioOption == 'Married')"
+                                  (click)="updateMarriedStatus()">
+                                  {{ "proceed" | transloco }}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="col-12 text-right">
+                        <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                          [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [disabled]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null
+                              " [ngClass]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              " (click)="updateMarriedStatus()">
+                          {{ "proceed" | transloco }}2
+                        </button>
+                      </div> -->
+                    </div>
+                  </div>
+
+                  <!-- FOR MULTIPLE CHOICE QUESTION (ExServiceman) OLD -->
+                  <!-- <div
+                    class="col-12"
+                    *ngIf="
+                      displayedQuestion.qsCode == 'Q_EXSERVICEMAN' &&
+                      displayedQuestion.qsOption1[activeLang] != null &&
+                      displayedQuestion.qsOption2[activeLang] != null &&
+                      displayedQuestion.qsOption3[activeLang] != null
+                    "
+                      >
+                    <div class="grid">
+                      <div class="grid m-0 p-0">
+                        <div class="col-12">
+                          If you are
+                          <b>Ex Serviceman or dependent of Ex Serviceman</b>
+                          , you need to generate
+                          <b>Ex Serviceman or dependent of Ex Serviceman</b>
+                          certificate from the system. Get it signed stamped from the competent authority and upload it
+                          in the below box.
+
+                        </div>
+                        <div class="col-12">
+                          To generate
+                          <b>Ex Serviceman</b>
+                          certificate -
+                          <a (click)="routeToCertEntryForExServiceAndDefenceFamily('EX')">CLICK HERE</a>
+                        </div>
+                        <div class="col-12">
+                          To generate
+                          <b>Dependent of Ex Serviceman</b>
+                          certificate -
+                          <a (click)="routeToCertEntryForExServiceAndDefenceFamily('DF')">CLICK HERE</a>
+                        </div>
+                      </div>
+
+                      <div class="col-12 lg:col-12 xl:col-12">
+                        <ion-radio-group
+                          [(ngModel)]="selectedRadioOption"
+                          class="col-6"
+                          (ionChange)="radioButtonClicked($event)"
+                        >
+                          <div class="grid">
+                            <div class="col-12 lg:col-4 xl:col-4">
+                              <ion-item style="--padding-end: 0px; --inner-padding-end: 0px">
+                                &nbsp;&nbsp;&nbsp;
+                                <ion-label style="white-space: normal">{{
+                                  displayedQuestion.qsOption1[activeLang]
+                                }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="Ex Serviceman"></ion-radio>
+                              </ion-item>
+                            </div>
+                            <div class="col-12 lg:col-4 xl:col-4">
+                              <ion-item style="--padding-end: 0px; --inner-padding-end: 0px">
+                                &nbsp;&nbsp;&nbsp;
+                                <ion-label style="white-space: normal">{{
+                                  displayedQuestion.qsOption2[activeLang]
+                                }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="Defence Family"></ion-radio>
+                              </ion-item>
+                            </div>
+                            <div class="col-12 lg:col-4 xl:col-4">
+                              <ion-item style="--padding-end: 0px; --inner-padding-end: 0px">
+                                &nbsp;&nbsp;&nbsp;
+                                <ion-label style="white-space: normal">{{
+                                  displayedQuestion.qsOption3[activeLang]
+                                }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="None of the above"></ion-radio>
+                              </ion-item>
+                            </div>
+                          </div>
+                        </ion-radio-group>
+                      </div>
+
+                      <div class="col-12 text-center file-upload-container m-0 p-0">
+                        <div class="grid p-1">
+                          <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                          <div class="col-12 lg:col-10 xl:col-8 md:col-8" *ngIf="isUploadImageVisible">
+                            <div class="grid card-border-dashed text-center">
+                              <div class="grid">
+                                <div class="col-12 line-height-4" [innerHtml]="ocrMessage">
+                                  
+                                </div>
+                              </div>
+                              <div class="col-12"></div>
+                              <div class="col-12 error-message" *ngIf="errorMessageVisible">Only image is allowed.</div>
+                              <div class="col-12" (click)="presentActionSheet()" *ngIf="selectedImage == ''">
+                                <div class="grid centered-file-upload-image">
+                                  <div class="col-12">
+                                    <img src="assets/browse.png" />
+                                  </div>
+                                  <div class="col-12">
+                                    <label>{{ "browseAndUpload" | transloco }}</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12" *ngIf="selectedImage != ''">
+                                <div class="grid">
+                                  <div class="col-12">
+                                    <img [src]="selectedImage" class="selected-image-to-upload" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="grid mt-5">
+                          <div class="col-6 text-center" *ngIf="selectedImage == '' && isUploadImageVisible">
+                            <button
+                              [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                              [ngClass]="selectedImage == '' ? 'disabled-button' : 'active-button'"
+                            >
+                              {{ "upload" | transloco }}
+                            </button>
+                          </div>
+                          <div class="col-6 text-center" *ngIf="selectedImage != '' && isUploadImageVisible">
+                            <button
+                              [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                              class="retry-button"
+                              (click)="reUploadImage()"
+                            >
+                              {{ "re-upload" | transloco }}
+                            </button>
+                          </div>
+                          <div class="col-6 text-center" *ngIf="!isUploadImageVisible"></div>
+                          <div class="col-6 text-center">
+                            <button
+                              [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                              [disabled]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null ||
+                                ((selectedRadioOption == 'Ex Serviceman' || selectedRadioOption == 'Defence Family') &&
+                                  selectedImage == '')
+                              "
+                              [ngClass]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null ||
+                                ((selectedRadioOption == 'Ex Serviceman' || selectedRadioOption == 'Defence Family') &&
+                                  selectedImage == '')
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              "
+                              (click)="updateExServiceman()"
+                            >
+                              {{ "proceed" | transloco }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- FOR MULTIPLE CHOICE QUESTION (ExServiceman) OLD -->
+
+                  <div class="col-12" *ngIf="
+                      displayedQuestion.qsCode == 'Q_EXSERVICEMAN' &&
+                      displayedQuestion.qsOption1[activeLang] != null &&
+                      displayedQuestion.qsOption2[activeLang] != null &&
+                      displayedQuestion.qsOption3[activeLang] != null
+                      ">
+                    <div class="grid" *ngIf="isExServiceman">
+                      <div class="col-12 lg:col-12 xl:col-12">
+                        <!-- <div class="mt-5"> Are you an Ex Serviceman
+                        </div> -->
+                        <ion-radio-group [(ngModel)]="selectedRadioOption" class="col-6"
+                          (ionChange)="radioButtonClicked($event)">
+                          <div class="grid">
+                            <div class="col-12 lg:col-6 xl:col-6">
+                              <ion-item style="--padding-end: 0px; --inner-padding-end: 0px">
+                                &nbsp;&nbsp;&nbsp;
+                                <ion-label style="white-space: normal">{{
+                                  "yes" | transloco
+                                  }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="Ex Serviceman"></ion-radio>
+                              </ion-item>
+                            </div>
+                            <div class="col-12 lg:col-6 xl:col-6">
+                              <ion-item style="--padding-end: 0px; --inner-padding-end: 0px">
+                                &nbsp;&nbsp;&nbsp;
+                                <ion-label style="white-space: normal">{{
+                                  "no" | transloco
+                                  }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="test"></ion-radio>
+                              </ion-item>
+                            </div>
+                          </div>
+                        </ion-radio-group>
+                      </div>
+
+                      <div class="grid m-0 p-0" *ngIf="selectedRadioOption == 'Ex Serviceman'">
+                        <div class="col-12">
+                          You need to generate
+                          <b>Ex Serviceman </b>
+                          certificate from the system. Get it signed stamped from the competent authority and upload it
+                          in the below box.
+
+                        </div>
+                        <div class="col-12">
+                          To generate
+                          <b>Ex Serviceman</b>
+                          certificate -
+                          <a (click)="routeToCertEntryForExServiceAndDefenceFamily('EX')">CLICK HERE</a>
+                        </div>
+                      </div>
+
+                      <div class="col-12 text-center file-upload-container m-0 p-0" *ngIf="showExservicemanFile">
+                        <div class="grid p-1">
+                          <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                          <div class="col-12 lg:col-10 xl:col-8 md:col-8" *ngIf="isUploadImageVisible">
+                            <div class="grid card-border-dashed text-center">
+                              <div class="grid">
+                                <div class="col-12 line-height-4" [innerHtml]="ocrMessage">
+
+                                </div>
+                              </div>
+                              <div class="col-12"></div>
+                              <div class="col-12 error-message" *ngIf="errorMessageVisible">Only image is allowed.</div>
+                              <div class="col-12" (click)="presentActionSheet()" *ngIf="selectedImage == ''">
+                                <div class="grid centered-file-upload-image">
+                                  <div class="col-12">
+                                    <img src="assets/browse.png" />
+                                  </div>
+                                  <div class="col-12">
+                                    <label>{{ "browseAndUpload" | transloco }}</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12" *ngIf="selectedImage != ''">
+                                <div class="grid">
+                                  <div class="col-12">
+                                    <img [src]="selectedImage" class="selected-image-to-upload" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="grid mt-5">
+                          <div class="col-6 text-center" *ngIf="selectedImage == '' && isUploadImageVisible">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                              [ngClass]="selectedImage == '' ? 'disabled-button' : 'active-button'">
+                              {{ "upload" | transloco }}
+                            </button>
+                          </div>
+                          <div class="col-6 text-center"
+                            *ngIf="selectedImage != '' && isUploadImageVisible && showExservicemanFile">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" class="retry-button"
+                              (click)="reUploadImage()">
+                              {{ "re-upload" | transloco }}
+                            </button>
+                          </div>
+                          <div class="col-6 text-center" *ngIf="!isUploadImageVisible"></div>
+                          <div class="col-6 text-center" *ngIf="selectedRadioOption !== 'test'">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [disabled]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null ||
+                                ((selectedRadioOption == 'Ex Serviceman') &&
+                                  selectedImage == '')
+                              " [ngClass]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null ||
+                                ((selectedRadioOption == 'Ex Serviceman') &&
+                                  selectedImage == '')
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              " (click)="updateExServiceman()">
+                              {{ "proceed" | transloco }}
+                            </button>
+                          </div>
+
+                          <div class="col-6 text-center" *ngIf="selectedRadioOption === 'test'">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [ngClass]="'active-button'"
+                              (click)="openDF()">
+                              {{ "next" | transloco }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- DF -->
+                    <div class="grid" *ngIf="!isExServiceman">
+                      <div class="col-12 lg:col-12 xl:col-12">
+                        <!-- <div class="mt-5"> Are you from a defense family?
+                        </div> -->
+                        <ion-radio-group [(ngModel)]="selectedRadioOption" class="col-6"
+                          (ionChange)="radioButtonClicked($event)">
+                          <div class="grid">
+                            <div class="col-12 lg:col-6 xl:col-6">
+                              <ion-item style="--padding-end: 0px; --inner-padding-end: 0px">
+                                &nbsp;&nbsp;&nbsp;
+                                <ion-label style="white-space: normal">{{
+                                  "yes" | transloco
+                                  }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="Defence Family"></ion-radio>
+                              </ion-item>
+                            </div>
+                            <div class="col-12 lg:col-6 xl:col-6">
+                              <ion-item style="--padding-end: 0px; --inner-padding-end: 0px">
+                                &nbsp;&nbsp;&nbsp;
+                                <ion-label style="white-space: normal">{{
+                                  "no" | transloco
+                                  }}</ion-label>
+                                <ion-radio mode="md" slot="start" value="None of the above"></ion-radio>
+                              </ion-item>
+                            </div>
+                            
+                          </div>
+                        </ion-radio-group>
+                      </div>
+
+                      <div class="grid m-0 p-0" *ngIf="selectedRadioOption == 'Defence Family'">
+                        <div class="col-12">
+                          You need to generate
+                          <b>Defence family </b>
+                          certificate from the system. Get it signed stamped from the competent authority and upload it
+                          in the below box.
+
+                        </div>
+                        <div class="col-12">
+                          To generate
+                          <b>Defence family</b>
+                          certificate -
+                          <a (click)="routeToCertEntryForExServiceAndDefenceFamily('DF')">CLICK HERE</a>
+                        </div>
+                      </div>
+
+                      <div class="col-12 text-center file-upload-container m-0 p-0" *ngIf="selectedRadioOption == 'Defence Family'">
+                        <div class="grid p-1">
+                          <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                          <div class="col-12 lg:col-10 xl:col-8 md:col-8" *ngIf="isUploadImageVisible">
+                            <div class="grid card-border-dashed text-center">
+                              <div class="grid">
+                                <div class="col-12 line-height-4" [innerHtml]="ocrMessage">
+
+                                </div>
+                              </div>
+                              <div class="col-12"></div>
+                              <div class="col-12 error-message" *ngIf="errorMessageVisible">Only image is allowed.</div>
+                              <div class="col-12" (click)="presentActionSheet()" *ngIf="selectedImage == ''">
+                                <div class="grid centered-file-upload-image">
+                                  <div class="col-12">
+                                    <img src="assets/browse.png" />
+                                  </div>
+                                  <div class="col-12">
+                                    <label>{{ "browseAndUpload" | transloco }}</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12" *ngIf="selectedImage != ''">
+                                <div class="grid">
+                                  <div class="col-12">
+                                    <img [src]="selectedImage" class="selected-image-to-upload" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 lg:col-1 xl:col-2 md:col-2"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="grid mt-5">
+                          <div class="col-6 text-center" *ngIf="selectedImage == '' && isUploadImageVisible">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                              [ngClass]="selectedImage == '' ? 'disabled-button' : 'active-button'">
+                              {{ "upload" | transloco }}
+                            </button>
+                          </div>
+                          <div class="col-6 text-center" *ngIf="selectedImage != '' && isUploadImageVisible">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" class="retry-button"
+                              (click)="reUploadImage()">
+                              {{ "re-upload" | transloco }}
+                            </button>
+                          </div>
+                          <div class="col-6 text-center" *ngIf="!isUploadImageVisible"></div>
+                          <div class="col-6 text-center">
+                            <button [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                              [style.fontSize]="activeLang == 'mr' ? '18px' : ''" [disabled]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null ||
+                                ((selectedRadioOption == 'Defence Family') &&
+                                  selectedImage == '')
+                              " [ngClass]="
+                                selectedRadioOption == '' ||
+                                selectedRadioOption == null ||
+                                ((selectedRadioOption == 'Defence Family') &&
+                                  selectedImage == '')
+                                  ? 'disabled-button'
+                                  : 'active-button'
+                              " (click)="updateExServiceman()">
+                              {{ "proceed" | transloco }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <!-- </div>
+            </div> code not build issue may be extra -->
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 lg:col-1 xl:col-1 md:col-1 file-upload-container text-center"></div>
+  </div>
+  <input type="file" id="fileupload" accept="image/png,image/jpeg,image/jpg" style="display: none"
+    (change)="handleFileInput($event)" *ngIf="fileUploadVisible" />
+</ng-template>

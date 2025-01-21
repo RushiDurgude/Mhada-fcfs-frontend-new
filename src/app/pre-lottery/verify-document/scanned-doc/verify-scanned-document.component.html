@@ -1,0 +1,18 @@
+<div class="col-12 card mt-2">
+    <ul>
+        <li *ngFor="let param of data?.scannedDocParamList">
+            <h4 class="m-0">
+                <span class="label">{{param.label}} </span><div class="val" *ngIf="!param.children">{{param.val}}</div>
+            </h4>
+            <div class="col-12" *ngIf="param.children?.length > 0" style="background-color: aliceblue;">
+                <ul *ngFor="let param1 of param.children" class="mb-3">
+                    <li *ngFor="let innerParam of param1">
+                        <h5 class="m-0">
+                            <span class="label">{{innerParam.label}} </span><div class="val">{{innerParam.val}}</div>
+                        </h5>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>

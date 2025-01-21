@@ -1,0 +1,144 @@
+.flex-container {
+    display: flex;
+    justify-content: space-between; /* Adjust spacing between items */
+    height: 100%;
+  }
+  
+  .swiper-container {
+    flex: 1;
+    max-width: 50%; /* Adjust width as needed */
+    padding-right: 10px; /* Optional spacing between swiper and content */
+  }
+  
+  .content-right {
+    flex: 1;
+    max-width: 50%; /* Adjust width as needed */
+  }
+  
+  @media (max-width: 768px) {
+    .swiper-container {
+      max-width: 100% !important;
+      height: auto; /* Ensure height adjusts properly */
+      display: block; /* Ensure visibility */
+    }
+    // .swiper-width {
+    //   min-height: 300px; /* Ensure the swiper container has enough height */
+    // }
+    .select-location-btn {
+      width: 100%; /* Make button take full width on mobile */
+    }
+  }
+  
+  .swiper-width {
+    // max-width: 40%;
+    // margin: 0 auto;
+    max-width: 44%;
+    margin: 29px auto;
+  }
+  
+  .details-width {
+    max-width: 55%;
+    margin: 26px auto;
+  }
+  
+  @media (max-width: 768px) {
+    .details-width {
+      max-width: 100%;
+      margin: 0;
+    }
+    
+  }
+  
+  .bg-details {
+    background-color: #D4E5FF !important;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between; /* Space between header text and button */
+    align-items: center; /* Center items vertically */
+  }
+  
+  // .top-right {
+  //   top: -70px; /* Adjust as needed */
+  //   right: -513px; /* Adjust as needed */
+  //   display: flex;
+  //   gap: 5px; /* Space between buttons */
+  // }
+  
+  .position-relative {
+    position: relative;
+  }
+  
+  .position-absolute {
+    position: absolute;
+  }
+  
+  .top-right {
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    display: flex;
+    gap: 5px; /* Space between buttons */
+  }
+
+  .tenement-categories {
+    text-align: left;
+  //  margin: 20px 0;
+  }
+  
+  .title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: "Poppins";
+    color: #313638;
+  }
+  
+  .categories-grid {
+    display: flex;
+    justify-content: normal;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .category-code {
+    font-size: 14px;
+    font-weight: 500;
+    color: #5a5a5a;
+  }
+  
+  .category-count {
+    font-family: Poppins;
+    font-size: 11.8px;
+    font-weight: 500;
+    font-weight: bold;
+    color: white;
+    background-color: #007f3f; /* Green color */
+    border-radius: 15px;
+    padding: 9px 4px;
+    min-width: 50px; /* Minimum width to ensure consistency */
+    height: 23px; /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    //box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for a subtle effect */
+  }
+  
+  /* Custom Colors for Different Categories */
+  .category-item:nth-child(2n) .category-count {
+    background-color: #ff7f0e; /* Orange */
+  }
+  
+  .category-item:nth-child(3n) .category-count {
+    background-color: #d95f02; /* Brown */
+  }
+  

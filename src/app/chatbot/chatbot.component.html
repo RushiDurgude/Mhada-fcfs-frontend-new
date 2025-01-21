@@ -1,0 +1,169 @@
+<!-- OLD CODE -->
+<!-- <div class="grid m-0 p-0">
+  <div class="col-3 chatbot-header"></div>
+  <div class="col-6 chatbot-header">
+    <label class="font-medium text-xl line-height-3 text-white">Chat with us</label>
+  </div>
+  <div class="col-3 chatbot-header text-right">
+    <button mat-icon-button class="-mt-1" (click)="endChat('N')">
+      <mat-icon style="color: #fff">close</mat-icon>
+    </button>
+  </div>
+
+  <div class="grid m-0 p-0 custom-dialog w-full" *ngIf="chats.length > 0">
+    <div class="col-12 w-full chat-container" id="scrollToBottom" style="height: calc(100vh - 120px)">
+      [style.max-height.px]="maxHeight"
+      <div class="grid" *ngFor="let chat of chats">
+        <div class="col-12 w-full">
+          <div class="grid p-0" *ngFor="let que of chat.questions; first as isFirst">
+            <div class="col-9" style="text-align: left">
+              <div class="w-full text-left text-xs mt-2" *ngIf="isFirst">{{ que.dateTime | date: "dd-MMM HH:mm" }}</div>
+              <div class="w-full text-sm mt-2 mb-2" *ngIf="isFirst && que.queId != '99'">
+                Please click on relevant question below or try to share query with more details
+              </div>
+              <button [disabled]="que.disabled" (click)="selectQuestion(chat, que)" class="chat-que-btn">
+                {{ que.queEng }}
+              </button>
+            </div>
+            <div class="col-3"></div>
+          </div>
+        </div>
+
+        <div class="col-12 w-full">
+          <div class="grid p-2" *ngFor="let ans of chat.answers">
+            <div class="col-3"></div>
+            <div class="col-9 text-left">
+              <div class="w-full text-right mt-2 text-xs">
+                {{ ans.dateTime | date: "dd-MMM HH:mm" }}
+              </div>
+              <button class="ans-message" style="float: right">
+                {{ ans.ans }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 chat-input-text" *ngIf="isMessageInputVisible">
+      <div class="grid m-0 p-0">
+        <div class="col-1 m-0 text-left">
+          <ion-icon (click)="presentActionSheet()" class="text-2xl mt-2" name="ellipsis-vertical-outline"></ion-icon>
+        </div>
+        <div class="col-9 m-0">
+          <input
+            type="text"
+            [(ngModel)]="message"
+            class="input"
+            placeholder="Start typing..."
+            (keydown.enter)="sendMessage()"
+          />
+        </div>
+        <div class="col-2 text-right">
+          <button mat-icon-button (click)="sendMessage()" [disabled]="message == ''">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="grid m-0 p-0 h-full">
+  <div class="col-12 p-0" style="min-height: 10%; max-height: 10%">
+    <div class="grid m-0 p-0">
+      <div class="col-3 chatbot-header"></div>
+      <div class="col-6 chatbot-header">
+        <label class="font-medium text-xl text-white">{{ "chat-with-us" | transloco }}</label>
+      </div>
+      <div class="col-3 chatbot-header text-right">
+        <button mat-icon-button class="-mt-1" (click)="endChat('N')">
+          <mat-icon style="color: #fff">close</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="col-12"
+    style="min-height: 80%; max-height: 80%; overflow: auto; display: flex; flex-direction: column-reverse"
+  >
+    <div class="grid m-0 p-0 custom-dialog w-full" *ngIf="chats.length > 0">
+      <div class="col-12 w-full chat-container">
+        <div class="grid" *ngFor="let chat of chats">
+          <div class="col-12 w-full">
+            <div class="grid p-0" *ngFor="let que of chat.questions; first as isFirst">
+              <div class="col-9" style="text-align: left">
+                <div class="w-full text-left text-xs mb-2 p-0" *ngIf="isFirst">
+                  {{ que.dateTime | date : "dd-MMM HH:mm" }}
+                </div>
+                <div class="w-full text-sm mb-2 p-0" *ngIf="isFirst && que.queId != '99'">
+                  Please click on relevant question below or try to share query with more details
+                </div>
+                <button
+                  [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                  [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                  [disabled]="que.disabled"
+                  (click)="selectQuestion(chat, que)"
+                  class="chat-que-btn"
+                >
+                  {{ que.queEng[activeLang] }}
+                </button>
+              </div>
+              <div class="col-3"></div>
+            </div>
+          </div>
+
+          <div class="col-12 w-full">
+            <div class="grid p-2" *ngFor="let ans of chat.answers">
+              <div class="col-3"></div>
+              <div class="col-9 p-0 text-left">
+                <div class="w-full text-right mt-2 text-xs">
+                  {{ ans.dateTime | date : "dd-MMM HH:mm" }}
+                </div>
+                <button
+                  [style.fontWeight]="activeLang == 'mr' ? '600' : ''"
+                  [style.fontSize]="activeLang == 'mr' ? '18px' : ''"
+                  class="ans-message"
+                  style="float: right"
+                >
+                  {{ ans.ans[activeLang] }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 p-0" style="min-height: 10%; max-height: 10%; z-index: 2000">
+    <div class="grid m-0">
+      <div class="col-12 m-0 p-0" *ngIf="isMessageInputVisible">
+        <div class="grid m-0 p-0 chat-input-text">
+          <div class="col-1 m-0 text-left">
+            <ion-icon (click)="presentActionSheet()" class="text-2xl mt-2" name="ellipsis-vertical-outline"></ion-icon>
+          </div>
+          <div class="col-9 m-0">
+            <!-- <input
+              type="text"
+              [(ngModel)]="message"
+              class="input"
+              placeholder="{{ 'chat-bot-start-typing' | transloco }}"
+              (keydown.enter)="sendMessage()"
+            /> -->
+            <textarea
+              name="chatbottextarea"
+              [(ngModel)]="message"
+              class="input text-base"
+              placeholder="{{ 'chat-bot-start-typing' | transloco }}"
+            ></textarea>
+          </div>
+          <div class="col-2 text-right">
+            <button mat-icon-button (click)="sendMessage()" [disabled]="message == ''">
+              <mat-icon>send</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

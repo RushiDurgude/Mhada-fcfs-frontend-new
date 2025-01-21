@@ -1,0 +1,224 @@
+<div class="example-boundary">
+  <div class="chatbot-cdk" cdkDragLockAxis="y" cdkDragBoundary=".example-boundary" cdkDrag>
+    <!-- <button
+      *ngIf="isChatBotBtnVisible && authFlag"
+      (click)="openChatBot()"
+      class="chatBot"
+      [ngClass]="devicePlatform == 'ios' ? 'mb-6' : ''"
+      title="ChatBot"
+    > -->
+    <!-- <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="chatbubbles-outline" style="color: white"></ion-icon> -->
+    <img
+      src="assets/ChatBot.png"
+      style="width: 50px; height: 47px"
+      (click)="openChatBot()"
+      [ngClass]="devicePlatform == 'ios' ? 'mb-6' : ''"
+      *ngIf="isChatBotBtnVisible && authFlag && router.url != '/contact-us' && !previousAppVersionDetected"
+    />
+    <!-- </button> -->
+  </div>
+</div>
+
+<ion-app [ngClass]="devicePlatform == 'ios' ? 'ion-margin-bottom ion-padding-bottom' : ''">
+  <div class="ion-page" id="main-content">
+    <ion-content (ionScroll)="onScroll($event)" [forceOverscroll]="false">
+      <app-toolbar></app-toolbar>
+      <router-outlet></router-outlet>
+    </ion-content>
+    <div
+      *ngIf="devicePlatform === 'android' || devicePlatform === 'ios'"
+      [ngClass]="devicePlatform == 'ios' ? 'mb-6' : ''"
+    >
+      <app-bottom-navigation-bar></app-bottom-navigation-bar>
+    </div>
+
+    <button *ngIf="isGoToTopBtnVisible" (click)="scrollToTop()" class="scrollToTop" title="Top">
+      <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="arrow-up" style="color: white"></ion-icon>
+    </button>
+  </div>
+</ion-app>
+<ion-menu
+  side="start"
+  swipeGesture="false"
+  content-id="main-content"
+  [ngClass]="devicePlatform == 'ios' ? 'ion-margin-bottom ion-padding-bottom mb-6' : ''"
+>
+  <ion-header>
+    <ion-toolbar translucent class="text-center">
+      <ion-title [color]="isDarkMode ? 'light' : 'dark'">{{ "menu" | transloco }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <div id="page-container">
+        <div id="content-wrap">
+          <ion-menu-toggle auto-hide="true">
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="cursor-pointer" routerDirection="forward" (click)="getShowInfoFlag()">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="home-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-home" | transloco }}
+            </ion-item>
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="cursor-pointer" routerDirection="forward" [routerLink]="['/app', 'news']">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="volume-high-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-news" | transloco }}
+            </ion-item>
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="cursor-pointer" routerDirection="forward" [routerLink]="['/app', 'quick-links']">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-quick-links" | transloco }}
+            </ion-item>
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="cursor-pointer" routerDirection="forward" [routerLink]="['/app', 'help']">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-help" | transloco }}
+            </ion-item>
+            <ion-item
+              [color]="isDarkMode ? 'dark' : 'light'"
+              class="cursor-pointer"
+              routerDirection="forward"
+              [routerLink]="['/notifications']"
+              *ngIf="authFlag"
+            >
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="notifications" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-notifications" | transloco }}
+            </ion-item>
+            <ion-item
+              [color]="isDarkMode ? 'dark' : 'light'"
+              class="cursor-pointer"
+              routerDirection="forward"
+              [routerLink]="['/app', 'select-lottery' , '1']"
+              *ngIf="authFlag"
+            >
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-apply" | transloco }}
+            </ion-item>
+            <ion-item
+              [color]="isDarkMode ? 'dark' : 'light'"
+              class="cursor-pointer"
+              routerDirection="forward"
+              [routerLink]="['/app', 'application-detail-lists']"
+              *ngIf="authFlag"
+              ><!-- [routerLink]="['/app', 'application-list ']"-->
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-application-Lists" | transloco }}
+            </ion-item>
+
+            <!-- <ion-item
+              [color]="isDarkMode ? 'dark' : 'light'"
+              class="cursor-pointer"
+              routerDirection="forward"
+              [routerLink]="['/app', 'application-detail-list']"
+              *ngIf="authFlag"
+              >
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-application-List" | transloco }}
+            </ion-item> -->
+
+            <!-- <ion-item
+              [color]="isDarkMode ? 'dark' : 'light'"
+              class="cursor-pointer"
+              routerDirection="forward"
+              [routerLink]="['/app', 'applicant-requests']"
+              *ngIf="authFlag"
+              >
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-request" | transloco }} 
+            </ion-item> -->
+            <!-- <ion-item
+            class="cursor-pointer"
+            routerDirection="forward"
+            [routerLink]="['/app', 'application-detail-list']"
+            *ngIf="authFlag"
+          >
+            <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+            {{ "menu-application-Detail-List" | transloco }}
+          </ion-item> -->
+
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/noc/noc-list']" *ngIf="authFlag">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="newspaper" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-noc" | transloco }}
+            </ion-item> -->
+
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/my-grievances']" *ngIf="authFlag">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-my-issues" | transloco }}
+            </ion-item>
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/my-objection-suggestion']" *ngIf="authFlag">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+              {{ "my-objections-suggestions" | transloco }}
+            </ion-item> -->
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/cert-entry', 'pan-validation']">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-certificate-generation" | transloco }}
+            </ion-item>
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/app', 'select-board', 'VIEW']"> -->
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/app','select-lottery' , '1', 'VIEW']">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+              {{ "title-header-live-lottery" | transloco }}
+            </ion-item>
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/app', 'old-lottery']">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+              {{ "title-header-old-lottery" | transloco }}
+            </ion-item> -->
+            <!-- <ion-item
+            [color]="isDarkMode ? 'dark' : 'light'"
+              routerDirection="forward"
+              [routerLink]="['/app', 'accepted-applications', 'accepted-applications-lottery']"
+            >
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-draft-list" | transloco }}
+            </ion-item> -->
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/app', 'draw-result']">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-draw-result" | transloco }}
+            </ion-item> -->
+            <ion-item
+              [color]="isDarkMode ? 'dark' : 'light'"
+              routerDirection="forward"
+              [routerLink]="['/app', 'verify-scanned-qr']"
+              *ngIf="devicePlatform === 'android' || devicePlatform === 'ios'"
+            >
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="search-outline" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-verify-qr" | transloco }}
+            </ion-item>
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/contact-us']">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="call" slot="start" class="mr-2"></ion-icon>
+              {{ "label-contact-us" | transloco }}
+            </ion-item>
+
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" routerLink="/privacy-policy">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="shield-checkmark-outline" slot="start" class="mr-2"></ion-icon>
+              {{ "privacy-policy" | transloco }}
+            </ion-item>
+
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" routerLink="/important-links">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
+              {{ "important-links" | transloco }}
+            </ion-item>
+
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="cursor-pointer" routerDirection="forward" (click)="logout()" *ngIf="authFlag">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="log-out-outline" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-logout" | transloco }}
+            </ion-item>
+            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward">
+              <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="close" slot="start" class="mr-2"></ion-icon>
+              {{ "menu-close" | transloco }}
+            </ion-item>
+          </ion-menu-toggle>
+        </div>
+        <footer id="footer">
+          <!-- <div class="coontainer"> -->
+          <!-- <div class="child"> -->
+          <p><b>Last Login:</b> {{ digiLastLoginDate }}</p>
+          <!-- <br /> -->
+          <p><b>App Version:</b> 2.DEMO</p>
+          <!-- </div> -->
+          <!-- </div> -->
+        </footer>
+      </div>
+    </ion-list>
+
+    <!-- <div class="coontainer">
+      <div class="child">
+        <p style="font-size: 10px">DEMO_v_061222_1100</p>
+      </div>
+    </div> -->
+  </ion-content>
+</ion-menu>
