@@ -14,9 +14,9 @@ export const environment = {
   // REGISTRATION_URL: "https://cidcoregistration.probitysoftware.in/",
   // GRIEVANCE_URL: "http://103.11.152.158:8008/",
   // APPLICATION_URL: "https://cidcoapplication.probitysoftware.in"
-  REGISTRATION_URL: "http://localhost:38089/",
-  GRIEVANCE_URL: "http://localhost:38089/",
-  APPLICATION_URL: "http://localhost:8066"
+  REGISTRATION_URL: "http://10.250.5.247:38089/",
+  GRIEVANCE_URL: "http://10.250.5.247:38089/",
+  APPLICATION_URL: "http://10.250.5.247:8066"
 };
 
 /*
