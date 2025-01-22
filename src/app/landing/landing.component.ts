@@ -116,10 +116,25 @@ export class LandingComponent implements OnInit {
 
   async getBannerImages() {
     this.banners = [];
-    const response: any = await this.questionAnswerService.getBannerImages();
-    if (response.status === 'SUCCESS') {
-      this.banners = response.bannerImages;
-    }
+    // const response: any = await this.questionAnswerService.getBannerImages();
+    // if (response.status === 'SUCCESS') {
+    //   this.banners = response.bannerImages;
+    // }
+
+    const bannerData = [
+      {
+        imageUrl: "assets/banner2.jpg",
+        heading: null,
+        description: null
+      },
+      {
+        imageUrl: "assets/banner1.jpg",
+        heading: null,
+        description: null
+      }
+    ];
+    this.banners = bannerData.map(data => new BannerImageModel(data.imageUrl, data.heading, data.description));
+          
   }
 
   async startNow() {

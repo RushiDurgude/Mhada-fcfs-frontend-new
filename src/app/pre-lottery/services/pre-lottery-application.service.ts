@@ -115,7 +115,7 @@ export class PreLotteryApplicationService {
 
   fetchActiveHelpCidco() {
     return this.http.get<AnnouncementModel[]>(
-      api_url + "/guest/announcements/help/cidco"
+      api_url + "/guest/announcements/help/mhada"
     );
   }
 
