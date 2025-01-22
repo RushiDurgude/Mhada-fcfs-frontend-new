@@ -4,11 +4,9 @@
 
 export const environment = {
   production: false,
-  REGISTRATION_URL: "http://localhost:38099/",
-  //REGISTRATION_URL: "http://103.11.152.158:8084/",
-  GRIEVANCE_URL: "http://localhost:38099/",
-  //APPLICATION_URL: "http://103.11.152.158:7072"
-  APPLICATION_URL: "http://localhost:7066"
+  REGISTRATION_URL: "http://localhost:38089/",
+  GRIEVANCE_URL: "http://localhost:38089/",
+  APPLICATION_URL: "http://localhost:8066"
 
 };
 
