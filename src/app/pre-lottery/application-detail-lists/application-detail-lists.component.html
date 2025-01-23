@@ -54,10 +54,11 @@
                     <span style="cursor: pointer;">View Acknowledgment</span>
                   </a>
                 
-                  <a class="more-receipts" *ngIf="element.applicationPaymentStatus === 'Payment received'"
+                  <a class="more-receipts" 
+                  *ngIf="element.applicationPaymentStatus === 'Payment received' && !(element.emdAmount == 0 && element.applicationFee == 0)"
                   (click)="showReceipts(element.key)">
                     <mat-icon>visibility</mat-icon>
-                    <span style="cursor: pointer;">EMD Receipts</span>
+                    <span style="cursor: pointer;">EMD Receipt</span>
                   </a>
                 </div>
                 
@@ -66,7 +67,7 @@
                   <!-- justify-content-between -->
                   <button class="status-btn approve">{{ element.applicationFormStatus }}</button>
                   <button class="status-btn pending" *ngIf="element.applicationPaymentStatus === 'Payment not received'">EMD Payment Pending</button>
-                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment received'">EMD Payment Recieved</button>
+                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment received' && !(element.emdAmount == 0 && element.applicationFee == 0)">EMD Payment Recieved</button>
                   <!-- <button class="status-btn reject">Reject</button>
                   <button class="status-btn forward">Forward</button>
                   <button class="status-btn forward">Forward</button> -->
