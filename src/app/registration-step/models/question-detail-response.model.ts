@@ -29,6 +29,7 @@ import { HandicappedResponse } from "./handicapped-response.mode";
 import { AddressResponse } from "./address-response.model";
 import { JournalistResponse } from "./journalist-response.model";
 import { EmailMobileResponse } from "./email-mobile-response.model";
+import { FreedomfighterResponse } from "./freedomfighter-response.model";
 
 export class QuestionDetailResponse {
     constructor(
@@ -62,6 +63,8 @@ export class QuestionDetailResponse {
         public addressResponse: AddressResponse,
         public journalistResponse: JournalistResponse,
         public emailMobileResponse: EmailMobileResponse,
+
+        public freedomfighterResponse: FreedomfighterResponse,
 
         public status: string,
         public errorMessage: string
