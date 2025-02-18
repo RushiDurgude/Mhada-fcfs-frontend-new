@@ -27,6 +27,7 @@ import { AddressRequest } from "./address-request.model";
 import { JournalistRequest } from "./journalist-request.model";
 import { OldWinnerRequest } from "./old-winner-request.model";
 import { EmailMobileRequest } from "./email-mobile-request.model";
+import { FreedomfighterRequest } from "./freedomfighter-request.model";
 
 export class QuestionRequest {
     constructor(
@@ -58,6 +59,7 @@ export class QuestionRequest {
         public addressRequest?: AddressRequest,
         public journalistRequest?: JournalistRequest,
         public oldWinnerRequest?: OldWinnerRequest,
-        public emailMobileRequest?: EmailMobileRequest
+        public emailMobileRequest?: EmailMobileRequest,
+        public freedomfighterRequest?: FreedomfighterRequest,
     ) { }
 }
