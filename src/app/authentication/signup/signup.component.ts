@@ -48,7 +48,7 @@ export class SignupComponent implements OnInit {
   isEmailVisible: any = false;
   resendOtp: string = "N";
   multipleNamesExist: boolean = false;
-  siteKey: string = "6LeWlokqAAAAAACB5JwblsHJMN57Xd_G7-dSEFRQ";
+  siteKey: string = "6LfIUqsqAAAAACZ0zougWrAW_gE5Bs_MuzKa5DYW";
   @ViewChild("target") MyProp: ElementRef;
   constructor(
     private dialog: MatDialog,

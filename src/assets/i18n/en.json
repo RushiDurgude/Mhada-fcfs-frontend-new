@@ -1020,6 +1020,9 @@
   "mhada": "MHADA FCFS",
   "download-our-apps": "Download our apps now",
   "proceed-to-digilocker-spouse": "Proceed to Digilocker",
+  
+  "freedome-question-label-content-1": "If you are <b>Freedom Fighter</b> you need to generate <b>Freedom Fighter certificate</b> from the system. Get it signed stamped from the competent authority and upload it in the below box. ",
+  "freedome-question-label-content-2": "To Generate <b>Freedom Fighter certificate-</b>",
 
   "handicap-question-label-content-1": "If you are <b>Handicap</b>, you need to have UDID Card -",
   "handicap-question-label-apply-button":"Apply Here",
