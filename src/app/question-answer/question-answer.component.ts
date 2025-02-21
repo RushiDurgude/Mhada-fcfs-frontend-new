@@ -141,7 +141,7 @@ export class QuestionAnswerComponent implements OnInit {
   @ViewChild("captchaElem") captchaElem: RecaptchaComponent;
 
   iAgree: any;
-  siteKey: string = "6LeWlokqAAAAAACB5JwblsHJMN57Xd_G7-dSEFRQ";
+  siteKey: string = "6LfIUqsqAAAAACZ0zougWrAW_gE5Bs_MuzKa5DYW";
   
   isDarkMode: boolean = false;
   isExServiceman: boolean = true;
