@@ -42,7 +42,7 @@ export class QsSpousePanComponent implements OnInit {
   isCaptchaClicked: boolean = false;
   isCaptchaVisible: boolean = true;
   @ViewChild("captchaElem") captchaElem: RecaptchaComponent;
-  siteKey: string = "6LeWlokqAAAAAACB5JwblsHJMN57Xd_G7-dSEFRQ";
+  siteKey: string = "6LfIUqsqAAAAACZ0zougWrAW_gE5Bs_MuzKa5DYW";
   selectedRadioOption: string;
 
   constructor(

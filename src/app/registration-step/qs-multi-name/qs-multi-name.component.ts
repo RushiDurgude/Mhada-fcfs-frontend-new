@@ -32,7 +32,7 @@ export class QsMultiNameComponent implements OnInit {
   // OLD
   platform = localStorage.getItem("platform");
   multipleNamesExist: boolean = false;
-  siteKey: string = "6LeWlokqAAAAAACB5JwblsHJMN57Xd_G7-dSEFRQ";
+  siteKey: string = "6LfIUqsqAAAAACZ0zougWrAW_gE5Bs_MuzKa5DYW";
   aadharName: string = "";
   panName: string = "";
   consentAccepted: boolean = false;

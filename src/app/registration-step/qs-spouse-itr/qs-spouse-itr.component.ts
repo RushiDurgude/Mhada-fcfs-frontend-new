@@ -22,7 +22,7 @@ export class QsSpouseItrComponent implements OnInit {
   dirtyForm: boolean = false;
   workingStatus: string;
   @ViewChild("captchaElem") captchaElem: RecaptchaComponent;
-  siteKey: string = "6LeWlokqAAAAAACB5JwblsHJMN57Xd_G7-dSEFRQ";
+  siteKey: string = "6LfIUqsqAAAAACZ0zougWrAW_gE5Bs_MuzKa5DYW";
   iAgree: boolean = false;
   latestRevisedItr: boolean = false;
   isCaptchaClicked: boolean = false;
