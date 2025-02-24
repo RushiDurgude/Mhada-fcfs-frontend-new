@@ -70,11 +70,11 @@
                     </div>
                   </div>
                 <div class="grid col-12 p-0 m-0 mt-0">
-                    <div class="grid p-0 d-flex flex-column" *ngIf="filteredSchemes">
+                    <div class="col-12 grid p-0 d-flex flex-column" *ngIf="filteredSchemes">
                         <div *ngFor="let scheme of filteredSchemes" class="col-12 sm:col-4 md:col-6 lg:col-12 p-0 mt-3"
                             [ngClass]="scheme.canApplyForScheme ? 'cursor-pointer' : 'cursor-not-allowed'">
 
-                            <div class="col-12 p-0 border-1 border-gray-400 shadow-2 bg-white d-flex align-items-start container-spacing"
+                            <div class="col-12 sm:col-4 md:col-6 lg:col-12 p-0 border-1 border-gray-400 shadow-2 bg-white d-flex align-items-start"
                                 style="padding: 10px; align-items: flex-start; border-radius: 4px; border: 1px solid #E6E6E6; background-color: #ffffff;"
                                 *ngIf="scheme.canApplyForScheme">
 
@@ -84,10 +84,10 @@
                                     <!-- Image Section -->
                                 
                                     <div class="col-12 md:col-3 lg:col-3 xl:col-3" *ngIf="scheme?.buildingImages.length > 0; else defaultImage">
-                                      <img class="p-0" [src]="api_url + scheme?.buildingImages[0]" style="width: 300px; height: 135px;" />
+                                      <img class="p-0" [src]="api_url + scheme?.buildingImages[0]" style="width: 260px; height: 135px;" />
                                     </div>
                                     <ng-template #defaultImage class="col-12 md:col-3 lg:col-3 xl:col-3">
-                                      <img class="p-0" src="assets/default-building.png" alt="Default Image" style="width: 300px; height: 135px;" />
+                                      <img class="p-0" src="assets/default-building.png" alt="Default Image" style="width: 260px; height: 135px;" />
                                     </ng-template>
                                   
                                     <!-- Scheme Title Section -->
@@ -177,7 +177,7 @@
                                     </div>
                                 </div>                                  
                             </div>
-                            <div class="col-12 p-0 border-1 border-gray-400 shadow-2 bg-white d-flex align-items-start container-spacing"
+                            <div class="col-12 sm:col-4 md:col-6 lg:col-12 p-0 border-1 border-gray-400 shadow-2 bg-white d-flex align-items-start"
                                 style="padding: 10px; align-items: flex-start; border-radius: 4px; border: 1px solid #E6E6E6; background-color: #ffffff;"
                                 *ngIf="!scheme.canApplyForScheme">
 
