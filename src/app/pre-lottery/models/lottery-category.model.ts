@@ -4,5 +4,6 @@ export class LotteryCategoryModel {
         public categoryCode: string, 
         public categoryName: string, 
         public displaySequence: number,
+        public categoryGroup: any,
         public lotteryKey: number) { }
 }

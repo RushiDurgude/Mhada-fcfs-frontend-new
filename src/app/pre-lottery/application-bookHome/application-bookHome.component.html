@@ -78,13 +78,15 @@ style="min-height: 100%; overflow: hidden;" >
                             class="grid p-2">
                             <div class="grid col-12 p-0 pb-4" style="border-radius: 6px; display: flex; justify-content: space-between;">
                                 <div class="image-container" style="display: flex; flex-direction: column;">
+                                    <div *ngIf="this.flatSelected != null && this.selectedWing === 'Y' && applicationModel?.schemePhoto && !applicationModel.schemePhoto.endsWith('null')">
                                     <div style="background-color: #F0F0F0; border: 1px solid #CCCCCC; padding: 10px;margin-bottom: 5px;">
                                         <label for="scheme" style="color: #979292;">
                                           <img [src]="api_url+applicationModel?.schemePhoto" class="responsive-image" style="width: 200px; height: 150px;" alt="Buildings" (click)="openZoomedModal(api_url+applicationModel?.schemePhoto)">
                                         </label>
                                         <div style="text-align: center; margin-top: 2px;">Layout Plan</div>
                                       </div>
-                                    <div *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                    </div>
+                                    <div *ngIf="this.flatSelected != null && this.selectedWing === 'Y' && flatSelected?.floorPhoto && !flatSelected.floorPhoto.endsWith('null')">
                                         <div style="background-color: #F0F0F0; border: 1px solid #CCCCCC; padding: 10px;margin-bottom: 5px;">
                                         <label for="scheme" style="color: #979292;">
                                             <img [src]="api_url+flatSelected?.floorPhoto" class="responsive-image" style="width: 200px; height: 150px;" alt="FloorPhoto"
@@ -141,8 +143,10 @@ style="min-height: 100%; overflow: hidden;" >
                                                 class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
                                                 style="appearance: auto" (change)="loadBuildings($event)">
                                                 <option value="">{{"option-select" | transloco}}</option>
-                                                <option *ngFor="let category of categoryList" [value]="category">{{category}}</option>
-                                            </select>    
+                                                <option *ngFor="let category of categoryList" [value]="category.categoryCode">
+                                                    {{category.categoryCode}} - {{category.categoryName}}
+                                                  </option>                                             
+                                                </select>    
                                         </div> 
                                         <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0" style="flex: 1;">
                                             <label for="buildingNo" style="color: #000000;font-size: larger;">

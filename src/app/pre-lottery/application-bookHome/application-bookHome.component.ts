@@ -13,6 +13,7 @@ import { ViewPdfComponent } from "../view-pdf/view-pdf.component";
 import { FloorTenementModel } from "../models/FloorTenementModel";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ZoomedImageModalComponent } from "src/app/zoom-image/zoomed.component";
+import { LotteryCategoryModel } from "../models/lottery-category.model";
 
 @Component({
   selector: "app-application-bookHome",
@@ -36,7 +37,7 @@ export class ApplicationBookHomeComponent implements OnInit {
   category:string;
   wingList: string[] = [];
   buildingList: string[] = [];
-  categoryList: string[] = [];
+  categoryList: LotteryCategoryModel[] = [];
   floorGrid: { number: FloorTenementModel[] };
   availableCount:number;
   allotedCount:number;
@@ -175,13 +176,14 @@ export class ApplicationBookHomeComponent implements OnInit {
 
   loadCategory() {  
     this.preLotteryApplicationService.fetchCategoryList(this.applicationKey)
-    .subscribe((data:any) => {
-        this.categoryList = data.categoryList;
-    },
-    (error) => {
-        console.log(error);
-    });
- }
+      .subscribe((data: any) => {
+        this.categoryList = data;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>",this.categoryList);
+      },
+      (error) => {
+        console.log('Error fetching category list:', error);
+      });
+  }
 
  loadBuildings(event: any) { 
   let category = event?.target?.value;
