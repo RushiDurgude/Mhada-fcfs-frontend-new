@@ -55,7 +55,7 @@ style="min-height: 100%; overflow: hidden;" >
                             [pendingPayments]="applicationModel.pendingPayments"
                             ></app-application-status>
                     </div>
-                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0" *ngIf="applicationModel?.flatDetail">
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0" *ngIf="applicationModel?.flatDetail && applicationModel?.emdAmount > 0">
                         <h4 class="mt-1 text-lg border-bottom-2 border-bluegray-100">{{"label-emd-payment-status" | transloco}}</h4>
                         <app-application-status 
                             class="col-12 p-0"
