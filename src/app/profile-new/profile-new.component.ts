@@ -148,7 +148,8 @@ export class ProfileNewComponent implements OnInit {
   }
 
   apply() {
-    this.router.navigate(["/app", "select-lottery", "1"], { replaceUrl: true });
+  //  this.router.navigate(["/app", "select-lottery", "1"], { replaceUrl: true });
+    this.router.navigate(["/app", "select-board"], { replaceUrl: true });
   }
 
   async displayProgressSpinner() {

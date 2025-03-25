@@ -10,7 +10,7 @@ import { SharedService } from "../toolbar/shared.service";
 
 export const categories: {[key: string]: {en: string, mr: string}} = {
     // 'AR': {en: 'Artist (AR)', mr: 'कलाकार (AR)'},
-    // 'CG': {en: 'Central Government (CG)', mr: 'केंद्रीय कर्मचारी (CG)'},
+    'CG': {en: 'Central Government (CG)', mr: 'केंद्रीय कर्मचारी (CG)'},
     // 'DF': {en: 'Defence Family (DF)', mr: 'लढाईत मृत झालेल्यांचे कौटुंबिय अथवा जायबंदी होऊन अपंग झालेले कर्मचारी (DF)'},
     'EX': {en: 'Ex-Serviceman (EX)', mr: 'माजी सैनिक (EX)'},
     // 'FF': {en: 'Freedom Fighter (FF)', mr: 'स्वातंत्र्य सैनिक व त्याचे वारसदार (FF)'},

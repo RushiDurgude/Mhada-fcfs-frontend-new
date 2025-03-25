@@ -96,6 +96,14 @@
                         {{"button-view-receipt" | transloco}}
                     </button>
                 </div>
+                <div class="col-12 text-center mt-2" *ngIf="paymentResponseModel?.status === 'SUCCESS'">
+                    <button
+                    class="applicant-btn shadow-4 mt-0 p-2"
+                    [routerLink]="['/app', 'application-detail-lists']"
+                  >
+                    {{ "menu-application-Lists" | transloco }}
+                  </button>
+                </div>
                 <div class="col-12 text-center mt-0"  
                     *ngIf="paymentResponseModel?.status === 'PENDING' || paymentResponseModel?.status === 'FAILURE'">
                     <div class="grid col-12 warning-message justify-content-center m-0 p-2">
