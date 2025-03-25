@@ -1062,7 +1062,8 @@ export class ProfileComponent implements OnInit {
     //this.progressSpinnerDialog.close();
     //if (!response.error) {
     //localStorage.setItem("categories", response);
-    this.router.navigate(["/app", "select-lottery", "1"]);
+    //this.router.navigate(["/app", "select-lottery", "1"]);
+    this.router.navigate(["/app", "select-board"]);
     //} else {
     //this.errorToast(response);
     //}
