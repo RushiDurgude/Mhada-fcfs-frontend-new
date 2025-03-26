@@ -70,6 +70,7 @@ export class ApplicationComponent implements OnInit {
   showChequePassbookUpload: boolean = false;
   uploadedBankChequePassbookFile: string | ArrayBuffer;
   uploadedBankChequePassbookFileName: string;
+  drawWinner:boolean = false;
 
   previewImage: string = '';
   api_url: string = '';
@@ -144,6 +145,7 @@ export class ApplicationComponent implements OnInit {
         }
 
         this.stopForMCGMYes = this.applicationFormModel.stopForMCGMYes;
+        this.drawWinner = this.applicationFormModel.drawWinner;
 
         this.showChequePassbookUpload = this.applicationFormModel.showChequePassbookUpload;
 
@@ -159,10 +161,10 @@ export class ApplicationComponent implements OnInit {
         this.formLoadStatus = applicationFormModel.status;
         this.formLoadErrorMessage = applicationFormModel.errorMessage;
   
-        // if(this.applicationFormModel.lotteryCategories 
-        //   && this.applicationFormModel.lotteryCategories.length === 0) {
-        //   this.applicableCategoriesError = true;
-        // }
+        if(this.applicationFormModel.lotteryCategories 
+          && this.applicationFormModel.lotteryCategories.length === 0) {
+          this.applicableCategoriesError = true;
+        }
 
         this.loaded = true;
       }
@@ -185,9 +187,13 @@ export class ApplicationComponent implements OnInit {
   onSubmit() {
     console.log(this.appForm.valid, this.appForm.value);
 
-    // if (this.applicableCategoriesError){
-    //   return;
-    // }
+    if (this.applicableCategoriesError){
+      return;
+    }
+
+    if (this.drawWinner){
+      return;
+    }
     
     if (this.appForm.valid && ((this.appForm.value.havingMCGMArea === 'N' && 
     this.stopForMCGMYes) || !this.stopForMCGMYes)) {
