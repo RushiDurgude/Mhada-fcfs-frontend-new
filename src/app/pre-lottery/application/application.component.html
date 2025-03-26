@@ -79,15 +79,20 @@
         <form
           [formGroup]="appForm"
           #localForm="ngForm"
-          (ngSubmit)= "onSubmit()"
+          (ngSubmit)="isApplyDisabled = true; onSubmit()"
           class="grid p-2"
         >
         <!-- (ngSubmit)="isApplyDisabled = true; -->
-          <!-- <div class="col-12" *ngIf="applicableCategoriesError">
+        <div class="col-12" *ngIf="drawWinner">
+          <small class="error-block">
+            {{ "error-draw-winner-apply" | transloco }}
+          </small>
+        </div>
+          <div class="col-12" *ngIf="applicableCategoriesError">
             <small class="error-block">
               {{ "error-applicable-categories-empty" | transloco }}
             </small>
-          </div> -->
+          </div>
           <h5 class="col-12 p-2 text-primary" style="font-family: Poppins;
           font-size: 16px;
           font-style: normal;
@@ -99,7 +104,7 @@
           >
           <!-- Image Section -->
           <div
-            class="image-section"
+            class="image-section" 
             style="flex: 0 0 auto; width: 92px; height: 60px;">
             <ng-container *ngIf="applicationFormModel?.buildingImages.length > 0; else defaultImage">
               <img class="p-0" [src]="api_url + applicationFormModel?.buildingImages[0]" style="width: 100%; height: auto;" />
