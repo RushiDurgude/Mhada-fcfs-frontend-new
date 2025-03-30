@@ -108,12 +108,12 @@ style="min-height: 100%; overflow: hidden;" >
                                     <div class="field col-12 sm:col-6 md:col-6 lg:col-4 imagedetails">
                                         <!-- Image Section -->
                                         <div class="image-section" style="flex: 0 0 auto; width: 92px; height: 60px;">
-                                          <ng-container *ngIf="applicationFormModel?.buildingImages.length > 0; else defaultImage">
+                                          <!-- <ng-container *ngIf="applicationFormModel?.buildingImages.length > 0; else defaultImage">
                                             <img class="p-0" [src]="api_url + applicationFormModel?.buildingImages[0]" style="width: 100%; height: auto;" />
                                           </ng-container>
-                                          <ng-template #defaultImage>
+                                          <ng-template #defaultImage> -->
                                             <img class="p-0" src="assets/default-building.png" alt="Default Image" style="width: 92px; height: 60px;" />
-                                          </ng-template>
+                                          <!-- </ng-template> -->
                                         </div>
                                       
                                         <!-- Text Content Section -->
