@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { AlertController, ModalController, ToastController } from "@ionic/angular";
@@ -22,6 +22,11 @@ import { SchemeModel } from "../models/scheme.model";
 export class ApplicationComponent implements OnInit {
   scheme: SchemeModel;
   applicationFormModel: ApplicationFormModel;
+  selectedAgency: string = '';
+  couponCode: string = '';
+  couponValid: boolean | null = null; 
+  errorMessage: string = '';
+  successMessage: string = '';
   lotteryKey: number;
   boardKey: number;
   schemeKey: number;
@@ -74,22 +79,26 @@ export class ApplicationComponent implements OnInit {
 
   previewImage: string = '';
   api_url: string = '';
+  selectedAgencyError: boolean = false;
+  couponCodeError: boolean =false;
+
 
   constructor(private preLotteryApplicationService: PreLotteryApplicationService, 
     private route: ActivatedRoute, private dialog: MatDialog, private router: Router,
     private toastController: ToastController, private modalCtrl: ModalController,
-    private translocoService: TranslocoService, private alertController: AlertController) {}
+    private translocoService: TranslocoService, private alertController: AlertController,private fb: FormBuilder,
+    private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.api_url = api_url;
+    // this.initializeForm();
     this.route.params.subscribe((params: Params) => {
       this.boardKey = +params["boardKey"];
       this.lotteryKey = +params["lotteryKey"];
       this.schemeKey = +params["schemeKey"];
-
       this.loadData();
-
     });
+    console.log('Form Controls:', this.appForm.controls); 
     
     this.appForm = new FormGroup({
       havingMCGMArea: new FormControl(null, Validators.required),
@@ -103,8 +112,29 @@ export class ApplicationComponent implements OnInit {
       refundMode: new FormControl(null, Validators.required),
       refundForm: new FormGroup({}),
       nomineeDetailForm: new FormGroup({}),
+      selectedAgency: new FormControl(null, Validators.required),
+      couponCode:new FormControl(null),
       // nomineeDetailArray: new FormArray([])
     });
+
+
+    this.appForm.get('couponCode')?.valueChanges.subscribe(() => {
+      this.validateCoupon();
+    });
+  }
+
+  // setSelectedAgency(event: Event) {
+  //   debugger
+  //   const selectedValue = (event.target as HTMLSelectElement).value;
+  //   this.selectedAgency = selectedValue;
+  //   console.log("Selected Agency Changed:", this.selectedAgency);
+  // }
+  setSelectedAgency(event: Event) {
+    this.selectedAgency = (event.target as HTMLSelectElement).value;
+    this.appForm.get('selectedAgency')?.setValue(this.selectedAgency);
+
+    console.log('Selected Agency Changed:', this.selectedAgency);
+    this.cdr.detectChanges();
   }
 
   // addNewNominee() {
@@ -128,6 +158,23 @@ export class ApplicationComponent implements OnInit {
   // get nominees() {
   //   return this.appForm.get('nomineeDetailArray')['controls'];
   // }
+
+  initializeForm() {
+    this.appForm = this.fb.group({
+      havingMCGMArea:[null, Validators.required],
+      mcgmAreaDtl: [null],
+
+      isPrivateHouse: [null],
+      isTenementAllotted: [null],
+      isTenementSurrender: [null],
+
+      iAgree: [null, Validators.required],
+      refundMode: [null, Validators.required],
+      selectedAgency: [null, Validators.required],
+      couponCode:[null,Validators.required],
+
+    });
+  }
   
   loadData() {
     this.displayProgressSpinner();
@@ -138,7 +185,7 @@ export class ApplicationComponent implements OnInit {
       if(applicationFormModel.status === 'SUCCESS') {
         this.applicationFormModel = applicationFormModel;
         console.log('stopForMCGMYes : ',this.applicationFormModel.stopForMCGMYes);
-
+        console.log("Agency Types:", this.applicationFormModel.agencyTypes);
         if(this.applicationFormModel.showNomineeEntry) {
           this.showNominee = true;
           this.showNomineeDetails(true);
@@ -146,7 +193,6 @@ export class ApplicationComponent implements OnInit {
 
         this.stopForMCGMYes = this.applicationFormModel.stopForMCGMYes;
         this.drawWinner = this.applicationFormModel.drawWinner;
-
         this.showChequePassbookUpload = this.applicationFormModel.showChequePassbookUpload;
 
         if(this.applicationFormModel.bankVerification && 
@@ -184,6 +230,47 @@ export class ApplicationComponent implements OnInit {
     });
   }
 
+  checkCouponValidity() {
+    // Trim the input value
+    this.couponCode = this.appForm.get('couponCode').value?.trim() || '';
+  
+    if (!this.couponCode) {
+      this.couponValid = null; // Hide messages when empty
+      return;
+    }
+  }
+
+  validateCoupon() {
+    const couponCode = this.appForm.get('couponCode')?.value;
+    if (!couponCode) {
+      console.warn('No Coupon Code Entered!');
+      return;
+    }
+    console.log('Validating Coupon Code:', couponCode);
+    console.log('Coupon Code Entered:', couponCode);  // Debugging Log
+    if (couponCode) {
+      this.preLotteryApplicationService.validateCoupon(couponCode,this.schemeKey).subscribe(
+        (response) => {
+          console.log('API Response:', response);  // Debugging Log
+          if (response.errorMessage) {
+            this.couponValid = false;
+            this.errorMessage = response.errorMessage || 'Invalid Coupon Code!';
+          } else {
+            this.couponValid = true;
+            this.errorMessage = '';
+            this.successMessage = 'Coupon Code Applied Successfully';
+          }
+        },
+        (error) => {
+          this.couponValid = false;
+          this.errorMessage = 'Invalid Coupon Code!';
+          console.error(error);
+        }
+      );
+    }
+  }
+  
+
   onSubmit() {
     console.log(this.appForm.valid, this.appForm.value);
 
@@ -194,6 +281,29 @@ export class ApplicationComponent implements OnInit {
     if (this.drawWinner){
       return;
     }
+
+    if (!this.appForm.value.selectedAgency) {
+      this.selectedAgencyError = true;
+      this.formValidMessage = false;
+      this.preLotteryApplicationService.showErrorToast('Agency selection is required.');
+      return;
+  } else {
+      this.selectedAgencyError = false;
+  }
+
+  if (this.appForm.value.selectedAgency === 'AGENT' && !this.appForm.value.couponCode) {
+      this.couponCodeError = true;
+      this.formValidMessage = false;
+      this.preLotteryApplicationService.showErrorToast('Coupon Code is required');
+      return;
+  } else {
+      this.couponCodeError = false;
+  }
+
+  if (this.appForm.value.selectedAgency === 'AGENT' && !this.couponValid) {
+    this.preLotteryApplicationService.showErrorToast('Please enter a valid Coupon Code');
+    return;
+  }
     
     if (this.appForm.valid && ((this.appForm.value.havingMCGMArea === 'N' && 
     this.stopForMCGMYes) || !this.stopForMCGMYes)) {
@@ -214,6 +324,9 @@ export class ApplicationComponent implements OnInit {
       this.nomineeEmailIdError = false;
      // this.signatureError = false;
       this.bankError = false;
+      this.selectedAgencyError = false;
+      this.couponCodeError = false;
+
 
       console.log('mcgmareadtl---', this.appForm.value.havingMCGMArea === "Y" &&
       (!this.appForm.value.mcgmAreaDtl || this.appForm.value.mcgmAreaDtl.length === 0));
@@ -370,7 +483,9 @@ export class ApplicationComponent implements OnInit {
       //changeRequest
       this.appForm.value.isTenementAllotted,
       this.appForm.value.isTenementSurrender,
-      this.uploadedBankChequePassbookFile
+      this.uploadedBankChequePassbookFile,
+      this.appForm.value.selectedAgency,
+      this.appForm.value.couponCode
     )
     .subscribe((application) => {
       this.progressSpinnerDialog.close();
