@@ -128,7 +128,6 @@
             </p>
           </div>
         </div>
-        
           <div class="col-12 pl-2 pr-2">
             <hr width="100%" size="2" style=background-color:#E6E6E6;height:2px>
           </div>         
@@ -176,6 +175,45 @@
               [formSubmitted]="localForm.submitted"
             ></field-error-component>
           </div> -->
+
+          <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+            <label for="selectedAgency" style="color: #5A5A5A; font-family: Poppins; font-size: 13px; font-style: normal">
+              {{ "label-agent" | transloco }}
+              <span class="text-red-900">*</span>
+            </label>
+            <select
+            id="selectedAgency"
+            (change)="setSelectedAgency($event)"
+            formControlName="selectedAgency"
+            class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+            style="appearance: auto"
+            >
+              <option value="">{{ "option-select" | transloco }}</option>
+              <option *ngFor="let agency of applicationFormModel?.agencyTypes" [value]="agency">
+                {{ agency }}
+              </option>
+            </select>
+          </div>
+          
+          <!-- Debugging -->
+          <!-- <p>Selected Agency: {{ selectedAgency }}</p> -->
+          
+          <!-- Coupon Code Input (Only Show When "AGENT" is Selected) -->
+          <div *ngIf="selectedAgency === 'AGENT'" class="field col-12 sm:col-6 md:col-6 lg:col-4">
+            <label for="couponCode" style="color: #5A5A5A; font-family: Poppins; font-size: 13px; font-style: normal">
+              Coupon Code
+              <span class="text-red-900">*</span>
+            </label>
+            <input
+              id="couponCode"
+              type="text"
+              formControlName="couponCode"
+              (input)="checkCouponValidity()"
+              class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+            />
+            <p *ngIf="couponCode?.trim() && !couponValid" style="color: red; font-size: small;margin-top: 3px;">{{ errorMessage }}</p>
+            <p *ngIf="couponCode?.trim() && couponValid" style="color:green; font-size: small;margin-top: 3px;">{{ successMessage }}</p>
+          </div>                          
 
           <div class="field mb-0 col-12" *ngIf="!stopForMCGMYes">
             <label for="havingMCGMArea" style="color: #979292">

@@ -1051,7 +1051,9 @@
   "landing-details2": "Your Dream Home Awaits with MHADA FCFS! Explore our housing schemes designed to provide quality and affordable homes for all.",
   "label-payment-success": "Payment Successful!",
   "button-booknow": "Book Now",
-  "error-draw-winner-apply": "Mhada Winner not able to Apply"
+  "error-draw-winner-apply": "Mhada Winner not able to Apply",
+  "label-agent": "Select Agency"
+
 
 
 }

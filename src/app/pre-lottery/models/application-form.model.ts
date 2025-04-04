@@ -7,5 +7,5 @@ export class ApplicationFormModel {
         public bankVerification: string, public showNomineeEntry: boolean, 
         public stopForMCGMYes: boolean, public applicantName: string, 
         public showChequePassbookUpload: boolean,public lotteryCode: string,
-        public lotteryName: string,public buildingImages: string[],public drawWinner: boolean) { }
+        public lotteryName: string,public buildingImages: string[],public drawWinner: boolean,public agencyTypes: string[]) { }
 }
