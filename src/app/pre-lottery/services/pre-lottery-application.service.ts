@@ -319,7 +319,9 @@ export class PreLotteryApplicationService {
     signature: string,
     isTenementAllotted: string,
     isTenementSurrender: string,
-    uploadedBankChequePassbookFile: string | ArrayBuffer
+    uploadedBankChequePassbookFile: string | ArrayBuffer,
+    selectedAgency: string,
+    couponCode: string
   ) {
     return this.http.post<ApplicationModel>(
       api_url + "/apply/scheme/" + schemeKey,
@@ -341,6 +343,8 @@ export class PreLotteryApplicationService {
         isTenementAllotted,
         isTenementSurrender,
         uploadedBankChequePassbookFile,
+        selectedAgency,
+        couponCode
       }
     );
   }
@@ -742,6 +746,12 @@ export class PreLotteryApplicationService {
       data: string;
       errorMessage: string;
     }>(api_url + "/applications/" + applicationKey + "/acknowledgement");
+  }
+
+  validateCoupon(couponCode: string,schemeKey: number) {
+    return this.http.get<{ errorMessage: string }>(
+      api_url + "/"+couponCode+"/validateCoupon/" +schemeKey 
+    );
   }
 
   fetchRefundDetail(applicationKey: number) {
