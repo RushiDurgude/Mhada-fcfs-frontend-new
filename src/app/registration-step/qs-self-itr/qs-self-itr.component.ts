@@ -300,7 +300,7 @@ export class QsSelfItrComponent implements OnInit {
     this.evaluateProceed();
   }
 
-  agreeClicked(event) {
+  agreeClicked() {
     this.evaluateProceed();
   }
 
