@@ -27,7 +27,8 @@ export class SignupComponent implements OnInit {
   signUpPassword: string = "";
   signupConfirmPassword: string = "";
   emailPattern: any = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$";
-  passwordPattern: any = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+  // passwordPattern: any = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+  passwordPattern: any = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$";
   panPattern: string = "^[A-Z]{5}[0-9]{4}[A-Z]$";
   mobilePattern: any = "^[0-9]{10}$";
   signUpPanVerified: boolean = true;
@@ -829,7 +830,7 @@ export class SignupComponent implements OnInit {
       this.authenticationService.verifyRegistrationPanNew(this.signUpPanNo.toUpperCase(), this.captchaText,this.captchaKey)
         .subscribe(data => {
           this.closeProgressSpinner();
-
+          this.generateCaptcha();
           if (data.status === 'SUCCESS') {
 
             if (data.registrationStatus === 'NEW_REGISTRATION') {
@@ -855,6 +856,7 @@ export class SignupComponent implements OnInit {
           }
 
         }, async error => {
+          this.generateCaptcha();
           this.isCaptchaVisible = false;
             setTimeout(() => {
               this.isCaptchaVisible = true;
@@ -864,6 +866,7 @@ export class SignupComponent implements OnInit {
         });
 
     } else {
+      this.generateCaptcha();
       this.frontendWarningToast("Invalid-Captcha");
       return;
     }
