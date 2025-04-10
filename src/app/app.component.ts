@@ -86,7 +86,7 @@ export class AppComponent implements ViewDidEnter {
   async checkLastRoute() {
     this.googleAnalyticsService.startTrackerWithId("G-Q5M810MKKM");
     if (
-      window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/") ||
+      window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/") ||
       window.location.href.toString().startsWith("https://uatilms.mhada.gov.in/") ||
       window.location.href.toString().startsWith("https://housing.pmrda.gov.in/") ||
       window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/") 
@@ -174,7 +174,7 @@ export class AppComponent implements ViewDidEnter {
         var lastRoute = localStorage.getItem("lastRoute");
         this.router.navigate([lastRoute], { replaceUrl: true });
       } else if (
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/question-answer?requestId=") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/question-answer?requestId=") ||
         window.location.href.toString().startsWith("https://uatilms.mhada.gov.in/question-answer?requestId=") ||
         window.location.href.toString().startsWith("http://localhost:8100/question-answer?requestId=") ||
         window.location.href.toString().startsWith("http://localhost/question-answer?requestId=") ||
@@ -186,7 +186,7 @@ export class AppComponent implements ViewDidEnter {
         this.afterDigiRouteToQuestionAnswer();
       } 
       else if (
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/question-answer/spouse?requestId=") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/question-answer/spouse?requestId=") ||
         window.location.href.toString().startsWith("https://uatilms.mhada.gov.in/question-answer/spouse?requestId=") ||
         window.location.href.toString().startsWith("http://localhost:8100/question-answer/spouse?requestId=") ||
         window.location.href.toString().startsWith("http://localhost/question-answer/spouse?requestId=") ||
@@ -198,7 +198,7 @@ export class AppComponent implements ViewDidEnter {
         this.afterSpouseDigiRouteToQuestionAnswer();
       } 
       else if (
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/profile?success=true") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/profile?success=true") ||
         window.location.href.toString().startsWith("https://uatilms.mhada.gov.in/profile?success=true") ||
         window.location.href.toString().startsWith("http://localhost:8100/profile?success=true") ||
         window.location.href.toString().startsWith("http://localhost/profile?success=true") ||
@@ -212,25 +212,25 @@ export class AppComponent implements ViewDidEnter {
       } else if (
         window.location.href.toString().startsWith("http://localhost:8100/app/payment-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/payment-verify") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/app/payment-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("capacitor://localhost/app/payment-verify")||
         window.location.href.toString().startsWith("http://localhost:8100/app/esign-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/esign-verify") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/app/esign-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/esign-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/esign-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/esign-verify") ||
         window.location.href.toString().startsWith("capacitor://localhost/app/esign-verify") || 
         window.location.href.toString().startsWith("http://localhost:8100/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/installment-payment-verify") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/app/installment-payment-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("capacitor://localhost/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("http://localhost:8100/app/noc-payment-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/noc-payment-verify") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/app/noc-payment-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/noc-payment-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/noc-payment-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/noc-payment-verify") ||
         window.location.href.toString().startsWith("capacitor://localhost/app/noc-payment-verify")
@@ -238,7 +238,7 @@ export class AppComponent implements ViewDidEnter {
       } else if (
         window.location.href.toString().startsWith("http://localhost:8100/cert-entry") ||
         window.location.href.toString().startsWith("http://localhost/cert-entry") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/cert-entry") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/cert-entry") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/cert-entry") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/cert-entry") ||
         window.location.href.toString().startsWith("capacitor://localhost/cert-entry")
@@ -258,7 +258,7 @@ export class AppComponent implements ViewDidEnter {
       }
     } else {
       if (
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/privacy-policy") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/privacy-policy") ||
         window.location.href.toString().startsWith("https://uatilms.mhada.gov.in/privacy-policy") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/privacy-policy") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/privacy-policy") 
@@ -267,25 +267,25 @@ export class AppComponent implements ViewDidEnter {
       } else if (
         window.location.href.toString().startsWith("http://localhost:8100/app/payment-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/payment-verify") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/app/payment-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("capacitor://localhost/app/payment-verify")||
         window.location.href.toString().startsWith("http://localhost:8100/app/esign-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/esign-verify") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/app/esign-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/esign-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/esign-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/esign-verify") ||
         window.location.href.toString().startsWith("capacitor://localhost/app/esign-verify") ||
         window.location.href.toString().startsWith("http://localhost:8100/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/installment-payment-verify") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/app/installment-payment-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("capacitor://localhost/app/installment-payment-verify") ||
         window.location.href.toString().startsWith("http://localhost:8100/app/noc-payment-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/noc-payment-verify") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/app/noc-payment-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/noc-payment-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/noc-payment-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/noc-payment-verify") ||
         window.location.href.toString().startsWith("capacitor://localhost/app/noc-payment-verify")
@@ -293,14 +293,14 @@ export class AppComponent implements ViewDidEnter {
       } else if (
         window.location.href.toString().startsWith("http://localhost:8100/cert-entry") ||
         window.location.href.toString().startsWith("http://localhost/cert-entry") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/cert-entry") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/cert-entry") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/cert-entry") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/cert-entry") ||
         window.location.href.toString().startsWith("capacitor://localhost/cert-entry")
       ) {
       } else if (
         window.location.href.toString().startsWith("http://localhost:8100/registration-step") ||
-        window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/registration-step") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/registration-step") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/registration-step")
       ) {
         this.router.navigate(["/registration-step"]);
@@ -534,7 +534,7 @@ export class AppComponent implements ViewDidEnter {
                   text: "Go to Website",
                   role: "confirm",
                   handler: () => {
-                    window.open("https://housing.pmrda.gov.in/", "_blank");
+                    window.open("https://bookmyhome.mhada.gov.in/", "_blank");
                   },
                 },
                 {

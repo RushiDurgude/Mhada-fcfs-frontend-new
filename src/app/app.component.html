@@ -65,10 +65,10 @@
               <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
               {{ "menu-quick-links" | transloco }}
             </ion-item>
-            <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="cursor-pointer" routerDirection="forward" [routerLink]="['/app', 'help']">
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" class="cursor-pointer" routerDirection="forward" [routerLink]="['/app', 'help']">
               <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
               {{ "menu-help" | transloco }}
-            </ion-item>
+            </ion-item> -->
             <ion-item
               [color]="isDarkMode ? 'dark' : 'light'"
               class="cursor-pointer"
@@ -136,18 +136,18 @@
               {{ "menu-noc" | transloco }}
             </ion-item> -->
 
-            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/my-grievances']" *ngIf="authFlag">
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/my-grievances']" *ngIf="authFlag">
               <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
               {{ "menu-my-issues" | transloco }}
-            </ion-item>
+            </ion-item> -->
             <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/my-objection-suggestion']" *ngIf="authFlag">
               <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
               {{ "my-objections-suggestions" | transloco }}
             </ion-item> -->
-            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/cert-entry', 'pan-validation']">
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/cert-entry', 'pan-validation']">
               <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
               {{ "menu-certificate-generation" | transloco }}
-            </ion-item>
+            </ion-item> -->
             <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/app', 'select-board', 'VIEW']">
             <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" [routerLink]="['/app','select-lottery' , '1', 'VIEW']"> -->
               <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="list" slot="start" class="mr-2"></ion-icon>
@@ -183,10 +183,10 @@
               {{ "label-contact-us" | transloco }}
             </ion-item>
 
-            <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" routerLink="/privacy-policy">
+            <!-- <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" routerLink="/privacy-policy">
               <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="shield-checkmark-outline" slot="start" class="mr-2"></ion-icon>
               {{ "privacy-policy" | transloco }}
-            </ion-item>
+            </ion-item> -->
 
             <ion-item [color]="isDarkMode ? 'dark' : 'light'" routerDirection="forward" routerLink="/important-links">
               <ion-icon [color]="isDarkMode ? 'light' : 'dark'"  name="information-circle-sharp" slot="start" class="mr-2"></ion-icon>
@@ -208,7 +208,7 @@
           <!-- <div class="child"> -->
           <p><b>Last Login:</b> {{ digiLastLoginDate }}</p>
           <!-- <br /> -->
-          <p><b>App Version:</b> 2.DEMO</p>
+          <!-- <p><b>App Version:</b> 2.DEMO</p> -->
           <!-- </div> -->
           <!-- </div> -->
         </footer>
