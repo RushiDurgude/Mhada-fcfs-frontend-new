@@ -20,9 +20,16 @@
                   <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment not received'" [routerLink]="['/app', 'payment', element.key]">
                     {{ "button-pay-emd-fee" | transloco }}
                   </button>
-                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null" [routerLink]="['/app', 'application-bookHome', element.key]">
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null && element.allowedForBookMyhome" [routerLink]="['/app', 'application-bookHome', element.key]">
                     {{ "book-my-home" | transloco }}
                   </button>
+                  <p class="countdown-timer" *ngIf="countdowns[element.key] && element.flatDetail !== null" style="margin: auto;">
+                    ⏳ Time Left: {{ countdowns[element.key] }}
+                  </p>
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.flatDetail !== null" [routerLink]="['/app', element.key,'installments']">
+                    {{ "button-my-installment" | transloco }}
+                  </button>
+                  
                   <div style="height: 32px; float: left" 
                   *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.pendingPayments && !verifyPaymentClicked">
                   <button class="btn-medium hidden xl:block lg:block md:block" style="height: 34px; float: left; background-color: orange; color: white;border-radius: 4px;font-family: Poppins;    font-size: 12px;" 
