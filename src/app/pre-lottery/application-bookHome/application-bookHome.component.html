@@ -68,6 +68,20 @@ style="min-height: 100%; overflow: hidden;" >
                             [pendingPayments]="applicationModel.pendingPayments"
                             ></app-application-status>
                     </div>
+
+                    <div class="col-12" style="text-align: center; display: flex; flex-direction: column; align-items: center;" *ngIf="applicationModel?.flatDetail">
+                        <p style="color: #5A5A5A; font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px;">
+                          <strong>Disclosure:</strong> Once a tenement is selected and payment is made, it cannot be changed, edited, or modified.
+                        </p>
+                        <p style="color: #5A5A5A; font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px; margin-top: 2px;">
+                          Please complete the first installment within 48 hours to confirm the flat. If you fail to do so, the selected flat will be released.
+                        </p>
+                        <button 
+                          class="applicant-btn hidden xl:block lg:block md:block"
+                          [routerLink]="['/app', applicationModel.key, 'installments']">
+                          {{ "button-my-installment" | transloco }}
+                        </button>
+                      </div>
                 <!-- </div> -->
             </div>
             <div class="col-12" *ngIf="formLoadStatus != null && formLoadStatus === 'SUCCESS'">
