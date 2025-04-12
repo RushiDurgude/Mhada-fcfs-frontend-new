@@ -14,6 +14,7 @@ import { FloorTenementModel } from "../models/FloorTenementModel";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ZoomedImageModalComponent } from "src/app/zoom-image/zoomed.component";
 import { LotteryCategoryModel } from "../models/lottery-category.model";
+import { event } from "jquery";
 
 @Component({
   selector: "app-application-bookHome",
@@ -45,6 +46,7 @@ export class ApplicationBookHomeComponent implements OnInit {
   nACount:number;
   appForm: FormGroup = new FormGroup({});
   flatSelected: FloorTenementModel;
+  // selectedCategory: LotteryCategoryModel | null = null;
 
   constructor(
     private preLotteryApplicationService: PreLotteryApplicationService,
@@ -189,6 +191,9 @@ export class ApplicationBookHomeComponent implements OnInit {
   let category = event?.target?.value;
   console.log("categorycode", event?.target?.value);
   this.category = category;
+  // const categoryCode = this.selectedCategory?.categoryCode;
+  // console.log("categorycode", categoryCode);
+  // this.category = categoryCode;
   this.preLotteryApplicationService.fetchBuildingList(this.applicationKey,category)
   .subscribe((data:any) => {
       this.buildingList = data.buildingList;
@@ -319,11 +324,14 @@ onSubmit() {
 
 submitForm() {
   this.displayProgressSpinner();
-  console.log('TenementId', this.flatSelected?.key);
+  console.log('TenementId:', this.flatSelected?.key);
+  // console.log('CategoryKey:', this.selectedCategory?.key);
+
   this.preLotteryApplicationService
     .saveSelectedTenement(
       this.applicationKey,
       this.flatSelected?.key
+      // this.selectedCategory?.key 
     )
     .subscribe((application) => {
       this.progressSpinnerDialog.close();

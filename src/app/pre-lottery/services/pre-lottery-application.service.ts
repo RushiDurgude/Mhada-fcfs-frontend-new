@@ -1440,12 +1440,14 @@ export class PreLotteryApplicationService {
   saveSelectedTenement(
     applicationKey: number,
     flatKey: number
+    // categoryKey: number
 
   ) {
     return this.http.post<ApplicationModel>(
      api_url + "/apply/save-tenement/" + applicationKey,
       {
         flatKey
+        // categoryKey
       }
     );
   } 

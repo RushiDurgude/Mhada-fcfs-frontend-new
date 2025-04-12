@@ -47,6 +47,7 @@ export class ApplicationListItemModel {
 	    public nomineeRelationWtApplicant: string,
         public schemeKey: number,
         public categoryKey: number,
-        public schemePhoto: string
+        public schemePhoto: string,
+        public tenementBookedDate: string
     ) { }
 }
