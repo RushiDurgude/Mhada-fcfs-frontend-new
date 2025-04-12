@@ -105,7 +105,7 @@ style="min-height: 100%; overflow: hidden;" >
                                     </div>
                                 </div>
                                 <div style="flex: 2; display: flex; flex-direction: column; align-items: flex-start;">
-                                    <div class="field col-12 sm:col-6 md:col-6 lg:col-4 imagedetails">
+                                    <div class="col-12 sm:col-6 md:col-6 lg:col-4 imagedetails">
                                         <!-- Image Section -->
                                         <div class="image-section" style="flex: 0 0 auto; width: 92px; height: 60px;">
                                           <!-- <ng-container *ngIf="applicationFormModel?.buildingImages.length > 0; else defaultImage">
@@ -125,7 +125,10 @@ style="min-height: 100%; overflow: hidden;" >
                                             {{applicationModel?.applicationNo}}
                                           </p>
                                         </div>
-                                      </div>                                      
+                                      </div> 
+                                      <p style="color: #5A5A5A; font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px; text-align: center;">
+                                        <strong>Disclosure:</strong> Once a tenement is selected and payment is made, it cannot be changed, edited, or modified.
+                                      </p>                                
 <!-- 
                                     <div style=" bottom: 0; width: 100%; text-align: right; ">
                                         <div>
@@ -144,6 +147,7 @@ style="min-height: 100%; overflow: hidden;" >
                                                 style="appearance: auto" (change)="loadBuildings($event)">
                                                 <option value="">{{"option-select" | transloco}}</option>
                                                 <option *ngFor="let category of categoryList" [value]="category.categoryCode">
+                                                    <!-- <option *ngFor="let category of categoryList" [ngvalue]="category"> -->
                                                     {{category.categoryCode}} - {{category.categoryName}}
                                                   </option>                                             
                                                 </select>    

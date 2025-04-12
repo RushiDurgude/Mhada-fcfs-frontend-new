@@ -50,6 +50,8 @@ export class ApplicationDetailListComponents implements OnInit {
   timelineData: TimelineDataModel[];
   loadCounter: number;
   emdReceiptCounter: number = 0;
+  countdowns: { [key: number]: string } = {};
+  private intervalId: any;
 
   verifyPaymentClicked: boolean = false;
   @Input() key: number = 0
@@ -166,7 +168,7 @@ export class ApplicationDetailListComponents implements OnInit {
           this.isAllowedForSurrenderAll = data.allowedForSurrenderAll;
           this.allowedForAcceptence = data.allowedForAcceptence;
           this.spouseErrorMsg = data.spouseErrorMsg;
-          this.dataSource = new MatTableDataSource(data.page.content);
+          this.dataSource = new MatTableDataSource<ApplicationListItemModel>(data.page.content);
           this.dataSourcePostLottery = new MatTableDataSource(
             data.pagePostLottery.content
           );
@@ -186,6 +188,7 @@ export class ApplicationDetailListComponents implements OnInit {
               data.pagePostLottery.totalElements
             );
           });
+          this.startCountdown(data.page.content);
           this.isSearchDisabled = false;
           this.isLoading = false;
         },
@@ -224,6 +227,34 @@ export class ApplicationDetailListComponents implements OnInit {
       this.isSearchDisabled = false;
     }
   }
+
+  startCountdown(applications: ApplicationListItemModel[]) {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  
+    this.intervalId = setInterval(() => {
+      const now = new Date().getTime();
+  
+      applications.forEach(app => {
+        if (!app.tenementBookedDate) return;
+  
+        const bookedTime = new Date(app.tenementBookedDate).getTime(); // string to Date
+        const endTime = bookedTime + 48 * 60 * 60 * 1000;
+        const diff = endTime - now;
+  
+        if (diff <= 0) {
+          this.countdowns[app.key] = 'Expired';
+        } else {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          this.countdowns[app.key] = `${hours}h ${minutes}m ${seconds}s`;
+        }
+      });
+    }, 1000);
+  }
+  
 
   async showErrorToast(errorMessage: string) {
     const toast = await this.toastController.create({
