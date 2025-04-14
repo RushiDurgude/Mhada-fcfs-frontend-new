@@ -137,6 +137,15 @@ export class ApplicationComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  allowAlphaNumeric(event: KeyboardEvent) {
+    const pattern = /^[a-zA-Z0-9]$/;
+    const inputChar = event.key;
+  
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
   // addNewNominee() {
   //   let nomineeDetailArray: FormArray = this.appForm.get('nomineeDetailArray') as FormArray;
   //   if(nomineeDetailArray.length < 3) {
