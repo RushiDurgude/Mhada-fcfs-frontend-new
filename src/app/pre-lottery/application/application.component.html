@@ -107,7 +107,7 @@
             class="image-section" 
             style="flex: 0 0 auto; width: 92px; height: 60px;">
             <ng-container *ngIf="applicationFormModel?.buildingImages.length > 0; else defaultImage">
-              <img class="p-0" [src]="api_url + applicationFormModel?.buildingImages[0]" style="width: 100%; height: auto;" />
+              <img class="p-0" [src]="api_url + applicationFormModel?.buildingImages[0]" style="width: 100%; height: 70px;" />
             </ng-container>
             <ng-template #defaultImage>
               <img class="p-0" src="assets/default-building.png" alt="Default Image" style="width: 92px; height: 60px;" />
@@ -209,6 +209,7 @@
               type="text"
               formControlName="couponCode"
               (input)="checkCouponValidity()"
+              (keypress)="allowAlphaNumeric($event)"
               class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
             />
             <p *ngIf="couponCode?.trim() && !couponValid" style="color: red; font-size: small;margin-top: 3px;">{{ errorMessage }}</p>
