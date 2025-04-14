@@ -23,7 +23,7 @@
                   <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null && element.allowedForBookMyhome" [routerLink]="['/app', 'application-bookHome', element.key]">
                     {{ "book-my-home" | transloco }}
                   </button>
-                  <p class="countdown-timer" *ngIf="countdowns[element.key] && element.flatDetail !== null" style="margin: auto;">
+                  <p class="countdown-timer hidden xl:block lg:block md:block" *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED'" style="margin: auto;">
                     ⏳ Time Left: {{ countdowns[element.key] }}
                   </p>
                   <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.flatDetail !== null" [routerLink]="['/app', element.key,'installments']">
@@ -75,6 +75,8 @@
                   <button class="status-btn approve">{{ element.applicationFormStatus }}</button>
                   <button class="status-btn pending" *ngIf="element.applicationPaymentStatus === 'Payment not received'">EMD Payment Pending</button>
                   <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment received' && !(element.emdAmount == 0 && element.applicationFee == 0)">EMD Payment Recieved</button>
+                  <button class="status-btn approve" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED'">Flat Confirmed</button>
+
                   <!-- <button class="status-btn reject">Reject</button>
                   <button class="status-btn forward">Forward</button>
                   <button class="status-btn forward">Forward</button> -->
@@ -84,6 +86,10 @@
                   <button class="applicant-btn block sm:block md:hidden mt-3"  [routerLink]="['/app', 'payment', element.key]" *ngIf="element.applicationPaymentStatus === 'Payment not received'">
                     {{ "button-pay-emd-fee" | transloco }}
                   </button>
+
+                  <p class="countdown-timer block sm:block md:hidden text-center mt-3" *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED'" style="margin: auto;">
+                    ⏳ Time Left: {{ countdowns[element.key] }}
+                  </p>
 
                   <button class="applicant-btn block sm:block md:hidden mt-3"  [routerLink]="['/app', 'payment', element.key]" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null">
                     {{ "book-my-home" | transloco }}
