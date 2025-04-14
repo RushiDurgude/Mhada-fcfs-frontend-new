@@ -97,11 +97,15 @@
             
                   <!-- Check Payment Button -->
                   <div *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.pendingPayments && !verifyPaymentClicked">
-                    <button class="btn-medium block sm:block md:hidden" style="height: 34px; background-color: orange; color: white; border-radius: 4px; font-family: Poppins; font-size: 12px;" 
+                    <button class="btn-medium block sm:block md:hidden mt-3" style="height: 34px; background-color: orange; color: white; border-radius: 4px; font-family: Poppins; font-size: 12px;" 
                       (click)="verifyPayment(element.key)" type="button">
                       {{ "button-check-payment" | transloco }}
                     </button>
                   </div>
+
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null" [routerLink]="['/app', element.key,'installments']">
+                    {{ "button-my-installment" | transloco }}
+                  </button>
                 </div>
               </div>
             </div>            
