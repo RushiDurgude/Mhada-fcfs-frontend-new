@@ -340,9 +340,14 @@ submitForm() {
         this.showSucessToast(application.successMsg);
         this.loadData();
       }
-      else {
+      else {        
         this.showErrorToast(application.errorMessage);
-      }
+     if (application.errorMessage === 'Selected Flat is already booked') {
+       setTimeout(() => {
+      location.reload();
+    }, 1500); 
+  }
+  }
     }, error => {
       this.progressSpinnerDialog.close();
       
