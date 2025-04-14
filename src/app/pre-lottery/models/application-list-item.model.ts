@@ -48,6 +48,7 @@ export class ApplicationListItemModel {
         public schemeKey: number,
         public categoryKey: number,
         public schemePhoto: string,
-        public tenementBookedDate: string
+        public tenementBookedDate: string,
+        public tenementBookedStatus: string
     ) { }
 }
