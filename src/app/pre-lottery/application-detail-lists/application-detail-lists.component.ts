@@ -93,7 +93,7 @@ export class ApplicationDetailListComponents implements OnInit {
 
   pageSizeOptions: number[] = [10, 25, 100];
   totalRows = 0;
-  pageSize = 10;
+  pageSize = 100;
   currentPage = 0;
 
   pageSizeOptions1: number[] = [10, 25, 100];
