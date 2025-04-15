@@ -49,6 +49,7 @@ export class ApplicationListItemModel {
         public categoryKey: number,
         public schemePhoto: string,
         public tenementBookedDate: string,
-        public tenementBookedStatus: string
+        public tenementBookedStatus: string,
+        public allowedForBookMyhome: boolean
     ) { }
 }
