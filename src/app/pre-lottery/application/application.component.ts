@@ -138,7 +138,9 @@ export class ApplicationComponent implements OnInit {
   }
 
   allowAlphaNumeric(event: KeyboardEvent) {
-    const pattern = /^[a-zA-Z0-9]$/;
+    // const pattern = /^[a-zA-Z0-9]$/;
+    const pattern = /^[a-zA-Z0-9-]$/;
+
     const inputChar = event.key;
   
     if (!pattern.test(inputChar)) {
