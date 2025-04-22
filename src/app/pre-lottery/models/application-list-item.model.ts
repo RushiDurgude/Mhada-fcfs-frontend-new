@@ -50,6 +50,7 @@ export class ApplicationListItemModel {
         public schemePhoto: string,
         public tenementBookedDate: string,
         public tenementBookedStatus: string,
-        public allowedForBookMyhome: boolean
+        public allowedForBookMyhome: boolean,
+        public polPublish: string
     ) { }
 }
