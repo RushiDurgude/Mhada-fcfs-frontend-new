@@ -251,6 +251,14 @@ export class ApplicationComponent implements OnInit {
     }
   }
 
+  preventCopyPaste(event: ClipboardEvent): void {
+    event.preventDefault();
+  }
+
+  preventDragDrop(event: DragEvent): void {
+    event.preventDefault();
+  }
+
   validateCoupon() {
     const couponCode = this.appForm.get('couponCode')?.value;
     if (!couponCode) {
@@ -265,7 +273,7 @@ export class ApplicationComponent implements OnInit {
           console.log('API Response:', response);  // Debugging Log
           if (response.errorMessage) {
             this.couponValid = false;
-            this.errorMessage = response.errorMessage || 'Invalid Coupon Code!';
+            this.errorMessage = response.errorMessage;
           } else {
             this.couponValid = true;
             this.errorMessage = '';
