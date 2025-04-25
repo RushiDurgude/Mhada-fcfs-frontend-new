@@ -207,9 +207,14 @@
             <input
               id="couponCode"
               type="text"
+              maxlength="20"
               formControlName="couponCode"
               (input)="checkCouponValidity()"
               (keypress)="allowAlphaNumeric($event)"
+              (copy)="preventCopyPaste($event)"
+              (paste)="preventCopyPaste($event)"
+              (dragstart)="preventDragDrop($event)"
+              (drop)="preventDragDrop($event)"
               class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
             />
             <p *ngIf="couponCode?.trim() && !couponValid" style="color: red; font-size: small;margin-top: 3px;">{{ errorMessage }}</p>
