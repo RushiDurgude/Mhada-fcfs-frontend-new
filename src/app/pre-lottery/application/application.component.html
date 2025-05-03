@@ -88,6 +88,16 @@
             {{ "error-draw-winner-apply" | transloco }}
           </small>
         </div>
+        <div class="col-12" *ngIf="drawSpouseWinner">
+          <small class="error-block">
+            {{ "error-draw-winner-spouse-apply" | transloco }}
+          </small>
+        </div>
+        <div class="col-12" *ngIf="alreadyApplied">
+          <small class="error-block">
+            {{ "error-pmay-apply" | transloco }}
+          </small>
+        </div>
           <div class="col-12" *ngIf="applicableCategoriesError">
             <small class="error-block">
               {{ "error-applicable-categories-empty" | transloco }}
