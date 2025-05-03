@@ -17,6 +17,8 @@ export const environment = {
   REGISTRATION_URL: "http://10.250.5.247:38089/",
   GRIEVANCE_URL: "http://10.250.5.247:38089/",
   APPLICATION_URL: "http://10.250.5.247:8066"
+
+  
 };
 
 /*
