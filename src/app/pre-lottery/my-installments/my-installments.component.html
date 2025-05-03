@@ -55,18 +55,196 @@
           <div class="col-12 pl-3">{{ currentPage * pageSize + i + 1 }}</div>
         </td>
       </ng-container>
+      
       <ng-container matColumnDef="installment">
         <th mat-header-cell *matHeaderCellDef>
           {{ "label-installment" | transloco }}
         </th>
         <td mat-cell *matCellDef="let element">
-          <div class="title mb-1 mt-1 pl-2" style="font-size: 17px">
-            {{ element.installmentType }}
-          </div>
-          <div class="sub-title text-left mb-1">
+          <ng-container *ngIf="element.installmentType !== 'POL is pending'">
+            <div class="title mb-1 mt-1 pl-2" style="font-size: 17px">
+              {{ element.installmentType }}
+            </div>
+            <div class="sub-title text-left mb-1">
+              <div
+                class="mb-1 p-2 shadow-2 col-12"
+                *ngIf="element.actualInstallmentType !== 'TDS_CERTIFICATE'"
+              >
+                <div class="flex justify-content-between">
+                  <b>{{ "label-installment-amount" | transloco }}</b>
+                  {{ element.installmentAmount | currencyinr }}<br />
+                </div>
+                <hr
+                  style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  "
+                />
+                <div class="flex justify-content-between">
+                  <b>{{ "label-installment-paid-amount" | transloco }}</b>
+                  {{ element.paidAmount | currencyinr }}<br />
+                </div>
+                <hr
+                  style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  "
+                  *ngIf="+element.interestAmount > 0"
+                />
+                <div
+                  class="flex justify-content-between"
+                  *ngIf="+element.interestAmount > 0"
+                >
+                  <b
+                    >{{ "label-installment-interest-amount" | transloco }} ({{
+                      element.interestDelayDays
+                    }}
+                    days)</b
+                  >
+                  {{ element.interestAmount | currencyinr }}<br />
+                </div>
+                <hr
+                  style="
+                    border-bottom: 1px solid black;
+                    margin-top: 7px;
+                    margin-bottom: 7px;
+                  "
+                />
+                <div class="flex justify-content-between">
+                  <b>{{ "label-installment-balance-amount" | transloco }}</b>
+                  {{ element.balanceAmount | currencyinr }}
+                </div>
+              </div>
+              <div
+                class="mb-1 p-2 shadow-2 col-12"
+                *ngIf="element.actualInstallmentType === 'TDS_CERTIFICATE'"
+              >
+                <div class="flex justify-content-between">
+                  <b>{{ "label-installment-amount" | transloco }}</b>
+                  {{ element.installmentAmount | currencyinr }}<br />
+                </div>
+              </div>
+              <br />
+              <div class="mb-1 p-2 shadow-2">
+                <span *ngIf="!element.showAfterDueDatePast">
+                  <b>{{ "label-installment-due-date" | transloco }}</b> -
+                  {{ element.instPaymentEndDate }}
+                </span>
+                <span *ngIf="element.showAfterDueDatePast">
+                  <b>{{
+                    "label-installment-due-date-with-interest" | transloco
+                  }}</b>
+                  - {{ element.instPaymentEndDateWithInterest }} <br />(@
+                  {{ element.instPaymentInterestRate }}% pa)
+                </span>
+              </div>
+              <div class="grid col-12 m-0 pt-0 mt-2 justify-content-center">
+                <span [class]="statusClass(element.installmentPaymentStatus)">
+                  {{ element.installmentPaymentStatus }}
+                </span>
+              </div>
+              <div class="grid col-12 m-0 pl-0 pt-0 mt-2">
+                <div class="grid col-12 m-0">
+                  <div
+                    class="grid col-12 m-0 pt-0 mt-2"
+                    *ngIf="
+                      element.installmentPaymentStatus ===
+                        'FILE_UPLOAD_PENDING' ||
+                      element.installmentPaymentStatus === 'REJECTED'
+                    "
+                  >
+                    <button
+                      class="btn-medium shadow-4 col-12"
+                      style="height: 32px"
+                      [routerLink]="[
+                        '/app',
+                        'tds-certificate',
+                        applicationKey
+                      ]"
+                      type="button"
+                    >
+                      {{ "button-tds-upload-tds" | transloco }}
+                    </button>
+                  </div>
+                  <div
+                    class="grid col-12 m-0 pt-0 mt-2"
+                    *ngIf="
+                      element.installmentPaymentStatus === 'FILE_UPLOADED' ||
+                      element.installmentPaymentStatus === 'APPROVED'
+                    "
+                  >
+                    <button
+                      class="btn-medium shadow-4 col-12"
+                      style="height: 32px"
+                      [routerLink]="[
+                        '/app',
+                        'tds-certificate',
+                        applicationKey
+                      ]"
+                      type="button"
+                    >
+                      {{ "button-tds-view-tds" | transloco }}
+                    </button>
+                  </div>
+                  <div
+                    class="grid col-12 m-0 pt-0 mt-2"
+                    *ngIf="element.showInstallmentButton"
+                  >
+                    <button
+                      class="btn-medium shadow-4 col-12"
+                      style="height: 32px"
+                      [routerLink]="[
+                        '/app',
+                        'installment-payment',
+                        applicationKey,
+                        element.actualInstallmentType
+                      ]"
+                      type="button"
+                    >
+                      {{ "button-pay-ins" | transloco }}
+                    </button>
+                  </div>
+                  <div
+                    class="grid col-12 m-0 pt-0 mt-2"
+                    *ngIf="element.showInstallmentReceipt"
+                  >
+                    <button
+                      class="btn-medium shadow-4 col-12"
+                      style="height: 32px"
+                      (click)="
+                        showReceipt(applicationKey, element.actualInstallmentType)
+                      "
+                      type="button"
+                    >
+                      <mat-icon style="float: left; color: white"
+                        >download</mat-icon
+                      >
+                      <span style="color: white">{{
+                        "button-view-installment-receipt" | transloco
+                      }}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="element.installmentType === 'POL is pending'">
+            {{ "pol-pending" | transloco }}
+          </ng-container>
+        </td>     
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "label-installment-amount" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.installmentType !== 'POL is pending'">
             <div
-              class="mb-1 p-2 shadow-2 col-12"
-              *ngIf="element.actualInstallmentType !== 'TDS_CERTIFICATE'"
+              class="title mb-2 mt-1 schemecode col-11 p-1"
+              *ngIf="element.actualInstallmentType != 'TDS_CERTIFICATE'"
             >
               <div class="flex justify-content-between">
                 <b>{{ "label-installment-amount" | transloco }}</b>
@@ -116,7 +294,7 @@
               </div>
             </div>
             <div
-              class="mb-1 p-2 shadow-2 col-12"
+              class="title mb-2 mt-1 schemecode col-11 p-1"
               *ngIf="element.actualInstallmentType === 'TDS_CERTIFICATE'"
             >
               <div class="flex justify-content-between">
@@ -124,177 +302,8 @@
                 {{ element.installmentAmount | currencyinr }}<br />
               </div>
             </div>
-            <br />
-            <div class="mb-1 p-2 shadow-2">
-              <span *ngIf="!element.showAfterDueDatePast">
-                <b>{{ "label-installment-due-date" | transloco }}</b> -
-                {{ element.instPaymentEndDate }}
-              </span>
-              <span *ngIf="element.showAfterDueDatePast">
-                <b>{{
-                  "label-installment-due-date-with-interest" | transloco
-                }}</b>
-                - {{ element.instPaymentEndDateWithInterest }} <br />(@
-                {{ element.instPaymentInterestRate }}% pa)
-              </span>
-            </div>
-            <div class="grid col-12 m-0 pt-0 mt-2 justify-content-center">
-              <span [class]="statusClass(element.installmentPaymentStatus)">
-                {{ element.installmentPaymentStatus }}
-              </span>
-            </div>
-            <div class="grid col-12 m-0 pl-0 pt-0 mt-2">
-              <div class="grid col-12 m-0">
-                <div
-                  class="grid col-12 m-0 pt-0 mt-2"
-                  *ngIf="
-                    element.installmentPaymentStatus ===
-                      'FILE_UPLOAD_PENDING' ||
-                    element.installmentPaymentStatus === 'REJECTED'
-                  "
-                >
-                  <button
-                    class="btn-medium shadow-4 col-12"
-                    style="height: 32px"
-                    [routerLink]="[
-                      '/app',
-                      'tds-certificate',
-                      applicationKey
-                    ]"
-                    type="button"
-                  >
-                    {{ "button-tds-upload-tds" | transloco }}
-                  </button>
-                </div>
-                <div
-                  class="grid col-12 m-0 pt-0 mt-2"
-                  *ngIf="
-                    element.installmentPaymentStatus === 'FILE_UPLOADED' ||
-                    element.installmentPaymentStatus === 'APPROVED'
-                  "
-                >
-                  <button
-                    class="btn-medium shadow-4 col-12"
-                    style="height: 32px"
-                    [routerLink]="[
-                      '/app',
-                      'tds-certificate',
-                      applicationKey
-                    ]"
-                    type="button"
-                  >
-                    {{ "button-tds-view-tds" | transloco }}
-                  </button>
-                </div>
-                <div
-                  class="grid col-12 m-0 pt-0 mt-2"
-                  *ngIf="element.showInstallmentButton"
-                >
-                  <button
-                    class="btn-medium shadow-4 col-12"
-                    style="height: 32px"
-                    [routerLink]="[
-                      '/app',
-                      'installment-payment',
-                      applicationKey,
-                      element.actualInstallmentType
-                    ]"
-                    type="button"
-                  >
-                    {{ "button-pay-ins" | transloco }}
-                  </button>
-                </div>
-                <div
-                  class="grid col-12 m-0 pt-0 mt-2"
-                  *ngIf="element.showInstallmentReceipt"
-                >
-                  <button
-                    class="btn-medium shadow-4 col-12"
-                    style="height: 32px"
-                    (click)="
-                      showReceipt(applicationKey, element.actualInstallmentType)
-                    "
-                    type="button"
-                  >
-                    <mat-icon style="float: left; color: white"
-                      >download</mat-icon
-                    >
-                    <span style="color: white">{{
-                      "button-view-installment-receipt" | transloco
-                    }}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ "label-installment-amount" | transloco }}
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <div
-            class="title mb-2 mt-1 schemecode col-11 p-1"
-            *ngIf="element.actualInstallmentType != 'TDS_CERTIFICATE'"
-          >
-            <div class="flex justify-content-between">
-              <b>{{ "label-installment-amount" | transloco }}</b>
-              {{ element.installmentAmount | currencyinr }}<br />
-            </div>
-            <hr
-              style="
-                border-bottom: 1px solid black;
-                margin-top: 7px;
-                margin-bottom: 7px;
-              "
-            />
-            <div class="flex justify-content-between">
-              <b>{{ "label-installment-paid-amount" | transloco }}</b>
-              {{ element.paidAmount | currencyinr }}<br />
-            </div>
-            <hr
-              style="
-                border-bottom: 1px solid black;
-                margin-top: 7px;
-                margin-bottom: 7px;
-              "
-              *ngIf="+element.interestAmount > 0"
-            />
-            <div
-              class="flex justify-content-between"
-              *ngIf="+element.interestAmount > 0"
-            >
-              <b
-                >{{ "label-installment-interest-amount" | transloco }} ({{
-                  element.interestDelayDays
-                }}
-                days)</b
-              >
-              {{ element.interestAmount | currencyinr }}<br />
-            </div>
-            <hr
-              style="
-                border-bottom: 1px solid black;
-                margin-top: 7px;
-                margin-bottom: 7px;
-              "
-            />
-            <div class="flex justify-content-between">
-              <b>{{ "label-installment-balance-amount" | transloco }}</b>
-              {{ element.balanceAmount | currencyinr }}
-            </div>
-          </div>
-          <div
-            class="title mb-2 mt-1 schemecode col-11 p-1"
-            *ngIf="element.actualInstallmentType === 'TDS_CERTIFICATE'"
-          >
-            <div class="flex justify-content-between">
-              <b>{{ "label-installment-amount" | transloco }}</b>
-              {{ element.installmentAmount | currencyinr }}<br />
-            </div>
-          </div>
+          </ng-container>
+          
         </td>
       </ng-container>
 
@@ -303,9 +312,11 @@
           {{ "label-installment-status" | transloco }}
         </th>
         <td mat-cell *matCellDef="let element">
-          <span [class]="statusClass(element.installmentPaymentStatus)">
-            {{ element.installmentPaymentStatus }}
-          </span>
+          <ng-container *ngIf="element.installmentType !== 'POL is pending'">
+            <span [class]="statusClass(element.installmentPaymentStatus)">
+              {{ element.installmentPaymentStatus }}
+            </span>
+          </ng-container>
         </td>
       </ng-container>
 
@@ -314,18 +325,20 @@
           {{ "label-installment-due-date" | transloco }}
         </th>
         <td mat-cell *matCellDef="let element" class="p-0">
-          <span *ngIf="!element.showAfterDueDatePast">
-            {{ element.instPaymentEndDate }}
-          </span>
-          <span
-            *ngIf="
-              element.showAfterDueDatePast &&
-              element.instPaymentEndDateWithInterest
-            "
-          >
-            {{ element.instPaymentEndDateWithInterest }} <br />(@
-            {{ element.instPaymentInterestRate }}% pa)
-          </span>
+          <ng-container *ngIf="element.installmentType !== 'POL is pending'">
+            <span *ngIf="!element.showAfterDueDatePast">
+              {{ element.instPaymentEndDate }}
+            </span>
+            <span
+              *ngIf="
+                element.showAfterDueDatePast &&
+                element.instPaymentEndDateWithInterest
+              "
+            >
+              {{ element.instPaymentEndDateWithInterest }} <br />(@
+              {{ element.instPaymentInterestRate }}% pa)
+            </span>
+          </ng-container>
         </td>
       </ng-container>
       <ng-container matColumnDef="action">
@@ -333,86 +346,89 @@
           {{ "table-header-lottery-action" | transloco }}
         </th>
         <td mat-cell *matCellDef="let element">
-          <div class="grid m-0">
-            <div
-              class="grid col-12 m-0 pt-0 mt-2"
-              *ngIf="
-                element.installmentPaymentStatus === 'FILE_UPLOAD_PENDING' ||
-                element.installmentPaymentStatus === 'REJECTED'
-              "
-            >
-              <button
-                class="btn-medium shadow-4 col-12"
-                style="height: 32px"
-                [routerLink]="[
-                  '/app',
-                  'tds-certificate',
-                  applicationKey
-                ]"
-                type="button"
-              >
-                <!--TODO Add new route and direct to new tds component-->
-                {{ "button-tds-upload-tds" | transloco }}
-              </button>
-            </div>
-            <div
-              class="grid col-12 m-0 pt-0 mt-2"
-              *ngIf="
-                element.installmentPaymentStatus === 'FILE_UPLOADED' ||
-                element.installmentPaymentStatus === 'APPROVED'
-              "
-            >
-              <button
-                class="btn-medium shadow-4 col-12"
-                style="height: 32px"
-                [routerLink]="[
-                  '/app',
-                  'tds-certificate',
-                  applicationKey
-                ]"
-                type="button"
-              >
-                <!--TODO Add new route and direct to new tds component-->
-                {{ "button-tds-view-tds" | transloco }}
-              </button>
-            </div>
-            <div
-              class="grid col-12 m-0 pt-0 mt-2"
-              *ngIf="element.showInstallmentButton"
-            >
-              <button
-                class="btn-medium shadow-4 col-12"
-                style="height: 32px"
-                [routerLink]="[
-                  '/app',
-                  'installment-payment',
-                  applicationKey,
-                  element.actualInstallmentType
-                ]"
-                type="button"
-              >
-                {{ "button-pay-ins" | transloco }}
-              </button>
-            </div>
-            <div
-              class="grid col-12 m-0 pt-0 mt-2"
-              *ngIf="element.showInstallmentReceipt"
-            >
-              <button
-                class="btn-medium shadow-4 col-12"
-                style="height: 32px"
-                (click)="
-                  showReceipt(applicationKey, element.actualInstallmentType)
+          <ng-container *ngIf="element.installmentType !== 'POL is pending'">
+            <div class="grid m-0">
+              <div
+                class="grid col-12 m-0 pt-0 mt-2"
+                *ngIf="
+                  element.installmentPaymentStatus === 'FILE_UPLOAD_PENDING' ||
+                  element.installmentPaymentStatus === 'REJECTED'
                 "
-                type="button"
               >
-                <mat-icon style="float: left; color: white">download</mat-icon>
-                <span style="color: white">{{
-                  "button-view-installment-receipt" | transloco
-                }}</span>
-              </button>
+                <button
+                  class="btn-medium shadow-4 col-12"
+                  style="height: 32px"
+                  [routerLink]="[
+                    '/app',
+                    'tds-certificate',
+                    applicationKey
+                  ]"
+                  type="button"
+                >
+                  <!--TODO Add new route and direct to new tds component-->
+                  {{ "button-tds-upload-tds" | transloco }}
+                </button>
+              </div>
+              <div
+                class="grid col-12 m-0 pt-0 mt-2"
+                *ngIf="
+                  element.installmentPaymentStatus === 'FILE_UPLOADED' ||
+                  element.installmentPaymentStatus === 'APPROVED'
+                "
+              >
+                <button
+                  class="btn-medium shadow-4 col-12"
+                  style="height: 32px"
+                  [routerLink]="[
+                    '/app',
+                    'tds-certificate',
+                    applicationKey
+                  ]"
+                  type="button"
+                >
+                  <!--TODO Add new route and direct to new tds component-->
+                  {{ "button-tds-view-tds" | transloco }}
+                </button>
+              </div>
+              <div
+                class="grid col-12 m-0 pt-0 mt-2"
+                *ngIf="element.showInstallmentButton"
+              >
+                <button
+                  class="btn-medium shadow-4 col-12"
+                  style="height: 32px"
+                  [routerLink]="[
+                    '/app',
+                    'installment-payment',
+                    applicationKey,
+                    element.actualInstallmentType
+                  ]"
+                  type="button"
+                >
+                  {{ "button-pay-ins" | transloco }}
+                </button>
+              </div>
+              <div
+                class="grid col-12 m-0 pt-0 mt-2"
+                *ngIf="element.showInstallmentReceipt"
+              >
+                <button
+                  class="btn-medium shadow-4 col-12"
+                  style="height: 32px"
+                  (click)="
+                    showReceipt(applicationKey, element.actualInstallmentType)
+                  "
+                  type="button"
+                >
+                  <mat-icon style="float: left; color: white">download</mat-icon>
+                  <span style="color: white">{{
+                    "button-view-installment-receipt" | transloco
+                  }}</span>
+                </button>
+              </div>
             </div>
-          </div>
+          </ng-container>
+          
         </td>
       </ng-container>
 

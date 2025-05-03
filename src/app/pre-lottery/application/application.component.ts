@@ -76,6 +76,8 @@ export class ApplicationComponent implements OnInit {
   uploadedBankChequePassbookFile: string | ArrayBuffer;
   uploadedBankChequePassbookFileName: string;
   drawWinner:boolean = false;
+  drawSpouseWinner:boolean = false;
+  alreadyApplied:boolean = false;
 
   previewImage: string = '';
   api_url: string = '';
@@ -204,6 +206,8 @@ export class ApplicationComponent implements OnInit {
 
         this.stopForMCGMYes = this.applicationFormModel.stopForMCGMYes;
         this.drawWinner = this.applicationFormModel.drawWinner;
+        this.drawSpouseWinner = this.applicationFormModel.drawSpouseWinner;
+        this.alreadyApplied = this.applicationFormModel.alreadyApplied;
         this.showChequePassbookUpload = this.applicationFormModel.showChequePassbookUpload;
 
         if(this.applicationFormModel.bankVerification && 
@@ -298,6 +302,14 @@ export class ApplicationComponent implements OnInit {
     }
 
     if (this.drawWinner){
+      return;
+    }
+
+    if (this.drawSpouseWinner){
+      return;
+    }
+
+    if (this.alreadyApplied){
       return;
     }
 
