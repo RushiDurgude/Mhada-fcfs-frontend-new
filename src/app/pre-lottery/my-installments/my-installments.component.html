@@ -18,11 +18,15 @@
         <div class="flex align-items-center justify-content-between">
           <div class="flex align-items-center">
             <div class="title ml-2">
-              <a
-                [routerLink]="[
+              <!-- [routerLink]="[
                   '/app',
                   'application-detail-list',
                   'post-apps'
+                ]" -->
+              <a
+                [routerLink]="[
+                  '/app',
+                  'application-detail-lists'
                 ]"
               >
                 <ion-icon color="dark" name="arrow-undo"></ion-icon>
@@ -231,7 +235,9 @@
             </div>
           </ng-container>
           <ng-container *ngIf="element.installmentType === 'POL is pending'">
-            {{ "pol-pending" | transloco }}
+           <div style="text-align: center; color: black; font-weight: bold;">
+             {{ "pol-pending" | transloco }}
+           </div>
           </ng-container>
         </td>     
       </ng-container>
