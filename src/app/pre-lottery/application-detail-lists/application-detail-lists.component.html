@@ -20,6 +20,9 @@
                   <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment not received'" [routerLink]="['/app', 'payment', element.key]">
                     {{ "button-pay-emd-fee" | transloco }}
                   </button>
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null && element.allowedForBookMyhome" [routerLink]="['/app', 'edit-refund-detail', element.key]">
+                    {{ "button-edit-refund-detail" | transloco }}
+                  </button>
                   <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null && element.allowedForBookMyhome" [routerLink]="['/app', 'application-bookHome', element.key]">
                     {{ "book-my-home" | transloco }}
                   </button>
@@ -62,7 +65,7 @@
                   </a>
                 
                   <a class="more-receipts" 
-                  *ngIf="element.applicationPaymentStatus === 'Payment received' && !(element.emdAmount == 0 && element.applicationFee == 0)"
+                  *ngIf="element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded'"
                   (click)="showReceipts(element.key)">
                     <mat-icon>visibility</mat-icon>
                     <span style="cursor: pointer;">EMD Receipt</span>
@@ -81,7 +84,9 @@
                   <!-- justify-content-between -->
                   <button class="status-btn approve">{{ element.applicationFormStatus }}</button>
                   <button class="status-btn pending" *ngIf="element.applicationPaymentStatus === 'Payment not received'">EMD Payment Pending</button>
-                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment received' && !(element.emdAmount == 0 && element.applicationFee == 0)">EMD Payment Recieved</button>
+                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded'">EMD Payment Recieved</button>
+                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment requested'">Refund Requested</button>
+                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment refunded'">Refund Done</button>
                   <button class="status-btn approve" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED'">Flat Confirmed</button>
 
                   <!-- <button class="status-btn reject">Reject</button>
