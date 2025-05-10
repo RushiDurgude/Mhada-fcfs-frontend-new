@@ -258,7 +258,7 @@ export class EditRefundDetailComponent implements OnInit {
       if (this.showChequePassbookUpload) {
         refundForm.addControl(
           "uploadBankChequePassbookFile",
-          new FormControl(null, [Validators.required])
+          new FormControl(null)
         );
       }
 
