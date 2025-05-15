@@ -19,6 +19,7 @@ export class QsWorkStatusComponent implements OnInit {
   @Output() proceedNext = new EventEmitter();
   proceedEnabled: boolean = false;
   selectedRadioOption: string;
+  selectedRadioOptionSkip: string;
   dirtyForm: boolean = false;
 
   financialYears: {[key: number]: string};
@@ -59,11 +60,20 @@ export class QsWorkStatusComponent implements OnInit {
       this.closeProgressSpinner();
       if(data.status === 'SUCCESS') {
         if(data.workStatusResponse) {
+          if(data.workStatusResponse.answer === "Skip"){
+          this.selectedRadioOptionSkip = data.workStatusResponse.answer;
+          this.financialYear = data.workStatusResponse.financialYear;
+          this.selfIncome = data.workStatusResponse.selfIncome;
+          this.spouseIncome = data.workStatusResponse.spouseIncome;
+          this.evaluateProceed();
+          }else{
+          this.selectedRadioOptionSkip = "No";
           this.selectedRadioOption = data.workStatusResponse.answer;
           this.financialYear = data.workStatusResponse.financialYear;
           this.selfIncome = data.workStatusResponse.selfIncome;
           this.spouseIncome = data.workStatusResponse.spouseIncome;
           this.evaluateProceed();
+          }
         }
         else {
           localStorage.removeItem("editQuestionCode");
@@ -83,6 +93,15 @@ export class QsWorkStatusComponent implements OnInit {
     if(this.dirtyForm) {
       if(this.evaluateProceed()) {
         this.displayProgressSpinner();
+        if (this.selectedRadioOptionSkip === "Skip") {
+        this.questionRequest = {
+          workStatusRequest: {
+            financialYear: null,
+            selfIncome: null,
+            spouseIncome: null
+          }
+        };
+      } else {
         this.questionRequest = {
           workStatusRequest: {
             financialYear: +this.financialYear,
@@ -90,6 +109,7 @@ export class QsWorkStatusComponent implements OnInit {
             spouseIncome: +this.spouseIncome
           }
         };
+      }
         this.registrationStepService.saveQuestion(this.questionCode, this.questionRequest)
         .subscribe((data) => {
           this.closeProgressSpinner();
@@ -155,6 +175,16 @@ export class QsWorkStatusComponent implements OnInit {
     this.dirtyForm = true;
     this.evaluateProceed();
   }
+
+  radioButtonClickedNew(event: string) {
+  console.log(event) 
+  this.dirtyForm = true;
+  this.evaluateProceed();
+
+  // Optionally log or perform any action
+  console.log("Selected Option:", event);
+}
+
 
   async displayProgressSpinner() {
     this.progressSpinnerDialog = this.dialog.open(LoaderComponent, {
@@ -257,7 +287,20 @@ export class QsWorkStatusComponent implements OnInit {
         }
       }
     }
+
+    if (this.selectedRadioOptionSkip === "Skip") {
+      this.proceedEnabled = true;
+    }
     
+    return this.proceedEnabled;
+  }
+
+  evaluateProceeds() {
+    console.log('evaluateProceeds called', this.selectedRadioOptionSkip);
+    this.proceedEnabled = false;
+    if (this.selectedRadioOptionSkip === "Skip") {
+      this.proceedEnabled = true;
+    }
     return this.proceedEnabled;
   }
 }
