@@ -1055,8 +1055,7 @@
   "error-draw-winner-spouse-apply": "Applicant Spouse is Mhada Winner not able to Apply",
   "error-pmay-apply": "You have already done the application, please complete process for flat booking.",
   "label-agent": "Select Agency",
-  "pol-pending":"POL is pending"
-
-
+  "pol-pending":"POL is pending",
+  "konkan-detail":"If you want to apply for Kokan Board Non PMAY Schemes click on Yes and proceed"
 
 }
