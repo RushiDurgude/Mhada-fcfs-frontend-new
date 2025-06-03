@@ -199,12 +199,11 @@ export class EditRefundDetailComponent implements OnInit {
           this.progressSpinnerDialog.close();
           if (status === "SUCCESS") {
             this.showBack = false;
+            this.showSucessToast("Refund Request Submitted.");
             this.router.navigate(
               [
                 "/app",
-                "application-detail",
-                this.applicationKey,
-                "Success",
+                "application-detail-lists"
               ],
               { replaceUrl: true }
             );
@@ -259,7 +258,7 @@ export class EditRefundDetailComponent implements OnInit {
       if (this.showChequePassbookUpload) {
         refundForm.addControl(
           "uploadBankChequePassbookFile",
-          new FormControl(null, [Validators.required])
+          new FormControl(null)
         );
       }
 
@@ -299,6 +298,17 @@ export class EditRefundDetailComponent implements OnInit {
       icon: "information-circle",
       position: "top",
       cssClass: "toast error-toast",
+      duration: 4000,
+    });
+    toast.present();
+  }
+
+  async showSucessToast(sucessMessage: string) {
+    const toast = await this.toastController.create({
+      message: sucessMessage,
+      icon: "information-circle",
+      position: "top",
+      cssClass: "toast success-toast",
       duration: 4000,
     });
     toast.present();

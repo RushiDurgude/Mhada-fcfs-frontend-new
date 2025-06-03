@@ -88,6 +88,16 @@
             {{ "error-draw-winner-apply" | transloco }}
           </small>
         </div>
+        <div class="col-12" *ngIf="drawSpouseWinner">
+          <small class="error-block">
+            {{ "error-draw-winner-spouse-apply" | transloco }}
+          </small>
+        </div>
+        <div class="col-12" *ngIf="alreadyApplied">
+          <small class="error-block">
+            {{ "error-pmay-apply" | transloco }}
+          </small>
+        </div>
           <div class="col-12" *ngIf="applicableCategoriesError">
             <small class="error-block">
               {{ "error-applicable-categories-empty" | transloco }}
@@ -207,9 +217,14 @@
             <input
               id="couponCode"
               type="text"
+              maxlength="20"
               formControlName="couponCode"
               (input)="checkCouponValidity()"
               (keypress)="allowAlphaNumeric($event)"
+              (copy)="preventCopyPaste($event)"
+              (paste)="preventCopyPaste($event)"
+              (dragstart)="preventDragDrop($event)"
+              (drop)="preventDragDrop($event)"
               class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
             />
             <p *ngIf="couponCode?.trim() && !couponValid" style="color: red; font-size: small;margin-top: 3px;">{{ errorMessage }}</p>
@@ -949,7 +964,7 @@
           </div>
         </div>
       </div> -->
-      <div class="col-12 text-center mt-0" *ngIf="application?.emdAmount > 0 && application?.applicationFee > 0">
+      <div class="col-12 text-center mt-0">
         <button
           class="btn-medium shadow-4 mt-0"
           type="button"

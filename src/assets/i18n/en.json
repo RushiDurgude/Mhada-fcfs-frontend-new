@@ -95,7 +95,7 @@
   "title-cert-entry-issuing-authority": "Certificate Issuing Concern Authority",
   "lbl-cert-entry-tbl-header": "Certificate",
   "title-scheme-eligible-apply": "Based on your Income Group, You are eligible to Apply in this Scheme",
-  "title-header-refund-detail": "Edit Refund Detail",
+  "title-header-refund-detail": "Refund Detail",
   "title-header-letter-of-intimation": "My Intimation Letters",
   "title-confirm-selection": "Confirm Selection",
   "title-caste-validity-ref-letter": "Apply for Caste Validity Reference Letter",
@@ -281,7 +281,7 @@
   "button-fetch-caategory-certificate": "Generate Certificate",
   "button-mail-category-certificate": "Mail Certificate",
   "button-go-to-home": "Go to Home",
-  "button-edit-refund-detail": "Refund Detail",
+  "button-edit-refund-detail": "Refund Request",
   "button-download-loi": "LOI",
   "button-download-esign-acceptance": "Acceptance Letter",
   "button-download-esign-surrender": "Surrender Letter",
@@ -1051,9 +1051,11 @@
   "landing-details2": "Your Dream Home Awaits with MHADA FCFS! Explore our housing schemes designed to provide quality and affordable homes for all.",
   "label-payment-success": "Payment Successful!",
   "button-booknow": "Book Now",
-  "error-draw-winner-apply": "Mhada Winner not able to Apply",
-  "label-agent": "Select Agency"
-
-
+  "error-draw-winner-apply": "Applicant is Mhada Winner not able to Apply",
+  "error-draw-winner-spouse-apply": "Applicant Spouse is Mhada Winner not able to Apply",
+  "error-pmay-apply": "You have already done the application, please complete process for flat booking.",
+  "label-agent": "Select Agency",
+  "pol-pending":"POL is pending",
+  "konkan-detail":"To apply for Konkan Board Non-PMAY Virar Bolinj MHADA tenements (not under PMAY), click YES to proceed."
 
 }

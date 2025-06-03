@@ -76,6 +76,8 @@ export class ApplicationComponent implements OnInit {
   uploadedBankChequePassbookFile: string | ArrayBuffer;
   uploadedBankChequePassbookFileName: string;
   drawWinner:boolean = false;
+  drawSpouseWinner:boolean = false;
+  alreadyApplied:boolean = false;
 
   previewImage: string = '';
   api_url: string = '';
@@ -138,7 +140,9 @@ export class ApplicationComponent implements OnInit {
   }
 
   allowAlphaNumeric(event: KeyboardEvent) {
-    const pattern = /^[a-zA-Z0-9]$/;
+    // const pattern = /^[a-zA-Z0-9]$/;
+    const pattern = /^[a-zA-Z0-9-]$/;
+
     const inputChar = event.key;
   
     if (!pattern.test(inputChar)) {
@@ -202,6 +206,8 @@ export class ApplicationComponent implements OnInit {
 
         this.stopForMCGMYes = this.applicationFormModel.stopForMCGMYes;
         this.drawWinner = this.applicationFormModel.drawWinner;
+        this.drawSpouseWinner = this.applicationFormModel.drawSpouseWinner;
+        this.alreadyApplied = this.applicationFormModel.alreadyApplied;
         this.showChequePassbookUpload = this.applicationFormModel.showChequePassbookUpload;
 
         if(this.applicationFormModel.bankVerification && 
@@ -249,6 +255,14 @@ export class ApplicationComponent implements OnInit {
     }
   }
 
+  preventCopyPaste(event: ClipboardEvent): void {
+    event.preventDefault();
+  }
+
+  preventDragDrop(event: DragEvent): void {
+    event.preventDefault();
+  }
+
   validateCoupon() {
     const couponCode = this.appForm.get('couponCode')?.value;
     if (!couponCode) {
@@ -263,7 +277,7 @@ export class ApplicationComponent implements OnInit {
           console.log('API Response:', response);  // Debugging Log
           if (response.errorMessage) {
             this.couponValid = false;
-            this.errorMessage = response.errorMessage || 'Invalid Coupon Code!';
+            this.errorMessage = response.errorMessage;
           } else {
             this.couponValid = true;
             this.errorMessage = '';
@@ -288,6 +302,14 @@ export class ApplicationComponent implements OnInit {
     }
 
     if (this.drawWinner){
+      return;
+    }
+
+    if (this.drawSpouseWinner){
+      return;
+    }
+
+    if (this.alreadyApplied){
       return;
     }
 
