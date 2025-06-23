@@ -1460,4 +1460,22 @@ export class PreLotteryApplicationService {
   playAudioCaptcha(captchaKey: number) {
     return this.http.get(api_url + "/guest/captcha/audio/" + captchaKey, {responseType: 'blob'});
   }
+
+  sendOtpForNoc(appKey: number) {
+    return this.http.get<{
+      otpSentMessage: string;
+      authEncryped: string;
+      status: string;
+      errorMessage: string;
+    }>(api_url + "/confirm/noc-sendotp/" + appKey);
+  }
+
+  regenerateOtpForNoc(appKey: number, authEncryped: string) {
+    return this.http.post<{
+      otpSentMessage: string;
+      authEncryped: string;
+      status: string;
+      errorMessage: string;
+    }>(api_url + "/confirm/noc-regenotp/" + appKey, authEncryped);
+  }
 }
