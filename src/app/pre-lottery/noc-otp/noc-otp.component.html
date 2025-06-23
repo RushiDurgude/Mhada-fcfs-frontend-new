@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-icon name="close-circle-sharp" 
+                (click)="cancel()" style="color: red;font-size: 26px;"></ion-icon>
+        </ion-buttons>
+        <!-- <ion-title class="pl-3">{{"enter-surrender-remark" | transloco}}</ion-title> -->
+        <ion-title class="pl-3">Otp Verication For NOC</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="p-1" style="height: 30vh;">
+    <div class="grid col-12" id="print-wrapper">
+        <div class="grid col-12 pb-3 mb-3 pt-3" *ngIf="form">
+            <form [formGroup]="form" #localForm="ngForm" (ngSubmit)="onSubmit()" class="grid col-12">
+                <div class="col-12 p-0">
+                </div> 
+                <div class="col-12 p-0">
+                    <div class="col-12" style="padding-top: 17px;">
+                        <label>
+                            {{otpSentMessage}}<br>
+                            Enter OTP
+                        </label>
+                        <input type="text" class="text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round appearance-none outline-none focus:border-primary w-full" 
+                        (blur)="onBlurField()" formControlName="enteredOtp" maxlength="6"/>
+                    </div>
+                    <field-error-component [controlName]="form.get('enteredOtp')" [formSubmitted]="localForm.submitted"></field-error-component>
+                </div>
+                <div class="loginLabel" *ngIf="!isResendOtpButtonVisible" style="padding-left: 7px;">
+                    {{ "resend-otp-in" | transloco }} {{ resendOtpIn }}
+                </div>
+                <div
+                    class="loginLabel"
+                    style="color: blue; text-decoration: underline; letter-spacing: 0.05rem; padding-left: 7px; cursor: pointer;"
+                    (click)="onResendOtpClick()"
+                    *ngIf="isResendOtpButtonVisible"
+                  >
+                    {{ "resend-otp" | transloco }}
+                </div>
+
+                <div class="col-12">
+                    <br>
+                    <button type="submit"
+                        class="btn shadow-4 bg-primary text-white mt-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ion-content>
