@@ -9,9 +9,14 @@ export class NocRequestModel {
         public loanAmount: number,
         public rateOfInterest: number,
         public applicationKey: number,
+        public bankEmailId: string,
+        public bankAuthorizedOfficerName: string,
+        public bankAuthorizedOfficerDesignation: string,
         public nocApplicationFile: string | ArrayBuffer,
         public sanctionLetterFile: string | ArrayBuffer,
-        public cancelNocLetterFile: string | ArrayBuffer
+        public cancelNocLetterFile: string | ArrayBuffer,
+        public enteredOtp: string,
+        public authEncrypted: string
 
         
         ) { }
