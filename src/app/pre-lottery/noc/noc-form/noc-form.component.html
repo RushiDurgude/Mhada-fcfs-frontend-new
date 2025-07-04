@@ -222,6 +222,37 @@
                     class="position-absolute block">
                 </field-error-component>
             </div>
+            <!-- new field added -->
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="bankEmailId" class="label-input">
+                    {{"bank-email-id" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="email" id="bankEmailId" formControlName="bankEmailId" class="form-control" autocomplete="off"
+                  required />
+                <field-error-component [controlName]="form.get('bankEmailId')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="bankAuthorizedOfficerName" class="label-input">
+                    {{"bank-authorized-officer-name" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="text" id="bankAuthorizedOfficerName" formControlName="bankAuthorizedOfficerName" class="form-control" autocomplete="off"
+                    required pattern="[a-zA-Z0-9\-_/-\]+" />
+                <field-error-component [controlName]="form.get('bankAuthorizedOfficerName')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
+                <label for="bankAuthorizedOfficerDesignation" class="label-input">
+                    {{"bank-authorized-officer-designation" | transloco}} <span class="text-red-900">*</span>
+                </label>
+                <input type="text" id="bankAuthorizedOfficerDesignation" formControlName="bankAuthorizedOfficerDesignation" class="form-control" autocomplete="off"
+                    required pattern="[a-zA-Z0-9\-_/-\]+" />
+                <field-error-component [controlName]="form.get('bankAuthorizedOfficerDesignation')" [formSubmitted]="localForm.submitted"
+                    class="position-absolute block">
+                </field-error-component>
+            </div>
 
 
             <!-- <button mat-raised-button color="primary">Primary</button> -->
@@ -274,8 +305,6 @@
                 <field-error-component [controlName]="form.get('sanctionLetterFile')"
                     [formSubmitted]="localForm.submitted"></field-error-component>
             </div>
-
-
             <!-- <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative">
                 <div class="col-12 sm:col-12 md:col-4 lg:col-4 field" style="padding-top: 17px;">
                     <label for="file1" style="color: #979292;">
@@ -347,15 +376,33 @@
         </div>
         <div class="borderBottom">
         </div>
-
-        <div class="mx-3 py-3" style="float: right;">
-            <button type="submit" [disabled]="isSubmitDisabled" class="btn btn-secondary mr-3" style="height: 44px;"
+        <label class="grid col-12 m-0 cursor-pointer pt-2">
+            <br />
+            <div class="col-1">
+              <input
+                type="checkbox"
+                #confirmed
+                class="mr-2"
+                style="scale: 1.5"
+                value="Y"
+                (change)="onCheckboxChange($event)"
+                required
+              />
+            </div>
+            <div class="col-11">
+                <p>
+                    I hereby declare that the information submitted for the Non-Objection Certificate (NOC) is true. 
+                    If found to be misleading or false, I shall be liable for action under the Indian Penal Code.
+                </p>
+            </div>
+          </label> 
+         <div class="mx-3 py-3" style="float: right;">
+            <button type="submit" [disabled]="isSubmitDisabled || !confirmed.checked"
+            class="btn btn-secondary mr-3" style="height: 44px;"
                 mat-stroked-button>Submit</button>
             <button type="button" [routerLink]="['/noc/noc-list']"  class="btn btn-primery" style="height: 44px;"
                 mat-raised-button>Cancel</button>
         </div>
-
-
 
     </form>
 </div>

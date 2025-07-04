@@ -804,7 +804,7 @@
   "button-surrender-tenement": "Surrender tenement",
   "button-revert-surrender-tenement": "Revert Surrender tenement",
   "button-e-registration": "Appointment For Possession",
-  "view-noc-letter-btn": "Download E-Sign NOC",
+  "view-noc-letter-btn": "Download NOC",
   "error-spouse-winner-acceptance": "You and your spouse are allowed to accept only one tenement, and you have to surrender all remaining tenements.",
   "enter-surrender-remark": "Enter Surrender Reason and OTP",
 
@@ -1056,6 +1056,8 @@
   "error-pmay-apply": "You have already done the application, please complete process for flat booking.",
   "label-agent": "Select Agency",
   "pol-pending":"POL is pending",
-  "konkan-detail":"To apply for Konkan Board Non-PMAY Virar Bolinj MHADA tenements (not under PMAY), click YES to proceed."
-
+  "konkan-detail":"To apply for Konkan Board Non-PMAY Virar Bolinj MHADA tenements (not under PMAY), click YES to proceed.",
+   "bank-email-id": "Bank Email Id",
+  "bank-authorized-officer-name": "Bank authorized officer name",
+  "bank-authorized-officer-designation": "Bank authorized officer designation"
 }
