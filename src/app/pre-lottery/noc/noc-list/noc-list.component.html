@@ -8,12 +8,20 @@
       <div class="user-filter flex justify-content-end align-items-center mt-2 col-12">
         <div class="md:mr-3">
             <div>
-              <button type="button" *ngIf="allowedForApply && !showCancelNoc" [routerLink]="['/app', 'noc', 'noc-form']"
+              <button type="button" *ngIf="allowedForApply" [routerLink]="['/app', 'noc', 'noc-form']"
               color="primery" class="btn btn-secondary btn-auto " mat-raised-button>
               {{ "Page-heading-apply-noc" | transloco }}
             </button>
             </div>
         </div>
+        <!-- <div class="md:mr-3">
+            <div>
+              <button type="button" *ngIf="!showCancelNoc" [routerLink]="['/app', 'noc', 'noc-form']"
+              color="primery" class="btn btn-secondary btn-auto " mat-raised-button>
+              {{ "Page-heading-apply-noc" | transloco }}
+            </button>
+            </div>
+        </div> -->
     </div>
     </div>
     <div class="grid m-0 col-12">
