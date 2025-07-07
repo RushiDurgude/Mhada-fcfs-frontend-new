@@ -323,7 +323,7 @@
                 <field-error-component [controlName]="form.get('sanctionLetterFile')"
                     [formSubmitted]="localForm.submitted"></field-error-component>
             </div> -->
-            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative" *ngIf="form.get('cancelNocLetterFile')">
+            <div class="col-12 pl-0 md:col-4 md:pr-3 pr-0 pt-0 pb-4 position-relative" *ngIf="secondNoc">
                 <div class="col-12 sm:col-12 md:col-4 lg:col-4 field" style="padding-top: 17px;">
                     <label for="file2" style="color: #979292;width: max-content;">
                         {{"cancel-noc-letter" | transloco}} <span class="text-red-900">*</span>
