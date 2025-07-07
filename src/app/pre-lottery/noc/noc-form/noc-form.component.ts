@@ -94,17 +94,17 @@ export class NocFormComponent  implements OnInit {
           console.log("Data From DB",data);
           this.applicationList = data.applications;
 
-          if(data.isSecondNoc){
-            this.nocGenerationResponseModel = data;
-            this.pBankName = data.bankName;
-            this.pBranchName = data.branchName;
-            this.pLoanAmount = data.loanAmount;
-            this.pRateOfInterest = data.rateOfIntrest;
-            this.pTenureYear = data.tenureYear;
-            this.pTenureMonth = data.tenureMonth;
-            this.secondNoc = true;
+          // if(data.isSecondNoc){
+          //   this.nocGenerationResponseModel = data;
+          //   this.pBankName = data.bankName;
+          //   this.pBranchName = data.branchName;
+          //   this.pLoanAmount = data.loanAmount;
+          //   this.pRateOfInterest = data.rateOfIntrest;
+          //   this.pTenureYear = data.tenureYear;
+          //   this.pTenureMonth = data.tenureMonth;
+          //   this.secondNoc = true;
             
-          }
+          // }
 
           if(this.pageMode === 'ADD') {
             this.form.addControl("applicationKey", new FormControl(null, Validators.required));
@@ -363,7 +363,15 @@ console.log("otpResponse.authEncryped"+otpResponse.authEncryped);
             this.tenement = data.tenement;
             this.lotteryName = data.lottery;
             this.mobileNumber = data.mobileNumber;
-
+            this.nocGenerationResponseModel = data;
+            this.pBankName = data.bankName;
+            this.pBranchName = data.branchName;
+            this.pLoanAmount = data.loanAmount;
+            this.pRateOfInterest = data.rateOfIntrest;
+            this.pTenureYear = data.tenureYear;
+            this.pTenureMonth = data.tenureMonth;
+            this.secondNoc = data.isSecondNoc; 
+            console.log( "Second NOC: ",this.secondNoc);
   
           }, error => {
             this.isSubmitDisabled = false;
