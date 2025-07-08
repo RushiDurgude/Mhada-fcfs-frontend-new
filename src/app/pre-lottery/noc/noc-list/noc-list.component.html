@@ -5,6 +5,7 @@
   <div class="user-info flex justify-content-between align-items-center">
     <div class="desktop-details col-12">
       <div class="title">{{ "page-heading" | transloco }}</div>
+      <div style="margin-top: 12px;">{{ "label-pol-not-generated" | transloco }}</div>
       <div class="user-filter flex justify-content-end align-items-center mt-2 col-12">
         <div class="md:mr-3">
             <div>
@@ -290,7 +291,7 @@
             </td>
               <div class="mobile-header" style="border-radius: 0px">
                 <div class="col-12" *ngIf="allowedForApply"> {{ "label-noc-record-not-found" | transloco }} </div>
-                <div class="col-12" *ngIf="!allowedForApply" style="background-color: #4baaf5"> {{ "label-pol-not-generated" | transloco }} </div>
+                  <div class="col-12" *ngIf="!allowedForApply" style="background-color: #4baaf5"> {{ "label-pol-not-generated" | transloco }} </div>
                 <div class="col-12" *ngIf="isNotEligibleError" style="background-color: #4baaf5">{{isNotEligibleError}}</div>
               </div>
           </tr>
