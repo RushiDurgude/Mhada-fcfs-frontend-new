@@ -59,7 +59,7 @@ export class EsignVerifyComponent implements OnInit {
           str = "Esign Successful.";
         }
         this.preLotteryApplicationService.successToast(str);
-        this.router.navigate(['/app', 'application-detail-list', 'post-apps'], { replaceUrl: true });
+        this.router.navigate(['/app', 'application-detail-lists'], { replaceUrl: true });
       }
       else {
         this.progressSpinnerDialog.close();
@@ -71,7 +71,7 @@ export class EsignVerifyComponent implements OnInit {
           duration: 4000,
         });
         toast.present();
-        this.router.navigate(['/app', 'application-detail-list', 'post-apps'], { replaceUrl: true });
+        this.router.navigate(['/app', 'application-detail-lists'], { replaceUrl: true });
       }
     }, error => {
       this.progressSpinnerDialog.close();
@@ -82,7 +82,7 @@ export class EsignVerifyComponent implements OnInit {
           this.loadData();
         });
       }
-      this.router.navigate(['/app', 'application-detail-list', 'post-apps'], { replaceUrl: true });
+      this.router.navigate(['/app', 'application-detail-lists'], { replaceUrl: true });
     });
   }
 }
