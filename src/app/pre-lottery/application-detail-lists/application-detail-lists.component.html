@@ -37,6 +37,9 @@
 
 
       <div class="col-12 p-0 lg:pl-4 xl:pl-4 lg:pr-3 xl:pr-3 lg:pb-3 xl:pb-3">
+        <div *ngIf="isLoading">
+  <mat-progress-bar mode="indeterminate" color="primary" style="width: auto;"></mat-progress-bar>
+</div>
         <div class="col-12 p-0 lg:p-2 xl:p-2">
           <div class="grid col-12 p-0 m-0 mt-0">
             <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let element of dataSourcePostLottery.data">
@@ -147,7 +150,7 @@
                     {{ "button-pay-emd-fee" | transloco }}
                   </button>
 
-                  <p class="countdown-timer block sm:block md:hidden text-center mt-3" *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED'" style="margin: auto;">
+                  <p class="countdown-timer block sm:block md:hidden text-center mt-3" *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED' && element.postLotteryStatus !== 'Surrendered tenement'" style="margin: auto;">
                     ⏳ Time Left: {{ countdowns[element.key] }}
                   </p>
 
@@ -170,6 +173,11 @@
                   <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null" [routerLink]="['/app', element.key,'installments']">
                     {{ "button-my-installment" | transloco }}
                   </button>
+
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null && element.showSurrenderButton" [routerLink]="['/app', 'surrender-tenement', 'surrender', element.key]">
+                    {{ "button-surrender-tenement" | transloco }}
+                  </button>
+
                 </div>
               </div>
             </div>    
@@ -182,7 +190,7 @@
 
             <!-- Empty Data Message -->
             <div class="col-12 mt-2 text-center">
-              <div class="alert alert-info" *ngIf="dataLoaded && (!dataSource.data || dataSource.data.length === 0)">
+              <div class="alert alert-info" *ngIf="dataLoaded && (!dataSourcePostLottery.data || dataSourcePostLottery.data.length === 0)">
                 {{"message-lotteries-empty" | transloco}}
               </div>
             </div>
