@@ -97,19 +97,20 @@
             
                 <!-- Action Links -->
                 <div class="action-links mt-2">
-                  <a class="view-acknowledgment" (click)="showAcknowledgements(element.key)">
+                  <a class="view-acknowledgment" *ngIf="element.acceptanceSurrenderStatus !== 'Surrendered tenement'" (click)="showAcknowledgements(element.key)">
                     <mat-icon>visibility</mat-icon>
                     <span style="cursor: pointer;">View Acknowledgment</span>
                   </a>
                 
                   <a class="more-receipts" 
-                  *ngIf="element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded'"
+                  *ngIf="(element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded')
+                   && element.acceptanceSurrenderStatus !== 'Surrendered tenement'"
                   (click)="showReceipts(element.key)">
                     <mat-icon>visibility</mat-icon>
                     <span style="cursor: pointer;">EMD Receipt</span>
                   </a>
 
-                  <a class="more-receipts" 
+                  <a class="more-receipts"
                   *ngIf="element.pol"
                   (click)="showPOL(element.key)">
                     <mat-icon>visibility</mat-icon>
@@ -131,12 +132,13 @@
                 <hr style="border: none; border-top: 2px solid #E6E6E6; margin: 16px 0;" />
                 <div class="status-buttons mt-3 d-flex">
                   <!-- justify-content-between -->
-                  <button class="status-btn approve">{{ element.applicationFormStatus }}</button>
-                  <button class="status-btn pending" *ngIf="element.applicationPaymentStatus === 'Payment not received'">EMD Payment Pending</button>
-                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded'">EMD Payment Recieved</button>
+                  <button class="status-btn approve" *ngIf="element.acceptanceSurrenderStatus !== 'Surrendered tenement'">{{ element.applicationFormStatus }}</button>
+                  <button class="status-btn pending" *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">EMD Payment Pending</button>
+                  <button class="status-btn approve" *ngIf="(element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded') && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">EMD Payment Recieved</button>
                   <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment requested'">Refund Requested</button>
                   <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment refunded'">Refund Done</button>
-                  <button class="status-btn approve" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED'">Flat Confirmed</button>
+                  <button class="status-btn approve" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">Flat Confirmed</button>
+                  <button class="status-btn pending" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && !element.pol && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">POL Pending</button>
                   <button class="status-btn approve" *ngIf="element.postLotteryStatus === 'Surrendered tenement'">Surrendered Tenement</button>
 
 
@@ -170,7 +172,7 @@
                     </button>
                   </div>
 
-                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null" [routerLink]="['/app', element.key,'installments']">
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.showMyInstallmentButton" [routerLink]="['/app', element.key,'installments']">
                     {{ "button-my-installment" | transloco }}
                   </button>
 
