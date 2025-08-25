@@ -127,6 +127,16 @@
                           "button-download-esign-surrender" | transloco
                           }}</span>
                   </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.draftAllotmentLetter &&
+                        !element.allotmentLetter"
+                  (click)="showDraftAllotmentLetter(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "button-view-draftallotmentletter" | transloco
+                          }}</span>
+                  </a>
                 </div>
                 
                 <hr style="border: none; border-top: 2px solid #E6E6E6; margin: 16px 0;" />
