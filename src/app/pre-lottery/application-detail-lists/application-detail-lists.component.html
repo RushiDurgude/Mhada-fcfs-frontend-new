@@ -70,6 +70,14 @@
                   <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.flatDetail !== null && element.showSurrenderButton" [routerLink]="['/app', 'surrender-tenement', 'surrender', element.key]">
                     {{ "button-surrender-tenement" | transloco }}
                   </button>
+
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.allowedForPossUpd && element.possessiondtlupdtStatus === null" [routerLink]="['/app', 'possession-details-entry', element.applicationNo, element.registrationKey]">
+                    {{ "possession-details" | transloco }}
+                  </button>
+
+                  <!-- <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
+                    {{ "button-e-registration" | transloco }}
+                  </button> -->
                   
                   <div style="height: 32px; float: left" 
                   *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.pendingPayments && !verifyPaymentClicked">
@@ -150,7 +158,7 @@
                   <button class="status-btn approve" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">Flat Confirmed</button>
                   <button class="status-btn pending" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && !element.pol && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">POL Pending</button>
                   <button class="status-btn approve" *ngIf="element.postLotteryStatus === 'Surrendered tenement'">Surrendered Tenement</button>
-
+                  <button class="status-btn approve" *ngIf="element.possessiondtlupdtStatus === 'SUCCESS'">Possession Details Updated</button>
 
                   <!-- <button class="status-btn reject">Reject</button>
                   <button class="status-btn forward">Forward</button>
@@ -185,6 +193,14 @@
                   <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.showMyInstallmentButton" [routerLink]="['/app', element.key,'installments']">
                     {{ "button-my-installment" | transloco }}
                   </button>
+
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.allowedForPossUpd && element.possessiondtlupdtStatus === null" [routerLink]="['/app', 'possession-details-entry', element.applicationNo, element.registrationKey]">
+                    {{ "possession-details" | transloco }}
+                  </button>
+
+                  <!-- <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
+                    {{ "button-e-registration" | transloco }}
+                  </button> -->
 
                   <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null && element.showSurrenderButton" [routerLink]="['/app', 'surrender-tenement', 'surrender', element.key]">
                     {{ "button-surrender-tenement" | transloco }}
