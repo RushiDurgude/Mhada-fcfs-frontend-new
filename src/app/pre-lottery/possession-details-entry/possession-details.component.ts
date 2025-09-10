@@ -260,7 +260,7 @@ export class PossessionDetailsComponent implements OnInit {
                   this.successToast("Data Saved Successfully");
                   this.router.navigate([
                     "/app",
-                    "application-detail-list",
+                    "application-detail-lists",
                   ]);
                 } else {
                   this.isSubmitDisabled = false;
