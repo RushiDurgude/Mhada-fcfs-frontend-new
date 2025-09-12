@@ -75,9 +75,9 @@
                     {{ "possession-details" | transloco }}
                   </button>
 
-                  <!-- <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
                     {{ "button-e-registration" | transloco }}
-                  </button> -->
+                  </button>
                   
                   <div style="height: 32px; float: left" 
                   *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.pendingPayments && !verifyPaymentClicked">
@@ -198,9 +198,9 @@
                     {{ "possession-details" | transloco }}
                   </button>
 
-                  <!-- <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
                     {{ "button-e-registration" | transloco }}
-                  </button> -->
+                  </button>
 
                   <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null && element.showSurrenderButton" [routerLink]="['/app', 'surrender-tenement', 'surrender', element.key]">
                     {{ "button-surrender-tenement" | transloco }}
