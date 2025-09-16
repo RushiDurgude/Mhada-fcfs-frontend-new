@@ -145,6 +145,24 @@
                           "button-view-draftallotmentletter" | transloco
                           }}</span>
                   </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.allotmentLetter"
+                  (click)="showAllotmentLetter(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "button-view-allotmentletter" | transloco
+                          }}</span>
+                  </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.possessionLetter"
+                  (click)="showPossessionLetter(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "button-view-possessionletter" | transloco
+                          }}</span>
+                  </a>
                 </div>
                 
                 <hr style="border: none; border-top: 2px solid #E6E6E6; margin: 16px 0;" />
