@@ -78,6 +78,28 @@
                   <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
                     {{ "button-e-registration" | transloco }}
                   </button>
+
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.agrmntUploadAllowed" (click)="file1.click()" type="button">
+                    {{ "upload-agreement-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        agrmntLtrUpload(
+                          $event,
+                          element.registrationKey,
+                          element.applicationNo
+                        )
+                      " accept="application/pdf" />
+                  </button>
+
+                    <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.indx2UploadAllowed" (click)="file1.click()" type="button">
+                    {{ "upload-index2-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        indx2LtrUpload(
+                          $event,
+                          element.registrationKey,
+                          element.applicationNo
+                        )
+                      " accept="application/pdf" />
+                  </button>
                   
                   <div style="height: 32px; float: left" 
                   *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.pendingPayments && !verifyPaymentClicked">
@@ -163,6 +185,26 @@
                           "button-view-possessionletter" | transloco
                           }}</span>
                   </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.agrmntAllowed"
+                  (click)="showAgreement(element.registrationKey,
+                        element.applicationNo)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "agreement-letter" | transloco
+                          }}</span>
+                  </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.indx2Allowed"
+                  (click)="showIndex2Ltr(element.registrationKey,
+                        element.applicationNo)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "index-2-letter" | transloco
+                          }}</span>
+                  </a>
                 </div>
                 
                 <hr style="border: none; border-top: 2px solid #E6E6E6; margin: 16px 0;" />
@@ -222,6 +264,28 @@
 
                   <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null && element.showSurrenderButton" [routerLink]="['/app', 'surrender-tenement', 'surrender', element.key]">
                     {{ "button-surrender-tenement" | transloco }}
+                  </button>
+                  
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.agrmntUploadAllowed" (click)="file1.click()" type="button">
+                    {{ "upload-agreement-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        agrmntLtrUpload(
+                          $event,
+                          element.registrationKey,
+                          element.applicationNo
+                        )
+                      " accept="application/pdf" />
+                  </button>
+
+                    <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.indx2UploadAllowed" (click)="file1.click()" type="button">
+                    {{ "upload-index2-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        indx2LtrUpload(
+                          $event,
+                          element.registrationKey,
+                          element.applicationNo
+                        )
+                      " accept="application/pdf" />
                   </button>
 
                 </div>
