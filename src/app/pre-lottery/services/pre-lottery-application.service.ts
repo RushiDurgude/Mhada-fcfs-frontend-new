@@ -1241,7 +1241,7 @@ export class PreLotteryApplicationService {
 
   uploadAgrmntLtr(
     registrationKey: number,
-    applicationNo: number,
+    applicationNo: string,
     agrmntLetterBase64: string
   ) {
     console.log(
@@ -1269,7 +1269,7 @@ export class PreLotteryApplicationService {
 
   uploadIndxLtr(
     registrationKey: number,
-    applicationNo: number,
+    applicationNo: string,
     indx2LetterBase64: string
   ) {
     console.log(
