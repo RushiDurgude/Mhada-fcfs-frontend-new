@@ -59,6 +59,8 @@ export class PostLotteryApplicationListItemModel {
     public tenementBookedStatus: string,
     public allowedForBookMyhome: boolean,
     public possessiondtlupdtStatus: string,
-    public allowedForPossUpd: boolean
+    public allowedForPossUpd: boolean,
+    public agrmntUploadAllowed: boolean,
+    public indx2UploadAllowed: boolean
   ) {}
 }
