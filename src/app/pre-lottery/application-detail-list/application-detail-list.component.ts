@@ -913,7 +913,7 @@ export class ApplicationDetailListComponent implements OnInit {
     }
   }
 
-  showAgreement(registrationKey: number, applicationNo: number) {
+  showAgreement(registrationKey: number, applicationNo: string) {
     this.displayProgressSpinner();
     this.preLotteryApplicationService
       .fetchAgreementCopy(registrationKey, applicationNo)
@@ -949,7 +949,7 @@ export class ApplicationDetailListComponent implements OnInit {
       );
   }
 
-  showIndex2Ltr(registrationKey: number, applicationNo: number) {
+  showIndex2Ltr(registrationKey: number, applicationNo: string) {
     this.displayProgressSpinner();
     this.preLotteryApplicationService
       .fetchIndex2Copy(registrationKey, applicationNo)

@@ -1211,7 +1211,7 @@ export class PreLotteryApplicationService {
     }>(api_url + "/applications/eRegistrationCall/" + applicationKey);
   }
 
-  fetchAgreementCopy(registrationKey: number, applicationNo: number) {
+  fetchAgreementCopy(registrationKey: number, applicationNo: string) {
     return this.http.get<{
       status: string;
       data: string;
@@ -1225,7 +1225,7 @@ export class PreLotteryApplicationService {
     );
   }
 
-  fetchIndex2Copy(registrationKey: number, applicationNo: number) {
+  fetchIndex2Copy(registrationKey: number, applicationNo: string) {
     return this.http.get<{
       status: string;
       data: string;
