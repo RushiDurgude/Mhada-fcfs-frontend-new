@@ -4,11 +4,45 @@
       <h1 style="font-size: 18px; margin-top: 10px; padding-left: 15px; text-decoration: underline; ">
         {{"menu-application-List" | transloco}}
       </h1>
+<div class="grid align-items-center mt-2 m-2">
+  <!-- Left (Button): full width on mobile, half on desktop -->
+  <div class="col-12 md:col-6">
+    <button class="btn shadow-4 mt-0" style="background: #1F71BB !important;font-size: 13px !important;" type="button" (click)="openModalForCorrigendum()">
+      {{ "corresspondence-name" | transloco }}
+    </button>
+  </div>
+
+  <!-- Right (Search Form): full width on mobile, half on desktop -->
+  <div class="col-12 md:col-6">
+    <form class="flex align-items-center justify-content-end" [formGroup]="filterForm"
+      (ngSubmit)="isSearchDisabled = true; onSearch()">
+      <div class="mr-2" style="flex: 1;">
+        <input type="text" id="filterText" formControlName="filterText" class="form-control w-full"
+          placeholder="{{ 'label-application-placeholder' | transloco }}" autocomplete="off" />
+      </div>
+      <div class="flex gap-2" style="gap: 4px;">
+        <button type="submit" title="Search" [disabled]="isSearchDisabled"
+          class="applicant-btn" mat-stroked-button style="width: auto;">
+          <mat-icon style="color: #ffffff;">search</mat-icon>
+        </button>
+        <button type="button" title="Refresh" (click)="resetFilter($event)" class="applicant-btn"
+          mat-stroked-button style="width: auto;">
+          <mat-icon style="color: #ffffff;">refresh</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 
       <div class="col-12 p-0 lg:pl-4 xl:pl-4 lg:pr-3 xl:pr-3 lg:pb-3 xl:pb-3">
+        <div *ngIf="isLoading">
+  <mat-progress-bar mode="indeterminate" color="primary" style="width: auto;"></mat-progress-bar>
+</div>
         <div class="col-12 p-0 lg:p-2 xl:p-2">
           <div class="grid col-12 p-0 m-0 mt-0">
-            <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let element of dataSource.data">
+            <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let element of dataSourcePostLottery.data">
               <div class="application-card p-3 position-relative">
                 <!-- Application Info and Button -->
                 <div class="d-flex justify-content-between align-items-center">
@@ -26,11 +60,45 @@
                   <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.applicationPaymentStatus === 'Payment received' && element.flatDetail === null && element.allowedForBookMyhome" [routerLink]="['/app', 'application-bookHome', element.key]">
                     {{ "book-my-home" | transloco }}
                   </button>
-                  <p class="countdown-timer hidden xl:block lg:block md:block" *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED'" style="margin: auto;">
+                  <p class="countdown-timer hidden xl:block lg:block md:block" *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED' && element.postLotteryStatus !== 'Surrendered tenement'" style="margin: auto;">
                     ⏳ Time Left: {{ countdowns[element.key] }}
                   </p>
-                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.flatDetail !== null" [routerLink]="['/app', element.key,'installments']">
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.showMyInstallmentButton" [routerLink]="['/app', element.key,'installments']">
                     {{ "button-my-installment" | transloco }}
+                  </button>
+
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.flatDetail !== null && element.showSurrenderButton" [routerLink]="['/app', 'surrender-tenement', 'surrender', element.key]">
+                    {{ "button-surrender-tenement" | transloco }}
+                  </button>
+
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.allowedForPossUpd && element.possessiondtlupdtStatus === null" [routerLink]="['/app', 'possession-details-entry', element.applicationNo, element.registrationKey]">
+                    {{ "possession-details" | transloco }}
+                  </button>
+
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
+                    {{ "button-e-registration" | transloco }}
+                  </button>
+
+                  <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.agrmntUploadAllowed" (click)="file1.click()" type="button">
+                    {{ "upload-agreement-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        agrmntLtrUpload(
+                          $event,
+                          element.registrationKey,
+                          element.applicationNo
+                        )
+                      " accept="application/pdf" />
+                  </button>
+
+                    <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="element.indx2UploadAllowed" (click)="file1.click()" type="button">
+                    {{ "upload-index2-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        indx2LtrUpload(
+                          $event,
+                          element.registrationKey,
+                          element.applicationNo
+                        )
+                      " accept="application/pdf" />
                   </button>
                   
                   <div style="height: 32px; float: left" 
@@ -59,35 +127,98 @@
             
                 <!-- Action Links -->
                 <div class="action-links mt-2">
-                  <a class="view-acknowledgment" (click)="showAcknowledgements(element.key)">
+                  <a class="view-acknowledgment" *ngIf="element.acceptanceSurrenderStatus !== 'Surrendered tenement'" (click)="showAcknowledgements(element.key)">
                     <mat-icon>visibility</mat-icon>
                     <span style="cursor: pointer;">View Acknowledgment</span>
                   </a>
                 
                   <a class="more-receipts" 
-                  *ngIf="element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded'"
+                  *ngIf="(element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded')
+                   && element.acceptanceSurrenderStatus !== 'Surrendered tenement'"
                   (click)="showReceipts(element.key)">
                     <mat-icon>visibility</mat-icon>
                     <span style="cursor: pointer;">EMD Receipt</span>
                   </a>
 
-                  <a class="more-receipts" 
-                  *ngIf="element.flatDetail != null && element.polPublish === 'Y'"
+                  <a class="more-receipts"
+                  *ngIf="element.pol"
                   (click)="showPOL(element.key)">
                     <mat-icon>visibility</mat-icon>
                     <span style="cursor: pointer;">View POL</span>
+                  </a>
+
+                  <a class="more-receipts" 
+                  *ngIf="element.acceptanceSurrenderStatus != null &&
+                            element.acceptanceSurrenderStatus ===
+                              'Surrendered tenement'"
+                  (click)="showAcceptedApplicationPdf(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "button-download-esign-surrender" | transloco
+                          }}</span>
+                  </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.draftAllotmentLetter &&
+                        !element.allotmentLetter"
+                  (click)="showDraftAllotmentLetter(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "button-view-draftallotmentletter" | transloco
+                          }}</span>
+                  </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.allotmentLetter"
+                  (click)="showAllotmentLetter(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "button-view-allotmentletter" | transloco
+                          }}</span>
+                  </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.possessionLetter"
+                  (click)="showPossessionLetter(element.key)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "button-view-possessionletter" | transloco
+                          }}</span>
+                  </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.agrmntAllowed"
+                  (click)="showAgreement(element.registrationKey,
+                        element.applicationNo)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "agreement-letter" | transloco
+                          }}</span>
+                  </a>
+
+                  <a class="more-receipts"
+                  *ngIf="element.indx2Allowed"
+                  (click)="showIndex2Ltr(element.registrationKey,
+                        element.applicationNo)">
+                    <mat-icon>visibility</mat-icon>
+                    <span style="cursor: pointer;">{{
+                          "index-2-letter" | transloco
+                          }}</span>
                   </a>
                 </div>
                 
                 <hr style="border: none; border-top: 2px solid #E6E6E6; margin: 16px 0;" />
                 <div class="status-buttons mt-3 d-flex">
                   <!-- justify-content-between -->
-                  <button class="status-btn approve">{{ element.applicationFormStatus }}</button>
-                  <button class="status-btn pending" *ngIf="element.applicationPaymentStatus === 'Payment not received'">EMD Payment Pending</button>
-                  <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded'">EMD Payment Recieved</button>
+                  <button class="status-btn approve" *ngIf="element.acceptanceSurrenderStatus !== 'Surrendered tenement'">{{ element.applicationFormStatus }}</button>
+                  <button class="status-btn pending" *ngIf="element.applicationPaymentStatus === 'Payment not received' && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">EMD Payment Pending</button>
+                  <button class="status-btn approve" *ngIf="(element.applicationPaymentStatus === 'Payment received' || element.applicationPaymentStatus === 'Payment requested' || element.applicationPaymentStatus === 'Payment refunded') && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">EMD Payment Recieved</button>
                   <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment requested'">Refund Requested</button>
                   <button class="status-btn approve" *ngIf="element.applicationPaymentStatus === 'Payment refunded'">Refund Done</button>
-                  <button class="status-btn approve" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED'">Flat Confirmed</button>
+                  <button class="status-btn approve" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">Flat Confirmed</button>
+                  <button class="status-btn pending" *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && !element.pol && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">POL Pending</button>
+                  <button class="status-btn approve" *ngIf="element.postLotteryStatus === 'Surrendered tenement'">Surrendered Tenement</button>
+                  <button class="status-btn approve" *ngIf="element.possessiondtlupdtStatus === 'SUCCESS'">Possession Details Updated</button>
 
                   <!-- <button class="status-btn reject">Reject</button>
                   <button class="status-btn forward">Forward</button>
@@ -99,7 +230,7 @@
                     {{ "button-pay-emd-fee" | transloco }}
                   </button>
 
-                  <p class="countdown-timer block sm:block md:hidden text-center mt-3" *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED'" style="margin: auto;">
+                  <p class="countdown-timer block sm:block md:hidden text-center mt-3" *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED' && element.postLotteryStatus !== 'Surrendered tenement'" style="margin: auto;">
                     ⏳ Time Left: {{ countdowns[element.key] }}
                   </p>
 
@@ -119,9 +250,44 @@
                     </button>
                   </div>
 
-                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null" [routerLink]="['/app', element.key,'installments']">
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.showMyInstallmentButton" [routerLink]="['/app', element.key,'installments']">
                     {{ "button-my-installment" | transloco }}
                   </button>
+
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.allowedForPossUpd && element.possessiondtlupdtStatus === null" [routerLink]="['/app', 'possession-details-entry', element.applicationNo, element.registrationKey]">
+                    {{ "possession-details" | transloco }}
+                  </button>
+
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
+                    {{ "button-e-registration" | transloco }}
+                  </button>
+
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.flatDetail !== null && element.showSurrenderButton" [routerLink]="['/app', 'surrender-tenement', 'surrender', element.key]">
+                    {{ "button-surrender-tenement" | transloco }}
+                  </button>
+                  
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.agrmntUploadAllowed" (click)="file1.click()" type="button">
+                    {{ "upload-agreement-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        agrmntLtrUpload(
+                          $event,
+                          element.registrationKey,
+                          element.applicationNo
+                        )
+                      " accept="application/pdf" />
+                  </button>
+
+                    <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.indx2UploadAllowed" (click)="file1.click()" type="button">
+                    {{ "upload-index2-letter" | transloco }}
+                    <input type="file" [id]="file1" #file1 style="display: none" (change)="
+                        indx2LtrUpload(
+                          $event,
+                          element.registrationKey,
+                          element.applicationNo
+                        )
+                      " accept="application/pdf" />
+                  </button>
+
                 </div>
               </div>
             </div>    
@@ -134,7 +300,7 @@
 
             <!-- Empty Data Message -->
             <div class="col-12 mt-2 text-center">
-              <div class="alert alert-info" *ngIf="dataLoaded && (!dataSource.data || dataSource.data.length === 0)">
+              <div class="alert alert-info" *ngIf="dataLoaded && (!dataSourcePostLottery.data || dataSourcePostLottery.data.length === 0)">
                 {{"message-lotteries-empty" | transloco}}
               </div>
             </div>

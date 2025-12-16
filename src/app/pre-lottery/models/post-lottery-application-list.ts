@@ -56,5 +56,11 @@ export class PostLotteryApplicationListItemModel {
     public instPaymentRefundedIcon: string,
     public ineligibityRemarks: string,
     public pendingDoc: string,
+    public tenementBookedStatus: string,
+    public allowedForBookMyhome: boolean,
+    public possessiondtlupdtStatus: string,
+    public allowedForPossUpd: boolean,
+    public agrmntUploadAllowed: boolean,
+    public indx2UploadAllowed: boolean
   ) {}
 }

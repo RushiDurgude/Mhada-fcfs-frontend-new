@@ -98,7 +98,7 @@ export class ApplicationDetailListComponents implements OnInit {
 
   pageSizeOptions1: number[] = [10, 25, 100];
   totalRows1 = 0;
-  pageSize1 = 10;
+  pageSize1 = 100;
   currentPage1 = 0;
 
   isAllowedForERegistration: boolean = false;
@@ -117,7 +117,7 @@ export class ApplicationDetailListComponents implements OnInit {
   indx2Letter: File;
   agrmntLtrFile: string | ArrayBuffer;
   registrationKey: number = 0;
-  applicationNo: number = 0;
+  applicationNo: string;
   agrmntLtrUpldAppKey: number = 0;
   allotmentLetterCounter: number = 0;
   draftAllotmentLetterCounter: number = 0;
@@ -951,7 +951,7 @@ export class ApplicationDetailListComponents implements OnInit {
     }
   }
 
-  showAgreement(registrationKey: number, applicationNo: number) {
+  showAgreement(registrationKey: number, applicationNo: string) {
     this.displayProgressSpinner();
     this.preLotteryApplicationService
       .fetchAgreementCopy(registrationKey, applicationNo)
@@ -987,7 +987,7 @@ export class ApplicationDetailListComponents implements OnInit {
       );
   }
 
-  showIndex2Ltr(registrationKey: number, applicationNo: number) {
+  showIndex2Ltr(registrationKey: number, applicationNo: string) {
     this.displayProgressSpinner();
     this.preLotteryApplicationService
       .fetchIndex2Copy(registrationKey, applicationNo)
@@ -1023,7 +1023,7 @@ export class ApplicationDetailListComponents implements OnInit {
       );
   }
 
-  agrmntLtrUpload(event1, registrationKey: number, applicationNo: number) {
+  agrmntLtrUpload(event1, registrationKey: number, applicationNo: string) {
     this.agrmntLetter = event1.target.files[0];
     this.registrationKey = registrationKey;
     this.applicationNo = applicationNo;
@@ -1042,7 +1042,7 @@ export class ApplicationDetailListComponents implements OnInit {
     }
   }
 
-  indx2LtrUpload(event1, registrationKey: number, applicationNo: number) {
+  indx2LtrUpload(event1, registrationKey: number, applicationNo: string) {
     this.indx2Letter = event1.target.files[0];
     this.registrationKey = registrationKey;
     this.applicationNo = applicationNo;

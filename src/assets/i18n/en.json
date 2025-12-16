@@ -778,7 +778,7 @@
   "error-application-noc-load": "Unable to fetch NOC List",
   "btn-noc-cancel": "Request for Cancellation",
   "label-noc-record-not-found": "Records for NOC not Found",
-  "label-pol-not-generated": "POL Was Not Created. If a POL is not generated, you cannot submit an application for a NOC.",
+  "label-pol-not-generated": " Note : If a POL is not generated and 10% amount not paid you cannot submit an application for a NOC.",
   "label-cancel-noc": "Cancel NOC",
   "noc-payment-receipt": "Payment Receipt",
   "noc-payment-receipt-upload": "Upload 1st Installment Payment Receipt",
@@ -804,7 +804,7 @@
   "button-surrender-tenement": "Surrender tenement",
   "button-revert-surrender-tenement": "Revert Surrender tenement",
   "button-e-registration": "Appointment For Possession",
-  "view-noc-letter-btn": "Download E-Sign NOC",
+  "view-noc-letter-btn": "Download NOC",
   "error-spouse-winner-acceptance": "You and your spouse are allowed to accept only one tenement, and you have to surrender all remaining tenements.",
   "enter-surrender-remark": "Enter Surrender Reason and OTP",
 
@@ -1056,6 +1056,8 @@
   "error-pmay-apply": "You have already done the application, please complete process for flat booking.",
   "label-agent": "Select Agency",
   "pol-pending":"POL is pending",
-  "konkan-detail":"To apply for Konkan Board Non-PMAY Virar Bolinj MHADA tenements (not under PMAY), click YES to proceed."
-
+  "konkan-detail":"To apply for Konkan Board Non-PMAY Virar Bolinj MHADA tenements (not under PMAY), click YES to proceed.",
+   "bank-email-id": "Bank Email Id",
+  "bank-authorized-officer-name": "Bank authorized officer name",
+  "bank-authorized-officer-designation": "Bank authorized officer designation"
 }

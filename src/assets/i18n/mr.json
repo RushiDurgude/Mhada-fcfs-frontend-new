@@ -797,7 +797,7 @@
   "error-application-noc-load": "NOC यादी आणण्यात अक्षम",
   "btn-noc-cancel": "रद्द करण्याची विनंती",
   "label-noc-record-not-found": "NOC साठी नोंदी सापडल्या नाहीत",
-  "label-pol-not-generated": "POL पत्र तयार झाले नाही. जर POL पत्र तयार केले नसेल तर तुम्ही NOC अर्ज सादर करू शकत नाही.",
+  "label-pol-not-generated": "टीप: जर पीओएल तयार झाला नाही आणि १०% रक्कम भरली नाही तर तुम्ही एनओसीसाठी अर्ज सादर करू शकत नाही.",
   "noc-payment-receipt": "पैसे भरल्याची पावती",
   "noc-payment-receipt-upload": "पहिला हप्ता भरण्याची पावती अपलोड करा",
   "view-noc-payment-receipt": "पहिल्या हप्त्याची पावती",
@@ -808,7 +808,7 @@
   "button-download-ineligible-scrutiny-letter": "अंतिम अपात्र पत्र",
   "no matching lottery found": "कोणतीही जुळणारी लॉटरी सापडली नाही",
   "label-cancel-noc": "NOC रद्द करा",
-  "view-noc-letter-btn": "ई-साइन एनओसी डाउनलोड करा",
+  "view-noc-letter-btn": "एनओसी डाउनलोड करा",
   "digi-multiple-names": "अधिक नावे",
   "label-aadhar-name": "आधार वरिल नाव",
   "label-pan-name": "पॅन वरिल नाव",
@@ -1052,6 +1052,9 @@
   "error-pmay-apply": "तुम्ही आधीच अर्ज केला आहे, कृपया फ्लॅट बुकिंगची प्रक्रिया पूर्ण करा.",
   "label-agent": "एजन्सी निवडा",
   "pol-pending":"पीओएल प्रलंबित आहे",
-  "konkan-detail":"जर तुम्हाला कोंकण मंडळाच्या पीएमएवाय व्यतिरिक्त विरार बोळींज येथील म्हाडाच्या घरांच्या योजनांसाठी अर्ज करायचा असेल तर हो वर क्लिक करा आणि पुढे जा."
+  "konkan-detail":"जर तुम्हाला कोंकण मंडळाच्या पीएमएवाय व्यतिरिक्त विरार बोळींज येथील म्हाडाच्या घरांच्या योजनांसाठी अर्ज करायचा असेल तर हो वर क्लिक करा आणि पुढे जा.",
+  "bank-email-id": "बँक ईमेल आयडी",
+  "bank-authorized-officer-name": "बँक अधिकृत अधिकारी नाव",
+  "bank-authorized-officer-designation": "बँक अधिकृत अधिकारी पद"
 
 }
