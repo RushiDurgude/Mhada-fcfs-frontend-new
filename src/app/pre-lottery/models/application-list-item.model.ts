@@ -53,5 +53,6 @@ export class ApplicationListItemModel {
         public allowedForBookMyhome: boolean,
         public polPublish: string,
         public tenementConfirmDays: number,
+        public tenementRelaseDays: string
     ) { }
 }
