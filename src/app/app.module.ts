@@ -232,6 +232,7 @@ import { QsSpouseOldWinnerComponent } from "./registration-step/qs-spouse-old-wi
 import { ZoomedImageModalComponent } from "./zoom-image/zoomed.component";
 import { ApplicationDetailListComponents } from "./pre-lottery/application-detail-lists/application-detail-lists.component";
 import { ApplicationBookHomeComponent } from "./pre-lottery/application-bookHome/application-bookHome.component";
+import { NocOtpComponent } from "./pre-lottery/noc-otp/noc-otp.component";
 
 // import { HTTP } from "@ionic-native/http/ngx";
 @NgModule({
@@ -416,7 +417,9 @@ import { ApplicationBookHomeComponent } from "./pre-lottery/application-bookHome
     QsSpouseOldWinnerComponent,
     ZoomedImageModalComponent,
     ApplicationDetailListComponents,
-    ApplicationBookHomeComponent
+    ApplicationBookHomeComponent,
+    NocOtpComponent,
+
   ],
   imports: [
     BrowserModule,

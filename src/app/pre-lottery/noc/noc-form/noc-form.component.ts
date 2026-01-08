@@ -6,8 +6,11 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { NocGenerationFormModel } from "../../models/noc-generation-form.model";
 import { PreLotteryApplicationService } from "../../services/pre-lottery-application.service";
-import { ToastController } from "@ionic/angular";
+import { ModalController, ToastController } from "@ionic/angular";
 import { NocGenerationResponseModel } from "../../models/noc-generation-response-model";
+import { NocOtpComponent } from "../../noc-otp/noc-otp.component";
+import { LoaderComponent } from "src/app/loader/loader.component";
+import { data } from "jquery";
 // import { ToastController } from "@ionic/angular/providers/toast-controller";
 // import { ConsoleReporter } from "jasmine";
 
@@ -22,7 +25,8 @@ import { NocGenerationResponseModel } from "../../models/noc-generation-response
   styleUrls: ["../../pre-lottery.component.scss","./noc-form.component.scss"],
 })
 export class NocFormComponent  implements OnInit {
-
+  isChecked: boolean = false;
+  SubmitDisabled: boolean = true;
   applicationList: {[key:number]:string};
   applicationKey: number;
   applicatName: string;
@@ -30,6 +34,8 @@ export class NocFormComponent  implements OnInit {
   category: string;
   tenement: string;
   lotteryName: string;
+  mobileNumber: string;
+
 
   selectedFile: File;
   sanctionLetter: File;
@@ -62,10 +68,16 @@ export class NocFormComponent  implements OnInit {
   showDraftList: boolean = false;
   showFinalList: boolean = false;
   showLoiBtn: boolean = false;
+  progressSpinnerDialog: any = null;
+  otpSentMessage: string;
+  authEncrypted: string;
+
+
   constructor(private preLotteryApplicationService: PreLotteryApplicationService, 
     private route: ActivatedRoute, 
     private dialog: MatDialog,
     private router: Router,
+    private modalCtrl: ModalController,
     private toastController: ToastController) {}
 
   ngOnInit() {
@@ -82,17 +94,17 @@ export class NocFormComponent  implements OnInit {
           console.log("Data From DB",data);
           this.applicationList = data.applications;
 
-          if(data.isSecondNoc){
-            this.nocGenerationResponseModel = data;
-            this.pBankName = data.bankName;
-            this.pBranchName = data.branchName;
-            this.pLoanAmount = data.loanAmount;
-            this.pRateOfInterest = data.rateOfIntrest;
-            this.pTenureYear = data.tenureYear;
-            this.pTenureMonth = data.tenureMonth;
-            this.secondNoc = true;
+          // if(data.isSecondNoc){
+          //   this.nocGenerationResponseModel = data;
+          //   this.pBankName = data.bankName;
+          //   this.pBranchName = data.branchName;
+          //   this.pLoanAmount = data.loanAmount;
+          //   this.pRateOfInterest = data.rateOfIntrest;
+          //   this.pTenureYear = data.tenureYear;
+          //   this.pTenureMonth = data.tenureMonth;
+          //   this.secondNoc = true;
             
-          }
+          // }
 
           if(this.pageMode === 'ADD') {
             this.form.addControl("applicationKey", new FormControl(null, Validators.required));
@@ -123,6 +135,9 @@ export class NocFormComponent  implements OnInit {
       tenureMonths: new FormControl(null, Validators.required),
       loanAmount: new FormControl(null, Validators.required),
       loanIntrest: new FormControl(null, Validators.required),
+      bankEmailId: new FormControl(null, Validators.required),
+      bankAuthorizedOfficerName: new FormControl(null, Validators.required),
+      bankAuthorizedOfficerDesignation: new FormControl(null, Validators.required),
       Nocfile: new FormControl(null, Validators.required),
       sanctionLetterFile: new FormControl(null, Validators.required),
     });
@@ -179,80 +194,157 @@ export class NocFormComponent  implements OnInit {
       this.isSubmitDisabled = false;
     }
   }
+  onCheckboxChange(e: any) {
+    if(e.target){
+      console.log("check box ticked");
+  this.isSubmitDisabled = false;
 
+    }else{
+      console.log("check box unticked");
+   this.isSubmitDisabled = true;
 
-
+    }
+  }
+  
   async saveNoc() {
     console.log("in save NOC", this.form.value);
 
     const regexNamePtrn = /^[a-zA-Z& ]+$/;
 
-    if(!this.form.value.branchName.match(regexNamePtrn)){
-      this.showErrorToast("Only alphabets allowed for Branch Name");
-      this.isSubmitDisabled = false;
-      return;
+    if (!this.form.value.branchName.match(regexNamePtrn)) {
+        this.showErrorToast("Only alphabets allowed for Branch Name");
+        this.isSubmitDisabled = false;
+        return;
     }
 
-    if(!this.form.value.bankName.match(regexNamePtrn)){
-      this.showErrorToast("Only alphabets allowed for Bank Name");
-      this.isSubmitDisabled = false;
-      return;
+    if (!this.form.value.bankAuthorizedOfficerName.match(regexNamePtrn)) {
+        this.showErrorToast("Only alphabets allowed for Bank Authorized Officer Name");
+        this.isSubmitDisabled = false;
+        return;
     }
 
-    if(!this.applicatName){
-      this.showErrorToast("Please Select Application");
-      this.isSubmitDisabled = false;
-      return;
+    if (!this.form.value.bankAuthorizedOfficerDesignation.match(regexNamePtrn)) {
+        this.showErrorToast("Only alphabets allowed for Bank Authorized Officer Designation");
+        this.isSubmitDisabled = false;
+        return;
     }
 
-
-    if(!this.validateLoanAmount()){
-      this.showErrorToast("Loan Amount Should Be Greatter than Zero");
-      this.isSubmitDisabled = false;
-      return;
-    }
-    if(!this.validateRateOfIntrest()){
-      this.showErrorToast("Rate of Intrest Should Be Gratter ThanZero");
-      this.isSubmitDisabled = false;
-      return;
+    if (!this.form.value.bankName.match(regexNamePtrn)) {
+        this.showErrorToast("Only alphabets allowed for Bank Name");
+        this.isSubmitDisabled = false;
+        return;
     }
 
+    if (!this.applicatName) {
+        this.showErrorToast("Please Select Application");
+        this.isSubmitDisabled = false;
+        return;
+    }
 
-    this.preLotteryApplicationService
-        .saveNoc({
-          bankName: this.form.value.bankName.trim(),
-          branchName: this.form.value.branchName.trim(),
-          tenureYear: this.form.value.tenureYear,
-          tenureMonths: this.form.value.tenureMonths,
-          rateOfInterest: this.form.value.loanIntrest,
-          loanAmount: this.form.value.loanAmount,
-          applicationKey: this.applicationKey,
-          nocApplicationFile: this.nocApplicationFile == null ? "NO UPDATE": this.nocApplicationFile ,
-          sanctionLetterFile: this.sanctionLetterFile == null ? "NO UPDATE": this.sanctionLetterFile ,
-          cancelNocLetterFile: this.cancelNocLetterFile == null ? "NO UPDATE": this.cancelNocLetterFile 
-        }).subscribe((data: any) => {
-            if(data.status === 'SUCCESS') {
-              this.successToast("NOC submitted");
-              this.router.navigate(['/noc/noc-list']);
-            }
-            else {
-              this.isSubmitDisabled = false;
-              this.showErrorToast(data.errorMessage);
-            }
-          }, error => {
-            this.isSubmitDisabled = false;
-            console.log(error);
-            this.showErrorToast(error.error.errorMessage);
-          });
-    } 
+    if (!this.validateLoanAmount()) {
+        this.showErrorToast("Loan Amount Should Be Greater than Zero");
+        this.isSubmitDisabled = false;
+        return;
+    }
+
+    if (!this.validateRateOfIntrest()) {
+        this.showErrorToast("Rate of Interest Should Be Greater Than Zero");
+        this.isSubmitDisabled = false;
+        return;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!emailPattern.test(this.form.value.bankEmailId.trim())) {
+        this.showErrorToast("Please enter a valid email ID");
+        this.isSubmitDisabled = false;
+        return;
+    }
+    const loanAmount = this.form.value.loanAmount;
+    const confirmLoan = confirm(`Please Confirm your loan amount: ₹${loanAmount}`);
+    if (!confirmLoan) {
+      this.isSubmitDisabled = false;
+      return;
+     }
+    this.displayProgressSpinner();
     
+    this.preLotteryApplicationService.sendOtpForNoc(this.applicationKey).subscribe(async (otpResponse) => {
+        this.progressSpinnerDialog.close();
 
+        if (otpResponse.status === 'SUCCESS') {
+            this.otpSentMessage = otpResponse.otpSentMessage;
+            this.authEncrypted = otpResponse.authEncryped;
+console.log("otpResponse.authEncryped"+otpResponse.authEncryped);
+            const modal = await this.modalCtrl.create({
+                component: NocOtpComponent,
+                componentProps: {
+                    otpSentMessage: this.otpSentMessage,
+                    authEncrypted: this.authEncrypted,
+                    applicationKey: this.applicationKey
+                }
+            });
 
+            modal.present();
+            const { data, role } = await modal.onWillDismiss();
 
+            if (data != null && role === 'submit') {
+                this.displayProgressSpinner();
+  console.log("Hii in saveNoc");
+             console.log("bankName"+this.form.value.bankName.trim());
+             console.log("branchName"+this.form.value.branchName.trim());
+             console.log("tenureYear"+this.form.value.tenureYear);
+             console.log("tenureMonths"+this.form.value.tenureMonths);
+             console.log("loanIntrest"+ this.form.value.loanIntrest);
+             console.log("loanAmount"+this.form.value.loanAmount);
+             console.log("bankEmailId"+this.form.value.bankEmailId.trim());
+             console.log("bankAuthorizedOfficerName"+this.form.value.bankAuthorizedOfficerName.trim());
+             console.log("bankAuthorizedOfficerDesignation"+this.form.value.bankAuthorizedOfficerDesignation.trim());
+             console.log("applicationKey"+this.applicationKey);
+             console.log("enteredOtp"+data.enteredOtp.toString());
+             console.log("enteredOtp"+data.authEncrypted);
+             console.log("enteredOtp"+this.authEncrypted);
 
-
-
-
+                this.preLotteryApplicationService.saveNoc({
+                    bankName: this.form.value.bankName.trim(),
+                    branchName: this.form.value.branchName.trim(),
+                    tenureYear: this.form.value.tenureYear,
+                    tenureMonths: this.form.value.tenureMonths,
+                    rateOfInterest: this.form.value.loanIntrest,
+                    loanAmount: this.form.value.loanAmount,
+                    bankEmailId: this.form.value.bankEmailId.trim(),
+                    bankAuthorizedOfficerName: this.form.value.bankAuthorizedOfficerName.trim(),
+                    bankAuthorizedOfficerDesignation: this.form.value.bankAuthorizedOfficerDesignation.trim(),
+                    applicationKey: this.applicationKey,
+                    enteredOtp: data.enteredOtp.toString(),
+                    authEncrypted: this.authEncrypted,
+                    nocApplicationFile: this.nocApplicationFile ?? "NO UPDATE",
+                    sanctionLetterFile: this.sanctionLetterFile ?? "NO UPDATE",
+                    cancelNocLetterFile: this.cancelNocLetterFile ?? "NO UPDATE"
+                }).subscribe((response) => {
+                    this.progressSpinnerDialog.close();
+                    
+                    if (response.status === 'SUCCESS') {
+                        this.successToast("NOC submitted");
+                        this.router.navigate(['/noc/noc-list']);
+                    } else {
+                        this.showErrorToast(response.errorMessage);
+                    }
+                }, error => {
+                    this.progressSpinnerDialog.close();
+                    this.showErrorToast(error.error?.errorMessage || "Submission failed.");
+                });
+            } else {
+                this.showErrorToast("OTP verification failed!");
+            }
+        } else {
+            this.showErrorToast(otpResponse.errorMessage || "Failed to send OTP. Please try again.");
+        }
+        
+    }, error => {
+        this.progressSpinnerDialog.close();
+        this.showErrorToast(error.error?.errorMessage || "Error sending OTP.");
+    });
+}
 
     onDropdownChange(e: any) {
       console.log('*********Selected value: ', e.value);
@@ -270,6 +362,16 @@ export class NocFormComponent  implements OnInit {
             this.category = data.category;
             this.tenement = data.tenement;
             this.lotteryName = data.lottery;
+            this.mobileNumber = data.mobileNumber;
+            this.nocGenerationResponseModel = data;
+            this.pBankName = data.bankName;
+            this.pBranchName = data.branchName;
+            this.pLoanAmount = data.loanAmount;
+            this.pRateOfInterest = data.rateOfIntrest;
+            this.pTenureYear = data.tenureYear;
+            this.pTenureMonth = data.tenureMonth;
+            this.secondNoc = data.isSecondNoc; 
+            console.log( "Second NOC: ",this.secondNoc);
   
           }, error => {
             this.isSubmitDisabled = false;
@@ -345,4 +447,15 @@ export class NocFormComponent  implements OnInit {
       }
     }
   }
+
+  // updateSubmitStatus() {
+  //   this.SubmitDisabled = !this.isChecked;
+  // }
+
+   async displayProgressSpinner() {
+      this.progressSpinnerDialog = this.dialog.open(LoaderComponent, {
+        disableClose: true,
+        panelClass: "progressSpinner",
+      });
+    }
 }

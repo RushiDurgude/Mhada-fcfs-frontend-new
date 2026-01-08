@@ -1211,7 +1211,7 @@ export class PreLotteryApplicationService {
     }>(api_url + "/applications/eRegistrationCall/" + applicationKey);
   }
 
-  fetchAgreementCopy(registrationKey: number, applicationNo: number) {
+  fetchAgreementCopy(registrationKey: number, applicationNo: string) {
     return this.http.get<{
       status: string;
       data: string;
@@ -1225,7 +1225,7 @@ export class PreLotteryApplicationService {
     );
   }
 
-  fetchIndex2Copy(registrationKey: number, applicationNo: number) {
+  fetchIndex2Copy(registrationKey: number, applicationNo: string) {
     return this.http.get<{
       status: string;
       data: string;
@@ -1241,7 +1241,7 @@ export class PreLotteryApplicationService {
 
   uploadAgrmntLtr(
     registrationKey: number,
-    applicationNo: number,
+    applicationNo: string,
     agrmntLetterBase64: string
   ) {
     console.log(
@@ -1269,7 +1269,7 @@ export class PreLotteryApplicationService {
 
   uploadIndxLtr(
     registrationKey: number,
-    applicationNo: number,
+    applicationNo: string,
     indx2LetterBase64: string
   ) {
     console.log(
@@ -1459,5 +1459,23 @@ export class PreLotteryApplicationService {
 
   playAudioCaptcha(captchaKey: number) {
     return this.http.get(api_url + "/guest/captcha/audio/" + captchaKey, {responseType: 'blob'});
+  }
+
+  sendOtpForNoc(appKey: number) {
+    return this.http.get<{
+      otpSentMessage: string;
+      authEncryped: string;
+      status: string;
+      errorMessage: string;
+    }>(api_url + "/confirm/noc-sendotp/" + appKey);
+  }
+
+  regenerateOtpForNoc(appKey: number, authEncryped: string) {
+    return this.http.post<{
+      otpSentMessage: string;
+      authEncryped: string;
+      status: string;
+      errorMessage: string;
+    }>(api_url + "/confirm/noc-regenotp/" + appKey, authEncryped);
   }
 }

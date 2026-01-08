@@ -98,7 +98,7 @@ export class ApplicationDetailListComponents implements OnInit {
 
   pageSizeOptions1: number[] = [10, 25, 100];
   totalRows1 = 0;
-  pageSize1 = 10;
+  pageSize1 = 100;
   currentPage1 = 0;
 
   isAllowedForERegistration: boolean = false;
@@ -117,7 +117,7 @@ export class ApplicationDetailListComponents implements OnInit {
   indx2Letter: File;
   agrmntLtrFile: string | ArrayBuffer;
   registrationKey: number = 0;
-  applicationNo: number = 0;
+  applicationNo: string;
   agrmntLtrUpldAppKey: number = 0;
   allotmentLetterCounter: number = 0;
   draftAllotmentLetterCounter: number = 0;
@@ -228,33 +228,80 @@ export class ApplicationDetailListComponents implements OnInit {
     }
   }
 
+  // startCountdown(applications: ApplicationListItemModel[]) {
+  //   if (this.intervalId) {
+  //     clearInterval(this.intervalId);
+  //   }
+  
+  //   this.intervalId = setInterval(() => {
+  //     const now = new Date().getTime();
+  //     const fortyEightHoursMs = 48 * 60 * 60 * 1000;
+  
+  //     applications.forEach(app => {
+  //       if (!app.tenementBookedDate) return;
+  
+  //       const bookedTime = new Date(app.tenementBookedDate).getTime(); // string to Date
+  //       const confirmDurationMs = app.tenementConfirmDays * 24 * 60 * 60 * 1000;
+  //       const endTime = bookedTime + confirmDurationMs;
+  //       const diff = endTime - now;
+  
+  //       if (diff <= 0) {
+  //         this.countdowns[app.key] = 'Expired';
+  //       } else {
+  //         const hours = Math.floor(diff / (1000 * 60 * 60));
+  //         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  //         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  //         this.countdowns[app.key] = `${hours}h ${minutes}m ${seconds}s`;
+  //       }
+  //     });
+  //   }, 1000);
+  // }
+
   startCountdown(applications: ApplicationListItemModel[]) {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  
-    this.intervalId = setInterval(() => {
-      const now = new Date().getTime();
-  
-      applications.forEach(app => {
-        if (!app.tenementBookedDate) return;
-  
-        const bookedTime = new Date(app.tenementBookedDate).getTime(); // string to Date
-        const endTime = bookedTime + 48 * 60 * 60 * 1000;
-        const diff = endTime - now;
-  
-        if (diff <= 0) {
-          this.countdowns[app.key] = 'Expired';
-        } else {
-          const hours = Math.floor(diff / (1000 * 60 * 60));
-          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-          this.countdowns[app.key] = `${hours}h ${minutes}m ${seconds}s`;
-        }
-      });
-    }, 1000);
+  if (this.intervalId) {
+    clearInterval(this.intervalId);
   }
-  
+
+  this.intervalId = setInterval(() => {
+    const now = Date.now();
+    const fortyEightHoursMs = 48 * 60 * 60 * 1000;
+
+    applications.forEach(app => {
+      if (!app.tenementBookedDate || !app.tenementConfirmDays) return;
+
+      const bookedTime = new Date(app.tenementBookedDate).getTime();
+      const confirmDurationMs =
+        app.tenementConfirmDays * 24 * 60 * 60 * 1000;
+
+      const endTime = bookedTime + confirmDurationMs;
+      const diff = endTime - now;
+
+      if (diff <= 0) {
+        this.countdowns[app.key] = 'Expired';
+        return;
+      }
+
+      // ⏳ Time calculations
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (24 * 3600));
+      const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      // 🔥 Display logic
+      if (diff > fortyEightHoursMs) {
+        // More than 48 hours → show days + time
+        this.countdowns[app.key] =
+          `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      } else {
+        // Less than or equal to 48 hours → show only time
+        const totalHours = Math.floor(diff / (1000 * 60 * 60));
+        this.countdowns[app.key] =
+          `${totalHours}h ${minutes}m ${seconds}s`;
+      }
+    });
+  }, 1000);
+}
 
   async showErrorToast(errorMessage: string) {
     const toast = await this.toastController.create({
@@ -951,7 +998,7 @@ export class ApplicationDetailListComponents implements OnInit {
     }
   }
 
-  showAgreement(registrationKey: number, applicationNo: number) {
+  showAgreement(registrationKey: number, applicationNo: string) {
     this.displayProgressSpinner();
     this.preLotteryApplicationService
       .fetchAgreementCopy(registrationKey, applicationNo)
@@ -987,7 +1034,7 @@ export class ApplicationDetailListComponents implements OnInit {
       );
   }
 
-  showIndex2Ltr(registrationKey: number, applicationNo: number) {
+  showIndex2Ltr(registrationKey: number, applicationNo: string) {
     this.displayProgressSpinner();
     this.preLotteryApplicationService
       .fetchIndex2Copy(registrationKey, applicationNo)
@@ -1023,7 +1070,7 @@ export class ApplicationDetailListComponents implements OnInit {
       );
   }
 
-  agrmntLtrUpload(event1, registrationKey: number, applicationNo: number) {
+  agrmntLtrUpload(event1, registrationKey: number, applicationNo: string) {
     this.agrmntLetter = event1.target.files[0];
     this.registrationKey = registrationKey;
     this.applicationNo = applicationNo;
@@ -1042,7 +1089,7 @@ export class ApplicationDetailListComponents implements OnInit {
     }
   }
 
-  indx2LtrUpload(event1, registrationKey: number, applicationNo: number) {
+  indx2LtrUpload(event1, registrationKey: number, applicationNo: string) {
     this.indx2Letter = event1.target.files[0];
     this.registrationKey = registrationKey;
     this.applicationNo = applicationNo;

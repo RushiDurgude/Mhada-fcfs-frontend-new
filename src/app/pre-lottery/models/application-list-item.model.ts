@@ -51,6 +51,8 @@ export class ApplicationListItemModel {
         public tenementBookedDate: string,
         public tenementBookedStatus: string,
         public allowedForBookMyhome: boolean,
-        public polPublish: string
+        public polPublish: string,
+        public tenementConfirmDays: number,
+        public tenementRelaseDays: string
     ) { }
 }

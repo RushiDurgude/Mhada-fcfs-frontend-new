@@ -6,8 +6,9 @@ export class ApplicationDetailsForNocFormModel {
         public category: string,
         public tenement: string,
         public lottery: string,
-        
+        public mobileNumber:string,
         public status: string,
         public errorMessage: string,  
+        
     ) { }
 }
