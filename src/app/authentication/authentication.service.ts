@@ -302,5 +302,33 @@ export class AuthenticationService {
       errorMessage: string;
     }>(serverUrl + "open/update-password?panNumber=" + panNumber, { otp, password });
   }
+
+  async checkSession(): Promise<boolean> {
+    const base = await serverUrl;
+    console.log('checkSession called');
+    try {
+      await this.httpClient.get(base + 'auth/validate', { withCredentials: true }).toPromise();
+      console.log('after ok session');
+      return true;
+    } catch (err) {
+      console.log('in exception', err);
+      return false;
+    }
+  }
+
+  async logout() {
+    const url = (await serverUrl) + "logoutv1";
+    return new Promise((resolve) => {
+      this.httpClient
+        .post(url, {})
+        .toPromise()
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((resp: Response) => {
+          resolve(resp);
+        });
+    });
+  }
   
 }

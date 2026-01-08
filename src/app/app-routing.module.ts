@@ -92,7 +92,7 @@ const routes: Routes = [
   { path: "contact-us", component: ContactUsComponent },
   // { path: "", component: LandingComponent },
   { path: "important-links", component: ImportantListComponent },
-
+  { path: "newuser", component: SignupComponent },
   { 
     path: "registration-step", 
     component: RegistrationStepComponent,

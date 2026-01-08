@@ -49,6 +49,7 @@ export class AppComponent implements ViewDidEnter {
     private googleAnalyticsService: GoogleAnalyticsService,
     private themeService: ThemeService
   ) {
+    console.log('in app component', this.router.url);
     if (localStorage.getItem("platform") == "android" || localStorage.getItem("platform") == "ios") {
       // this.initializeApp();
       this.checkLastRoute();
@@ -92,7 +93,7 @@ export class AppComponent implements ViewDidEnter {
       window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/") 
     ) {
       localStorage.setItem("platform", "browser");
-    } else if (window.location.href.toString().startsWith("http://localhost:8100")) {
+    } else if (window.location.href.toString().startsWith("http://localhost:8100") || window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100")) {
       localStorage.setItem("platform", "browser-local");
     } else if (window.location.href.toString().startsWith("capacitor://localhost")) {
       localStorage.setItem("platform", "ios");
@@ -117,8 +118,10 @@ export class AppComponent implements ViewDidEnter {
     this.sharedService.authFlag.subscribe((flag) => {
       this.authFlag = flag;
     });
-
-    if (this.checkToken.isAuthenticateUser() == true) {
+   
+    const authStatus = await this.checkToken.isAuthenticateUser();
+    if (authStatus) {
+      this.sharedService.setAuthentication(true);
       this.getLastDigiLockerLoginDate();
     }
     this.ionViewDidEnter();
@@ -299,11 +302,23 @@ export class AppComponent implements ViewDidEnter {
         window.location.href.toString().startsWith("capacitor://localhost/cert-entry")
       ) {
       } else if (
-        window.location.href.toString().startsWith("http://localhost:8100/registration-step") ||
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/registration-step") ||
         window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/registration-step") ||
+        window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/registration-step") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/registration-step")
       ) {
         this.router.navigate(["/registration-step"]);
+      } else if (
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/profile?sso") ||
+        window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/profile?sso") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/profile?sso") ||
+        window.location.href.toString().startsWith("https://housing.pmrda.gov.in/profile?sso") ||
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/newuser") ||
+        window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/newuser") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/newuser") ||
+        window.location.href.toString().startsWith("https://housing.pmrda.gov.in/newuser") 
+      ) {
+        //this.router.navigate(["/registration-step"]);
       } else {
         this.router.navigate(["/"]);
       }
@@ -418,11 +433,22 @@ export class AppComponent implements ViewDidEnter {
           {
             text: "Logout",
             handler: () => {
-              setTimeout(() => {
-                localStorage.clear();
-                this.sharedService.setAuthentication(false);
-                this.router.navigate(["/"]);
-                window.location.reload();
+              // setTimeout(() => {
+              //   localStorage.clear();
+              //   this.sharedService.setAuthentication(false);
+              //   this.router.navigate(["/"]);
+              //   window.location.reload();
+              // }, 100);
+
+              setTimeout(async () => {
+                const response: any = await this.authenticationService.logout();
+                console.log(response, response.error);
+                if(!response.error) {
+                  localStorage.clear();
+                  this.sharedService.setAuthentication(false);
+                  this.router.navigate(["/"]);
+                  window.location.reload();
+                }
               }, 100);
             },
           },

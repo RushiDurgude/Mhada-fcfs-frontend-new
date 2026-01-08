@@ -859,7 +859,7 @@ export class PreLotteryApplicationService {
       } else {
         const response: any = await this.profileService.refreshtoken();
         console.log("new token", response);
-        localStorage.setItem("token", response.token);
+        // localStorage.setItem("token", response.token);
         this.sharedService.setAuthentication(true);
       }
     } else {

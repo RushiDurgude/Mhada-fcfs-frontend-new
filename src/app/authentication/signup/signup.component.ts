@@ -618,7 +618,7 @@ export class SignupComponent implements OnInit {
       };
       const response: any = await this.authenticationService.verifyEmailDetails(JSON.stringify(TabRegDto));
       if (response.status.toLowerCase() == "success") {
-        localStorage.setItem("token", response.message);
+        // localStorage.setItem("token", response.message);
         localStorage.removeItem("otpVerificationPending");
         localStorage.setItem("panNo", this.signUpPanNo);
         this.successToast("OTP verified.");
@@ -645,7 +645,7 @@ export class SignupComponent implements OnInit {
       };
       const response: any = await this.authenticationService.verifyOtp(JSON.stringify(TabRegDto));
       if (response.status.toLowerCase() == "success") {
-        localStorage.setItem("token", response.message);
+        // localStorage.setItem("token", response.message);
         localStorage.setItem("panNo", this.signUpPanNo);
         this.successToast("OTP verified.");
         localStorage.setItem("session-started", "true");
@@ -955,7 +955,7 @@ export class SignupComponent implements OnInit {
       .subscribe(data => {
         this.closeProgressSpinner();
         if (data.status == 'SUCCESS') {
-          localStorage.setItem("token", data.token);
+          // localStorage.setItem("token", data.token);
           localStorage.setItem("session-started", "true");
           localStorage.setItem("expiresIn", data.expiresIn);
           localStorage.setItem("panNo", this.signUpPanNo);

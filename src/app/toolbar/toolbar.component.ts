@@ -66,8 +66,10 @@ export class ToolbarComponent implements OnInit {
   }
 
   async toProfileNew() {
-    console.log('this.authService.isAuthenticateUser()', this.authService.isAuthenticateUser());
-    if (this.authService.isAuthenticateUser()) {
+      const authStatus = await this.authService.isAuthenticateUser();
+
+    console.log('this.authService.isAuthenticateUser()', authStatus);
+    if (authStatus) {
       localStorage.removeItem("editQuestionCode");
       this.router.routeReuseStrategy.shouldReuseRoute = function() {
         return false;
@@ -78,7 +80,8 @@ export class ToolbarComponent implements OnInit {
   }
 
   async toProfile() {
-    if (this.authService.isAuthenticateUser()) {
+    const authStatus = await this.authService.isAuthenticateUser();
+    if (authStatus) {
       if (
         this.router.url == "/successStatus" ||
         this.router.url == "/failureStatus" ||
@@ -229,7 +232,7 @@ export class ToolbarComponent implements OnInit {
             window.location.reload();
           } else {
             const response: any = await this.profileService.refreshtoken();
-            localStorage.setItem("token", response.token);
+            // localStorage.setItem("token", response.token);
             this.sharedService.setAuthentication(true);
             // window.location.reload();
             this.ngOnInit();
