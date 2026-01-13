@@ -185,8 +185,9 @@
               [formSubmitted]="localForm.submitted"
             ></field-error-component>
           </div> -->
-
-          <div class="field col-12 sm:col-6 md:col-6 lg:col-4">
+<!-- To do need to add the new column in lottery evenet isagencyallowed - Y 
+  when data load in this form get the is agency allowed --Y and N - null Prajjjwal-->
+          <div class="field col-12 sm:col-6 md:col-6 lg:col-4" *ngIf="isAgencyNotAllowed === 'N'"> 
             <label for="selectedAgency" style="color: #5A5A5A; font-family: Poppins; font-size: 13px; font-style: normal">
               {{ "label-agent" | transloco }}
               <span class="text-red-900">*</span>

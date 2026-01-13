@@ -6,28 +6,34 @@
           <div class="col-12 lg:col-12 xl:col-12">
             <ion-radio-group [(ngModel)]="selectedRadioOption" (ngModelChange)="radioButtonClicked($event)">
               <div class="grid">
-                <div class="col-12 m-0 p-0 lg:col-3">
+                <div class="col-12 m-0 p-0 sm:col-6 md:col-4 lg:col-2">
                   <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
                     <ion-label>&nbsp;&nbsp;&nbsp;{{"unmarried-label" | transloco}}</ion-label>
                     <ion-radio mode="md" slot="start" value="Unmarried"></ion-radio>
                   </ion-item>
                 </div>
-                <div class="col-12 m-0 p-0 lg:col-3">
+                <div class="col-12 m-0 p-0 sm:col-6 md:col-4 lg:col-2">
                   <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
                     <ion-label>&nbsp;&nbsp;&nbsp;{{"married-label" | transloco}}</ion-label>
                     <ion-radio mode="md" slot="start" value="Married"></ion-radio>
                   </ion-item>
                 </div>
-                <div class="col-12 m-0 p-0 lg:col-3">
+                <div class="col-12 m-0 p-0 sm:col-6 md:col-4 lg:col-2">
                   <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
                     <ion-label>&nbsp;&nbsp;&nbsp;{{"divorcee-label" | transloco}}</ion-label>
                     <ion-radio mode="md" slot="start" value="Divorcee"></ion-radio>
                   </ion-item>
                 </div>
-                <div class="col-12 m-0 p-0 lg:col-3">
+                <div class="col-12 m-0 p-0 sm:col-6 md:col-4 lg:col-3">
                   <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
                     <ion-label>&nbsp;&nbsp;&nbsp;{{"widow-widower-label" | transloco}}</ion-label>
                     <ion-radio mode="md" slot="start" value="Widow"></ion-radio>
+                  </ion-item>
+                </div>
+                <div class="col-12 m-0 p-0 sm:col-6 md:col-4 lg:col-2">
+                  <ion-item class="ion-no-padding" style="--padding-end: 0px;--inner-padding-end: 0px;">
+                    <ion-label>&nbsp;&nbsp;&nbsp;{{"Separated-label" | transloco}}</ion-label>
+                    <ion-radio mode="md" slot="start" value="Separated"></ion-radio>
                   </ion-item>
                 </div>
               </div>
