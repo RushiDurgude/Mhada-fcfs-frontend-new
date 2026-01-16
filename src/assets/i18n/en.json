@@ -70,7 +70,6 @@
   "phoneNoOtpLabel": "Enter the OTP received on your mobile",
   "phoneNoOtpError": "Entered OTP is invalid",
   "landing-mhada-toolbar-title": "Maharashtra Housing and Area Development Authority - (MHADA Lottery)",
-
   "title-header-help": "Help",
   "title-header-application": "Application",
   "title-header-applications": "Applications",
@@ -99,11 +98,9 @@
   "title-header-letter-of-intimation": "My Intimation Letters",
   "title-confirm-selection": "Confirm Selection",
   "title-caste-validity-ref-letter": "Apply for Caste Validity Reference Letter",
-
   "option-select": "Select",
   "option-yes": "Yes",
   "option-no": "No",
-
   "label-builtup-area": "Builtup Area",
   "label-super-builtup-area": "Super Builtup Area",
   "label-carpet-area": "Carpet Area",
@@ -113,6 +110,7 @@
   "label-rera": "RERA",
   "label-selected-scheme": "Selected Scheme",
   "label-category": "Category",
+  "label-having-mcgm-mumbai-area": "Has the applicant or spouse been allotted any tenement by any government authority OR is a member of housing society to which land or building allotted by any Government authority?",
   "label-having-mcgm-area": "Does the applicant and /or his/ her spouse or minor children possess/allotted any kind of residential tenement or residential plot, not only by MHADA FCFS or any other government agencies in the jurisdiction of Local Municipal Authority or in the State of Maharashtra or in India but also do not possess any privately owned residential tenement or residential plot in the jurisdiction of Local Municipal Authority? If yes then provide information about the same.",
   "label-mumbai-scheme-located-que": "Does the applicant or spouse have a private house or plot within the municipal jurisdiction in which scheme is located?",
   "label-mumbai-government-authority-que": "Has the applicant or spouse have been allotted any tenement by any government authority OR is a member of housing society to which land or building allotted by any Government authority?",
@@ -213,7 +211,6 @@
   "label-refund-message": "Refund Message",
   "label-installment-balance-amount": "Balance Amount",
   "label-installment-due-date-with-interest": "Due Date with Interest",
-
   "table-header-lottery": "Lottery",
   "table-header-tenement-details": "Tenement Details",
   "button-pay-firstins": "Pay 1st Installment",
@@ -227,7 +224,6 @@
   "terms-and-conditions-ins-payment-paragraph-23": "No Chargeback or Dispute will be accepted by MHADA FCFS as the Applicant had agreed to pay an additional service charge for paying Online through Credit card/Net Banking.  ",
   "terms-and-conditions-ins-payment-header-3": "General Information",
   "terms-and-conditions-ins-payment-paragraph-31": "While making the e-payment if the receipt is not generated due to network connectivity or technical problem, please check your bank account. If the amount is not debited then please try the transaction after 1 hour, if amount is debited then a receipt will be available in the next 1 hour.",
-
   "label-pan": "PAN",
   "label-emailid": "Email Id",
   "label-scheme-categories": "Categories",
@@ -245,7 +241,6 @@
   "header-applications": "Applications",
   "sub-header-applications": "(Lottery)",
   "sub-header-applications-pl": "(Post Lottery)",
-
   "error-required-fields": "Please enter all required fields!",
   "error-try-again": "Please try again",
   "error-select-file": "Please select PDF File",
@@ -253,7 +248,6 @@
   "error-caste-validity-ref-letter-form-load": "Unable to load Caste Validity Reference Letter form",
   "error-caste-validity-ref-letter-district-name-required": "District Name is required",
   "error-caste-validity-ref-letter-form-submit": "Unable to submit Caste Validity Reference Letter form",
-
   "button-submit": "Submit",
   "button-submits": "SUBMIT",
   "button-esigned-application": "E-Signed Application",
@@ -290,45 +284,31 @@
   "button-apply-for-caste-validity-ref-letter": "Apply for Caste Validity Reference Letter",
   "button-reapply-for-caste-validity-ref-letter": "Re-Apply for Caste Validity Reference Letter",
   "button-view-caste-validity-ref-letter": "View Caste Validity Reference Letter",
-
   "terms-and-conditions-application-1": "I hereby declare that the information disclosed & document submitted by me on MHADA FCFS portal/ Mobile App, with intension to participate in housing schemes, is/are true and correct to the best of my knowledge.",
   "terms-and-conditions-application-2": "Further I declare, that the information disclosed & document submitted by me on MHADA portal, with intention to participate in lottery schemes, is/are true and correct to the best of my knowledge.Further in case any of the information or documents are found to be incorrect, False, fabricated and forged, then MHADA may exercises its right to cancel the allotment of tenement and I shall be liable to be prosecuted and punished under section 199 and 200 of IPC 1960 and / or any other laws applicable there to, without prejudice to legal remedies, available to the both the parties.",
   "terms-and-conditions-application-3": "I have accepted the terms and conditions of the MHADA FCFS housing schemes, to which I intend to apply and further undertake to abide by the provisions of the Maharashtra Housing and Area Development Act,2023, as amended from time to time, and the Maharashtra Housing and Area Development Authority Land disposal regulations, 2023. (All regulations and decision)",
-
   "terms-and-conditions-emd-payment-header-1": "Merchant Discount rates for online payment - MHADA FCFS housing",
-
   "terms-and-conditions-emd-payment-paragraph-1-col-hdr-1": "Payment Mode",
   "terms-and-conditions-emd-payment-paragraph-1-col-hdr-2": "MDR & Applicable Taxes on each Transaction Amount ",
-
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl1-1": "Credit Cards Issued In India ",
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl1-2": "0.85% ",
-
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl2-1": "Debit Cards Issued In India ",
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl2-2": "Rs. 30/- ",
-
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl3-1": "Net Banking (HDFC / ICICI / Axis)",
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl3-2": "Rs. 25/- ",
-
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl3-3": "Net Banking (SBI)",
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl3-4": "Rs. 35/- ",
-
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl3-5": "Net Banking (Other)",
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl3-6": "Rs. 16/- ",
-
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl4-1": "NEFT / RTGS",
   "terms-and-conditions-emd-payment-paragraph-1-col-dtl4-2": "Rs. 20/- ",
-
   "terms-and-conditions-emd-payment-header-2": "Terms & Conditions for Online Payment",
-
   "terms-and-conditions-emd-payment-paragraph-21": "It should be noted that all Refunds processed in the case of who have not paid the Cost tenement to MHADA applicants will be credited to the respective saving accounts only which updated /provided during the time of application of the MHADA FCFS BookemyHome. Hence no charge back should be raised by the applicant.",
   "terms-and-conditions-emd-payment-paragraph-22": "Service charges levied for the online payment at the time of Application processing will not be refunded as the same will be borne by the Applicant.",
   "terms-and-conditions-emd-payment-paragraph-23": "No Chargeback or Dispute will be accepted by MHADA as the Applicant had agreed to pay an additional service charge for paying Online through Credit card/Net Banking.",
   "terms-and-conditions-emd-payment-paragraph-24": "EMD of all non-winners & wait list applicants will be refunded to the applicant on account of any reason would take place on or after 10 days from the Lottery Draw.",
-
   "terms-and-conditions-emd-payment-header-3": "General Information",
-
   "terms-and-conditions-emd-payment-paragraph-31": "While making the e-payment if the receipt is not generated due to connectivity or technical problem, please check your bank account. If the amount is not debited then please try the transaction after 1 hour, if amount is debited then a receipt will be available in the next 1 hour",
-
   "error-help-load": "Unable to fetch Help details.",
   "error-news-load": "Unable to fetch News details.",
   "error-application-form-load": "Unable to fetch details for Application form.",
@@ -377,7 +357,6 @@
   "error-invalid-application": "Invalid Application",
   "error-having-mcgm-stopflow": "You are not eligible, please click OK to return to the lottery",
   "error-installment-pay-amt-more-bal-amt": "Payment amount can not be more than Balance amount.",
-
   "menu-home": "Home",
   "menu-news": "News",
   "menu-help": "Help",
@@ -405,7 +384,6 @@
   "menu-noc": "NOC",
   "menu-verify-qr": "Verify Document",
   "menu-request": "Requests",
-
   "message-help-videos-empty": "No Help Videos",
   "message-help-links-empty": "No Help Links",
   "message-news-empty": "No News",
@@ -417,16 +395,13 @@
   "message-category-cert-mailed": "Category Certificate has been mailed.",
   "message-schemes-not-eligible": "Based on your Income Group, You are not eligible to Apply in this Scheme",
   "message-cert-jr-submit-docs": "Submit one set of documents to Public Relations Officer, MHADA FCFS, Cidco Bhavan, Sion Panvel Road, Sakaram Patil Marg,Cbd Belapur, Navi Mumbai - 400614  (Opposite Kokan Bhavan) by hand or by registered Post",
-
   "error-notifications-load": "Unable to fetch Notifications details.",
-
   "consent-header": "General Consent",
   "consent-aadhar-header": "Aadhar Card",
   "consent-aadhar-content": "I hereby provide my expressed & written consent to share my Aadhar number details & also, provide consent to get my Aadhar details validated through Digilocker services. I understand that my Aadhar number will not be stored anywhere on MHADA FCFS server or on the servers of any other participant involved in verification of my Aadhar number.",
   "consent-pan-header": "PAN number/Domicile certificates/Caste Validity certificates/ Income certificate from Tahsildar",
   "consent-pan-content": "I also provide my expressed & written consent to validate above documents through MahaIT API services & provide consent to store the details.",
   "consent-i-agree": "I agree to my information being shared and gathered between services",
-
   "raise-grievance": "Raise Grievance",
   "raise-grievances": "Raise",
   "my-grievances": "My Grievances",
@@ -483,13 +458,10 @@
   "select-payment": "Select Payment",
   "find-payment": "Find Payment",
   "no-matching-payment": "no matching payment found",
-
   "objSuggestionID": "Objection/Suggestion Id",
-
   "lottery": "Lottery",
   "applicant-name": "Application No.",
   "payment-amount": "payment",
-
   "MHADA FCFS-reply-name": "MHADA",
   "otp-verification-title": "OTP Verification",
   "otp-timer": "Seconds Left....",
@@ -498,7 +470,6 @@
   "file-ext-msg": "Upload only .pdf,.png,.jpg,.jpeg files",
   "file-size-msg": "File size must be less than 700KB",
   "upload-file-btn": "Upload File",
-
   "attachement-ext-title": "Allow Only .jpg, .png, .jpeg and .pdf files",
   "ok-btn": "Ok",
   "warning-header": "Warning",
@@ -520,7 +491,6 @@
   "crop-image": "Crop Image",
   "crop": "Crop",
   "rotate": "Rotate",
-
   "document-verification-pending": "Verifying...",
   "warning-income-certificate": "Verifying...",
   "error-network-related": "There was network related or instance related error understanding the request. Please try doing it again.",
@@ -535,7 +505,6 @@
   "caste-certificate-success": "Caste certificate verified successfully.",
   "pmay-success": "PMAY verified successfully",
   "disability-success": "Disability certificate verified successfully",
-
   "warning-document-mismatch": "Uploaded document seems to be of different person. Kindly upload the document of person whose details was used for DigiLocker verification",
   "warning-unable-to-upload-doc": "Unable to upload document",
   "warning-no-response-from-digilocker": "No response from Digilocker, please try again",
@@ -554,9 +523,7 @@
   "warning-unable-to-update-caste": "Unable to update caste status",
   "warning-unable-to-update-married-status": "Unable to update married status",
   "warning-unable-to-update-consent": "Unable to update consent status",
-
   "success-otp-sent": "OTP sent to your email id and mobile no",
-
   "custom-itr-name": "Please check, your Name (as per ITR) - ",
   "custom-itr-acknowledgement-no": " Acknowledgement Number - ",
   "custom-itr-consent": "I agree that, my annual income from all source is disclosed correctly by me, for the above mentioned Assessment Year",
@@ -570,10 +537,8 @@
   "custom-dont-worry": ", but don't worry our ",
   "custom-manual-look": " will have a look at this document and will try to verify it manually",
   "custom-reupload": ". If correct, please proceed.",
-
   "resend-otp": "Resend OTP",
   "resend-otp-in": "Resend OTP in",
-
   "mandatory-doc": "Kindly complete the Mandatory Document upload (Aadhar, PAN, Domicile), before proceeding to Profile.",
   "enter-otp": "Please enter OTP sent on entered mobile no. and email id.",
   "chat-with-us": "Chat with us",
@@ -583,14 +548,11 @@
   "chat-bot-close": "Close",
   "chat-bot-options": "Select",
   "chat-bot-chat-emailed": "Chat mailed on your email id",
-
   "digilocker-error": "Sorry for the Inconvenience. We are facing issues at DigiLocker end. Please retry after sometime.",
   "digilocker-service-error": "Sorry for the Inconvenience. We are facing intermittent issues at DigiLocker end. Please try after sometime.",
-
   "predefined-doc-verified": "Document verified successfully.",
   "predefined-doc-not-verified": "Document not verified.",
   "predefined-doc-verification-failed": "Document verification failed.",
-
   "label-login": "Login",
   "label-signup": "Signup",
   "label-pan-password-login": "PAN & Password",
@@ -606,14 +568,12 @@
   "label-dont-have-signup-link": "Signup",
   "label-existing-user": "Already a user?",
   "label-existing-user-signin-link": "Sign In",
-
   "predefined-doc-ocr-fail": "Unable to recognize the uploaded document, request you to proceed for further system checks.",
   "predefined-doc-ocr-seal-status-fail": "Uploaded document is missing sign / stamp, please upload the appropriate document with sign & stamp",
   "predefined-doc-ocr-doc-type-mismatch-part-1": "Uploaded document seems to be of different category than",
   "predefined-doc-ocr-doc-type-mismatch-part-2": "category, please upload the appropriate document",
   "predefined-doc-verification-rejected-part-1": "It seems you have not already register ",
   "predefined-doc-verification-rejected-part-2": " category for MHADA FCFS Registration, please do the needful first and then upload the signed stamp certificate",
-
   "video-not-available": "No help video as of now.",
   "pan-api-fail": "Sorry for the Inconvenience. We are facing intermittent issues at PAN service. Please try after sometime.",
   "document-rejected-mismatch": "Uploaded ITR seems to be of different person. Kindly upload the ITR where your name is clearly visible.",
@@ -670,7 +630,6 @@
   "documents-label-special-categories-special-info": "Note : - Though accepted by the online systems, certificates not signed and attested by competent authorities are eligible to be rejected at any stage.",
   "documents-label-special-categories-link": "click here to know how to apply for these categories",
   "documents-label-mhada-videos": "Help videos",
-
   "documents-label-itr": "ITR",
   "documents-label-income-proof": "Tahasildar Income Certificate",
   "documents-label-income-proof-self-itr": "If you have an ITR",
@@ -681,22 +640,17 @@
   "documents-label-income-proof-spouse-itr-content": "Select the ITR button and upload the ITR Acknowledgement Receipt of FY 2023-24(AY 2024-25). Form 16 or Salary Slip is not allowed ITR Acknowledgment Receipt is mandatory",
   "documents-label-income-proof-spouse-income-certificate": "If your spouse is working and has an Income Certificate",
   "documents-label-income-proof-spouse-income-certificate-content": "Select the Income Certificate button and upload the Income Certificate issued by only the Tahsildar or Maha e-Seva Kendra for the year 2023-24 having barcode issued by MahaOnline/MahaIT.",
-
   "documents-label-self-itr-header": "If you have an ITR",
   "documents-label-spouse-itr-header": "If your spouse is working and has an ITR",
   "documents-label-income-certificate": "Tahasildar Income certificate (Having an income of self or spouse or both (in case of married applicant). First select a financial year and enter your and your spouse's (For married applicant) income then click on Proceed button. Select the Income Certificate option and Upload the Income Certificate issued only by the Tahsildar or Maha e-Seva Kendra for the financial year mentioned in the lottery booklet, and ensure it has a barcode issued by MahaOnline/MahaIT. For financial year, read lottery advertisement and booklet carefully",
-
   "allowed-with-condition-question-radio-option-yes": "I have certificate",
   "allowed-with-condition-question-radio-option-no": "I do not have certificate as of now",
-
   "spouse-pan-same-as-applicant": "Looks like you are using Applicant PAN as Spouse PAN. Kindly reupload different PAN for Spouse.",
-
   "error-accepted-list": "Unable to fetch Lottery details.",
   "error-scheme-list": "Unable to fetch Scheme details.",
   "error-category-list": "Unable to fetch Category",
   "header-accepted-applications": "Published Applications",
   "header-application-detail": "Application Detail",
-
   "table-header-lottery-code": "Lottery Code",
   "table-header-lottery-name": "Lottery Name",
   "table-header-lottery-board": "Lottery Board",
@@ -707,7 +661,6 @@
   "table-header-lottery-search": "search by lottery code, lottery name, board",
   "lable-draft-list-publish": "Draft List Published",
   "lable-final-list-publish": "Final List Published",
-
   "lable-no-data-match": "No data matching the filter or No data.",
   "label-installment": "Installment",
   "label-installment-amount": "Amount",
@@ -716,7 +669,6 @@
   "label-cert-jr-expapp-cert-help": "Required 5 years experience certificate as a Journalist",
   "label-installment-interest-amount": "Interest Amount",
   "label-installment-payment-amount": "Payment Amount",
-
   "lable-lottery": "Lottery",
   "table-header-scheme-code": "Scheme Code",
   "table-header-scheme-name": "Scheme Name",
@@ -724,30 +676,25 @@
   "table-header-scheme-action": "Action",
   "table-header-scheme-view": "View",
   "table-header-scheme-search": "search by Scheme code, Scheme name",
-
   "table-header-category-code": "Category Code",
   "table-header-category-name": "Category Name",
   "table-header-category-action": "Action",
   "table-header-category-view": "View",
-
   "label-post-lottery-status": "Status",
   "button-accept-tenement": "Accept Tenement",
   "title-header-surrender": "Surrender Tenement(s)",
-
   "signUp-multiple-name-question": "Are you known by other names?",
   "signUp-multiple-name-textbox-label": "Recognised by Name",
   "signUp-multiple-name-dropdown-label": "Reason",
   "signUp-multiple-name-dropdown-placeholder": "Select Reason",
   "signUp-multiple-name-another-name": "Add Another Name",
   "signUp-multiple-name-submit": "Submit",
-
   "other-names": "Other Names",
   "signup-multiple-name-regex-error": "Name should not contain special characters",
   "signup-multiple-name-submit-warning": "Please submit the record",
   "signup-multiple-name-enter-name-warning": "Please enter the name",
   "signup-multiple-name-select-reason-warning": "Please select the appropriate reason for Name Change",
   "signup-multiple-name-select-document-warning": "Please upload valid document for Name Change",
-
   "page-heading": "My NOC",
   "Page-heading-apply-noc": "Apply For NOC",
   "fill-noc-details": "Fill New NOC Detail",
@@ -756,7 +703,6 @@
   "noc-applicant-category": "Category",
   "noc-applicant-tenement": "Tenement",
   "noc-application-lottery": "Lottery",
-
   "noc-bank-name": "Bank Name",
   "noc-branch-name": "Branch Name",
   "noc-date": "NOC Applied Date",
@@ -766,9 +712,7 @@
   "noc-tenure-months": "Tenure Months",
   "noc-application": "NOC Application",
   "noc-sanction -letter": "Santion Letter",
-
   "noc-status": "NOC Status",
-
   "noc-tab-col-heading-noc": "Action",
   "noc-tab-col-heading-sanctionLetter": "Sanction Letter",
   "view-noc-btn": "View NOC File",
@@ -807,7 +751,6 @@
   "view-noc-letter-btn": "Download NOC",
   "error-spouse-winner-acceptance": "You and your spouse are allowed to accept only one tenement, and you have to surrender all remaining tenements.",
   "enter-surrender-remark": "Enter Surrender Reason and OTP",
-
   "digi-multiple-names": "Multiple Names",
   "label-aadhar-name": "Name on Aadhar",
   "label-pan-name": "Name on PAN",
@@ -821,7 +764,6 @@
   "button-pay-noc": "Pay NOC Installment",
   "label-lottery-noc-gst": "0.25% Of Loan Amount + 1000",
   "button-view-noc-receipt": "NOC Payment Receipt",
-
   "error-qbfile-upload": "Please Upload 26QB file.",
   "error-asFile-upload": "Please Upload 26AS file.",
   "error-form16BFile-upload": "Please Upload Form 16B file.",
@@ -832,7 +774,6 @@
   "applicant-details": "Applicant Details",
   "button-tds-view-tds": "View TDS",
   "button-tds-upload-tds": "Upload TDS Certificate",
-
   "label-waitlist-cancel_remark": "Your claim on the tenement has been cancelled.",
   "success-caste-validity-ref-letter-request": "Request for Caste Validity Reference Letter received.",
   "warning-address": "Please enter valid address details before proceeding.",
@@ -864,11 +805,9 @@
   "applicant-appeal-remark": "Remark",
   "applicant-appeal-reject-remark": "Reject Remark",
   "applicant-appeal-hearing-remark": "Hearing Remark",
-
   "applicant-appeal-letter": "Appeal Letter",
   "applicant-appeal-other-letter": "Additional Document",
   "applicant-appeal-order-letter": "Order Document",
-
   "error-appealLetterFile-upload": "Please Upload Appeal Letter file in pdf format.",
   "error-appealDocFile-upload": "Please Upload Additional Document file in pdf format.",
   "page-appeal": "My Appeal",
@@ -950,56 +889,45 @@
   "label-final-applicant-name-show": "For Applicant which name from below should be used in POL",
   "label-final-spouse-name-show": "For Spouse which name from below should be used in POL",
   "label-show-spouse-name": "Show spouse name on POL letter",
-
   "ocr-central-government-employee-success": "Please check, you are uploading CERTIFICATE FOR CENTRAL GOVERNMENT EMPLOYEE Category & Certificate is Sign Stamped. If correct, please proceed.",
   "fetch-latest-revised-itr": "If you filed a revised ITR and the amount is not shown then tick the checkbox",
-
   "state-question-label-content-1": "If you are <strong>State Govt. Employee</strong> , you need to generate  <strong>State Govt. Employee</strong> certificate from the system. Get it signed stamped from the competent authority and upload it in the below box.",
   "state-generate-certificate": "To generate Certificate",
   "state-question-label-content-2": "State Govt. Employee ",
-
   "MHADA FCFS-question-label-content-1": "If you are <strong>MHADA FCFS Employee</strong> who have completed minimum <strong>5 Years</strong> service at MHADA FCFS, Upload your MHADA FCFS ID Card with Employee Code / ID on it in the below box.",
   "mhada-question-label-content-1": "If you are <strong>MHADA FCFS Employee</strong> who have completed minimum <strong>5 Years</strong> service at MHADA FCFS, Upload your MHADA FCFS ID Card with Employee Code / ID on it in the below box.",
   "note-copy-paste-not-allowed": "Note : Copy-Paste is not allowed. Please type your Address",
-
   "unmarried-label": "Unmarried",
   "married-label": "Married",
   "divorcee-label": "Divorcee",
   "widow-widower-label": "Widow / Widower",
+  "Separated-label": "Separated",
   "spouse-pan-link-to-digi": "Please ensure that your spouse's PAN card is linked to their Digilocker account. To check the linking status, please visit the",
   "digilocker-website": "Digilocker website",
   "enter-spouse-pan": "Enter Spouse Pan",
   "fetch-pan": "Fetch Pan",
-
   "option-both": "Both",
   "option-self": "Self",
   "option-spouse": "Spouse",
   "option-none": "None",
-
   "option-itr": "ITR",
   "option-spouse-itr": "Spouse ITR",
   "option-family-income-cert": "Family Income Certificate",
   "option-income-Certificate": "Income Certificate",
-
   "option-caste-sc": "SC (Scheduled Castes)",
   "option-caste-st": "ST (Scheduled Tribes)",
   "option-caste-nt": "NT (Nomadic Tribes)",
   "option-caste-dt-vj": "DT (Denotified Tribes)/ VJ (Vimukta Jati)",
   "option-caste-open": "OPEN",
-
   "only-pdf-is-allowed": "Only PDF is allowed.",
   "only-image-is-allowed": "Only image is allowed",
-
   "central-question-label-content-1": "If you are <strong>Central Govt. Employee</strong> , you need to generate <strong>Central Govt. Employee</strong> certificate from the system. Get it signed stamped from the competent authority and upload it in the below box.",
   "central-generate-certificate": "To generate Certificate",
   "central-question-label-content-2": "Central Govt. Employee ",
-
   "journalist-question-label-content-1": "If you are <b>Journalist</b>, you need to generate <b>Journalist</b> certificate from the system. Get it signed stamped from the competent authority and upload it in the below box.",
   "journalist-generate-certificate": "To generate Certificate ",
-
   "ex-serviceman-question-label-content-1": "If you are <b>Ex Serviceman</b>, you need to generate <b>Ex Serviceman</b> certificate from the system. Get it signed stamped from the competent authority and upload it in the below box.",
   "ex-serviceman-generate-certificate": "To generate Certificate ",
-
   "error-network-related-issue": "There was a network-related or instance-related error in understanding the request. Please try again.",
   "error-mandatory-fields": "Please complete mandatory fields!",
   "error-provide-consent": "Please Provide Consent",
@@ -1009,7 +937,6 @@
   "error-pass-and-confirm-pass-not-match": "Password and Confirm Password do not match",
   "error-enter-valid-password-itr": "Please enter valid Password for IT Portal",
   "error-invalid-authentication": "Invalid Authentication Mode",
-
   "documents-label-pap": "PAP(Project Affected People)",
   "documents-label-pap-line-1": "Project affected from all regions of Maharashtra state can apply under this category.",
   "documents-label-rm": "RM(Religious Minority)",
@@ -1020,24 +947,20 @@
   "mhada": "MHADA FCFS",
   "download-our-apps": "Download our apps now",
   "proceed-to-digilocker-spouse": "Proceed to Digilocker",
-  
   "freedome-question-label-content-1": "If you are <b>Freedom Fighter</b> you need to generate <b>Freedom Fighter certificate</b> from the system. Get it signed stamped from the competent authority and upload it in the below box. ",
   "freedome-question-label-content-2": "To Generate <b>Freedom Fighter certificate-</b>",
-
   "handicap-question-label-content-1": "If you are <b>Handicap</b>, you need to have UDID Card -",
-  "handicap-question-label-apply-button":"Apply Here",
-  "handicap-question-label-content-2":"Upload your <b>UDID Card with UD ID</b> on it in the below box.",
-
-  "password-does-not-match-label":"Password does not match",
+  "handicap-question-label-apply-button": "Apply Here",
+  "handicap-question-label-content-2": "Upload your <b>UDID Card with UD ID</b> on it in the below box.",
+  "password-does-not-match-label": "Password does not match",
   "MHADA FCFS": "MHADA FCFS",
   "menu-MHADA FCFS-board-links": "MHADA FCFS Board",
   "menu-mhada-board-links": "MHADA FCFS Board",
-  "sendOtp" : "Send OTP",
-  "please-enter-otp-received-on-email" : "Please Enter OTP received on Email",
-  "please-enter-otp-received-on-mobile" : "Please Enter OTP received on Mobile No",
-
-  "documents-label-death-certificate-your-spouse":"For Widow applicant",
-  "documents-label-death-certificate-your-spouse-content":"Please upload death certificate of your spouse",
+  "sendOtp": "Send OTP",
+  "please-enter-otp-received-on-email": "Please Enter OTP received on Email",
+  "please-enter-otp-received-on-mobile": "Please Enter OTP received on Mobile No",
+  "documents-label-death-certificate-your-spouse": "For Widow applicant",
+  "documents-label-death-certificate-your-spouse-content": "Please upload death certificate of your spouse",
   "label-mobileNo": "Mobile Number",
   "label-email-otp": "Enter Email OTP",
   "label-mobile-otp": "Enter Mobile OTP",
@@ -1055,9 +978,9 @@
   "error-draw-winner-spouse-apply": "Applicant Spouse is Mhada Winner not able to Apply",
   "error-pmay-apply": "You have already done the application, please complete process for flat booking.",
   "label-agent": "Select Agency",
-  "pol-pending":"POL is pending",
-  "konkan-detail":"To apply for Konkan Board Non-PMAY Virar Bolinj MHADA tenements (not under PMAY), click YES to proceed.",
-   "bank-email-id": "Bank Email Id",
+  "pol-pending": "POL is pending",
+  "konkan-detail": "To apply for Konkan Board Non-PMAY Virar Bolinj MHADA tenements (not under PMAY), click YES to proceed.",
+  "bank-email-id": "Bank Email Id",
   "bank-authorized-officer-name": "Bank authorized officer name",
   "bank-authorized-officer-designation": "Bank authorized officer designation"
 }
