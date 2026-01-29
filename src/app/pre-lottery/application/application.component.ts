@@ -141,7 +141,7 @@ export class ApplicationComponent implements OnInit {
 
 
   get havingMcgmQuestionLabel(): string {
-    return this.boardKey === 1
+    return this.boardKey === 9
       ? this.translocoService.translate('label-having-mcgm-mumbai-area')
       : this.translocoService.translate('label-having-mcgm-area');
   }
