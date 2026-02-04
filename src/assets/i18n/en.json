@@ -370,7 +370,7 @@
   "menu-notifications": "Notifications",
   "menu-my-issues": "My Issues",
   "menu-certificate-generation": "Certificate Generation",
-  "menu-quick-links": "Quick Links",
+  "menu-quick-links": "User Guide",
   "menu-mumbai-board-links": "Mumbai Board",
   "menu-konkan-board-links": "Konkan Board",
   "menu-pune-board-links": "Pune Board",
@@ -979,10 +979,12 @@
   "error-pmay-apply": "You have already done the application, please complete process for flat booking.",
   "label-agent": "Select Agency",
   "pol-pending": "POL is pending",
-  "konkan-detail": "To apply for Mumbai Board / Konkan Board Non-PMAY Virar Bolinj MHADA tenements, click Non Pmay to proceed.",
+  "konkan-detail": "To apply for Mumbai Board / Konkan Board (Non-PMAY Virar Bolinj MHADA tenements), click Non Pmay to proceed.",
   "bank-email-id": "Bank Email Id",
   "bank-authorized-officer-name": "Bank authorized officer name",
   "bank-authorized-officer-designation": "Bank authorized officer designation",
-  "option-nonPmay": "Non Pmay",
-  "option-Pmay": "Pmay"
+  "option-nonPmay": "NON-PMAY",
+  "option-Pmay": "PMAY",
+  "menu-quick-links-new": "User Guide And Help File"
+
 }

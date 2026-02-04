@@ -382,7 +382,7 @@
   "menu-notifications": "सूचना",
   "menu-my-issues": "माझे मुद्दे",
   "menu-certificate-generation": "प्रमाणपत्र निर्मिती",
-  "menu-quick-links": "क्विक लिंक्स",
+  "menu-quick-links": "मदत संचिका",
   "menu-mumbai-board-links": "मुंबई मंडळ",
   "menu-konkan-board-links": "कोकण मंडळ",
   "menu-pune-board-links": "पुणे मंडळ",
@@ -981,5 +981,7 @@
   "bank-authorized-officer-name": "बँक अधिकृत अधिकारी नाव",
   "bank-authorized-officer-designation": "बँक अधिकृत अधिकारी पद",
   "option-nonPmay": "नॉन-पीएमवाय",
-  "option-Pmay": "पीएमवाय"
+  "option-Pmay": "पीएमवाय",
+  "menu-quick-links-new": "मदत संचिका"
+
 }
