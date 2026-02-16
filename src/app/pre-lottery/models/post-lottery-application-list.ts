@@ -61,6 +61,7 @@ export class PostLotteryApplicationListItemModel {
     public possessiondtlupdtStatus: string,
     public allowedForPossUpd: boolean,
     public agrmntUploadAllowed: boolean,
-    public indx2UploadAllowed: boolean
+    public indx2UploadAllowed: boolean,
+    public tenementConfirmDays: number,
   ) {}
 }
