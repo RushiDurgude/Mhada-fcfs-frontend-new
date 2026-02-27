@@ -36,7 +36,7 @@ import { SurrenderRemarkComponent } from "../surrender-remark/surrender-remark.c
   ],
 })
 export class ApplicationDetailListComponents implements OnInit {
-  lotteries: any[] = []; 
+  lotteries: any[] = [];
   applicationList: ApplicationListItemModel[] = [];
   dataLoaded: boolean = false;
   dataFiltered: boolean = true;
@@ -232,19 +232,19 @@ export class ApplicationDetailListComponents implements OnInit {
   //   if (this.intervalId) {
   //     clearInterval(this.intervalId);
   //   }
-  
+
   //   this.intervalId = setInterval(() => {
   //     const now = new Date().getTime();
   //     const fortyEightHoursMs = 48 * 60 * 60 * 1000;
-  
+
   //     applications.forEach(app => {
   //       if (!app.tenementBookedDate) return;
-  
+
   //       const bookedTime = new Date(app.tenementBookedDate).getTime(); // string to Date
   //       const confirmDurationMs = app.tenementConfirmDays * 24 * 60 * 60 * 1000;
   //       const endTime = bookedTime + confirmDurationMs;
   //       const diff = endTime - now;
-  
+
   //       if (diff <= 0) {
   //         this.countdowns[app.key] = 'Expired';
   //       } else {
@@ -258,50 +258,50 @@ export class ApplicationDetailListComponents implements OnInit {
   // }
 
   startCountdown(applications: ApplicationListItemModel[]) {
-  if (this.intervalId) {
-    clearInterval(this.intervalId);
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
+    this.intervalId = setInterval(() => {
+      const now = Date.now();
+      const fortyEightHoursMs = 48 * 60 * 60 * 1000;
+
+      applications.forEach(app => {
+        if (!app.tenementBookedDate || !app.tenementConfirmDays) return;
+
+        const bookedTime = new Date(app.tenementBookedDate).getTime();
+        const confirmDurationMs =
+          app.tenementConfirmDays * 24 * 60 * 60 * 1000;
+
+        const endTime = bookedTime + confirmDurationMs;
+        const diff = endTime - now;
+
+        if (diff <= 0) {
+          this.countdowns[app.key] = 'Expired';
+          return;
+        }
+
+        // ⏳ Time calculations
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / (24 * 3600));
+        const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        // 🔥 Display logic
+        if (diff > fortyEightHoursMs) {
+          // More than 48 hours → show days + time
+          this.countdowns[app.key] =
+            `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        } else {
+          // Less than or equal to 48 hours → show only time
+          const totalHours = Math.floor(diff / (1000 * 60 * 60));
+          this.countdowns[app.key] =
+            `${totalHours}h ${minutes}m ${seconds}s`;
+        }
+      });
+    }, 1000);
   }
-
-  this.intervalId = setInterval(() => {
-    const now = Date.now();
-    const fortyEightHoursMs = 48 * 60 * 60 * 1000;
-
-    applications.forEach(app => {
-      if (!app.tenementBookedDate || !app.tenementConfirmDays) return;
-
-      const bookedTime = new Date(app.tenementBookedDate).getTime();
-      const confirmDurationMs =
-        app.tenementConfirmDays * 24 * 60 * 60 * 1000;
-
-      const endTime = bookedTime + confirmDurationMs;
-      const diff = endTime - now;
-
-      if (diff <= 0) {
-        this.countdowns[app.key] = 'Expired';
-        return;
-      }
-
-      // ⏳ Time calculations
-      const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / (24 * 3600));
-      const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      // 🔥 Display logic
-      if (diff > fortyEightHoursMs) {
-        // More than 48 hours → show days + time
-        this.countdowns[app.key] =
-          `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      } else {
-        // Less than or equal to 48 hours → show only time
-        const totalHours = Math.floor(diff / (1000 * 60 * 60));
-        this.countdowns[app.key] =
-          `${totalHours}h ${minutes}m ${seconds}s`;
-      }
-    });
-  }, 1000);
-}
 
   async showErrorToast(errorMessage: string) {
     const toast = await this.toastController.create({
@@ -1299,5 +1299,10 @@ export class ApplicationDetailListComponents implements OnInit {
           }
         }
       );
+  }
+
+  isTimeCompleted(key: number): boolean {
+    const countdown = this.countdowns[key];
+    return !countdown || countdown === '00:00:00';
   }
 }
