@@ -84,7 +84,7 @@ export class ApplicationComponent implements OnInit {
   api_url: string = '';
   selectedAgencyError: boolean = false;
   couponCodeError: boolean = false;
-  isAgencyNotAllowed: string = '';
+  isAgencyAllowed: string = '';
 
   constructor(private preLotteryApplicationService: PreLotteryApplicationService,
     private route: ActivatedRoute, private dialog: MatDialog, private router: Router,
@@ -115,7 +115,8 @@ export class ApplicationComponent implements OnInit {
       refundMode: new FormControl(null, Validators.required),
       refundForm: new FormGroup({}),
       nomineeDetailForm: new FormGroup({}),
-      selectedAgency: new FormControl(null, Validators.required),
+      // selectedAgency: new FormControl(null, Validators.required),
+      selectedAgency: new FormControl(null),
       couponCode: new FormControl(null),
       // nomineeDetailArray: new FormArray([])
     });
@@ -137,6 +138,14 @@ export class ApplicationComponent implements OnInit {
   //   this.selectedAgency = selectedValue;
   //   console.log("Selected Agency Changed:", this.selectedAgency);
   // }
+
+
+  get havingMcgmQuestionLabel(): string {
+    return this.boardKey === 9
+      ? this.translocoService.translate('label-having-mcgm-mumbai-area')
+      : this.translocoService.translate('label-having-mcgm-area');
+  }
+
   setSelectedAgency(event: Event) {
     this.selectedAgency = (event.target as HTMLSelectElement).value;
     this.appForm.get('selectedAgency')?.setValue(this.selectedAgency);
@@ -203,14 +212,26 @@ export class ApplicationComponent implements OnInit {
         this.progressSpinnerDialog.close();
         if (applicationFormModel.status === 'SUCCESS') {
           this.applicationFormModel = applicationFormModel;
-          this.isAgencyNotAllowed = applicationFormModel.isAgencyNotAllowed;
           console.log('stopForMCGMYes : ', this.applicationFormModel.stopForMCGMYes);
           console.log("Agency Types:", this.applicationFormModel.agencyTypes);
-          console.log('Agency flag :', this.applicationFormModel.isAgencyNotAllowed);
+          console.log('Agency flag :', this.applicationFormModel.isAgencyAllowed);
           if (this.applicationFormModel.showNomineeEntry) {
             this.showNominee = true;
             this.showNomineeDetails(true);
           }
+          this.isAgencyAllowed = applicationFormModel.isAgencyAllowed;
+
+          const agencyCtrl = this.appForm.get('selectedAgency');
+
+          if (this.isAgencyAllowed === 'Y') {
+            agencyCtrl?.setValidators([Validators.required]);
+            agencyCtrl?.setValue(null); // user must choose
+          } else {
+            agencyCtrl?.clearValidators();
+            agencyCtrl?.setValue('SELF'); // auto-select SELF
+          }
+
+          agencyCtrl?.updateValueAndValidity();
 
           this.stopForMCGMYes = this.applicationFormModel.stopForMCGMYes;
           this.drawWinner = this.applicationFormModel.drawWinner;
@@ -304,7 +325,19 @@ export class ApplicationComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.appForm.valid, this.appForm.value);
+    console.log('jjji', this.appForm.valid, this.appForm.value);
+    if (this.appForm.invalid) {
+      console.log('FORM INVALID → ERROR FLOW');
+
+      this.appForm.markAllAsTouched(); // show validation errors
+      this.preLotteryApplicationService.showErrorToast(
+        'Please fill all required fields correctly'
+      );
+
+      this.isApplyDisabled = false;
+      return;
+    }
+
 
     if (this.applicableCategoriesError) {
       return;
@@ -322,7 +355,11 @@ export class ApplicationComponent implements OnInit {
       return;
     }
 
-    if (!this.appForm.value.selectedAgency && this.isAgencyNotAllowed !== 'Y') {
+    if (this.isAgencyAllowed !== 'Y') {   /// To do check when the agency not allowed then set the application to self 
+      this.appForm.value.selectedAgency = 'SELF';
+    }
+
+    if (!this.appForm.value.selectedAgency) {
       this.selectedAgencyError = true;
       this.formValidMessage = false;
       this.preLotteryApplicationService.showErrorToast('Agency selection is required.');
@@ -331,7 +368,7 @@ export class ApplicationComponent implements OnInit {
       this.selectedAgencyError = false;
     }
 
-    if (this.appForm.value.selectedAgency === 'AGENT' && !this.appForm.value.couponCode && this.isAgencyNotAllowed !== 'Y') {
+    if (this.appForm.value.selectedAgency === 'AGENT' && !this.appForm.value.couponCode) {
       this.couponCodeError = true;
       this.formValidMessage = false;
       this.preLotteryApplicationService.showErrorToast('Coupon Code is required');
@@ -340,14 +377,17 @@ export class ApplicationComponent implements OnInit {
       this.couponCodeError = false;
     }
 
-    if (this.appForm.value.selectedAgency === 'AGENT' && !this.couponValid && this.isAgencyNotAllowed !== 'Y') {
+    if (this.appForm.value.selectedAgency === 'AGENT' && !this.couponValid) {
       this.preLotteryApplicationService.showErrorToast('Please enter a valid Coupon Code');
       return;
     }
 
+
     if (this.appForm.valid && ((this.appForm.value.havingMCGMArea === 'N' &&
       this.stopForMCGMYes) || !this.stopForMCGMYes)) {
+
       if (!this.appForm.value.iAgree) {
+
         this.preLotteryApplicationService.showErrorToast('Please agree to Terms and Conditions.');
         this.formValidMessage = false;
         return;
@@ -411,13 +451,16 @@ export class ApplicationComponent implements OnInit {
           }
         }
       }
+
+      console.log("test is check 12");
+
       if (this.stopForMCGMYes) {
         console.log('rushi', this.appForm.value.havingMCGMArea)
         console.log('rushi', this.appForm.value.isTenementAllotted)
         console.log('rushi', this.appForm.value.isTenementSurrender)
-
+        console.log("test is check 13");
         if (this.appForm.value.havingMCGMArea === 'N') {
-
+          console.log("test is check 14");
           if (this.appForm.value.isTenementAllotted == null) {
             this.fieldIsrequired = true;
             return
@@ -458,7 +501,7 @@ export class ApplicationComponent implements OnInit {
       //     }
       //   }
       // }
-
+      console.log("test is check 15");
       if (this.showNominee) {
         if (!ValidateName(this.appForm.value.nomineeDetailForm?.nomineeName)) {
           this.nomineeNameError = true;
@@ -503,6 +546,7 @@ export class ApplicationComponent implements OnInit {
     //     nomineeDetailArray.push({nomineePriority: t+1, nomineeName: nominee.nomineeName, nomineeRelationship: nominee.nomineeRelationship});
     //   }
     // }
+    console.log('application saving...');
 
     this.preLotteryApplicationService
       .saveApplicationForm(
