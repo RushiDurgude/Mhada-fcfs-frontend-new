@@ -21,7 +21,7 @@ export class QsDomcileComponent implements OnInit {
   progressSpinnerDialog: any = null;
   @Output() proceedNext = new EventEmitter();
   @Output() routeToCertEntry = new EventEmitter();
-  uploadFileVisible: boolean = true;
+  uploadFileVisible: boolean = false;
   reUploadFileVisible: boolean = false;
   fileObj: File;
   selectedImage: string = '';
