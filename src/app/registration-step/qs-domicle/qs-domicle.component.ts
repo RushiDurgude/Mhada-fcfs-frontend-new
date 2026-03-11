@@ -13,6 +13,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   templateUrl: "./qs-domicile.component.html",
   styleUrls: ['../registration-step.component.scss']
 })
+
 export class QsDomcileComponent implements OnInit {
   questionCode: string = 'Q_DOMICILE';
   @Input() activeLang: string = "";
