@@ -45,15 +45,17 @@ export class QsDomcileComponent implements OnInit {
       this.registrationStepService.fetchQuestionDetail(this.questionCode)
       .subscribe((data) => {  
         this.closeProgressSpinner();
+
+        console.log("DATA>>>>>>>>>>>>>>>", data)
         if(data.status === 'SUCCESS') {
           if(data.domicileResponse) {
             this.selectedRadioOption = data.domicileResponse.answer;
-            // if(this.selectedRadioOption === 'Yes') {
+             if(this.selectedRadioOption === 'Yes') {
               this.fetchDomicileCertificate();
-            // }
-            // else {
-            //   this.evaluateProceed();
-            // }
+             }
+             else {
+             this.evaluateProceed();
+             }
           }
           else {
             localStorage.removeItem("editQuestionCode");
@@ -201,7 +203,7 @@ export class QsDomcileComponent implements OnInit {
 
   async closeProgressSpinner() {
     if(this.progressSpinnerDialog) {
-      this.progressSpinnerDialog.close();
+      this.progressSpinnerDialog.close(); 
     }
   }
 
