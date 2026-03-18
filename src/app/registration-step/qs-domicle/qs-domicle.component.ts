@@ -46,13 +46,12 @@ export class QsDomcileComponent implements OnInit {
       .subscribe((data) => {  
         this.closeProgressSpinner();
 
-        console.log("DATA>>>>>>>>>>>>>>>", data)
         if(data.status === 'SUCCESS') {
           if(data.domicileResponse) {
             this.selectedRadioOption = data.domicileResponse.answer;
              if(this.selectedRadioOption === 'Yes') {
               this.fetchDomicileCertificate();
-             }
+             }    
              else {
              this.evaluateProceed();
              }
@@ -112,7 +111,9 @@ export class QsDomcileComponent implements OnInit {
             uploadedOcrEntry: this.ocrEntryKey,
             // fileBase64: this.fileBase64
           }
+          
         };
+        console.log('DOMICILE REQUEST >>>>>>>>',);
         this.registrationStepService.saveQuestion(this.questionCode, this.questionRequest)
         .subscribe((data) => {
           this.closeProgressSpinner();
