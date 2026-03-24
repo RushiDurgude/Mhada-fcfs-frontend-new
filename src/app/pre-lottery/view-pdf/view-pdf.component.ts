@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+//import { MatDialogRef } from '@angular/material/dialog';
 import { Device } from '@capacitor/device';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
