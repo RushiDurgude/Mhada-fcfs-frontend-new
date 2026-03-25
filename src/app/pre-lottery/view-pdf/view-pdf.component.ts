@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-//import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Device } from '@capacitor/device';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
@@ -27,7 +27,7 @@ export class ViewPdfComponent implements OnInit {
   }
 
   constructor(private themeService : ThemeService, private modalCtrl: ModalController, private toastController: ToastController, 
-     private fileOpener: FileOpener) {
+    private dialogRef: MatDialogRef<ViewPdfComponent>, private fileOpener: FileOpener) {
     this.screenWidth = window.innerWidth;
     this.isDarkMode = themeService.isDarkMode()
   }
@@ -76,10 +76,9 @@ export class ViewPdfComponent implements OnInit {
         this.openFile(path.uri);
       });;
 
-      // this.pdfDownloaded = true;
-      // this.modalCtrl.dismiss("downloaded");
       this.pdfDownloaded = true;
-      this.modalCtrl.dismiss("downloaded");
+      this.dialogRef.close("downloaded");
+    } else {
       window.open(this.pdfSrc, "_blank");
     }
   }
