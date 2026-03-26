@@ -13,6 +13,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   templateUrl: "./qs-domicile.component.html",
   styleUrls: ['../registration-step.component.scss']
 })
+
 export class QsDomcileComponent implements OnInit {
   questionCode: string = 'Q_DOMICILE';
   @Input() activeLang: string = "";
@@ -21,7 +22,7 @@ export class QsDomcileComponent implements OnInit {
   progressSpinnerDialog: any = null;
   @Output() proceedNext = new EventEmitter();
   @Output() routeToCertEntry = new EventEmitter();
-  uploadFileVisible: boolean = true;
+  uploadFileVisible: boolean = false;
   reUploadFileVisible: boolean = false;
   fileObj: File;
   selectedImage: string = '';
@@ -44,15 +45,16 @@ export class QsDomcileComponent implements OnInit {
       this.registrationStepService.fetchQuestionDetail(this.questionCode)
       .subscribe((data) => {  
         this.closeProgressSpinner();
+
         if(data.status === 'SUCCESS') {
           if(data.domicileResponse) {
             this.selectedRadioOption = data.domicileResponse.answer;
-            // if(this.selectedRadioOption === 'Yes') {
+             if(this.selectedRadioOption === 'Yes') {
               this.fetchDomicileCertificate();
-            // }
-            // else {
-            //   this.evaluateProceed();
-            // }
+             }    
+             else {
+             this.evaluateProceed();
+             }
           }
           else {
             localStorage.removeItem("editQuestionCode");
@@ -109,7 +111,9 @@ export class QsDomcileComponent implements OnInit {
             uploadedOcrEntry: this.ocrEntryKey,
             // fileBase64: this.fileBase64
           }
+          
         };
+        console.log('DOMICILE REQUEST >>>>>>>>',);
         this.registrationStepService.saveQuestion(this.questionCode, this.questionRequest)
         .subscribe((data) => {
           this.closeProgressSpinner();
@@ -200,7 +204,7 @@ export class QsDomcileComponent implements OnInit {
 
   async closeProgressSpinner() {
     if(this.progressSpinnerDialog) {
-      this.progressSpinnerDialog.close();
+      this.progressSpinnerDialog.close(); 
     }
   }
 
