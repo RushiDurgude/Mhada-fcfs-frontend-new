@@ -98,9 +98,8 @@
                     </button>
 
                     <button class="applicant-btn hidden xl:block lg:block md:block"
-                       *ngIf="element.showApplyCasteValidityReferenceLetter"
+                      *ngIf="isCasteButtonVisible(element)"
                          [routerLink]="['/app', 'apply-for-caste-validity-ref-letter', element.key]">
-
                             {{ "button-apply-for-caste-validity-ref-letter" | transloco }}
                       </button>
 
