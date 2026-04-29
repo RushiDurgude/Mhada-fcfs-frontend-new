@@ -53,6 +53,10 @@ export class ApplicationListItemModel {
         public allowedForBookMyhome: boolean,
         public polPublish: string,
         public tenementConfirmDays: number,
-        public tenementRelaseDays: string
+        public tenementRelaseDays: string,
+        public boardCode: string,
+        public isPmay: string,
+        public showApplyCasteValidityReferenceLetter: boolean
+        
     ) { }
 }

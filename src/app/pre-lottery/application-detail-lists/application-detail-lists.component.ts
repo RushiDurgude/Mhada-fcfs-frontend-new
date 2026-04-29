@@ -153,6 +153,34 @@ export class ApplicationDetailListComponents implements OnInit {
 
     this.onLoad();
   }
+//   isCasteButtonVisible(element: any): boolean {
+//   const boardCode =
+//     element?.boardCode ||
+//     element?.lotteryEvent?.board?.boardCode;
+//     console.log("isPmay =", element.isPmay);
+//    console.log("boardCode =", element.boardCode);
+
+//   return (
+//     element?.showApplyCasteValidityReferenceLetter === true &&
+//     element?.isPmay === 'N' &&
+//     (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
+
+   
+//   );
+// }
+
+isCasteButtonVisible(element: any): boolean {
+  const boardCode =
+    element?.boardCode ||
+    element?.lotteryEvent?.board?.boardCode;
+
+  return (
+    String(element?.showApplyCasteValidityReferenceLetter) === 'true' &&
+    element?.isPmay === 'N' &&
+    (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
+    
+  );
+}
 
   onLoad() {
     this.isLoading = true;
