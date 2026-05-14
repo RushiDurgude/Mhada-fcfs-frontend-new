@@ -98,14 +98,22 @@
                                         </div>
                                   
                                         <!-- Button at Top Right -->
-                                        <div class="d-flex gap-2 position-absolute top-right">
-                                          <button class="select-location-btn hidden xl:block lg:block md:block"
-                                            [routerLink]="['/app','scheme-detail', boardKey, lotteryKey, scheme.key, viewMode]">
-                                            <span class="text-white">
-                                              SELECT LOCATION
-                                            </span>
-                                          </button>
-                                        </div>
+                                        <div class="d-flex flex-column align-items-end position-absolute top-right">
+
+                                        <!-- PLOT LABEL -->
+                                        <!-- <span *ngIf="scheme?.bookingType === 'PLOT'" class="plot-label mb-1">
+                                           Plot
+                                        </span> -->
+
+                                         <!-- BUTTON -->
+                                        <button class="select-location-btn hidden xl:block lg:block md:block"
+                                        [routerLink]="['/app','scheme-detail', boardKey, lotteryKey, scheme.key, viewMode]">
+                                        <span class="text-white">
+                                         SELECT LOCATION
+                                        </span>
+                                        </button>
+
+                                         </div>
 
                                         <p class="mt-1 pt-0 pl-0 mb-1"
                                             style="color: #5A5A5A; font-family: Poppins; font-size: 12px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px;">
@@ -135,9 +143,9 @@
                                                     </div>
                                                     <!-- Updated Span -->
                                                     <span class="scheme-info">
-                                                        <span>Carpet Area</span>
+                                                        <span>{{scheme?.bookingType === 'PLOT'? ('Plot Area / Builtup Area'): ('Builtup Area')}}</span>
                                                         <span class="scheme-details">
-                                                            {{scheme.carpetArea}} {{scheme.carpetAreaUnit}}
+                                                            {{scheme.builtupArea}} {{scheme.builtupAreaUnit}}
                                                         </span>
                                                     </span>
                                                 </div>
