@@ -56,7 +56,8 @@ export class ApplicationListItemModel {
         public tenementRelaseDays: string,
         public boardCode: string,
         public isPmay: string,
-        public showApplyCasteValidityReferenceLetter: boolean
+        public showApplyCasteValidityReferenceLetter: boolean,
+        public bookingType: string
         
     ) { }
 }
