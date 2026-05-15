@@ -79,6 +79,7 @@ export class ApplicationComponent implements OnInit {
   drawWinner: boolean = false;
   drawSpouseWinner: boolean = false;
   alreadyApplied: boolean = false;
+  pmayDocumentNotSumitted: boolean = false;
 
   previewImage: string = '';
   api_url: string = '';
@@ -237,6 +238,7 @@ export class ApplicationComponent implements OnInit {
           this.drawWinner = this.applicationFormModel.drawWinner;
           this.drawSpouseWinner = this.applicationFormModel.drawSpouseWinner;
           this.alreadyApplied = this.applicationFormModel.alreadyApplied;
+          this.pmayDocumentNotSumitted = this.applicationFormModel.pmayDocumentNotSumitted;
           this.showChequePassbookUpload = this.applicationFormModel.showChequePassbookUpload;
 
           if (this.applicationFormModel.bankVerification &&
@@ -352,6 +354,10 @@ export class ApplicationComponent implements OnInit {
     }
 
     if (this.alreadyApplied) {
+      return;
+    }
+
+    if (this.pmayDocumentNotSumitted) {
       return;
     }
 
