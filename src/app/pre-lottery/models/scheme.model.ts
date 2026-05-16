@@ -32,7 +32,7 @@ export class SchemeModel {
         public lotteryCode: string,
         public lotteryName: string,
         public categoryCodesWithCount: string[],
-        public bookingType: string[]
+        public bookingType: string
     ) {}
         
 }
