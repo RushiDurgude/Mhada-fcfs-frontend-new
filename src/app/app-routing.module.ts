@@ -80,6 +80,8 @@ import { RegistrationStepComponent } from "./registration-step/registration-step
 import { ProfileNewComponent } from "./profile-new/profile-new.component";
 import { ApplicationDetailListComponents } from "./pre-lottery/application-detail-lists/application-detail-lists.component";
 import { ApplicationBookHomeComponent } from "./pre-lottery/application-bookHome/application-bookHome.component";
+import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot/application-bookPlot.component";
+
 
 const routes: Routes = [
   { path: "", component: LandingComponent },
@@ -270,6 +272,11 @@ const routes: Routes = [
       {
         path: "application-bookHome/:applicationKey",
         component: ApplicationBookHomeComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: "application-bookPlot/:applicationKey",
+        component: ApplicationBookPlotComponent,
         canActivate: [AuthGuardService],
       },
       {

@@ -1,0 +1,465 @@
+<div class="grid m-0 p-0 background-image card-content ng-star-inserted" 
+style="min-height: 100%; overflow: hidden;" >
+    <div class="grid col-12 pl-4 pr-4 mt-2">
+        <div class="col-12 card" style="border-radius: 6px;">
+            <!-- <div class="col-12 line-height-1 text-2xl" style="display: flex;">
+                <a [routerLink]="['/pre-lottery', 'application-detail-list']">
+                    <ion-icon name="arrow-undo"></ion-icon>
+                </a>
+                {{"title-header-bookHome" | transloco}} 
+            </div> -->
+            <div class="grid col-12 pl-3 pr-4 mt-0">
+                    <div class="col-12 line-height-1 text-2xl hidden xl:block lg:block md:block" style="display: flex; align-items: center;">
+                        <div style="display: flex; align-items: center;">
+                            <a [routerLink]="['/app', 'application-detail-lists']"
+                                style="color: #6c757d; text-decoration: none;font-size: 14px;">
+                                {{"menu-application-List" | transloco}}
+                            </a>
+                            <span style="margin: 0 8px;">&#8250;</span>
+                            <span style="font-weight: 500;font-size: 14px;">
+                                BookMyPlot
+                            </span>
+                        </div>
+                </div>
+            </div>
+            <div class="grid col-12 pl-2 pr-2 pt-0" *ngIf="formLoadStatus != null && formLoadStatus === 'SUCCESS'">
+                <!-- <div class="grid col-12 p-0 card" style="border-radius: 6px;"> -->
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 pl-4" *ngIf="applicationModel?.flatDetail">
+                        <label style="color: #979292;">{{"label-application-no" | transloco}}</label><br>
+                        <p class="m-0 font-bold" style="font-size: 16px;">{{applicationModel?.applicationNo}}</p>
+                    </div>
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 pl-4" *ngIf="applicationModel?.flatDetail">
+                        <label style="color: #979292;">{{"label-scheme" | transloco}}</label><br>
+                        <p class="m-0 font-bold" style="font-size: 16px;">{{applicationModel?.schemeCode}} - {{applicationModel?.schemeName}}</p>
+                    </div>
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 pl-4" *ngIf="applicationModel?.flatDetail">
+                        <label style="color: #979292;">{{"label-category" | transloco}}</label><br>
+                        <p class="m-0 font-bold" style="font-size: 16px;">{{applicationModel?.categoryCode}} - {{applicationModel?.categoryName}}</p>
+                    </div>
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 pl-4" *ngIf="applicationModel?.flatDetail">
+                        <label style="color: #979292;">{{"label-flat" | transloco}}</label><br>
+                        <p class="m-0 font-bold" style="font-size: 16px;">{{applicationModel?.flatDetail}}</p>
+                    </div>
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4" *ngIf="applicationModel?.flatDetail">
+                        <h4 class="mt-1 text-lg border-bottom-2 border-bluegray-100">{{"label-application-status" | transloco}}</h4>
+                        <app-application-status 
+                            class="col-12 p-0"
+                            [statusIcon]="applicationModel.applicationFormStatusIcon"
+                            [statusMsg]="applicationModel.applicationFormStatus"
+                            type="APPLICATION_FORM_STATUS"
+                            [key]="applicationModel.key"
+                            [full]="true"
+                            [draftListPublished]="applicationModel.draftListPublished"
+                            [finalListPublished]="applicationModel.finalListPublished"
+                            [rejectMessage]="applicationModel.rejectMessage"
+                            [pendingPayments]="applicationModel.pendingPayments"
+                            ></app-application-status>
+                    </div>
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0" *ngIf="applicationModel?.flatDetail && applicationModel?.emdAmount > 0">
+                        <h4 class="mt-1 text-lg border-bottom-2 border-bluegray-100">{{"label-emd-payment-status" | transloco}}</h4>
+                        <app-application-status 
+                            class="col-12 p-0"
+                            [statusIcon]="applicationModel.applicationPaymentStatusIcon"
+                            [statusMsg]="applicationModel.applicationPaymentStatus"
+                            [lotteryStage]="applicationModel.lotteryStage"
+                            type="APPLICATION_PAYMENT_STATUS"
+                            [key]="applicationModel.key"
+                            [full]="true"
+                            [pendingPayments]="applicationModel.pendingPayments"
+                            ></app-application-status>
+                    </div>
+
+                    <div class="col-12" style="text-align: center; display: flex; flex-direction: column; align-items: center;" *ngIf="applicationModel?.flatDetail">
+                        <p style="color: #5A5A5A; font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px;">
+                          <strong>Disclosure:</strong> Once a plot/tenement is selected and payment is made, it cannot be changed, edited, or modified.
+                        </p>
+                        <p  style="color: #5A5A5A; font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px; margin-top: 2px;">
+                          Please complete the first installment within {{applicationModel?.tenementRelaseDays}} to confirm the plot. If you fail to do so, the selected plot will be released.
+                        </p>
+                        <button
+                          class="applicant-btn hidden xl:block lg:block md:block"
+                          [routerLink]="['/app', applicationModel.key, 'installments']">
+                          {{ "button-my-installment" | transloco }}
+                        </button>
+                        <!-- <button
+                          class="applicant-btn hidden xl:block lg:block md:block"
+                          [routerLink]="['/app', 'application-detail-lists']">
+                          {{ "menu-application-Lists" | transloco }}
+                        </button> -->e
+                      </div>
+                <!-- </div> -->
+            </div>
+            <div class="col-12" *ngIf="formLoadStatus != null && formLoadStatus === 'SUCCESS'">
+                <div class="col-12 p-0 mt-0" >
+                    <div class="grid">
+                        <div class="col-12 pl-2 pr-2 pt-2" *ngIf="!(applicationModel?.flatDetail)">
+                            <form [formGroup]="appForm" #localForm="ngForm" (ngSubmit)="onSubmit()"
+                            class="grid p-2">
+                            <div class="grid col-12 p-0 pb-4" style="border-radius: 6px; display: flex; justify-content: space-between;">
+                                <div class="image-container" style="display: flex; flex-direction: column;">
+                                    <div *ngIf="this.flatSelected != null && this.selectedWing === 'Y' && applicationModel?.schemePhoto && !applicationModel.schemePhoto.endsWith('null')">
+                                    <div style="background-color: #F0F0F0; border: 1px solid #CCCCCC; padding: 10px;margin-bottom: 5px;">
+                                        <label for="scheme" style="color: #979292;">
+                                          <img [src]="api_url+applicationModel?.schemePhoto" class="responsive-image" style="width: 200px; height: 150px;" alt="Buildings" (click)="openZoomedModal(api_url+applicationModel?.schemePhoto)">
+                                        </label>
+                                        <div style="text-align: center; margin-top: 2px;">Layout Plan</div>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="this.flatSelected != null && this.selectedWing === 'Y' && flatSelected?.floorPhoto && !flatSelected.floorPhoto.endsWith('null')">
+                                        <div style="background-color: #F0F0F0; border: 1px solid #CCCCCC; padding: 10px;margin-bottom: 5px;">
+                                        <label for="scheme" style="color: #979292;">
+                                            <img [src]="api_url+flatSelected?.floorPhoto" class="responsive-image" style="width: 200px; height: 150px;" alt="FloorPhoto"
+                                            (click)="openZoomedModal(api_url+flatSelected?.floorPhoto)">
+                                        </label>
+                                        <div style="text-align: center; margin-top: 2px;">Floor Plan</div>
+                                    </div>
+                                    </div>
+                                    <div *ngIf="flatSelected != null && selectedWing === 'Y' && flatSelected?.unitPlan && !flatSelected.unitPlan.endsWith('null')">
+                                        <div style="background-color: #F0F0F0; border: 1px solid #CCCCCC; padding: 10px;margin-bottom: 5px;">
+                                        <label for="unitPlan" style="color: #979292;">
+                                            <img [src]="api_url+flatSelected?.unitPlan" class="responsive-image" style="width: 200px; height: 150px;" alt="UnitPlan" (click)="openZoomedModal(api_url+flatSelected?.unitPlan)">
+                                        </label>
+                                        <div style="text-align: center; margin-top: 2px;">Unit Plan</div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div style="flex: 2; display: flex; flex-direction: column; align-items: flex-start;">
+                                    <div class="col-12 sm:col-6 md:col-6 lg:col-4 imagedetails">
+                                        <!-- Image Section -->
+                                        <div class="image-section" style="flex: 0 0 auto; width: 92px; height: 60px;">
+                                          <!-- <ng-container *ngIf="applicationFormModel?.buildingImages.length > 0; else defaultImage">
+                                            <img class="p-0" [src]="api_url + applicationFormModel?.buildingImages[0]" style="width: 100%; height: auto;" />
+                                          </ng-container>
+                                          <ng-template #defaultImage> -->
+                                            <img class="p-0" src="assets/default-building.png" alt="Default Image" style="width: 92px; height: 60px;" />
+                                          <!-- </ng-template> -->
+                                        </div>
+                                      
+                                        <!-- Text Content Section -->
+                                        <div class="text-content" style="padding-left: 15px; flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center;">
+                                          <div class="scheme-title text-dark mb-0 pb-1" style="font-size: 20px; font-weight: 500;">
+                                            {{applicationModel?.schemeCode}} - {{applicationModel?.schemeName}}
+                                          </div>
+                                          <p class="mt-1 pt-0 pl-0 mb-1" style="color: #5A5A5A; font-family: Poppins; font-size: 12px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px;">
+                                            {{applicationModel?.applicationNo}}
+                                          </p>
+                                        </div>
+                                      </div> 
+                                      <p style="color: #5A5A5A; font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 0.15px; text-align: center;">
+                                        <strong>Disclosure:</strong> Once a plot is selected and payment is made, it cannot be changed, edited, or modified.
+                                      </p>                                
+<!-- 
+                                    <div style=" bottom: 0; width: 100%; text-align: right; ">
+                                        <div>
+                                            <p style="text-align: left; padding-left: 1%; ;padding-top: 1%;padding-bottom: 1%;"
+                                            >{{applicationModel?.schemeCode}} - {{applicationModel?.schemeName}}
+                                        </p>
+                                        </div>
+                                  </div> -->
+                                    <div class="col-12" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                        <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0" style="flex: 1;">
+                                            <label for="category" style="color: #000000;font-size: larger;">
+                                                Category <span class="text-red-900">*</span>
+                                            </label>
+                                            <select id="category" formControlName="category"
+                                                class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                                style="appearance: auto" (change)="loadFloorGrid($event)">
+                                                <option value="">{{"option-select" | transloco}}</option>
+                                                <option *ngFor="let category of categoryList" [value]="category.categoryCode">
+                                                    <!-- <option *ngFor="let category of categoryList" [ngvalue]="category"> -->
+                                                    {{category.categoryCode}} - {{category.categoryName}}
+                                                  </option>                                             
+                                                </select>    
+                                        </div> 
+                                        <!-- <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0" style="flex: 1;">
+                                            <label for="buildingNo" style="color: #000000;font-size: larger;">
+                                                Building No <span class="text-red-900">*</span>
+                                            </label>
+                                            <select id="building" formControlName="buildingNo"
+                                                class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                                style="appearance: auto" (change)="loadWings($event)">
+                                                <option value="">{{"option-select" | transloco}}</option>
+                                                <option *ngFor="let buildingNo of buildingList" [value]="buildingNo">{{buildingNo}}</option>
+                                            </select>    
+                                        </div>   -->
+                                        <!-- <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0" style="flex: 1;">
+                                            <label for="wing" style="color: #0f0f0f;font-size: larger;">
+                                                Wing  <span class="text-red-900">*</span>
+                                            </label>
+                                            <select id="wing" formControlName="wing"
+                                                class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                                style="appearance: auto" (change)="loadFloorGrid($event)">
+                                                <option value="">{{"option-select" | transloco}}</option>
+                                                <option *ngFor="let wing of wingList" [value]="wing">{{wing}}</option>
+                                            </select>       
+                                        </div>  -->
+                                    </div>
+                                <div class="col-12">
+                                    <div class="responsive-container" style="display: flex; align-items: center;" *ngIf="this.selectedWing === 'Y' ">
+                                        <span style="margin-right: 25px; font-size: 19px;">Choose Your Plot/Tenement </span>
+                                        <!-- Color Box 1 -->
+                                        <div style="width: 20px; height: 20px; background-color: lightgray; margin-right: 5px;"></div>
+                                        <span style="margin-right: 5px;">Sold</span>
+                                        <span style="background-color: lightgray; border-radius: 13px; color: black; padding: 2px 8px 2px 8px; margin-right: 15px;">{{allotedCount}} </span>
+        
+                                        <div style="width: 20px; height: 20px; background-color: rgb(1, 146, 13); margin-right: 5px;"></div>
+                                        <span style="margin-right: 15px;">Selected</span>
+        
+                                        <div style="width: 20px; height: 20px; border: 1px solid rgb(27, 231, 44); margin-right: 5px;"></div><br>
+                                        <span style="margin-right: 5px;">Available</span>
+                                        <span style="background-color: rgb(27, 231, 44); border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{availableCount}}</span>
+        
+                                        <div style="width: 20px; height: 20px; background-color: rgb(233, 120, 120); margin-right: 5px;"></div>
+                                        <span style="margin-right: 15px;">NA</span>
+                                        <span style="background-color: rgb(233, 120, 120);border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{nACount}}</span>
+                                        
+                                        <div style="width: 20px; height: 20px; background-color: rgb(253, 168, 9); margin-right: 5px;"></div>
+                                        <span style="margin-right: 5px;">Pending Payment</span>
+                                        <span style="background-color: rgb(253, 168, 9); border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{bookedCount}} </span>
+                                        
+                                        
+                                        <!-- Color Box 2 -->
+                                        
+                                        
+                                
+                                
+                                    </div>
+                                      
+                                     <div style=" bottom: 0; width: 100%; text-align: right; background-color: #f1f1f1; " *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                        <div  *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                            <p style="text-align: left; padding-left: 1%; ;padding-top: 1%;padding-bottom: 1%;"
+                                            >You Have Selected Plot/Tenement No '{{ flatSelected.flatNo }}' Click On Book Now To Confirm Booking
+                                        </p>
+                                        </div>
+                                  </div>
+                                </div>
+                                  <div class="col-12" style="max-height: 280px; overflow-y: auto; overflow-x: auto; margin-top: 20px !important; border: 1px solid #DFDFDF;">
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <!-- <div class="image-container" style="display: flex; flex-direction: column; margin-right: 20px;">
+                                            <label for="scheme" style="color: #979292;">
+                                                <img [src]="api_url+applicationModel?.schemePhoto" class="responsive-image" style="width: 200px; height: 150px;" alt="Buildings"
+                                                (click)="openZoomedModal(api_url+applicationModel?.schemePhoto)">
+                                            </label>
+                                            <div style="text-align: center; margin-top: 2px;">Layout Plan</div>
+                                            <div *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                                <label for="scheme" style="color: #979292;">
+                                                    <img [src]="api_url+flatSelected?.floorPhoto" class="responsive-image" style="width: 200px; height: 150px;" alt="FloorPhoto"
+                                                    (click)="openZoomedModal(api_url+flatSelected?.floorPhoto)">
+                                                </label>
+                                                <div style="text-align: center; margin-top: 2px;">Floor Plan</div>
+                                            </div>
+                                            <div *ngIf="flatSelected != null && selectedWing === 'Y' && flatSelected?.unitPlan && !flatSelected.unitPlan.endsWith('null')">
+                                                <label for="unitPlan" style="color: #979292;">
+                                                    <img [src]="api_url+flatSelected?.unitPlan" class="responsive-image" style="width: 200px; height: 150px;" alt="UnitPlan" (click)="openZoomedModal(api_url+flatSelected?.unitPlan)">
+                                                </label>
+                                                <div style="text-align: center; margin-top: 2px;">Unit Plan</div>
+                                            </div>
+                                        </div> -->
+                                        
+                                        <!-- <div *ngIf="this.selectedWing === 'Y'">
+                                            <table style="margin: 0px !important;">
+                                                <tbody>
+                                                    <tr *ngFor="let floor of floorGrid | keyvalue">
+                                                        <td>
+                                                            <label> Floor {{floor.key}} </label>
+                                                        </td>
+                                                        <td *ngFor="let flat of floor.value">
+                                                            <button
+                                                                [ngClass]="getStatusColor(flat, flatSelected)"
+                                                                [disabled]="flat.status === 'TENEMENT_ALLOTED' || flat.status === 'PENDING_PAYMENT' || flat.status === 'NA'"
+                                                                (click)="selectFlat(flat)" type="button">{{ flat.flatNo }}
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> -->
+    <div *ngIf="this.selectedWing === 'Y'">
+        <table style="margin: 0px !important;">
+            <tbody>
+
+                <ng-container *ngFor="let floor of floorGrid | keyvalue">
+
+                    <!-- Loop rows (each row = 10 flats) -->
+                    <tr *ngFor="let rowIndex of getFlatRowIndexes(floor.value.length); let i = index">
+
+                        <!-- Show floor only once -->
+                        <td *ngIf="i === 0" [attr.rowspan]="getFlatRowIndexes(floor.value.length).length">
+                            <label> Floor {{ floor.key }} </label>
+                        </td>
+
+                        <!-- Flats (10 per row) -->
+                        <td *ngFor="let flat of floor.value.slice(rowIndex * 10, (rowIndex + 1) * 10)">
+                            <button [ngClass]="getStatusColor(flat, flatSelected)"
+                                [disabled]="flat.status === 'TENEMENT_ALLOTED' || flat.status === 'PENDING_PAYMENT' || flat.status === 'NA'"
+                                (click)="selectFlat(flat)" type="button">
+                                {{ flat.flatNo }}
+                            </button>
+                        </td>
+
+                    </tr>
+
+                </ng-container>
+
+            </tbody>
+        </table>
+    </div>
+
+
+                                    </div>
+                                </div>
+                                
+                                </div>
+                                <div class="col-12 p-2 mt-6 mb-3" *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                    <!-- <button class="btn-medium active-button shadow-4 mt-0" type="submit" style=" margin-left: 80%; "> -->
+                                        <button class="btn-medium active-button shadow-4 mt-0 align-right" type="submit">  
+                                        {{"button-booknow" | transloco}}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- <div class="col-12 pl-3 pr-0 pb-3" style="height: calc(100% - 60px); overflow: scroll;"
+    *ngIf="formLoadStatus != null && formLoadStatus === 'SUCCESS'">
+    <div class="col-12">
+        <div class="col-12 p-0 mt-0" >
+            <div class="grid">
+                <div class="col-12 pl-2 pr-2 pt-2" *ngIf="!(applicationModel?.flatDetail)">
+                    <form [formGroup]="appForm" #localForm="ngForm" (ngSubmit)="onSubmit()"
+                    class="grid p-2">
+                    <div class="grid col-12 p-0 card pb-4" style="border-radius: 6px;">
+                        <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0">
+                            <label for="category" style="color: #000000;font-size: larger;">
+                                Category <span class="text-red-900">*</span>
+                            </label>
+                            <select id="category" formControlName="category"
+                                class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                style="appearance: auto" (change)="loadBuildings($event)">
+                                <option value="">{{"option-select" | transloco}}</option>
+                                <option *ngFor="let category of categoryList" [value]="category">{{category}}
+                                </option>
+                            </select>    
+                        </div> 
+                        <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0">
+                            
+                            <label for="buildingNo" style="color: #000000;font-size: larger;">
+                                Building No <span class="text-red-900">*</span>
+                            </label>
+                            <select id="building" formControlName="buildingNo"
+                                class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                                style="appearance: auto" (change)="loadWings($event)">
+                                <option value="">{{"option-select" | transloco}}</option>
+                                <option *ngFor="let buildingNo of buildingList" [value]="buildingNo">{{buildingNo}}
+                                </option>
+                            </select>    
+                    </div>  
+                    <div class="col-12 sm:col-12 md:col-6 lg:col-4 mt-0">
+                            
+                        <label for="buildingNo" style="color: #0f0f0f;font-size: larger;">
+                            Wing  <span class="text-red-900">*</span>
+                        </label>
+                        <select id="wing" formControlName="wing"
+                            class="w-full text-base text-color surface-overlay p-2 border-1 border-gray-900 surface-border border-round outline-none focus:border-primary"
+                            style="appearance: auto" (change)="loadFloorGrid($event)">
+                            <option value="">{{"option-select" | transloco}}</option>
+                            <option *ngFor="let wing of wingList" [value]="wing">{{wing}}
+                            </option>
+                        </select>       
+                          </div> 
+                        <div class="col-12">
+                            <div class="responsive-container" style="display: flex; align-items: center;" *ngIf="this.selectedWing === 'Y' ">
+                                <span style="margin-right: 25px; font-size: 19px;">Choose Your Flat </span>
+                                <div style="width: 20px; height: 20px; background-color: lightgray; margin-right: 5px;"></div>
+                                <span style="margin-right: 5px;">Sold</span>
+                                <span style="background-color: lightgray; border-radius: 13px; color: black; padding: 2px 8px 2px 8px; margin-right: 15px;">{{allotedCount}} </span>
+
+                                <div style="width: 20px; height: 20px; background-color: rgb(1, 146, 13); margin-right: 5px;"></div>
+                                <span style="margin-right: 15px;">Selected</span>
+
+                                <div style="width: 20px; height: 20px; border: 1px solid rgb(27, 231, 44); margin-right: 5px;"></div><br>
+                                <span style="margin-right: 5px;">Available</span>
+                                <span style="background-color: rgb(27, 231, 44); border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{availableCount}}</span>
+
+                                <div style="width: 20px; height: 20px; background-color: rgb(233, 120, 120); margin-right: 5px;"></div>
+                                <span style="margin-right: 15px;">NA</span>
+                                <span style="background-color: rgb(233, 120, 120);border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{nACount}}</span>
+                                
+                                <div style="width: 20px; height: 20px; background-color: rgb(253, 168, 9); margin-right: 5px;"></div>
+                                <span style="margin-right: 5px;">Pending Payment</span>
+                                <span style="background-color: rgb(253, 168, 9); border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{bookedCount}} </span>
+                                                                
+                                
+                        
+                        
+                            </div>
+                              
+                             <div style=" bottom: 0; width: 100%; text-align: right; background-color: #f1f1f1; " *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                <div  *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                    <p style="text-align: left; padding-left: 1%; ;padding-top: 1%;padding-bottom: 1%;"
+                                    >You Have Selected Flat No '{{ flatSelected.flatNo }}' Click On Book Now To Confirm Booking
+                                </p>
+                                </div>
+                          </div>
+                          <div class="col-12" style="max-height: 280px; overflow-y: auto; overflow-x: auto; margin-top: 20px !important; border: 1px solid #DFDFDF;">
+                            <div style="display: flex; align-items: flex-start;">
+                                <div class="image-container" style="display: flex; flex-direction: column; margin-right: 20px;">
+                                    <label for="scheme" style="color: #979292;">
+                                        <img [src]="applicationModel?.schemePhoto" class="responsive-image" style="width: 200px; height: 150px;" alt="Buildings"
+                                        (click)="openZoomedModal(applicationModel?.schemePhoto)">
+                                    </label>
+                                    <div style="text-align: center; margin-top: 2px;">Layout Plan</div>
+                                    <div *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                        <label for="scheme" style="color: #979292;">
+                                            <img [src]="flatSelected?.floorPhoto" class="responsive-image" style="width: 200px; height: 150px;" alt="FloorPhoto"
+                                            (click)="openZoomedModal(flatSelected?.floorPhoto)">
+                                        </label>
+                                        <div style="text-align: center; margin-top: 2px;">Floor Plan</div>
+                                    </div>
+                                    <div *ngIf="flatSelected != null && selectedWing === 'Y' && flatSelected?.unitPlan && !flatSelected.unitPlan.endsWith('null')">
+                                        <label for="unitPlan" style="color: #979292;">
+                                            <img [src]="flatSelected?.unitPlan" class="responsive-image" style="width: 200px; height: 150px;" alt="UnitPlan" (click)="openZoomedModal(flatSelected?.unitPlan)">
+                                        </label>
+                                        <div style="text-align: center; margin-top: 2px;">Unit Plan</div>
+                                    </div>
+                                </div>
+                                <div *ngIf="this.selectedWing === 'Y'">
+                                    <table style="margin: 0px !important;">
+                                        <tbody>
+                                            <tr *ngFor="let floor of floorGrid | keyvalue">
+                                                <td>
+                                                    <label> Floor {{floor.key}} </label>
+                                                </td>
+                                                <td *ngFor="let flat of floor.value">
+                                                    <button
+                                                        [ngClass]="getStatusColor(flat, flatSelected)"
+                                                        [disabled]="flat.status === 'TENEMENT_ALLOTED' || flat.status === 'PENDING_PAYMENT' || flat.status === 'NA'"
+                                                        (click)="selectFlat(flat)" type="button">{{ flat.flatNo }}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        <div class="col-12 p-2 mt-6 mb-3" *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                <button class="btn-medium active-button shadow-4 mt-0 align-right" type="submit">  
+                                {{"button-booknow" | transloco}}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

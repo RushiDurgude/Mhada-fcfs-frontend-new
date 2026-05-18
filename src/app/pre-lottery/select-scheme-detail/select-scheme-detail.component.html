@@ -133,7 +133,12 @@
                     </label>
                   </li>
                   <li>
-                    <label class="font-bold font-style-h2">{{"label-builtup-area" | transloco}} - </label><label
+                    <label class="font-bold font-style-h2">
+                       {{
+    scheme?.bookingType === 'PLOT'
+      ? ('Plot Area / Builtup Area' | transloco)
+      : ('label-builtup-area' | transloco)
+  }} - </label><label
                       class="font-style-h1" style="margin: 0px !important;font-size:13px">{{scheme?.builtupArea}}
                       {{scheme?.builtupAreaUnit}}</label>
                   </li>
@@ -158,7 +163,12 @@
                       class="font-style-h1" style="margin: 0px !important;font-size:13px">{{scheme?.emdAmount}}</label>
                   </li>
                   <li>
-                    <label class="font-bold font-style-h2">{{"label-total-tenements" | transloco}} - </label><label
+                    <label class="font-bold font-style-h2">
+                      {{ (scheme?.bookingType === 'PLOT'
+                      ? 'label-total-plots'
+                      : 'label-total-tenements') | transloco
+                      }} -
+                    </label><label
                       class="font-style-h1" style="margin: 0px !important;font-size:13px">{{scheme?.tenements}}</label>
                   </li>
                   <li>
@@ -176,7 +186,8 @@
                 </label>
               </p>
               <div class="tenement-categories">
-                <p class="title">Available Tenements as per Categories</p>
+                <p *ngIf="scheme?.bookingType !='PLOT'" class="title">Available Tenements as per Categories</p>
+                <p *ngIf="scheme?.bookingType =='PLOT'" class="title">Available Plots as per Categories</p>
                 <div class="categories-grid">
                   <div
                     class="category-item"

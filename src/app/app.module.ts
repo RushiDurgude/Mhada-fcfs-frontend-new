@@ -233,6 +233,7 @@ import { ZoomedImageModalComponent } from "./zoom-image/zoomed.component";
 import { ApplicationDetailListComponents } from "./pre-lottery/application-detail-lists/application-detail-lists.component";
 import { ApplicationBookHomeComponent } from "./pre-lottery/application-bookHome/application-bookHome.component";
 import { NocOtpComponent } from "./pre-lottery/noc-otp/noc-otp.component";
+import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot/application-bookPlot.component";
 
 // import { HTTP } from "@ionic-native/http/ngx";
 @NgModule({
@@ -418,6 +419,7 @@ import { NocOtpComponent } from "./pre-lottery/noc-otp/noc-otp.component";
     ZoomedImageModalComponent,
     ApplicationDetailListComponents,
     ApplicationBookHomeComponent,
+    ApplicationBookPlotComponent,
     NocOtpComponent,
 
   ],

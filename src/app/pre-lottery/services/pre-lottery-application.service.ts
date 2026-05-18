@@ -1421,6 +1421,13 @@ export class PreLotteryApplicationService {
     );
   }
 
+  fetchFloorGridForPlot(applicationKey:number,category: string) {
+    return this.http.get<{gridData: {number: FloorTenementModel[]}, status: string, errorMessage: string, 
+    availableCount: number, allotedCount: number, bookedCount: number, nacount: number}>(
+      api_url + "/apply/tenement/floor-grid-plot/"+applicationKey+"?category="+category
+    );
+  }
+
   fetchFloorDetail(schemeId:number,selectedBuildingNo:string,
     selectedwing:string) {
       return this.http.get<BuildingListModel>(
@@ -1428,6 +1435,8 @@ export class PreLotteryApplicationService {
         schemeId+"/" +selectedBuildingNo +"/"+selectedwing
       );
   }
+
+
 
   fetchFlatNoDetail(schemeId:number,selectedBuildingNo:string,
     selectedwing:string,selectedFloorNo:number) {
