@@ -8,5 +8,5 @@ export class ApplicationFormModel {
         public stopForMCGMYes: boolean, public applicantName: string,
         public showChequePassbookUpload: boolean, public lotteryCode: string,
         public lotteryName: string, public buildingImages: string[], public drawWinner: boolean,
-        public drawSpouseWinner: boolean, public alreadyApplied: boolean,public pmayDocumentNotSumitted: boolean, public agencyTypes: string[], public isAgencyAllowed: string) { }
+        public drawSpouseWinner: boolean, public alreadyApplied: boolean,public alreadyAppliedPuneScheme: boolean,public pmayDocumentNotSumitted: boolean, public agencyTypes: string[], public isAgencyAllowed: string) { }
 }

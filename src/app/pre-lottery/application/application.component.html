@@ -96,6 +96,11 @@
               {{ "error-pmay-apply" | transloco }}
             </small>
           </div>
+          <div class="col-12" *ngIf="alreadyAppliedPuneScheme">
+            <small class="error-block">
+              {{"You have already done the application for the selected Scheme "}}
+            </small>
+          </div>
           <div class="col-12" *ngIf="applicableCategoriesError">
             <small class="error-block">
               {{ "error-applicable-categories-empty" | transloco }}
