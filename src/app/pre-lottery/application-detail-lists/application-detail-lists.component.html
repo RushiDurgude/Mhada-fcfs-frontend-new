@@ -318,22 +318,20 @@
                     {{ "button-edit-refund-detail" | transloco }}
                   </button>
 
-                  <button class="applicant-btn block sm:block md:hidden mt-3"
-   *ngIf="element.applicationPaymentStatus === 'Payment received' &&
-    element.flatDetail === null &&
-    element.allowedForBookMyhome &&
-    !(element.bookingAllowedForMumbai && element.bookingType !== 'PLOT' && isTimeCompleted(element.key))
-  " [routerLink]="['/app', 'application-bookHome', element.key]">
-                      {{ 'book-my-home' | transloco }}
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.applicationPaymentStatus === 'Payment received' &&
+                      element.flatDetail === null &&
+                      element.allowedForBookMyhome && element.bookingType !== 'PLOT' &&
+                      !(element.bookingAllowedForMumbai && isTimeCompleted(element.key))
+                    " [routerLink]="['/app', 'application-bookHome', element.key]">
+                    {{ 'book-my-home' | transloco }}
                   </button>
-
-                  <button class="applicant-btn block sm:block md:hidden mt-3"
-   *ngIf="element.applicationPaymentStatus === 'Payment received' &&
-    element.flatDetail === null &&
-    element.allowedForBookMyhome &&
-    !(element.bookingAllowedForMumbai && element.bookingType == 'PLOT' && isTimeCompleted(element.key))
-  " [routerLink]="['/app', 'application-bookPlot', element.key]">
-                      {{ 'book-my-plot' | transloco }}
+                  
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.applicationPaymentStatus === 'Payment received' &&
+                      element.flatDetail === null &&
+                      element.allowedForBookMyhome && element.bookingType == 'PLOT' &&
+                      !(element.bookingAllowedForMumbai  && isTimeCompleted(element.key))
+                    " [routerLink]="['/app', 'application-bookPlot', element.key]">
+                    {{ 'book-my-plot' | transloco }}
                   </button>
 
                   <!-- Check Payment Button -->
