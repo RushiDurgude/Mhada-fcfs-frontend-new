@@ -17,7 +17,7 @@ export class YoutubeHelpVideoNewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    let url = this.data.qsDescription;
+    let url = this.data.helpVideo;
     this.videoSrc = this._sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
