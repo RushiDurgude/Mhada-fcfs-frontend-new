@@ -372,4 +372,8 @@ openZoomedModal(imageSrc: string): void {
   });
 }
 
+getFlatRowIndexes(flatCount: number): number[] {
+  return Array.from({ length: Math.ceil(flatCount / 10) }, (_, i) => i);
+}
+
 }

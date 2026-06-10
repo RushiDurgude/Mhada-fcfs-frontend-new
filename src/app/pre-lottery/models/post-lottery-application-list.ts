@@ -64,5 +64,6 @@ export class PostLotteryApplicationListItemModel {
     public indx2UploadAllowed: boolean,
     public tenementConfirmDays: number,
     public bookingAllowedForMumbai:boolean,
+    public bookingType: string,
   ) {}
 }

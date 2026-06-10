@@ -74,12 +74,21 @@
                     </button>
 
                     <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="
-    element.applicationPaymentStatus === 'Payment received' &&
-    element.flatDetail === null &&
-    element.allowedForBookMyhome &&
-    !(element.bookingAllowedForMumbai && isTimeCompleted(element.key))
-  " [routerLink]="['/app', 'application-bookHome', element.key]">
-                      {{ "book-my-home" | transloco }}
+                                            element.applicationPaymentStatus === 'Payment received' &&
+                                            element.flatDetail === null &&
+                                            element.allowedForBookMyhome && element.bookingType !== 'PLOT' &&
+                                            !(element.bookingAllowedForMumbai && isTimeCompleted(element.key))
+                                          " [routerLink]="['/app', 'application-bookHome', element.key]">
+                      {{ 'book-my-home' | transloco }}
+                    </button>
+                    
+                    <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="
+                                            element.applicationPaymentStatus === 'Payment received' &&
+                                            element.flatDetail === null &&
+                                            element.allowedForBookMyhome && element.bookingType === 'PLOT' &&
+                                            !(element.bookingAllowedForMumbai && isTimeCompleted(element.key))
+                                          " [routerLink]="['/app', 'application-bookPlot', element.key]">
+                      {{ 'book-my-plot' | transloco }}
                     </button>
                     <p class="countdown-timer hidden xl:block lg:block md:block"
                       *ngIf="countdowns[element.key] && element.flatDetail !== null && element.tenementBookedStatus !== 'TENEMENT_ALLOTED' && element.postLotteryStatus !== 'Surrendered tenement'"
@@ -171,7 +180,10 @@
                     <span class="detail-label">Category:</span> {{ element.categoryCode }} - {{ element.categoryName }}
                   </div>
                   <div class="detail-label" *ngIf="element.flatDetail">
-                    <span class="detail-label">Flat Details:</span> {{ element.flatDetail }}
+                    <span class="detail-label">
+                      {{ element.bookingType === 'PLOT' ? 'Plot Details:' : 'Flat Details:' }}
+                    </span>
+                    {{ element.flatDetail }}
                   </div>
                 </div>
 
@@ -260,10 +272,11 @@
                   <button class="status-btn approve"
                     *ngIf="element.applicationPaymentStatus === 'Payment refunded'">Refund Done</button>
                   <button class="status-btn approve"
-                    *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">Flat
-                    Confirmed</button>
+                    *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">
+                    {{ element.bookingType === 'PLOT' ? 'Plot Confirmed' : 'Flat Confirmed' }} 
+                  </button>
                   <button class="status-btn pending"
-                    *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && !element.pol && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">POL
+                    *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && !element.pol && element.acceptanceSurrenderStatus !== 'Surrendered tenement' && element.bookingType !== 'PLOT'">POL
                     Pending</button>
                   <button class="status-btn approve"
                     *ngIf="element.postLotteryStatus === 'Surrendered tenement'">Surrendered Tenement</button>
@@ -273,7 +286,7 @@
                   <!-- <button class="status-btn reject">Reject</button>
                   <button class="status-btn forward">Forward</button>
                   <button class="status-btn forward">Forward</button> -->
-                </div>
+                </div>  
                 <div class="d-flex justify-content-center gap-2">
                   <!-- EMD Fee Button (Visible on smaller screens) -->
                   <button class="applicant-btn block sm:block md:hidden mt-3"
@@ -305,14 +318,20 @@
                     {{ "button-edit-refund-detail" | transloco }}
                   </button>
 
-                  <button class="applicant-btn block sm:block md:hidden mt-3"
-                    [routerLink]="['/app', 'payment', element.key]" *ngIf="
-    element.applicationPaymentStatus === 'Payment received' &&
-    element.flatDetail === null &&
-    element.allowedForBookMyhome &&
-    !(element.bookingAllowedForMumbai && isTimeCompleted(element.key))
-  ">
-                    {{ "book-my-home" | transloco }}
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.applicationPaymentStatus === 'Payment received' &&
+                      element.flatDetail === null &&
+                      element.allowedForBookMyhome && element.bookingType !== 'PLOT' &&
+                      !(element.bookingAllowedForMumbai && isTimeCompleted(element.key))
+                    " [routerLink]="['/app', 'application-bookHome', element.key]">
+                    {{ 'book-my-home' | transloco }}
+                  </button>
+                  
+                  <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.applicationPaymentStatus === 'Payment received' &&
+                      element.flatDetail === null &&
+                      element.allowedForBookMyhome && element.bookingType == 'PLOT' &&
+                      !(element.bookingAllowedForMumbai  && isTimeCompleted(element.key))
+                    " [routerLink]="['/app', 'application-bookPlot', element.key]">
+                    {{ 'book-my-plot' | transloco }}
                   </button>
 
                   <!-- Check Payment Button -->

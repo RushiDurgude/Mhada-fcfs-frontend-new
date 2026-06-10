@@ -79,10 +79,13 @@ export class ApplicationComponent implements OnInit {
   drawWinner: boolean = false;
   drawSpouseWinner: boolean = false;
   alreadyApplied: boolean = false;
+  alreadyAppliedPuneScheme: boolean = false;
+  pmayDocumentNotSumitted: boolean = false;
 
   previewImage: string = '';
   api_url: string = '';
   selectedAgencyError: boolean = false;
+  
   couponCodeError: boolean = false;
   isAgencyAllowed: string = '';
 
@@ -237,6 +240,8 @@ export class ApplicationComponent implements OnInit {
           this.drawWinner = this.applicationFormModel.drawWinner;
           this.drawSpouseWinner = this.applicationFormModel.drawSpouseWinner;
           this.alreadyApplied = this.applicationFormModel.alreadyApplied;
+          this.alreadyAppliedPuneScheme = this.applicationFormModel.alreadyAppliedPuneScheme;
+          this.pmayDocumentNotSumitted = this.applicationFormModel.pmayDocumentNotSumitted;
           this.showChequePassbookUpload = this.applicationFormModel.showChequePassbookUpload;
 
           if (this.applicationFormModel.bankVerification &&
@@ -338,7 +343,6 @@ export class ApplicationComponent implements OnInit {
       return;
     }
 
-
     if (this.applicableCategoriesError) {
       return;
     }
@@ -352,6 +356,14 @@ export class ApplicationComponent implements OnInit {
     }
 
     if (this.alreadyApplied) {
+      return;
+    }
+
+    if (this.alreadyAppliedPuneScheme) {
+      return;
+    }
+
+    if (this.pmayDocumentNotSumitted) {
       return;
     }
 

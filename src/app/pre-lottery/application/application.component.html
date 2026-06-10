@@ -86,9 +86,19 @@
               {{ "error-draw-winner-spouse-apply" | transloco }}
             </small>
           </div>
+          <div class="col-12" *ngIf="pmayDocumentNotSumitted">
+            <small class="error-block">
+              {{"Please upload your Pmay Document or Will submit a certificate, before allotment letter option to apply for the scheme "}}
+            </small>
+          </div>
           <div class="col-12" *ngIf="alreadyApplied">
             <small class="error-block">
               {{ "error-pmay-apply" | transloco }}
+            </small>
+          </div>
+          <div class="col-12" *ngIf="alreadyAppliedPuneScheme">
+            <small class="error-block">
+              {{"You have already done the application for the selected Scheme "}}
             </small>
           </div>
           <div class="col-12" *ngIf="applicableCategoriesError">

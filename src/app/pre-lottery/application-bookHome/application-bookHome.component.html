@@ -251,7 +251,7 @@ style="min-height: 100%; overflow: hidden;" >
                                             </div>
                                         </div> -->
                                         
-                                        <div *ngIf="this.selectedWing === 'Y'">
+                                        <!-- <div *ngIf="this.selectedWing === 'Y'">
                                             <table style="margin: 0px !important;">
                                                 <tbody>
                                                     <tr *ngFor="let floor of floorGrid | keyvalue">
@@ -268,7 +268,39 @@ style="min-height: 100%; overflow: hidden;" >
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div> -->
+    <div *ngIf="this.selectedWing === 'Y'">
+        <table style="margin: 0px !important;">
+            <tbody>
+
+                <ng-container *ngFor="let floor of floorGrid | keyvalue">
+
+                    <!-- Loop rows (each row = 10 flats) -->
+                    <tr *ngFor="let rowIndex of getFlatRowIndexes(floor.value.length); let i = index">
+
+                        <!-- Show floor only once -->
+                        <td *ngIf="i === 0" [attr.rowspan]="getFlatRowIndexes(floor.value.length).length">
+                            <label> Floor {{ floor.key }} </label>
+                        </td>
+
+                        <!-- Flats (10 per row) -->
+                        <td *ngFor="let flat of floor.value.slice(rowIndex * 10, (rowIndex + 1) * 10)">
+                            <button [ngClass]="getStatusColor(flat, flatSelected)"
+                                [disabled]="flat.status === 'TENEMENT_ALLOTED' || flat.status === 'PENDING_PAYMENT' || flat.status === 'NA'"
+                                (click)="selectFlat(flat)" type="button">
+                                {{ flat.flatNo }}
+                            </button>
+                        </td>
+
+                    </tr>
+
+                </ng-container>
+
+            </tbody>
+        </table>
+    </div>
+
+
                                     </div>
                                 </div>
                                 
