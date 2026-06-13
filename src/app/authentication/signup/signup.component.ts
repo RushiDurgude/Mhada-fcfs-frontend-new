@@ -923,7 +923,7 @@ export class SignupComponent implements OnInit {
     };
 
     this.authenticationService
-      .signUpNew(this.signUpPanNo.toUpperCase(), hash, this.signUpEmailId, this.signUpMobileNo, otherNames)
+      .signUpNew(this.signUpPanNo.toUpperCase(), hash, this.signUpEmailId, this.signUpMobileNo, otherNames, this.captchaKey)
       .subscribe(data => {
         this.closeProgressSpinner();
         if (data.status == 'SUCCESS') {
