@@ -27,7 +27,7 @@ export class ProfileSelectionComponent {
 
   applyScheme() {
     this.displayProgressSpinner();
-    this.registrationStepService.getQuestionProfiles()
+    this.registrationStepService.getProfilesEsign()
       .subscribe((data) => {
         this.closeProgressSpinner();
         if (data.status === 'SUCCESS') {

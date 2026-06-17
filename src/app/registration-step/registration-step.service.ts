@@ -157,6 +157,10 @@ export class RegistrationStepService {
         return this.http.get<ProfileResponse>(serverUrl + "api/question-profiles/");
     }
 
+    getProfilesEsign() {
+        return this.http.get<ProfileResponse>(serverUrl + "api/esign-status/");
+    }
+
     fetchPhoto() {
         return this.http.get<QuestionDoc>(serverUrl + "api/question-profiles/photo");
     }
