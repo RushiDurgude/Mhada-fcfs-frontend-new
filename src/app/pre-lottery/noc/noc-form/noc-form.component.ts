@@ -144,44 +144,182 @@ export class NocFormComponent  implements OnInit {
   }
 
 
+// private validatePdfFile(file: File): boolean {
 
+//   if (!file) {
+//     return false;
+//   }
+
+//   const fileName = file.name.toLowerCase();
+
+//   const dangerousExtensions = [
+//     '.php', '.jsp', '.asp', '.aspx',
+//     '.exe', '.bat', '.sh', '.js', '.html'
+//   ];
+
+//   if (dangerousExtensions.some(ext => fileName.includes(ext))) {
+//     this.showErrorToast('Invalid file type');
+//     return false;
+//   }
+
+//   if (!fileName.endsWith('.pdf')) {
+//     this.showErrorToast('Only PDF files are allowed');
+//     return false;
+//   }
+
+//   if (file.type !== 'application/pdf') {
+//     this.showErrorToast('Only PDF files are allowed');
+//     return false;
+//   }
+
+//   return true;
+// }
   
+private validatePdfFile(file: File): boolean {
+
+  if (!file) {
+    return false;
+  }
+
+  const fileName = file.name.toLowerCase();
+
+  const validPdfName = /^[a-zA-Z0-9_\-\s]+\.pdf$/;
+
+  if (!validPdfName.test(fileName)) {
+    this.showErrorToast('Invalid PDF file name');
+    return false;
+  }
+
+  if (file.type !== 'application/pdf') {
+    this.showErrorToast('Only PDF files are allowed');
+    return false;
+  }
+
+  return true;
+}
+  // onFileSelect(event) {
+
+  // const file = event.target.files[0];
+
+  // // Validate PDF
+  // if (!this.validatePdfFile(file)) {
+  //   event.target.value = '';
+  //   return;
+  // }
+  //   this.selectedFile = event.target.files[0];
+  //   console.log("this.selectedFile",this.selectedFile);
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(this.selectedFile);
+  //   reader.onload = () => {
+  //     this.nocApplicationFile =reader.result;
+      
+  //   }
+
+  //   console.log("reader 1",reader.result);
+  // }
+
   onFileSelect(event) {
-    this.selectedFile = event.target.files[0];
-    console.log("this.selectedFile",this.selectedFile);
-    const reader = new FileReader();
-    reader.readAsDataURL(this.selectedFile);
-    reader.onload = () => {
-      this.nocApplicationFile =reader.result;
-      
-    }
 
-    console.log("reader 1",reader.result);
-  }
-  onSanctionLetter(event1) {
-    this.sanctionLetter = event1.target.files[0];
-    console.log("this.sanctionLetter ",this.sanctionLetter)
-    const readerr = new FileReader();
-    readerr.readAsDataURL(this.sanctionLetter);
+  const file = event.target.files[0];
 
-    readerr.onload = () => {
-      this.sanctionLetterFile =readerr.result;
-      
-    }
+  if (!this.validatePdfFile(file)) {
+    event.target.value = '';
+    return;
   }
 
-  onCancelNoc(event2) {
-    // this.form.addControl('cancelNocLetterFile', new FormControl('', Validators.required));
-    this.cancelNocLetter = event2.target.files[0];
-    console.log("this.cancelLetter ",this.cancelNocLetter)
-    const readerr = new FileReader();
-    readerr.readAsDataURL(this.cancelNocLetter);
+  this.selectedFile = file;
 
-    readerr.onload = () => {
-      this.cancelNocLetterFile =readerr.result;
+  console.log("this.selectedFile", this.selectedFile);
+
+  const reader = new FileReader();
+
+  reader.readAsDataURL(this.selectedFile);
+
+  reader.onload = () => {
+    this.nocApplicationFile = reader.result;
+  };
+}
+
+//   onSanctionLetter(event1) {
+// const input = event.target as HTMLInputElement;
+// const file = input.files?.[0];
+// if (!this.validatePdfFile(file)) {
+// input.value = '';  
+// return;
+// }
+//     this.sanctionLetter = event1.target.files[0];
+//     console.log("this.sanctionLetter ",this.sanctionLetter)
+//     const readerr = new FileReader();
+//     readerr.readAsDataURL(this.sanctionLetter);
+
+//     readerr.onload = () => {
+//       this.sanctionLetterFile =readerr.result;
       
-    }
+//     }
+//   }
+
+onSanctionLetter(event1) {
+
+  const file = event1.target.files[0];
+
+  if (!this.validatePdfFile(file)) {
+    event1.target.value = '';
+    return;
   }
+
+  this.sanctionLetter = file;
+
+  console.log("this.sanctionLetter ", this.sanctionLetter);
+
+  const readerr = new FileReader();
+
+  readerr.readAsDataURL(this.sanctionLetter);
+
+  readerr.onload = () => {
+    this.sanctionLetterFile = readerr.result;
+  };
+}
+
+onCancelNoc(event2) {
+
+  const file = event2.target.files[0];
+
+  if (!this.validatePdfFile(file)) {
+    event2.target.value = '';
+    return;
+  }
+
+  this.cancelNocLetter = file;
+
+  console.log("this.cancelLetter ", this.cancelNocLetter);
+
+  const readerr = new FileReader();
+
+  readerr.readAsDataURL(this.cancelNocLetter);
+
+  readerr.onload = () => {
+    this.cancelNocLetterFile = readerr.result;
+  };
+}
+
+//   onCancelNoc(event2) {
+// const input = event.target as HTMLInputElement;
+// const file = input.files?.[0];
+// if (!this.validatePdfFile(file)) {
+// input.value = '';
+//   return;
+// }
+//     // this.form.addControl('cancelNocLetterFile', new FormControl('', Validators.required));
+//     this.cancelNocLetter = event2.target.files[0];
+//     console.log("this.cancelLetter ",this.cancelNocLetter)
+//     const readerr = new FileReader();
+//     readerr.readAsDataURL(this.cancelNocLetter);
+
+//     readerr.onload = () => {
+//       this.cancelNocLetterFile =readerr.result;
+      
+//     }
+//   }
 
 
 
