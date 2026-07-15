@@ -231,11 +231,12 @@ export class ApplicationOtherDocumentComponent implements OnInit {
             })
           ),
         })
+        
         .subscribe(
           (data: any) => {
             if (data.status === "SUCCESS") {
               this.successToast("Data Saved Successfully");
-              this.router.navigate(["/app", "application-detail-list"]);
+              this.router.navigate(["/app", "application-detail-lists"]);
             } else {
               this.isSubmitDisabled = false;
               this.showErrorToast(data.errorMessage);
