@@ -401,7 +401,39 @@ export class AppComponent implements ViewDidEnter {
     this.counter++;
   }
 
-  logout() {
+  // logout() {
+  //   this.alertController
+  //     .create({
+  //       header: "Logout?",
+  //       message: "Are you sure you want to logout?",
+  //       backdropDismiss: false,
+  //       buttons: [
+  //         {
+  //           text: "Stay",
+  //           role: "cancel",
+  //           handler: () => {
+  //             // console.log('Application exit prevented!');
+  //           },
+  //         },
+  //         {
+  //           text: "Logout",
+  //           handler: () => {
+  //             setTimeout(() => {
+  //               localStorage.clear();
+  //               this.sharedService.setAuthentication(false);
+  //               this.router.navigate(["/"]);
+  //               window.location.reload();
+  //             }, 100);
+  //           },
+  //         },
+  //       ],
+  //     })
+  //     .then((alert) => {
+  //       alert.present();
+  //     });
+  // }
+
+   logout() {
     this.alertController
       .create({
         header: "Logout?",
@@ -416,22 +448,38 @@ export class AppComponent implements ViewDidEnter {
             },
           },
           {
-            text: "Logout",
-            handler: () => {
-              setTimeout(() => {
-                localStorage.clear();
-                this.sharedService.setAuthentication(false);
-                this.router.navigate(["/"]);
-                window.location.reload();
-              }, 100);
+        text: "Logout",
+        handler: () => {
+          this.authenticationService.logout().subscribe({
+            next: (response: any) => {
+
+              localStorage.clear();
+              this.sharedService.setAuthentication(false);
+              this.router.navigate(['/']);
+              window.location.reload();
+
             },
-          },
+            error: (error) => {
+
+              console.log(error);
+
+              // Clear local session even if API fails
+              localStorage.clear();
+              this.sharedService.setAuthentication(false);
+              this.router.navigate(['/']);
+              window.location.reload();
+
+            }
+          });
+        },
+      }
         ],
       })
       .then((alert) => {
         alert.present();
       });
   }
+
   showExitConfirm() {
     if (this.previousAppVersionDetected == false) {
       this.alertController
