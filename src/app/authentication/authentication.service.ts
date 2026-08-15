@@ -311,4 +311,17 @@ export class AuthenticationService {
     }>(serverUrl + "open/update-password?panNumber=" + panNumber, { otp, password });
   }
   
+  logout() {
+    return this.httpClient.post<{
+      status: string;
+      errorMessage: string;
+    }>(serverUrl + "open/logout", null);
+  }
+
+ forceLogout(panNo: string) {
+  return this.httpClient.post<{
+    status: string;
+    errorMessage: string;
+  }>(serverUrl + "open/forceLogout", panNo);
+}
 }

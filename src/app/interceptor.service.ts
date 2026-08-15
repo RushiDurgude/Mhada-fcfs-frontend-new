@@ -93,17 +93,61 @@ export class InterceptorService implements HttpInterceptor {
         }
         return event;
       }),
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        if (error.status === 0) {
-          errorMessage = 'Unable to connect to the server. Please try again later.';
-          this.clearLogin();
-        } else {
-          errorMessage = `Error Status: ${error.status}\nMessage: ${error.message}`;
-        }
-        console.log('errorMessage --> ',errorMessage);
-        console.log('log error --> ',error);
-        return throwError(error);
-      }));
+      // catchError((error: HttpErrorResponse) => {
+      //   let errorMessage = '';
+      //   if (error.status === 0) {
+      //     errorMessage = 'Unable to connect to the server. Please try again later.';
+      //     this.clearLogin();
+      //   } else {
+      //     errorMessage = `Error Status: ${error.status}\nMessage: ${error.message}`;
+      //   }
+      //   console.log('errorMessage --> ',errorMessage);
+      //   console.log('log error --> ',error);
+      //   return throwError(error);
+      // }));
+//         catchError((error: HttpErrorResponse) => {
+
+//   if (error.status === 401) {
+
+//     this.clearLogin();
+
+//     return throwError(() => error);
+//   }
+
+//   let errorMessage = '';
+
+//   if (error.status === 0) {
+
+//     errorMessage = 'Unable to connect to the server. Please try again later.';
+
+//   } else {
+
+//     errorMessage = `Error Status: ${error.status}\nMessage: ${error.message}`;
+
+//   }
+
+//   console.log('errorMessage --> ', errorMessage);
+//   console.log('log error --> ', error);
+
+//   return throwError(() => error);
+
+// }
+catchError((error: HttpErrorResponse) => {
+
+  console.log("Interceptor Error Status =", error.status);
+
+  if (error.status === 401) {
+
+    console.log("Redirecting to login...");
+
+    this.clearLogin();
+
+    return throwError(() => error);
+  }
+
+  return throwError(() => error);
+
+})
+);
   }
 }
