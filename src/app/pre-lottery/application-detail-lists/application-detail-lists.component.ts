@@ -174,12 +174,21 @@ isCasteButtonVisible(element: any): boolean {
     element?.boardCode ||
     element?.lotteryEvent?.board?.boardCode;
 
-  return (
-    String(element?.showApplyCasteValidityReferenceLetter) === 'true' &&
-    element?.isPmay === 'N' &&
-    (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
+  // return (
+  //   String(element?.showApplyCasteValidityReferenceLetter) === 'true' &&
+  //   element?.isPmay === 'N' &&
+  //   (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
     
-  );
+  // );
+
+   return (
+  String(element?.showApplyCasteValidityReferenceLetter) === 'true' &&
+  (
+    (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
+      ? element?.isPmay === 'N'
+      : (boardCode === 'NAGPUR' || boardCode === 'PUNE')
+  )
+);
 }
 
   onLoad() {
