@@ -181,6 +181,7 @@ isCasteButtonVisible(element: any): boolean {
     
   // );
 
+  
    return (
   String(element?.showApplyCasteValidityReferenceLetter) === 'true' &&
   (
