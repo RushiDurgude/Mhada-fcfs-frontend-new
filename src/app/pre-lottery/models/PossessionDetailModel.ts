@@ -1,5 +1,6 @@
 export class PossessionDetailModel {
   constructor(
+    
     public key: number,
     public applicationNo: number,
     public NewMaritalStatus: string,
@@ -15,6 +16,8 @@ export class PossessionDetailModel {
     public possApplicantName: string,
     public gender: string,
     public applicableSpouseName: string,
+     public boardCode: string,
+     public electricMeterAddress: string,
     public userResponsibilityLst: string[]
   ) {}
 }

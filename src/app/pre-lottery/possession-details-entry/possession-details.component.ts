@@ -23,6 +23,7 @@ import { DocumentScanner, ResponseType } from "capacitor-document-scanner";
   styleUrls: ["./possession-details.component.scss"],
 })
 export class PossessionDetailsComponent implements OnInit {
+  isNagpurBoard: boolean = false;
   userKey: number;
   applicationNo: number;
   registrationKey: number;
@@ -47,6 +48,7 @@ export class PossessionDetailsComponent implements OnInit {
   counter: number = 0;
   maritalStatus: string;
   gender: string;
+  boardCode: string;
   data: PossessionDetailModel;
   possApplicantName: string[];
   applicantName: any;
@@ -96,6 +98,11 @@ export class PossessionDetailsComponent implements OnInit {
     this.form = new FormGroup({
       applicantPhoto: new FormControl("", Validators.required),
       possApplicantName: new FormControl("", Validators.required),
+
+      //electricMeterAddress: new FormControl(""),
+      electricMeterAddress: new FormControl(""),
+
+      
       spouseAadhaar: new FormControl("", [
         Validators.required,
         Validators.pattern(/^[0-9]+$/),
@@ -141,6 +148,30 @@ export class PossessionDetailsComponent implements OnInit {
           this.data = data;
           this.maritalStatus = data.marriageStatus;
           this.gender = data.gender;
+          this.boardCode = data.boardCode;
+
+            console.log("Marriage Status:", this.maritalStatus);
+        console.log("Gender:", this.gender);
+        console.log("Board Code:", this.boardCode);
+
+
+         this.isNagpurBoard =
+  this.boardCode &&
+  this.boardCode.toUpperCase() === "NAGPUR";
+
+const electricMeterAddressControl =
+  this.form.get("electricMeterAddress");
+
+if (this.isNagpurBoard) {
+  electricMeterAddressControl?.setValidators([
+    Validators.required
+  ]);
+} else {
+  electricMeterAddressControl?.clearValidators();
+}
+
+electricMeterAddressControl?.updateValueAndValidity();
+
           if (
             (this.gender === "FEMALE" && this.maritalStatus === "Married") ||
             (this.gender === "MALE" && this.maritalStatus === "Married")
@@ -207,6 +238,30 @@ export class PossessionDetailsComponent implements OnInit {
   }
 
   async save() {
+
+     if (this.isNagpurBoard) {
+
+    const electricMeterAddressControl =
+      this.form.get("electricMeterAddress");
+
+    electricMeterAddressControl?.markAsTouched();
+    electricMeterAddressControl?.markAsDirty();
+    electricMeterAddressControl?.updateValueAndValidity();
+
+    if (
+      !electricMeterAddressControl ||
+      electricMeterAddressControl.invalid ||
+      !electricMeterAddressControl.value ||
+      electricMeterAddressControl.value.trim() === ""
+    ) {
+      this.showErrorToast(
+        "Please Enter Electric Meter Address"
+      );
+
+      this.isSubmitDisabled = false;
+      return;
+    }
+  }
     if (this.allRowsFilled()) {
       if (
         this.form.value.possApplicantName !== null &&
@@ -230,6 +285,8 @@ export class PossessionDetailsComponent implements OnInit {
               key: null,
               /* this.form.value.applicantPhoto */
               gender: this.gender,
+              boardCode: this.boardCode,
+              electricMeterAddress: this.form.value.electricMeterAddress,
               applicableSpouseName: this.isSpouseButtonVisible ? "Y" : "N",
               applicationNo: this.applicationNo,
               marriageStatus: this.maritalStatus,
@@ -243,6 +300,7 @@ export class PossessionDetailsComponent implements OnInit {
               spouseEmailId: this.form.value.spouseEmailId,
               spouseName: this.form.value.spouseName,
               possApplicantName: this.form.value.possApplicantName,
+             
 
               userResponsibilityLst: this.form.value.userResponsibilityLst.map(
                 (ur) => ({
@@ -372,7 +430,9 @@ export class PossessionDetailsComponent implements OnInit {
             .generatePossessionLetter({
               key: null,
               /* this.form.value.applicantPhoto */
+               electricMeterAddress: this.form.value.electricMeterAddress,
               gender: this.gender,
+              boardCode: this.boardCode,
               applicableSpouseName: this.isSpouseButtonVisible ? "N" : "Y",
               applicationNo: this.applicationNo,
               marriageStatus: this.maritalStatus,
@@ -442,7 +502,13 @@ export class PossessionDetailsComponent implements OnInit {
       this.isSubmitDisabled = false;
     }
   }
+openAddress(applicationNo: number): void {
+  console.log("Address button clicked");
+  console.log("Application No:", applicationNo);
+  console.log("Board Code:", this.boardCode);
 
+  // Add address navigation/API logic here
+}
   async presentActionSheetForSpouse() {
     this.fileUploadVisibleSpouse = true;
     this.ocrMessage = "";

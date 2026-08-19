@@ -81,7 +81,7 @@
                                           " [routerLink]="['/app', 'application-bookHome', element.key]">
                       {{ 'book-my-home' | transloco }}
                     </button>
-                    
+
                     <button class="applicant-btn hidden xl:block lg:block md:block" *ngIf="
                                             element.applicationPaymentStatus === 'Payment received' &&
                                             element.flatDetail === null &&
@@ -108,28 +108,33 @@
 
                     <button class="applicant-btn hidden xl:block lg:block md:block"
                       *ngIf="isCasteButtonVisible(element)"
-                         [routerLink]="['/app', 'apply-for-caste-validity-ref-letter', element.key]">
-                            {{ "button-apply-for-caste-validity-ref-letter" | transloco }}
-                      </button>
+                      [routerLink]="['/app', 'apply-for-caste-validity-ref-letter', element.key]">
+                      {{ "button-apply-for-caste-validity-ref-letter" | transloco }}
+                    </button>
 
-                      <button class="applicant-btn hidden xl:block lg:block md:block"
+                    <button class="applicant-btn hidden xl:block lg:block md:block"
                       *ngIf="element.showReApplyCasteValidityReferenceLetter"
-                        [routerLink]="['/app', 'apply-for-caste-validity-ref-letter', element.key]">
-                         {{ "button-reapply-for-caste-validity-ref-letter" | transloco }}
-                          </button>
+                      [routerLink]="['/app', 'apply-for-caste-validity-ref-letter', element.key]">
+                      {{ "button-reapply-for-caste-validity-ref-letter" | transloco }}
+                    </button>
 
-                       <!-- View / Download -->
-                      <button class="applicant-btn hidden xl:block lg:block md:block"
-                       *ngIf="element.downloadApplyCasteValidityReferenceLetter"
-                           (click)="downloadCasteValidityRefLetter(element.key)">
-                     {{ "button-view-caste-validity-ref-letter" | transloco }}
-                  </button>
+                    <!-- View / Download -->
+                    <button class="applicant-btn hidden xl:block lg:block md:block"
+                      *ngIf="element.downloadApplyCasteValidityReferenceLetter"
+                      (click)="downloadCasteValidityRefLetter(element.key)">
+                      {{ "button-view-caste-validity-ref-letter" | transloco }}
+                    </button>
 
                     <button class="applicant-btn hidden xl:block lg:block md:block"
                       *ngIf="element.allowedForPossUpd && element.possessiondtlupdtStatus === null"
                       [routerLink]="['/app', 'possession-details-entry', element.applicationNo, element.registrationKey]">
                       {{ "possession-details" | transloco }}
-                    </button> 
+                    </button>
+
+                    <button class="applicant-btn" [routerLink]="['/app', 'application-other-documents', element.key]"
+                      type="button">
+                      {{ "upload-other-document" | transloco }}
+                    </button>
 
                     <button class="applicant-btn hidden xl:block lg:block md:block"
                       *ngIf="element.allowedForERegistration" (click)="eRegistrationCall(element.key)">
@@ -273,7 +278,7 @@
                     *ngIf="element.applicationPaymentStatus === 'Payment refunded'">Refund Done</button>
                   <button class="status-btn approve"
                     *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && element.acceptanceSurrenderStatus !== 'Surrendered tenement'">
-                    {{ element.bookingType === 'PLOT' ? 'Plot Confirmed' : 'Flat Confirmed' }} 
+                    {{ element.bookingType === 'PLOT' ? 'Plot Confirmed' : 'Flat Confirmed' }}
                   </button>
                   <button class="status-btn pending"
                     *ngIf="element.tenementBookedStatus === 'TENEMENT_ALLOTED' && !element.pol && element.acceptanceSurrenderStatus !== 'Surrendered tenement' && element.bookingType !== 'PLOT'">POL
@@ -286,7 +291,7 @@
                   <!-- <button class="status-btn reject">Reject</button>
                   <button class="status-btn forward">Forward</button>
                   <button class="status-btn forward">Forward</button> -->
-                </div>  
+                </div>
                 <div class="d-flex justify-content-center gap-2">
                   <!-- EMD Fee Button (Visible on smaller screens) -->
                   <button class="applicant-btn block sm:block md:hidden mt-3"
@@ -325,7 +330,7 @@
                     " [routerLink]="['/app', 'application-bookHome', element.key]">
                     {{ 'book-my-home' | transloco }}
                   </button>
-                  
+
                   <button class="applicant-btn block sm:block md:hidden mt-3" *ngIf="element.applicationPaymentStatus === 'Payment received' &&
                       element.flatDetail === null &&
                       element.allowedForBookMyhome && element.bookingType == 'PLOT' &&

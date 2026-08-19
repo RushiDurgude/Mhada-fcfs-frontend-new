@@ -174,12 +174,22 @@ isCasteButtonVisible(element: any): boolean {
     element?.boardCode ||
     element?.lotteryEvent?.board?.boardCode;
 
-  return (
-    String(element?.showApplyCasteValidityReferenceLetter) === 'true' &&
-    element?.isPmay === 'N' &&
-    (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
+  // return (
+  //   String(element?.showApplyCasteValidityReferenceLetter) === 'true' &&
+  //   element?.isPmay === 'N' &&
+  //   (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
     
-  );
+  // );
+
+  
+   return (
+  String(element?.showApplyCasteValidityReferenceLetter) === 'true' &&
+  (
+    (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
+      ? element?.isPmay === 'N'
+      : (boardCode === 'NAGPUR' || boardCode === 'PUNE'||boardCode === 'AURANGABAD')
+  )
+);
 }
 
   onLoad() {
@@ -202,20 +212,33 @@ isCasteButtonVisible(element: any): boolean {
           );
           this.allowedForHelpFile = data.allowedForHelpFile;
 
+          // setTimeout(() => {
+          //   this.paginator.pageIndex = this.currentPage;
+          //   this.paginator.length = data.page.totalElements;
+
+          //   console.log("page", this.currentPage, data.page.totalElements);
+
+          //   this.paginator1.pageIndex = this.currentPage1;
+          //   this.paginator1.length = data.pagePostLottery.totalElements;
+          //   console.log(
+          //     "pagePostLottery",
+          //     this.currentPage1,
+          //     data.pagePostLottery.totalElements
+          //   );
+          // });
+
+
           setTimeout(() => {
-            this.paginator.pageIndex = this.currentPage;
-            this.paginator.length = data.page.totalElements;
+  if (this.selectedTab === 0 && this.paginator) {
+    this.paginator.pageIndex = this.currentPage;
+    this.paginator.length = data.page.totalElements;
+  }
 
-            console.log("page", this.currentPage, data.page.totalElements);
-
-            this.paginator1.pageIndex = this.currentPage1;
-            this.paginator1.length = data.pagePostLottery.totalElements;
-            console.log(
-              "pagePostLottery",
-              this.currentPage1,
-              data.pagePostLottery.totalElements
-            );
-          });
+  if (this.selectedTab === 1 && this.paginator1) {
+    this.paginator1.pageIndex = this.currentPage1;
+    this.paginator1.length = data.pagePostLottery.totalElements;
+  }
+});
           this.startCountdown(data.page.content);
           this.isSearchDisabled = false;
           this.isLoading = false;
