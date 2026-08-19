@@ -187,7 +187,7 @@ isCasteButtonVisible(element: any): boolean {
   (
     (boardCode === 'MUMBAI' || boardCode === 'KONKAN')
       ? element?.isPmay === 'N'
-      : (boardCode === 'NAGPUR' || boardCode === 'PUNE')
+      : (boardCode === 'NAGPUR' || boardCode === 'PUNE'||boardCode === 'AURANGABAD')
   )
 );
 }
@@ -227,7 +227,7 @@ isCasteButtonVisible(element: any): boolean {
           //   );
           // });
 
-          
+
           setTimeout(() => {
   if (this.selectedTab === 0 && this.paginator) {
     this.paginator.pageIndex = this.currentPage;
