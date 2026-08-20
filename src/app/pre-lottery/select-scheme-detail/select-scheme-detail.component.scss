@@ -571,4 +571,80 @@
   }
 
 }
-  
+  .tenement-table .flat-cell {
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
+
+  padding: 10px;
+
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+/* Flat display box */
+.tenement-table .flat-status {
+  width: 40px;
+  height: 40px;
+
+  min-width: 40px;
+  max-width: 40px;
+
+  min-height: 40px;
+  max-height: 40px;
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  font-size: 14px;
+  font-weight: 400;
+
+  line-height: 40px;
+
+  text-align: center;
+
+  border-radius: 0;
+
+  cursor: default;
+
+  user-select: none;
+}
+
+
+/* Available */
+.tenement-table .flat-status.available {
+  background-color: #ffffff !important;
+  border: 1px solid rgb(27, 231, 44) !important;
+  color: #222222 !important;
+}
+
+
+/* Sold */
+.tenement-table .flat-status.sold {
+  background-color: lightgray !important;
+  border: 1px solid lightgray !important;
+  color: #222222 !important;
+}
+
+
+/* Pending Payment */
+.tenement-table .flat-status.pendingPayment {
+  background-color: rgb(253, 168, 9) !important;
+  border: 1px solid rgb(253, 168, 9) !important;
+  color: #ffffff !important;
+}
+
+
+/* NA */
+.tenement-table .flat-status.na {
+  background-color: rgb(233, 120, 120) !important;
+  border: 1px solid rgb(233, 120, 120) !important;
+  color: #ffffff !important;
+}

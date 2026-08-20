@@ -110,8 +110,11 @@ export class SelectSchemeDetailComponent implements OnInit, AfterViewInit {
         this.progressSpinnerDialog.close();
       });
     }
-        this.loadCategory();
-    }
+    // Load tenement details only for Aurangabad Board
+    if (this.boardKey === 4) {
+      this.loadCategory();
+    } 
+   }
 
   ngAfterViewInit(): void {
     this.config = {
@@ -255,26 +258,22 @@ getFlatRowIndexes(flatCount: number): number[] {
   return Array.from({ length: Math.ceil(flatCount / 10) }, (_, i) => i);
 }
 
-getStatusColor(flat: FloorTenementModel, flatSelected: FloorTenementModel): string {
-  if(flatSelected?.key === flat.key) {
-    return "selected";
+getStatusColor(flat: any): string {
+
+  if (flat.status === 'TENEMENT_ALLOTED') {
+    return 'sold';
   }
-  else {
-    switch (flat.status) {
-      case 'TENEMENT_ALLOTED':
-        return 'sold'; // Red
-      case 'TENEMENT_NOT_ALLOTTED':
-        return 'available'; // Green
-     case 'PENDING_PAYMENT':
-          return 'pendingPayment'; // orange
-     case 'NA':
-          return 'na'; // orange
-      // Add more cases for other statuses
-      default:
-        return '#3498db'; // Default color
-    }
+
+  if (flat.status === 'PENDING_PAYMENT') {
+    return 'pendingPayment';
   }
-} 
+
+  if (flat.status === 'NA') {
+    return 'na';
+  }
+
+  return 'available';
+}
 
 selectFlat(flat: FloorTenementModel) {
   this.flatSelected = flat;
