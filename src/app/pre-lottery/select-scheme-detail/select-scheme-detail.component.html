@@ -205,8 +205,16 @@
      TENEMENT FILTER SECTION
      ================================ -->
 
-<div class="col-12 pl-4 pr-4">
-
+  <div
+  class="col-12 pl-4 pr-4"
+  *ngIf="boardKey === 4 && scheme?.bookingType !== 'PLOT'" 
+>
+<h5
+    class="mt-2 mb-2"
+    style="font-size: 18px; font-weight: 500;"
+  >
+    Tenement Layout
+  </h5>
   <hr
     width="100%"
     size="2"
@@ -318,9 +326,19 @@
 </div>
         <!-- //----------grid-------------- -->
 
-        <div class="col-12">
+        <!-- <div class="col-12">
                                     <div class="responsive-container" style="display: flex; align-items: center;" *ngIf="this.selectedWing === 'Y' ">
-                                        <!-- <span style="margin-right: 25px; font-size: 19px;">Choose Your Flat </span> -->
+                                      -->
+                                     <div
+                                        class="col-12"
+                                        *ngIf="boardKey === 4 && scheme?.bookingType !== 'PLOT' && selectedWing === 'Y'"
+                                      >
+                                        <div
+                                          class="responsive-container"
+                                          style="display: flex; align-items: center;"
+                                        >
+
+                                      <!-- <span style="margin-right: 25px; font-size: 19px;">Choose Your Flat </span> -->
                                         <!-- Color Box 1 -->
                                         <div style="width: 20px; height: 20px; background-color: lightgray; margin-right: 5px;"></div>
                                         <span style="margin-right: 5px;">Sold</span>
@@ -357,58 +375,65 @@
                                         </div>
                                   </div> -->
                                 </div>
-     <div class="col-12 tenement-grid-container" *ngIf="this.selectedWing === 'Y'">
+  <div
+  class="col-12 tenement-grid-container"
+  *ngIf="selectedWing === 'Y'"
+>
 
-    <div *ngIf="this.selectedWing === 'Y'">
+  <table class="tenement-table">
 
-        <table class="tenement-table">
-            <tbody>
+    <tbody>
 
-                <ng-container *ngFor="let floor of floorGrid | keyvalue">
+      <ng-container *ngFor="let floor of floorGrid | keyvalue">
 
-                    <tr *ngFor="let rowIndex of getFlatRowIndexes(floor.value.length); let i = index">
+        <tr
+          *ngFor="
+            let rowIndex of getFlatRowIndexes(floor.value.length);
+            let i = index
+          "
+        >
 
-                        <!-- Floor -->
-                        <td
-                            *ngIf="i === 0"
-                            [attr.rowspan]="getFlatRowIndexes(floor.value.length).length"
-                            class="floor-cell">
+          <!-- Floor Number -->
+          <td
+            *ngIf="i === 0"
+            [attr.rowspan]="
+              getFlatRowIndexes(floor.value.length).length
+            "
+            class="floor-cell"
+          >
+            <label>
+              Floor {{ floor.key }}
+            </label>
+          </td>
 
-                            <label>
-                                Floor {{ floor.key }}
-                            </label>
 
-                        </td>
+          <!-- Tenement / Flat -->
+          <td
+            *ngFor="
+              let flat of floor.value.slice(
+                rowIndex * 10,
+                (rowIndex + 1) * 10
+              )
+            "
+            class="flat-cell"
+          >
 
-                        <!-- Flats -->
-                        <td
-                            *ngFor="let flat of floor.value.slice(rowIndex * 10, (rowIndex + 1) * 10)"
-                            class="flat-cell">
+            <div
+              class="flat-status"
+              [ngClass]="getStatusColor(flat, null)"
+            >
+              {{ flat.flatNo }}
+            </div>
 
-                            <button
-                                type="button"
-                                [ngClass]="getStatusColor(flat, flatSelected)"
-                                [disabled]="
-                                    flat.status === 'TENEMENT_ALLOTED' ||
-                                    flat.status === 'PENDING_PAYMENT' ||
-                                    flat.status === 'NA'
-                                "
-                                (click)="selectFlat(flat)">
+          </td>
 
-                                {{ flat.flatNo }}
+        </tr>
 
-                            </button>
+      </ng-container>
 
-                        </td>
+    </tbody>
 
-                    </tr>
-
-                </ng-container>
-
-            </tbody>
-        </table>
-
-    </div>
+  </table>
 
 </div>
 
