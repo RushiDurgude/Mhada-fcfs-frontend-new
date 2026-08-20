@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from "@angular/common/http";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 
@@ -461,6 +461,10 @@ import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot
     MatRadioModule,
     MatCardModule,
     MatDividerModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN', // must match backend cookie name
+      headerName: 'X-XSRF-TOKEN', // must match backend expected header name
+    }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

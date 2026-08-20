@@ -33,6 +33,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('in documents page component', this.router.url);
     this.isDarkMode = this.themeService.isDarkMode();
     localStorage.setItem("lastRoute", this.router.url);
     this.sharedService.authFlag.subscribe((flag) => {
@@ -40,13 +41,14 @@ export class DocumentsComponent implements OnInit {
     });
 
     if (
-      window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/") ||
+      window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/") ||
       window.location.href.toString().startsWith("https://uatilms.mhada.gov.in/") ||
       window.location.href.toString().startsWith("https://housing.pmrda.gov.in/") ||
       window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/")
     ) {
       localStorage.setItem("platform", "browser");
-    } else if (window.location.href.toString().startsWith("http://localhost:8100")) {
+    } else if (window.location.href.toString().startsWith("http://localhost:8100") || window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100")
+     || window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in") || window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in")) {
       localStorage.setItem("platform", "browser-local");
     } else if (window.location.href.toString().startsWith("capacitor://localhost")) {
       localStorage.setItem("platform", "ios");
@@ -92,11 +94,21 @@ export class DocumentsComponent implements OnInit {
           {
             text: "Logout",
             handler: () => {
-              setTimeout(() => {
-                localStorage.clear();
-                this.sharedService.setAuthentication(false);
-                this.router.navigate(["/"]);
-                window.location.reload();
+              // setTimeout(() => {
+              //   localStorage.clear();
+              //   this.sharedService.setAuthentication(false);
+              //   this.router.navigate(["/"]);
+              //   window.location.reload();
+              // }, 100);
+              setTimeout(async () => {
+                const response: any = await this.authenticationService.logout();
+                console.log(response, response.error);
+                if(!response.error) {
+                  localStorage.clear();
+                  this.sharedService.setAuthentication(false);
+                  this.router.navigate(["/"]);
+                  window.location.reload();
+                }
               }, 100);
             },
           },
