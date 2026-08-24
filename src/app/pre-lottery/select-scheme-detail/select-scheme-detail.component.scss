@@ -141,4 +141,510 @@
   .category-item:nth-child(3n) .category-count {
     background-color: #d95f02; /* Brown */
   }
-  
+
+  /* =========================================
+   TENEMENT GRID MAIN CONTAINER
+   ========================================= */
+
+.tenement-grid-container {
+  width: 100%;
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin-top: 20px !important;
+  border: 1px solid #dfdfdf;
+  background-color: #ffffff;
+}
+
+
+/* =========================================
+   TENEMENT TABLE
+   ========================================= */
+
+.tenement-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0 !important;
+  background-color: #ffffff;
+}
+
+
+/* =========================================
+   FLOOR + FLAT CELLS
+   ========================================= */
+
+.tenement-table td {
+  border: 1px solid #dddddd;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #ffffff;
+}
+
+
+/* =========================================
+   FLOOR CELL
+   ========================================= */
+
+.tenement-table .floor-cell {
+  width: 86px;
+  min-width: 86px;
+  max-width: 86px;
+
+  height: 60px;
+
+  padding: 10px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  font-size: 16px;
+  font-weight: 400;
+  color: #444444;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   FLOOR LABEL
+   ========================================= */
+
+.tenement-table .floor-cell label {
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  font-size: 16px;
+  font-weight: 400;
+  color: #444444;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   FLAT CELL
+   ========================================= */
+
+.tenement-table .flat-cell {
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
+
+  padding: 10px;
+
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+/* =========================================
+   FLAT BUTTON - COMMON
+   ========================================= */
+
+.tenement-table .flat-cell button {
+  width: 40px;
+  height: 40px;
+
+  min-width: 40px;
+  max-width: 40px;
+
+  min-height: 40px;
+  max-height: 40px;
+
+  padding: 0;
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 400;
+
+  line-height: 40px;
+  text-align: center;
+
+  border-radius: 0;
+
+  box-sizing: border-box;
+
+  transition: none;
+}
+
+
+/* =========================================
+   AVAILABLE
+   ========================================= */
+
+.tenement-table .flat-cell button.available {
+  background-color: #ffffff !important;
+
+  border: 1px solid rgb(27, 231, 44) !important;
+
+  color: #222222 !important;
+
+  cursor: pointer;
+}
+
+
+/* =========================================
+   SELECTED
+   ========================================= */
+
+.tenement-table .flat-cell button.selected {
+  background-color: rgb(1, 146, 13) !important;
+
+  border: 1px solid rgb(1, 146, 13) !important;
+
+  color: #ffffff !important;
+
+  cursor: default;
+}
+
+
+/* =========================================
+   SOLD
+   ========================================= */
+
+.tenement-table .flat-cell button.sold {
+  background-color: lightgray !important;
+
+  border: 1px solid lightgray !important;
+
+  color: #222222 !important;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   PENDING PAYMENT
+   ========================================= */
+
+.tenement-table .flat-cell button.pendingPayment {
+  background-color: rgb(253, 168, 9) !important;
+
+  border: 1px solid rgb(253, 168, 9) !important;
+
+  color: #ffffff !important;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   NOT AVAILABLE
+   ========================================= */
+
+.tenement-table .flat-cell button.na {
+  background-color: rgb(233, 120, 120) !important;
+
+  border: 1px solid rgb(233, 120, 120) !important;
+
+  color: #ffffff !important;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   REMOVE DEFAULT BUTTON EFFECT
+   ========================================= */
+
+.tenement-table .flat-cell button:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .tenement-grid-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+
+  .tenement-table {
+    min-width: max-content;
+  }
+
+  .tenement-table .floor-cell {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+
+    font-size: 14px;
+  }
+
+  .tenement-table .floor-cell label {
+    font-size: 14px;
+  }
+
+  .tenement-table .flat-cell {
+    width: 55px;
+    min-width: 55px;
+    height: 55px;
+
+    padding: 7px;
+  }
+
+  .tenement-table .flat-cell button {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+    max-width: 40px;
+
+    min-height: 40px;
+    max-height: 40px;
+
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   TENEMENT FILTER CONTAINER
+   ========================================================= */
+
+.tenement-filter-container {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  column-gap: 25px;
+  row-gap: 20px;
+
+  margin-top: 15px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   EACH FILTER ITEM
+   ========================================================= */
+
+.tenement-filter-item {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+
+  margin-top: 0 !important;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.tenement-filter-label {
+  display: block;
+
+  margin: 0 0 6px 0 !important;
+  padding: 0;
+
+  font-size: 16px;
+  font-weight: 400;
+
+  line-height: 20px;
+
+  color: #000000;
+
+  text-align: left;
+}
+
+
+/* =========================================================
+   REQUIRED *
+   ========================================================= */
+
+.required-star {
+  color: #ff0000;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.tenement-filter-select {
+  width: 100%;
+
+  height: 40px;
+
+  padding: 0 10px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #8c8c8c;
+
+  border-radius: 4px;
+
+  background-color: #ffffff;
+
+  color: #333333;
+
+  font-size: 15px;
+
+  font-family: inherit;
+
+  outline: none;
+
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+
+/* =========================================================
+   SELECT FOCUS
+   ========================================================= */
+
+.tenement-filter-select:focus {
+  border-color: #666666;
+
+  outline: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+  .tenement-filter-container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    column-gap: 15px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+  .tenement-filter-container {
+    grid-template-columns: 1fr;
+
+    row-gap: 15px;
+
+    width: 100%;
+
+    margin-top: 15px !important;
+  }
+
+
+  .tenement-filter-item {
+    width: 100%;
+  }
+
+
+  .tenement-filter-label {
+    font-size: 15px;
+  }
+
+
+  .tenement-filter-select {
+    width: 100%;
+
+    height: 40px;
+
+    font-size: 15px;
+  }
+
+}
+  .tenement-table .flat-cell {
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
+
+  padding: 10px;
+
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+/* Flat display box */
+.tenement-table .flat-status {
+  width: 40px;
+  height: 40px;
+
+  min-width: 40px;
+  max-width: 40px;
+
+  min-height: 40px;
+  max-height: 40px;
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  font-size: 14px;
+  font-weight: 400;
+
+  line-height: 40px;
+
+  text-align: center;
+
+  border-radius: 0;
+
+  cursor: default;
+
+  user-select: none;
+}
+
+
+/* Available */
+.tenement-table .flat-status.available {
+  background-color: #ffffff !important;
+  border: 1px solid rgb(27, 231, 44) !important;
+  color: #222222 !important;
+}
+
+
+/* Sold */
+.tenement-table .flat-status.sold {
+  background-color: lightgray !important;
+  border: 1px solid lightgray !important;
+  color: #222222 !important;
+}
+
+
+/* Pending Payment */
+.tenement-table .flat-status.pendingPayment {
+  background-color: rgb(253, 168, 9) !important;
+  border: 1px solid rgb(253, 168, 9) !important;
+  color: #ffffff !important;
+}
+
+
+/* NA */
+.tenement-table .flat-status.na {
+  background-color: rgb(233, 120, 120) !important;
+  border: 1px solid rgb(233, 120, 120) !important;
+  color: #ffffff !important;
+}

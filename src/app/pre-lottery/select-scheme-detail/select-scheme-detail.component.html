@@ -201,10 +201,249 @@
           </div>
         </div>
   
+        <!-- ================================
+     TENEMENT FILTER SECTION
+     ================================ -->
+
+  <div
+  class="col-12 pl-4 pr-4"
+  *ngIf="boardKey === 4 && scheme?.bookingType !== 'PLOT'" 
+>
+<h5
+    class="mt-2 mb-2"
+    style="font-size: 18px; font-weight: 500;"
+  >
+    Tenement Layout
+  </h5>
+  <hr
+    width="100%"
+    size="2"
+    style="background-color:#E6E6E6; height:2px;"
+  >
+
+  <div class="tenement-filter-container">
+
+    <!-- ================= CATEGORY ================= -->
+    <div class="tenement-filter-item">
+
+      <label
+        for="category"
+        class="tenement-filter-label"
+      >
+        Category <span class="required-star">*</span>
+      </label>
+
+      <select
+        id="category"
+        formControlName="category"
+        class="tenement-filter-select"
+        (change)="loadBuildings($event)"
+      >
+
+        <option value="">
+          -- Select Category --
+        </option>
+
+        <option
+          *ngFor="let category of categoryList"
+          [value]="category.categoryCode"
+        >
+          {{ category.categoryCode }} - {{ category.categoryName }}
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ================= BUILDING ================= -->
+    <div class="tenement-filter-item">
+
+      <label
+        for="building"
+        class="tenement-filter-label"
+      >
+        Building No <span class="required-star">*</span>
+      </label>
+
+      <select
+        id="building"
+        formControlName="buildingNo"
+        class="tenement-filter-select"
+        (change)="loadWings($event)"
+      >
+
+        <option value="">
+          -- Select Building No --
+        </option>
+
+        <option
+          *ngFor="let buildingNo of buildingList"
+          [value]="buildingNo"
+        >
+          {{ buildingNo }}
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ================= WING ================= -->
+    <div class="tenement-filter-item">
+
+      <label
+        for="wing"
+        class="tenement-filter-label"
+      >
+        Wing <span class="required-star">*</span>
+      </label>
+
+      <select
+        id="wing"
+        formControlName="wing"
+        class="tenement-filter-select"
+        (change)="loadFloorGrid($event)"
+      >
+
+        <option value="">
+          -- Select Wing --
+        </option>
+
+        <option
+          *ngFor="let wing of wingList"
+          [value]="wing"
+        >
+          {{ wing }}
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+</div>
+        <!-- //----------grid-------------- -->
+
+        <!-- <div class="col-12">
+                                    <div class="responsive-container" style="display: flex; align-items: center;" *ngIf="this.selectedWing === 'Y' ">
+                                      -->
+                                     <div
+                                        class="col-12"
+                                        *ngIf="boardKey === 4 && scheme?.bookingType !== 'PLOT' && selectedWing === 'Y'"
+                                      >
+                                        <div
+                                          class="responsive-container"
+                                          style="display: flex; align-items: center;"
+                                        >
+
+                                      <!-- <span style="margin-right: 25px; font-size: 19px;">Choose Your Flat </span> -->
+                                        <!-- Color Box 1 -->
+                                        <div style="width: 20px; height: 20px; background-color: lightgray; margin-right: 5px;"></div>
+                                        <span style="margin-right: 5px;">Sold</span>
+                                        <span style="background-color: lightgray; border-radius: 13px; color: black; padding: 2px 8px 2px 8px; margin-right: 15px;">{{allotedCount}} </span>
+        
+                                        <!-- <div style="width: 20px; height: 20px; background-color: rgb(1, 146, 13); margin-right: 5px;"></div>
+                                        <span style="margin-right: 15px;">Selected</span> -->
+        
+                                        <div style="width: 20px; height: 20px; border: 1px solid rgb(27, 231, 44); margin-right: 5px;"></div><br>
+                                        <span style="margin-right: 5px;">Available</span>
+                                        <span style="background-color: rgb(27, 231, 44); border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{availableCount}}</span>
+        
+                                        <!-- <div style="width: 20px; height: 20px; background-color: rgb(233, 120, 120); margin-right: 5px;"></div>
+                                        <span style="margin-right: 15px;">NA</span>
+                                        <span style="background-color: rgb(233, 120, 120);border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{nACount}}</span> -->
+                                        
+                                        <div style="width: 20px; height: 20px; background-color: rgb(253, 168, 9); margin-right: 5px;"></div>
+                                        <span style="margin-right: 5px;">Pending Payment</span>
+                                        <span style="background-color: rgb(253, 168, 9); border-radius: 13px; color: white; padding: 2px 8px 2px 8px; margin-right: 15px;">{{bookedCount}} </span>
+                                        
+                                        
+                                        <!-- Color Box 2 -->
+                                        
+                                        
+                                
+                                
+                                    </div>
+                                      
+                                     <!-- <div style=" bottom: 0; width: 100%; text-align: right; background-color: #f1f1f1; " *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                        <div  *ngIf="this.flatSelected != null && this.selectedWing === 'Y'">
+                                            <p style="text-align: left; padding-left: 1%; ;padding-top: 1%;padding-bottom: 1%;"
+                                            >You Have Selected Flat No '{{ flatSelected.flatNo }}' Click On Book Now To Confirm Booking
+                                        </p>
+                                        </div>
+                                  </div> -->
+                                </div>
+  <div
+  class="col-12 tenement-grid-container"
+  *ngIf="selectedWing === 'Y'"
+>
+
+  <table class="tenement-table">
+
+    <tbody>
+
+      <ng-container *ngFor="let floor of floorGrid | keyvalue">
+
+        <tr
+          *ngFor="
+            let rowIndex of getFlatRowIndexes(floor.value.length);
+            let i = index
+          "
+        >
+
+          <!-- Floor Number -->
+          <td
+            *ngIf="i === 0"
+            [attr.rowspan]="
+              getFlatRowIndexes(floor.value.length).length
+            "
+            class="floor-cell"
+          >
+            <label>
+              Floor {{ floor.key }}
+            </label>
+          </td>
+
+
+          <!-- Tenement / Flat -->
+          <td
+            *ngFor="
+              let flat of floor.value.slice(
+                rowIndex * 10,
+                (rowIndex + 1) * 10
+              )
+            "
+            class="flat-cell"
+          >
+
+            <div
+              class="flat-status"
+              [ngClass]="getStatusColor(flat, null)"
+            >
+              {{ flat.flatNo }}
+            </div>
+
+          </td>
+
+        </tr>
+
+      </ng-container>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+        
+        <!-- //------------------------ -->
         <div class="col-12 pl-4 pr-4">
           <hr width="100%" size="2" style=background-color:#E6E6E6;height:2px>
         </div>
-  
+
         <!-- Additional Sections -->
         <div class="col-12 pl-4 pr-4">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -229,7 +468,9 @@
                 </div>
               </div>
             </div>
-  
+            <!-- Location tenement detail Section -->
+
+            
             <!-- Location Plan Section -->
             <div class="col-12 sm:col-12 md:col-6 lg:col-4 p-0 pr-2 mt-2" *ngIf="scheme?.locationImages?.length > 0">
               <div class="col-12 p-2 bg-details shadow-2 pt-2">
