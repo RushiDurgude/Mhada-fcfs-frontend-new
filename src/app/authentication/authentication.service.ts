@@ -9,14 +9,19 @@ import { ToastController } from "@ionic/angular";
   providedIn: "root",
 })
 export class AuthenticationService {
-  constructor(private httpClient: HttpClient,
+
+  constructor(
+    private httpClient: HttpClient,
     private toastController: ToastController,
   ) { }
+
 
   async loginUsingPasswordOld(tabRegDtoString: any) {
     const formData = new FormData();
     formData.append("tabRegDtoString", tabRegDtoString);
+
     const url = (await serverUrl) + "authenticateUserV1";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, formData)
@@ -30,12 +35,17 @@ export class AuthenticationService {
     });
   }
 
+
   async verifyRegistrationPanOld(panNo: any, captcha: any) {
+
     // OLD
     const formData = new FormData();
+
     formData.append("panNo", panNo);
     formData.append("captchaRes", captcha);
+
     const url = (await serverUrl) + "verifyRegistrationPanV1";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, formData)
@@ -48,6 +58,7 @@ export class AuthenticationService {
         });
     });
   }
+
 
   // async updatePassword(tabRegDtoString: any) {
   //   const formData = new FormData();
@@ -66,10 +77,14 @@ export class AuthenticationService {
   //   });
   // }
 
+
   async sendLoginOtpOld(tabRegDtoString: any) {
+
     const formData = new FormData();
     formData.append("tabRegDtoString", tabRegDtoString);
+
     const url = (await serverUrl) + "sendLoginOtpV1";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, formData)
@@ -83,14 +98,25 @@ export class AuthenticationService {
     });
   }
 
-  async signup(tabRegDtoString: any, otherNames: any, file1: any, file2: any, file3: any) {
+
+  async signup(
+    tabRegDtoString: any,
+    otherNames: any,
+    file1: any,
+    file2: any,
+    file3: any
+  ) {
+
     const formData = new FormData();
+
     formData.append("tabRegDtoString", tabRegDtoString);
     formData.append("otherNamesString", otherNames);
     formData.append("file1", file1);
     formData.append("file2", file2);
     formData.append("file3", file3);
+
     const url = (await serverUrl) + "signupV3";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, formData)
@@ -103,6 +129,7 @@ export class AuthenticationService {
         });
     });
   }
+
 
   // async sendForgotPasswordOtp(tabRegDtoString: any) {
   //   const formData = new FormData();
@@ -121,10 +148,14 @@ export class AuthenticationService {
   //   });
   // }
 
+
   async verifyOtp(tabRegEmailDto: any) {
+
     const formData = new FormData();
     formData.append("tabRegDtoString", tabRegEmailDto);
+
     const url = (await serverUrl) + "open/verifyRegistrationOtpV1";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, formData)
@@ -137,11 +168,15 @@ export class AuthenticationService {
         });
     });
   }
-  
+
+
   async verifyForgotPasswordOtp(tabRegEmailDto: any) {
+
     const formData = new FormData();
     formData.append("tabRegDtoString", tabRegEmailDto);
+
     const url = (await serverUrl) + "verifyForgotPasswordOtp";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, formData, { responseType: "text" })
@@ -155,10 +190,14 @@ export class AuthenticationService {
     });
   }
 
+
   async getLandingVideos() {
+
     let formData = new FormData();
     formData.append("type", "V");
+
     const url = (await serverUrl) + "open/getVideos";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, formData)
@@ -171,9 +210,12 @@ export class AuthenticationService {
         });
     });
   }
+
 
   async getHelpDocVideos() {
+
     const url = (await serverUrl) + "open/getHelpDocVideos";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, null)
@@ -187,10 +229,14 @@ export class AuthenticationService {
     });
   }
 
+
   async verifyEmailDetails(tabRegDtoString: any) {
+
     const formData = new FormData();
     formData.append("tabRegDtoString", tabRegDtoString);
+
     const url = (await serverUrl) + "open/verifyEmailDetailsV1";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, formData)
@@ -204,8 +250,11 @@ export class AuthenticationService {
     });
   }
 
+
   async getReasons() {
+
     const url = (await serverUrl) + "open/getReasons";
+
     return new Promise((resolve) => {
       this.httpClient
         .post(url, null)
@@ -218,67 +267,140 @@ export class AuthenticationService {
         });
     });
   }
+
 
   // NEW Code
 
   verifyRegistrationPan(panNo: any, captcha: any) {
+
     return this.httpClient.post<{
       status: string;
       errorMessage: string;
       panNumber: string;
       panName: string;
       registrationStatus: string;
-    }>(serverUrl + "open/verifyPan?panNo=" + panNo, captcha);
+    }>(
+      serverUrl + "open/verifyPan?panNo=" + panNo,
+      captcha
+    );
   }
 
-  verifyRegistrationPanNew(panNo :any, captchaText : string, captchaKey : number) {
+
+  verifyRegistrationPanNew(
+    panNo: any,
+    captchaText: string,
+    captchaKey: number
+  ) {
+
     const signUpRequestModel = {
-      panNo:panNo,
+      panNo: panNo,
       captchaText: captchaText,
       captchaKey: captchaKey
     };
+
     return this.httpClient.post<{
       status: string;
       errorMessage: string;
       panNumber: string;
       panName: string;
       registrationStatus: string;
-    }>(serverUrl + "open/verifyPanNew", signUpRequestModel);
+    }>(
+      serverUrl + "open/verifyPanNew",
+      signUpRequestModel
+    );
   }
 
-  // signUpNew(panNumber : string, password: string, email: string, mobileNumber:string, otherNamesString : any) {
+
+  // signUpNew(
+  //   panNumber: string,
+  //   password: string,
+  //   email: string,
+  //   mobileNumber: string,
+  //   otherNamesString: any
+  // ) {
   //   return this.httpClient.post<{
   //     status: string;
   //     errorMessage: string;
-  //   }>(serverUrl + "open/sign-up-registration", {panNumber, password, email, mobileNumber, otherNamesString});
-
+  //   }>(
+  //     serverUrl + "open/sign-up-registration",
+  //     {
+  //       panNumber,
+  //       password,
+  //       email,
+  //       mobileNumber,
+  //       otherNamesString
+  //     }
+  //   );
   // }
 
-  signUpNew(panNumber : string, password: string, email: string, mobileNumber:string, otherNamesString : any,captchaKey: number) {
+
+  signUpNew(
+    panNumber: string,
+    password: string,
+    email: string,
+    mobileNumber: string,
+    otherNamesString: any,
+    captchaKey: number
+  ) {
+
     return this.httpClient.post<{
       status: string;
       errorMessage: string;
-    }>(serverUrl + "open/sign-up-registration", {panNumber, password, email, mobileNumber, otherNamesString,captchaKey});
-
+    }>(
+      serverUrl + "open/sign-up-registration",
+      {
+        panNumber,
+        password,
+        email,
+        mobileNumber,
+        otherNamesString,
+        captchaKey
+      }
+    );
   }
 
-  verifyOtpNew(panNumber :string, smsOtp : string, emailOtp : string) {
+
+  verifyOtpNew(
+    panNumber: string,
+    smsOtp: string,
+    emailOtp: string
+  ) {
+
     return this.httpClient.post<{
       status: string;
       errorMessage: string;
       token: string;
       expiresIn: any;
-    }>(serverUrl + "open/verify-otp", {panNumber, smsOtp, emailOtp});
+    }>(
+      serverUrl + "open/verify-otp",
+      {
+        panNumber,
+        smsOtp,
+        emailOtp
+      }
+    );
   }
-  
-  resendOtpNew(panNumber :string) {
+
+
+  resendOtpNew(panNumber: string) {
+
     return this.httpClient.post<{
       status: string;
       errorMessage: string;
-    }>(serverUrl + "open/resend-otp/"+ panNumber, null);
+    }>(
+      serverUrl + "open/resend-otp/" + panNumber,
+      null
+    );
   }
 
-  loginUsingPassword(panNo: string, password: string,emailOtp : string, loginType : string) {
+
+  loginUsingPassword(
+    panNo: string,
+    password: string,
+    emailOtp: string,
+    loginType: string
+  ) {
+
     return this.httpClient.post<{
       status: string;
       errorMessage: string;
@@ -286,29 +408,123 @@ export class AuthenticationService {
       isOtpVerified: string;
       expiresIn: any;
       stage: string;
-    }>(serverUrl + "open/login", { panNo, password, emailOtp, loginType });
+    }>(
+      serverUrl + "open/login",
+      {
+        panNo,
+        password,
+        emailOtp,
+        loginType
+      }
+    );
   }
 
-  sendLoginOtp(panNumber : string) {
+
+  sendLoginOtp(panNumber: string) {
+
     return this.httpClient.post<{
       status: string;
       errorMessage: string;
-    }>(serverUrl + "open/send-login-otp/"+panNumber, null);
-
+    }>(
+      serverUrl + "open/send-login-otp/" + panNumber,
+      null
+    );
   }
 
-  sendForgotPasswordOtp(panNumber : string) {
+
+  sendForgotPasswordOtp(panNumber: string) {
+
     return this.httpClient.get<{
       status: string;
       errorMessage: string;
-    }>(serverUrl + "open/send-forgot-password-otp?panNumber="+panNumber);
+    }>(
+      serverUrl +
+      "open/send-forgot-password-otp?panNumber=" +
+      panNumber
+    );
   }
 
-  updatePassword(panNumber: string, otp: string, password: string) {
+
+  updatePassword(
+    panNumber: string,
+    otp: string,
+    password: string
+  ) {
+
     return this.httpClient.put<{
       status: string;
       errorMessage: string;
-    }>(serverUrl + "open/update-password?panNumber=" + panNumber, { otp, password });
+    }>(
+      serverUrl +
+      "open/update-password?panNumber=" +
+      panNumber,
+      {
+        otp,
+        password
+      }
+    );
   }
-  
+
+
+  async checkSession(): Promise<boolean> {
+
+    const base = await serverUrl;
+
+    console.log("checkSession called");
+
+    try {
+
+      await this.httpClient
+        .get(
+          base + "auth/validate",
+          {
+            withCredentials: true
+          }
+        )
+        .toPromise();
+
+      console.log("after ok session");
+
+      return true;
+
+    } catch (err) {
+
+      console.log("in exception", err);
+
+      return false;
+    }
+  }
+
+
+  /*
+   * NEW LOGOUT
+   *
+   * Important:
+   * This returns an Observable so that app.component.ts
+   * can use:
+   *
+   * this.authenticationService.logout().subscribe(...)
+   */
+  logout() {
+
+    return this.httpClient.post<{
+      status: string;
+      errorMessage: string;
+    }>(
+      serverUrl + "logoutv1",
+      {}
+    );
+  }
+
+
+  forceLogout(panNo: string) {
+
+    return this.httpClient.post<{
+      status: string;
+      errorMessage: string;
+    }>(
+      serverUrl + "open/forceLogout",
+      panNo
+    );
+  }
 }

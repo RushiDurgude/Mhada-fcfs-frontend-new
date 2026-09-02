@@ -139,7 +139,7 @@ export class CasteValidityRefLetterComponent implements OnInit {
         this.isApplyDisabled = false;
         if(status === 'SUCCESS') {
           this.preLotteryApplicationService.successToast(this.translocoService.translate("success-caste-validity-ref-letter-request"));
-          this.router.navigate(['/app', 'application-detail-list', 'post-apps'], { replaceUrl: true });
+          this.router.navigate(['/app', 'application-detail-lists', 'post-apps'], { replaceUrl: true });
         }
         else {
           this.showErrorToast(errorMessage);

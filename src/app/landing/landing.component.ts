@@ -90,13 +90,17 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('in landing page component', this.router.url);
     this.checkActiveLanguage();
     if (
       window.location.href.toString().startsWith("https://cidcohousing.probitysoftware.in/") ||
       window.location.href.toString().startsWith("https://uatilms.mhada.gov.in/") ||
       window.location.href.toString().startsWith("https://housing.pmrda.gov.in/") ||
       window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/") ||
-      window.location.href.toString().startsWith("http://localhost:8100/")
+      window.location.href.toString().startsWith("http://localhost:8100/") ||
+      window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/") ||
+      window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/") ||
+      window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/")
     ) {
       this.isDownloadAppButtonVisible = true;
     } else {
@@ -153,7 +157,9 @@ export class LandingComponent implements OnInit {
     // } else {
     //   this.router.navigate(["/signUp"], { replaceUrl: true });
     // }
-    if (this.authService.isAuthenticateUser()) {
+    const authStatus = await this.authService.isAuthenticateUser();
+
+    if (authStatus) {
       this.router.navigate(["/registration-step"], { replaceUrl: true });
     } 
     else {

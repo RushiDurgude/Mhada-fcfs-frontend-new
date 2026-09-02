@@ -7,6 +7,7 @@ import { LoaderComponent } from "src/app/loader/loader.component";
 import { SharedService } from "src/app/toolbar/shared.service";
 import { AuthenticationService } from "../authentication.service";
 import { ThemeService } from "src/app/theme.service";
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: "app-login",
@@ -33,11 +34,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     public toastController: ToastController,
+    private alertController: AlertController,
     private translocoService: TranslocoService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private sharedService: SharedService,
-    private themeService : ThemeService
+    private themeService : ThemeService,
   ) {
     this.isDarkMode = this.themeService.isDarkMode();
     // console.log('this LoginComponent',this.isDarkMode);
@@ -80,7 +82,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("panNo", this.loginPanNo);
         localStorage.setItem("callDigi", "true");
         localStorage.setItem("userExists", "true");
-        localStorage.setItem("token", response.message);
+        // localStorage.setItem("token", response.message);
         localStorage.setItem("session-started", "true");
         localStorage.setItem("regId", "0");
         // localStorage.setItem("userAlreadyRegistered", "true");
@@ -92,7 +94,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("panNo", this.loginPanNo);
         localStorage.setItem("session-started", "true");
         localStorage.setItem("regId", "0");
-        localStorage.setItem("token", response.message);
+        // localStorage.setItem("token", response.message);
         this.sharedService.setAuthentication(true);
         this.router.navigate(["/registration-step"]);
         //this.router.navigate(["/profile-selection"]);
@@ -171,7 +173,7 @@ export class LoginComponent implements OnInit {
     const response: any = await this.authenticationService.loginUsingPasswordOld(JSON.stringify(TabRegDto));
     this.progressSpinnerDialog.close();
     if (response.status == "Active") {
-      localStorage.setItem("token", response.message);
+      // localStorage.setItem("token", response.message);
       localStorage.setItem("panNo", this.loginPanNo);
       localStorage.setItem("callDigi", "true");
       localStorage.setItem("userExists", "true");
@@ -182,7 +184,7 @@ export class LoginComponent implements OnInit {
        this.router.navigate(["/registration-step"]);
       // this.router.navigate(["/profile-selection"]);
     } else if (response.status == "Inprocess") {
-      localStorage.setItem("token", response.message);
+      // localStorage.setItem("token", response.message);
       localStorage.setItem("panNo", this.loginPanNo);
       localStorage.setItem("session-started", "true");
       localStorage.setItem("regId", "0");
@@ -323,7 +325,7 @@ export class LoginComponent implements OnInit {
         this.closeProgressSpinner();
         if(data.status == 'SUCCESS') {
           localStorage.setItem("panNo", this.loginPanNo);
-          localStorage.setItem("token", data.token);
+          // localStorage.setItem("token", data.token);
           localStorage.setItem("expiresIn", data.expiresIn);
           localStorage.setItem("session-started", "true");
           this.sharedService.setAuthentication(true);
@@ -345,17 +347,58 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("editQuestionCode", "Q_EMAIL_MOBILE");
             this.router.navigate(["/registration-step"], { replaceUrl: true });
           }
-        } else {
-          if(data?.errorMessage == "User not found"){
-            this.frontendWarningToast(data.errorMessage);
-            localStorage.setItem("loginPan", this.loginPanNo);
-            localStorage.removeItem("otpVerificationPending");
-            this.router.navigate(["/signUp"], { replaceUrl: true });
-          } else {
-            this.frontendWarningToast(data.errorMessage);
-          }
-        }
+        } 
+        // else {
+        //   if(data?.errorMessage == "User not found"){
+        //     this.frontendWarningToast(data.errorMessage);
+        //     localStorage.setItem("loginPan", this.loginPanNo);
+        //     localStorage.removeItem("otpVerificationPending");
+        //     this.router.navigate(["/signUp"], { replaceUrl: true });
+        //   } else {
+        //     this.frontendWarningToast(data.errorMessage);
+        //   }
+        // }
+        else {
 
+    if(data?.errorMessage == "User not found"){
+
+        this.frontendWarningToast(data.errorMessage);
+        localStorage.setItem("loginPan", this.loginPanNo);
+        localStorage.removeItem("otpVerificationPending");
+        this.router.navigate(["/signUp"], { replaceUrl: true });
+
+    }
+    else if(data.status == "CONCURRENT_LOGIN"){
+
+        // const forceLogout = confirm(
+        //   "You are already logged in from another device.\n\nDo you want to logout the other session?"
+        // );
+        this.showForceLogoutPopup();
+
+        // if(forceLogout){
+
+        //     this.authenticationService
+        //         .forceLogout(this.loginPanNo.toUpperCase())
+        //         .subscribe(res=>{
+
+        //             if(res.status == "SUCCESS"){
+
+        //                 this.verifyOtp();
+
+        //             }
+
+        //         });
+
+        // }
+
+    }
+    else{
+
+        this.frontendWarningToast(data.errorMessage);
+
+    }
+
+}
       }, async error => {
         this.closeProgressSpinner();
         this.errorToast("");
@@ -400,7 +443,7 @@ export class LoginComponent implements OnInit {
         this.closeProgressSpinner();
         if(data.status == 'SUCCESS') {
           localStorage.setItem("panNo", this.loginPanNo);
-          localStorage.setItem("token", data.token);
+          // localStorage.setItem("token", data.token);
           localStorage.setItem("expiresIn", data.expiresIn);
           localStorage.setItem("session-started", "true");
           this.sharedService.setAuthentication(true);
@@ -435,4 +478,38 @@ export class LoginComponent implements OnInit {
         this.errorToast("");
       });
   }
+  
+  async showForceLogoutPopup() {
+
+  const alert = await this.alertController.create({
+    header: 'Login Alert',
+    message: 'You are already logged in from another device.<br><br>Do you want to force logout the other session?',
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel'
+      },
+      {
+        text: 'Yes',
+        handler: () => {
+
+          this.authenticationService
+            .forceLogout(this.loginPanNo.toUpperCase())   // or registrationId
+            .subscribe(res => {
+
+              if (res.status === 'SUCCESS') {
+                this.loginUsingPassword();
+              } else {
+                this.frontendWarningToast(res.errorMessage);
+              }
+
+            });
+
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
 }
