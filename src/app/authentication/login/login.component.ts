@@ -82,19 +82,22 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("panNo", this.loginPanNo);
         localStorage.setItem("callDigi", "true");
         localStorage.setItem("userExists", "true");
-        localStorage.setItem("token", response.message);
+        // localStorage.setItem("token", response.message);
         localStorage.setItem("session-started", "true");
         localStorage.setItem("regId", "0");
         // localStorage.setItem("userAlreadyRegistered", "true");
         this.sharedService.setAuthentication(true);
         this.router.navigate(["/registration-step"]);
+        //this.router.navigate(["/profile-selection"]);
+
       } else if (response.status == "Inprocess") {
         localStorage.setItem("panNo", this.loginPanNo);
         localStorage.setItem("session-started", "true");
         localStorage.setItem("regId", "0");
-        localStorage.setItem("token", response.message);
+        // localStorage.setItem("token", response.message);
         this.sharedService.setAuthentication(true);
         this.router.navigate(["/registration-step"]);
+        //this.router.navigate(["/profile-selection"]);
       } else if (response.status == "Wrong Password") {
         this.frontendWarningToast(response.status);
       } else if (response.status == "User not found.") {
@@ -170,7 +173,7 @@ export class LoginComponent implements OnInit {
     const response: any = await this.authenticationService.loginUsingPasswordOld(JSON.stringify(TabRegDto));
     this.progressSpinnerDialog.close();
     if (response.status == "Active") {
-      localStorage.setItem("token", response.message);
+      // localStorage.setItem("token", response.message);
       localStorage.setItem("panNo", this.loginPanNo);
       localStorage.setItem("callDigi", "true");
       localStorage.setItem("userExists", "true");
@@ -178,14 +181,16 @@ export class LoginComponent implements OnInit {
       localStorage.setItem("regId", "0");
       // localStorage.setItem("userAlreadyRegistered", "true");
       this.sharedService.setAuthentication(true);
-      this.router.navigate(["/registration-step"]);
+       this.router.navigate(["/registration-step"]);
+      // this.router.navigate(["/profile-selection"]);
     } else if (response.status == "Inprocess") {
-      localStorage.setItem("token", response.message);
+      // localStorage.setItem("token", response.message);
       localStorage.setItem("panNo", this.loginPanNo);
       localStorage.setItem("session-started", "true");
       localStorage.setItem("regId", "0");
       this.sharedService.setAuthentication(true);
       this.router.navigate(["/registration-step"]);
+      //this.router.navigate(["/profile-selection"]);
     } else if (response.status.toLowerCase().includes("otp")) {
       this.frontendWarningToast(response.status);
     } else if (response.status == "User not found.") {
@@ -320,14 +325,15 @@ export class LoginComponent implements OnInit {
         this.closeProgressSpinner();
         if(data.status == 'SUCCESS') {
           localStorage.setItem("panNo", this.loginPanNo);
-          localStorage.setItem("token", data.token);
+          // localStorage.setItem("token", data.token);
           localStorage.setItem("expiresIn", data.expiresIn);
           localStorage.setItem("session-started", "true");
           this.sharedService.setAuthentication(true);
 
           if(data.isOtpVerified == 'Y') {
             if(data.stage == 'PROFILE') {
-              this.router.navigate(["/profile"], { replaceUrl: true });
+              this.router.navigate(["/profile-selection"], { replaceUrl: true });
+             // this.router.navigate(["/profile"], { replaceUrl: true });
             } else {
               this.router.navigate(["/registration-step"], { replaceUrl: true });
             }
@@ -437,14 +443,15 @@ export class LoginComponent implements OnInit {
         this.closeProgressSpinner();
         if(data.status == 'SUCCESS') {
           localStorage.setItem("panNo", this.loginPanNo);
-          localStorage.setItem("token", data.token);
+          // localStorage.setItem("token", data.token);
           localStorage.setItem("expiresIn", data.expiresIn);
           localStorage.setItem("session-started", "true");
           this.sharedService.setAuthentication(true);
 
           if(data.isOtpVerified == 'Y') {
             if(data.stage == 'PROFILE') {
-              this.router.navigate(["/profile"], { replaceUrl: true });
+            this.router.navigate(["/profile-selection"], { replaceUrl: true });
+              // this.router.navigate(["/profile"], { replaceUrl: true });
             } else {
               this.router.navigate(["/registration-step"], { replaceUrl: true });
             }

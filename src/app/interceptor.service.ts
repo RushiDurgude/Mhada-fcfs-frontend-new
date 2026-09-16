@@ -1,153 +1,225 @@
+import { Injectable } from "@angular/core";
 import {
+  HttpInterceptor,
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor,
   HttpResponse,
   HttpErrorResponse
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslocoService } from '@ngneat/transloco';
+} from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { map, catchError } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { TranslocoService } from "@ngneat/transloco";
 
 @Injectable({
   providedIn: "root",
 })
 export class InterceptorService implements HttpInterceptor {
+
   token: any = "";
 
   username = "ILMSAPIUSER";
   password = "ILMSAPIUSER$123";
-  authorizationData = "Basic " + btoa(this.username + ":" + this.password);
 
-  constructor(private translocoService: TranslocoService, private _snackBar: MatSnackBar, private router: Router) { }
+  authorizationData =
+    "Basic " + btoa(this.username + ":" + this.password);
 
-  clearLogin() {
-    localStorage.clear();
-    this._snackBar.open("Please login again", "Close", {
-      horizontalPosition: "right",
-      verticalPosition: "top",
-      panelClass: "warning-toast1",
-      duration: 3 * 1000,
-    });
-    this.router.navigate(['']);
-  }
+  constructor(
+    private translocoService: TranslocoService,
+    private _snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+
+    // Get token from local storage
     if (this.token == null || this.token == "") {
       this.token = "";
     } else {
       this.token = localStorage.getItem("token");
     }
 
-    const expiresIn = localStorage.getItem("expiresIn");
-      const currentTime = new Date().getTime();
-      console.log(expiresIn, (+expiresIn - currentTime), (+expiresIn - currentTime) > 1000 * 60 * 60 * 10);//1000 * 60 * 60 * 10
-      if(req.url.indexOf("/open/login") < 0) {
-        if(expiresIn && (+expiresIn - currentTime) > 1000 * 60 * 60 * 10) {// 1000 * 60 * 60 * 10
-          //TODO later use refresh token at this point to set new access token
-        }
-        else {
-          if(expiresIn) {
-            if((+expiresIn - currentTime) <= 0) {
-              console.log('clearLogin 1');
-              this.clearLogin();
-            }
-          }
-        }
-      }
-    // req = req.clone({
-    //   setHeaders: {
-    //     // username: "ILMSUSER",
-    //     // password: "ILMS@1234",
-    //     // // auth_matcher_url: "http://localhost:38080/api/**"
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer " + this.token,
-    //   },
-    // });
+    /*
+     * Add common headers
+     */
     req = req.clone({
       headers: req.headers
         .append(
-          "Authorization",
-          localStorage.getItem("token") != null && localStorage.getItem("token") != "null"
-            ? "Bearer " + localStorage.getItem("token")
-            : ""
+          "Accept-Language",
+          this.translocoService.getActiveLang()
         )
-        .append("Accept-Language", this.translocoService.getActiveLang())
         .append("isRefreshToken", "true"),
     });
-    // req = req.clone({
-    //   headers: req.headers
-    //     .append("Content-Type", "application/json")
-    //     .append("Accept", "application/json")
-    //     .append("Authorization", "Bearer " + this.token),
-    // });
-    return next.handle(req).pipe(
+
+    /*
+     * Send cookies along with request
+     */
+    let credReq = req.clone({
+      withCredentials: true
+    });
+
+    /*
+     * Add XSRF token for non-GET requests
+     */
+    if (!["GET", "HEAD", "OPTIONS"].includes(req.method)) {
+
+      console.log("HTTP Method:", req.method);
+
+      let xsrfToken: string | null = null;
+
+      /*
+       * Registration API
+       */
+      if (
+        req.url.includes(
+          "bookmyhomeregistration.mhada.gov.in"
+        ) ||
+        req.url.includes(
+          "securitytestingbookmyhomeregistration.mhada.gov.in"
+        ) ||
+        req.url.includes(
+          "bookmyhomeregistrationlocal.mhada.gov.in:38089"
+        )
+      ) {
+
+        xsrfToken = this.getCookie("XSRF-TOKEN1");
+
+        console.log(
+          "XSRF-TOKEN1:",
+          xsrfToken
+        );
+
+      }
+
+      /*
+       * Application API
+       */
+      else if (
+        req.url.includes(
+          "bookmyhomeapplication.mhada.gov.in"
+        ) ||
+        req.url.includes(
+          "securitytestingbookmyhomeapplication.mhada.gov.in"
+        ) ||
+        req.url.includes(
+          "bookmyhomeapplicationlocal.mhada.gov.in:8066"
+        )
+      ) {
+
+        xsrfToken = this.getCookie("XSRF-TOKEN2");
+
+        console.log(
+          "XSRF-TOKEN2:",
+          xsrfToken
+        );
+      }
+
+      /*
+       * Add X-XSRF-TOKEN header
+       */
+      if (xsrfToken) {
+
+        credReq = credReq.clone({
+          setHeaders: {
+            "X-XSRF-TOKEN": xsrfToken
+          }
+        });
+
+      }
+    }
+
+    /*
+     * Send request
+     */
+    return next.handle(credReq).pipe(
+
+      /*
+       * Handle successful response
+       */
       map((event: HttpEvent<any>) => {
+
         if (event instanceof HttpResponse) {
-          console.log('event--->>>', event);
+          console.log(
+            "event--->>>",
+            event
+          );
         }
+
         return event;
       }),
-      // catchError((error: HttpErrorResponse) => {
-      //   let errorMessage = '';
-      //   if (error.status === 0) {
-      //     errorMessage = 'Unable to connect to the server. Please try again later.';
-      //     this.clearLogin();
-      //   } else {
-      //     errorMessage = `Error Status: ${error.status}\nMessage: ${error.message}`;
-      //   }
-      //   console.log('errorMessage --> ',errorMessage);
-      //   console.log('log error --> ',error);
-      //   return throwError(error);
-      // }));
-//         catchError((error: HttpErrorResponse) => {
 
-//   if (error.status === 401) {
+      /*
+       * Handle errors
+       */
+      catchError((error: HttpErrorResponse) => {
 
-//     this.clearLogin();
+        console.log(
+          "Interceptor Error Status =",
+          error.status
+        );
 
-//     return throwError(() => error);
-//   }
+        /*
+         * If token/session is unauthorized
+         */
+        if (error.status === 401) {
 
-//   let errorMessage = '';
+          console.log(
+            "Redirecting to login..."
+          );
 
-//   if (error.status === 0) {
+          this.clearLogin();
+        }
 
-//     errorMessage = 'Unable to connect to the server. Please try again later.';
-
-//   } else {
-
-//     errorMessage = `Error Status: ${error.status}\nMessage: ${error.message}`;
-
-//   }
-
-//   console.log('errorMessage --> ', errorMessage);
-//   console.log('log error --> ', error);
-
-//   return throwError(() => error);
-
-// }
-catchError((error: HttpErrorResponse) => {
-
-  console.log("Interceptor Error Status =", error.status);
-
-  if (error.status === 401) {
-
-    console.log("Redirecting to login...");
-
-    this.clearLogin();
-
-    return throwError(() => error);
+        return throwError(
+          () => error
+        );
+      })
+    );
   }
 
-  return throwError(() => error);
+  /*
+   * Clear login/session
+   */
+  clearLogin() {
 
-})
-);
+    localStorage.clear();
+
+    this._snackBar.open(
+      "Please login again",
+      "Close",
+      {
+        horizontalPosition: "right",
+        verticalPosition: "top",
+        panelClass: "warning-toast1",
+        duration: 3 * 1000,
+      }
+    );
+
+    this.router.navigate([""]);
+  }
+
+  /*
+   * Get cookie value
+   */
+  getCookie(
+    name: string
+  ): string | null {
+
+    const match = document.cookie.match(
+      new RegExp(
+        "(^|; )" +
+        name +
+        "=([^;]*)"
+      )
+    );
+
+    return match
+      ? decodeURIComponent(match[2])
+      : null;
   }
 }

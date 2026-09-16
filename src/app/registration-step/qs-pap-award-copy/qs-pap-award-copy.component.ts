@@ -6,7 +6,8 @@ import { LoaderComponent } from "src/app/loader/loader.component";
 import { ActionSheetController } from "@ionic/angular";
 import { TranslocoService } from "@ngneat/transloco";
 import * as pdfjsLib from 'pdfjs-dist';
-import { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
+// import { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
+import { PDFDocumentProxy } from "pdfjs-dist";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.js';
 

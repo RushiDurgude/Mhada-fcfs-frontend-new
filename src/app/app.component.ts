@@ -49,6 +49,7 @@ export class AppComponent implements ViewDidEnter {
     private googleAnalyticsService: GoogleAnalyticsService,
     private themeService: ThemeService
   ) {
+    console.log('in app component', this.router.url);
     if (localStorage.getItem("platform") == "android" || localStorage.getItem("platform") == "ios") {
       // this.initializeApp();
       this.checkLastRoute();
@@ -92,7 +93,7 @@ export class AppComponent implements ViewDidEnter {
       window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/") 
     ) {
       localStorage.setItem("platform", "browser");
-    } else if (window.location.href.toString().startsWith("http://localhost:8100")) {
+    } else if (window.location.href.toString().startsWith("http://localhost:8100") || window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100")) {
       localStorage.setItem("platform", "browser-local");
     } else if (window.location.href.toString().startsWith("capacitor://localhost")) {
       localStorage.setItem("platform", "ios");
@@ -117,8 +118,9 @@ export class AppComponent implements ViewDidEnter {
     this.sharedService.authFlag.subscribe((flag) => {
       this.authFlag = flag;
     });
-
-    if (this.checkToken.isAuthenticateUser() == true) {
+    const authStatus = await this.checkToken.isAuthenticateUser();
+    if (authStatus) {
+      this.sharedService.setAuthentication(true);
       this.getLastDigiLockerLoginDate();
     }
     this.ionViewDidEnter();
@@ -299,11 +301,23 @@ export class AppComponent implements ViewDidEnter {
         window.location.href.toString().startsWith("capacitor://localhost/cert-entry")
       ) {
       } else if (
-        window.location.href.toString().startsWith("http://localhost:8100/registration-step") ||
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/registration-step") ||
         window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/registration-step") ||
+        window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/registration-step") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/registration-step")
       ) {
         this.router.navigate(["/registration-step"]);
+      } else if (
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/profile?sso") ||
+        window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/profile?sso") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/profile?sso") ||
+        window.location.href.toString().startsWith("https://housing.pmrda.gov.in/profile?sso") ||
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/newuser") ||
+        window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/newuser") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/newuser") ||
+        window.location.href.toString().startsWith("https://housing.pmrda.gov.in/newuser")
+      ) {
+        //this.router.navigate(["/registration-step"]);
       } else {
         this.router.navigate(["/"]);
       }
@@ -433,52 +447,48 @@ export class AppComponent implements ViewDidEnter {
   //     });
   // }
 
-   logout() {
-    this.alertController
-      .create({
-        header: "Logout?",
-        message: "Are you sure you want to logout?",
-        backdropDismiss: false,
-        buttons: [
-          {
-            text: "Stay",
-            role: "cancel",
-            handler: () => {
-              // console.log('Application exit prevented!');
-            },
+logout() {
+  this.alertController
+    .create({
+      header: "Logout?",
+      message: "Are you sure you want to logout?",
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: "Stay",
+          role: "cancel",
+          handler: () => {
+            // console.log('Application exit prevented!');
           },
-          {
-        text: "Logout",
-        handler: () => {
-          this.authenticationService.logout().subscribe({
-            next: (response: any) => {
-
-              localStorage.clear();
-              this.sharedService.setAuthentication(false);
-              this.router.navigate(['/']);
-              window.location.reload();
-
-            },
-            error: (error) => {
-
-              console.log(error);
-
-              // Clear local session even if API fails
-              localStorage.clear();
-              this.sharedService.setAuthentication(false);
-              this.router.navigate(['/']);
-              window.location.reload();
-
-            }
-          });
         },
-      }
-        ],
-      })
-      .then((alert) => {
-        alert.present();
-      });
-  }
+        {
+          text: "Logout",
+          handler: () => {
+            this.authenticationService.logout().subscribe({
+              next: (response: any) => {
+                localStorage.clear();
+                this.sharedService.setAuthentication(false);
+                this.router.navigate(["/"]);
+                window.location.reload();
+              },
+              error: (error) => {
+                console.log(error);
+
+                // Clear local session even if API fails
+                localStorage.clear();
+                this.sharedService.setAuthentication(false);
+                this.router.navigate(["/"]);
+                window.location.reload();
+              }
+            });
+          },
+        },
+      ],
+    })
+    .then((alert) => {
+      alert.present();
+    });
+}
 
   showExitConfirm() {
     if (this.previousAppVersionDetected == false) {

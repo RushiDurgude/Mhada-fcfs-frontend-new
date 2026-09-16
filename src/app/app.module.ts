@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from "@angular/common/http";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 
@@ -234,6 +234,7 @@ import { ApplicationDetailListComponents } from "./pre-lottery/application-detai
 import { ApplicationBookHomeComponent } from "./pre-lottery/application-bookHome/application-bookHome.component";
 import { NocOtpComponent } from "./pre-lottery/noc-otp/noc-otp.component";
 import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot/application-bookPlot.component";
+import { ProfileSelectionComponent } from "./profile-selection/profile-selection.component";
 
 // import { HTTP } from "@ionic-native/http/ngx";
 @NgModule({
@@ -421,6 +422,7 @@ import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot
     ApplicationBookHomeComponent,
     ApplicationBookPlotComponent,
     NocOtpComponent,
+    ProfileSelectionComponent,
 
   ],
   imports: [
@@ -461,6 +463,10 @@ import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot
     MatRadioModule,
     MatCardModule,
     MatDividerModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN', // must match backend cookie name
+      headerName: 'X-XSRF-TOKEN', // must match backend expected header name
+    }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

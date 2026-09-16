@@ -1,0 +1,46 @@
+.background-image {
+  min-height: calc(100vh - 80px); // Adjust based on toolbar height
+  background-image: url('/assets/images/background-image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;   // Move content to top
+  padding-top: 8rem !important;         // Adjust this value as needed
+}
+
+.option-card {
+  border-radius: 1rem;
+  min-height: 240px;         // Increase card height
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+  gap: 2rem;                 // Increase space between buttons
+  margin-top: 3rem;
+}
+
+.action-button {
+  min-width: 190px;
+  min-height: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white !important;
+
+}
+
+.action-button,
+.action-button .mat-button-wrapper,
+.action-button ion-icon {
+  color: white !important;
+}
+
+::ng-deep .action-button .mat-button-wrapper {
+  color: white !important;
+}
+
+::ng-deep .action-button ion-icon {
+  color: white !important;
+}
