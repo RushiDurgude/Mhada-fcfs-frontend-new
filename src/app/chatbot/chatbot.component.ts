@@ -69,6 +69,16 @@ export class ChatbotComponent implements OnInit, AfterViewInit {
     this.getPreviousChats();
   }
 
+  allowOnlyValidCharacters(event: KeyboardEvent): void {
+  const validChars = /^[a-zA-Z0-9 ]$/;
+
+  if (!validChars.test(event.key)) {
+    event.preventDefault();
+  }
+}
+disablePaste(event: ClipboardEvent): void {
+  event.preventDefault();
+}
   async getPreviousChats() {
     const response: any = await this.chatbotService.getUsrChat();
     if (response != null && !response.error) {

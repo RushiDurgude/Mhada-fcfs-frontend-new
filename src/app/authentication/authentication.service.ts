@@ -246,11 +246,19 @@ export class AuthenticationService {
     }>(serverUrl + "open/verifyPanNew", signUpRequestModel);
   }
 
-  signUpNew(panNumber : string, password: string, email: string, mobileNumber:string, otherNamesString : any) {
+  // signUpNew(panNumber : string, password: string, email: string, mobileNumber:string, otherNamesString : any) {
+  //   return this.httpClient.post<{
+  //     status: string;
+  //     errorMessage: string;
+  //   }>(serverUrl + "open/sign-up-registration", {panNumber, password, email, mobileNumber, otherNamesString});
+
+  // }
+
+  signUpNew(panNumber : string, password: string, email: string, mobileNumber:string, otherNamesString : any,captchaKey: number) {
     return this.httpClient.post<{
       status: string;
       errorMessage: string;
-    }>(serverUrl + "open/sign-up-registration", {panNumber, password, email, mobileNumber, otherNamesString});
+    }>(serverUrl + "open/sign-up-registration", {panNumber, password, email, mobileNumber, otherNamesString,captchaKey});
 
   }
 
@@ -303,4 +311,17 @@ export class AuthenticationService {
     }>(serverUrl + "open/update-password?panNumber=" + panNumber, { otp, password });
   }
   
+  logout() {
+    return this.httpClient.post<{
+      status: string;
+      errorMessage: string;
+    }>(serverUrl + "open/logout", null);
+  }
+
+ forceLogout(panNo: string) {
+  return this.httpClient.post<{
+    status: string;
+    errorMessage: string;
+  }>(serverUrl + "open/forceLogout", panNo);
+}
 }

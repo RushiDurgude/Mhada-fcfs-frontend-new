@@ -1487,4 +1487,36 @@ export class PreLotteryApplicationService {
       errorMessage: string;
     }>(api_url + "/confirm/noc-regenotp/" + appKey, authEncryped);
   }
+
+  fetchCategoryListNew(
+    schemeKey: number) {
+      console.log(" Got the scheme details >>>>>>>>>>",schemeKey);
+      return this.http.get<{categoryList: string[], status: string, errorMessage: string}>(
+        api_url + "/guest/apply/tenement/category/" + schemeKey
+      );
+  }
+
+  fetchBuildingListNew(
+    schemeKey: number,category: string) {
+            console.log(" Got the scheme details >>>>>>>>>>",schemeKey,"Got the Category details >>>",category);
+      return this.http.get<{buildingList: string[], status: string, errorMessage: string}>(
+        api_url + "/guest/apply/tenement/buildings/" + schemeKey +"?category="+category
+      );
+  }
+
+  fetchWingListNew(schemeKey: number,
+    buildingNo: string,category: string) {
+      console.log(" Got the scheme details >>>>>>>>>>",schemeKey,"Got the Category details >>>",category,"Got the buildingNo details >>>",buildingNo);
+      return this.http.get<{wingList: string[], status: string, errorMessage: string}>(
+        api_url + "/guest/apply/tenement/buildings/wings/"+schemeKey+"?buildingNo="+buildingNo+"&category="+category
+      );
+  }
+
+  fetchFloorGridNew(schemeKey:number,buildingNo: string, wing: string,category: string) {
+          console.log(" Got the scheme details >>>>>>>>>>",schemeKey,"Got the Category details >>>",category,"Got the buildingNo details >>>",buildingNo,"Got the Wing details >>>",wing);
+    return this.http.get<{gridData: {number: FloorTenementModel[]}, status: string, errorMessage: string, 
+    availableCount: number, allotedCount: number, bookedCount: number, nacount: number}>(
+      api_url + "/guest/apply/tenement/floor-grid/"+schemeKey+"?buildingNo="+buildingNo+"&wing="+wing+"&category="+category
+    );
+  }
 }
