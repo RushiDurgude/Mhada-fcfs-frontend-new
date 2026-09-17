@@ -748,7 +748,7 @@ export class CreateObjectionSuggestionComponent implements OnInit {
           window.location.reload();
         } else {
           const response: any = await this.profileService.refreshtoken();
-          localStorage.setItem("token", response.token);
+          // localStorage.setItem("token", response.token);
           // window.location.reload();
           this.ngOnInit();
         }
