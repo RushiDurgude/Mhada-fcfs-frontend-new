@@ -8,7 +8,7 @@ import { LoaderComponent } from "src/app/loader/loader.component";
 import { CropImageComponent } from "src/app/question-answer/crop-image/crop-image.component";
 import * as pdfjsLib from 'pdfjs-dist';
 import { DomSanitizer } from "@angular/platform-browser";
-import { PDFDocumentProxy } from "pdfjs-dist";
+import { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.js';
 
