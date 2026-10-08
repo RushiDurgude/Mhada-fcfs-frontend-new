@@ -17,6 +17,15 @@
                 <h1 style="font-size: 18px; margin-top: 10px; padding-left: 15px;">
                     {{"title-header-select-lottery" | transloco}}
                 </h1>
+
+                <!-- Finance Assistance Message - Only for Konkan Board -->
+                <div *ngIf="boardKey === 2" class="finance-assistance-message">
+                    <strong>
+                        For Finance Assistance, Eligible Flat Owners may contact TENB Fintech Pvt. Ltd.,
+                        an Agency Authorized by KHADB.<br>
+                        Toll Free No. - 9228849529
+                    </strong>
+                </div>
             <!-- </div> -->
        
           <div class="col-12 p-0 lg:pl-4 xl:pl-4 lg:pr-3 xl:pr-3 lg:pb-3 xl:pb-3" *ngIf="loaded">
