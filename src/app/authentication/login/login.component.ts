@@ -88,6 +88,8 @@ export class LoginComponent implements OnInit {
         // localStorage.setItem("userAlreadyRegistered", "true");
         this.sharedService.setAuthentication(true);
         this.router.navigate(["/registration-step"]);
+        //this.router.navigate(["/profile-selection"]);
+
       } else if (response.status == "Inprocess") {
         localStorage.setItem("panNo", this.loginPanNo);
         localStorage.setItem("session-started", "true");
@@ -95,6 +97,7 @@ export class LoginComponent implements OnInit {
         // localStorage.setItem("token", response.message);
         this.sharedService.setAuthentication(true);
         this.router.navigate(["/registration-step"]);
+        //this.router.navigate(["/profile-selection"]);
       } else if (response.status == "Wrong Password") {
         this.frontendWarningToast(response.status);
       } else if (response.status == "User not found.") {
@@ -178,7 +181,8 @@ export class LoginComponent implements OnInit {
       localStorage.setItem("regId", "0");
       // localStorage.setItem("userAlreadyRegistered", "true");
       this.sharedService.setAuthentication(true);
-      this.router.navigate(["/registration-step"]);
+       this.router.navigate(["/registration-step"]);
+      // this.router.navigate(["/profile-selection"]);
     } else if (response.status == "Inprocess") {
       // localStorage.setItem("token", response.message);
       localStorage.setItem("panNo", this.loginPanNo);
@@ -186,6 +190,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem("regId", "0");
       this.sharedService.setAuthentication(true);
       this.router.navigate(["/registration-step"]);
+      //this.router.navigate(["/profile-selection"]);
     } else if (response.status.toLowerCase().includes("otp")) {
       this.frontendWarningToast(response.status);
     } else if (response.status == "User not found.") {
@@ -327,7 +332,8 @@ export class LoginComponent implements OnInit {
 
           if(data.isOtpVerified == 'Y') {
             if(data.stage == 'PROFILE') {
-              this.router.navigate(["/profile"], { replaceUrl: true });
+              this.router.navigate(["/profile-selection"], { replaceUrl: true });
+             // this.router.navigate(["/profile"], { replaceUrl: true });
             } else {
               this.router.navigate(["/registration-step"], { replaceUrl: true });
             }
@@ -444,7 +450,8 @@ export class LoginComponent implements OnInit {
 
           if(data.isOtpVerified == 'Y') {
             if(data.stage == 'PROFILE') {
-              this.router.navigate(["/profile"], { replaceUrl: true });
+            this.router.navigate(["/profile-selection"], { replaceUrl: true });
+              // this.router.navigate(["/profile"], { replaceUrl: true });
             } else {
               this.router.navigate(["/registration-step"], { replaceUrl: true });
             }

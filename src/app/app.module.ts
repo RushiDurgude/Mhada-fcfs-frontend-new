@@ -234,6 +234,7 @@ import { ApplicationDetailListComponents } from "./pre-lottery/application-detai
 import { ApplicationBookHomeComponent } from "./pre-lottery/application-bookHome/application-bookHome.component";
 import { NocOtpComponent } from "./pre-lottery/noc-otp/noc-otp.component";
 import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot/application-bookPlot.component";
+import { ProfileSelectionComponent } from "./profile-selection/profile-selection.component";
 
 // import { HTTP } from "@ionic-native/http/ngx";
 @NgModule({
@@ -421,6 +422,7 @@ import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot
     ApplicationBookHomeComponent,
     ApplicationBookPlotComponent,
     NocOtpComponent,
+    ProfileSelectionComponent,
 
   ],
   imports: [

@@ -644,8 +644,10 @@
           </tr>
         </tbody>
       </table>
-      <ion-item>
-  <ion-label position="stacked">Electric Meter Address</ion-label>
+      <ion-item *ngIf="isNagpurBoard">
+  <ion-label position="stacked">
+    Electric Meter Address
+  </ion-label>
 
   <ion-textarea
     formControlName="electricMeterAddress"

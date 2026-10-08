@@ -81,7 +81,7 @@ import { ProfileNewComponent } from "./profile-new/profile-new.component";
 import { ApplicationDetailListComponents } from "./pre-lottery/application-detail-lists/application-detail-lists.component";
 import { ApplicationBookHomeComponent } from "./pre-lottery/application-bookHome/application-bookHome.component";
 import { ApplicationBookPlotComponent } from "./pre-lottery/application-bookPlot/application-bookPlot.component";
-
+import { ProfileSelectionComponent } from "./profile-selection/profile-selection.component";
 
 const routes: Routes = [
   { path: "", component: LandingComponent },
@@ -114,6 +114,11 @@ const routes: Routes = [
   {
     path: "profile",
     component: ProfileNewComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: "profile-selection",
+    component: ProfileSelectionComponent,
     canActivate: [AuthGuardService],
   },
   {
