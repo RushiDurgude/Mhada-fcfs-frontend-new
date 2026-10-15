@@ -213,7 +213,8 @@ export class AppComponent implements ViewDidEnter {
         this.router.navigate(["/profile"], { replaceUrl: true });
       } else if (
         window.location.href.toString().startsWith("http://localhost:8100/app/payment-verify") ||
-        window.location.href.toString().startsWith("http://localhost/app/payment-verify") ||
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/app/payment-verify") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("https://sqtchousing.mhada.gov.in/app/payment-verify") ||
@@ -268,6 +269,7 @@ export class AppComponent implements ViewDidEnter {
         this.router.navigate(["/privacy-policy"]);
       } else if (
         window.location.href.toString().startsWith("http://localhost:8100/app/payment-verify") ||
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/app/payment-verify") ||
         window.location.href.toString().startsWith("http://localhost/app/payment-verify") ||
         window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/app/payment-verify") ||
         window.location.href.toString().startsWith("https://housing.pmrda.gov.in/app/payment-verify") ||
@@ -308,10 +310,10 @@ export class AppComponent implements ViewDidEnter {
       ) {
         this.router.navigate(["/registration-step"]);
       } else if (
-        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/profile?sso") ||
-        window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/profile?sso") ||
-        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/profile?sso") ||
-        window.location.href.toString().startsWith("https://housing.pmrda.gov.in/profile?sso") ||
+        window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/profile-selection?sso") ||
+        window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/profile-selection?sso") ||
+        window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/profile-selection?sso") ||
+        window.location.href.toString().startsWith("https://housing.pmrda.gov.in/profile-selection?sso") ||
         window.location.href.toString().startsWith("http://bookmyhomelocal.mhada.gov.in:8100/newuser") ||
         window.location.href.toString().startsWith("https://securitytestingbookmyhome.mhada.gov.in/newuser") ||
         window.location.href.toString().startsWith("https://bookmyhome.mhada.gov.in/newuser") ||
