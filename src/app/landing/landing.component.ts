@@ -27,6 +27,7 @@ export class LandingComponent implements OnInit {
   @ViewChild("VideoSlides") videoSlides: IonSlides | any;
   @ViewChild("VideoSlidesLargeScreen") videoSlidesLargeScreen: IonSlides | any;
 
+  showServicePopup: boolean = true;
   news: AnnouncementModel[] = [];
   videos: any[] = [];
   isDownloadAppButtonVisible: boolean = false;
@@ -221,6 +222,10 @@ export class LandingComponent implements OnInit {
     });
   }
 
+  closeServicePopup(): void {
+    this.showServicePopup = false;
+  }
+
   bannerHeading(bannerHeading) {
     return bannerHeading?.split("|||")[this.activeLangIndex];
   }
@@ -256,6 +261,7 @@ export class LandingComponent implements OnInit {
   }
 
 }
+
 
 document.querySelectorAll(".faq-question").forEach((button) => {
   button.addEventListener("click", () => {

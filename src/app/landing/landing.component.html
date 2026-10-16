@@ -1,4 +1,49 @@
 <div class="grid m-0 p-0" style="overflow: auto; background-color: white; width: 100%;">
+
+  <div class="grid m-0 p-0"
+     style="overflow: auto; background-color: white; width: 100%;">
+
+  <!-- Service Unavailability Popup -->
+  <div class="service-popup-overlay" *ngIf="showServicePopup">
+
+    <div class="service-popup">
+
+      <button
+        class="popup-close-btn"
+        (click)="closeServicePopup()"
+        aria-label="Close">
+        &times;
+      </button>
+
+      <div class="popup-icon">
+        ⚠
+      </div>
+
+      <h2>Important Notice</h2>
+
+      <p>
+        <strong>MAHA IT services will remain unavailable</strong>
+        from <strong>Friday, 16 October 2026, at 4:00 PM</strong>
+        until <strong>20 October 2026</strong>.
+      </p>
+
+      <p class="popup-subtext">
+       Domicile & Income Certificate will be not get approved.
+      </p>
+
+      <p class="popup-subtext">
+        We apologize for the inconvenience and appreciate your understanding.
+      </p>
+
+      <button
+        class="popup-ok-btn"
+        (click)="closeServicePopup()">
+        OK
+      </button>
+
+    </div>
+
+  </div>
   <!-- News Bar -->
   <div class="col-12 m-0 p-0" style="height: fit-content;">
     <div class="news-bar">
@@ -229,6 +274,7 @@
       </ul>
     </div>
   </div>
+  
   <footer style="background-color: #0078d7; color: white; padding: 0px 0; text-align: center; width: 100%;">
     <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
       <!-- Logo and Description -->
